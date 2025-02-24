@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fale Conosco</title>
+    <link rel="stylesheet" href="contato.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+
+<body>
+
+    <section class="container-contato">
+        <h1>Fale Conosco</h1>
+    </section>
+
+    <div id="fale-conosco">
+        <div class="fale-conosco-container">
+
+
+            <div class="conteudo-fale">
+                <div class="informacoes">
+                    <p>Está buscando uma solução eficiente para o controle de estoque de medicamentos? A InovaMed oferece uma plataforma inteligente que garante a gestão adequada do estoque de remédios, contribuindo para a saúde e bem-estar de todos. Nossa equipe está pronta para fornecer todo o suporte necessário na otimização do seu estoque, com foco em precisão e eficiência.</p>
+                    <br>
+                    <strong>• E-mail:</strong> contato@inovamed.com <br>
+                    <strong>• Telefone:</strong> (11) 98765-4321 <br>
+                    <strong>• Endereço:</strong> Rua dos Medicamentos, 123, Centro, SP - São Paulo <br>
+                    <strong>• Horário de atendimento:</strong> Segunda a sexta, das 8h às 18h <br><br>
+                    Ou preencha o formulário ao lado, e retornaremos o mais breve possível!
+                </div>
+                <div class="fale-conosco-card">
+                    <div class="form-content">
+                        <h2 class="title">Digite sua mensagem</h2>
+                        <p class="subtitle">Nos ajude com a melhoria</p>
+                        
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="username"></label>
+                                <input type="text" id="username"  class="input-field" placeholder="Digite seu nome">
+                            </div>
+                
+                            <div class="input-item">
+                                <label for="email"></label>
+                                <input type="email" id="email"  class="input-field" placeholder="Digite seu e-mail">
+                            </div>
+                        </div>
+                
+                        <div class="message-box">
+                            <label for="mensagem"></label>
+                            <textarea id="mensagem" placeholder="Digite sua mensagem"  class="input-field"></textarea>
+                        </div>
+                
+                        <button class="btn">Enviar mensagem</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="info-container">
+        <div class="info-box">
+            <i class="fa-regular fa-phone"></i>
+            <!-- <h3>Telefone do Técnico</h3> -->
+            <p>(11) 1234-5678</p>
+        </div>
+        <div class="info-box">
+            <!-- <h3>Telefone da Empresa</h3> --> 
+            <p>(11) 8765-4321</p>
+        </div>
+        <div class="info-box">
+            <!-- <h3>Email</h3> -->
+            <p>inovamed@outlook.com</p>
+        </div>
+    </div>
+
+<script>
+    window.addEventListener('scroll', function() {
+    const faleConosco = document.getElementById('fale-conosco');
+    const rect = faleConosco.getBoundingClientRect();
+
+    if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+        faleConosco.classList.add('visible');
+    }
+});
+</script>
+
+
+</body>
+
+</html>

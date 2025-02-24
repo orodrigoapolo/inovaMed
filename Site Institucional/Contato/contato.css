@@ -1,0 +1,227 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.container-contato {
+    width: 100%;
+    text-align: center;
+    padding: 40px;
+    background: radial-gradient(circle, #121E3C , #00304C, #121E3C, #000B35);
+    color: white;
+    font-size: 24px;
+   
+    margin-bottom: 0px;
+}
+
+#fale-conosco {
+    width: 100%; 
+    height: 50%;
+    background: #ffff;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    opacity: 0; /* Inicialmente invisível */
+    transform: translateX(-100%); /* Inicialmente fora da tela à esquerda */
+    transition: transform 1s ease, opacity 1s ease; /* Efeito suave */
+    transition-delay: 0.2s;
+}
+
+#fale-conosco.visible {
+    opacity: 1; /* Tornar visível */
+    transform: translateX(0); /* Finaliza na posição original */
+}
+
+.fale-conosco-container{
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo-contato {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.conteudo-fale {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+}
+
+.informacoes {
+    width: 50%;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    line-height: 1.5;
+}
+.fale-conosco-card {
+    width: 70%;
+    max-width: 500px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.3); /* Sombra mais intensa */
+    border-radius: 20px;
+    background-color: #ffff; 
+    border: 1px solid #ccc;
+    padding: 20px;
+    color: #333; 
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+.content .p {
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #555;
+}
+
+/* Grupo de inputs (nome e email lado a lado) */
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input-item {
+    width: 48%; /* Para ajustar o tamanho dos inputs */
+}
+
+.input-item label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input-item input {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 8px;
+    border: 2px solid #dfdfdf;
+    margin-bottom: 10px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3); 
+    transition: all 0.3s ease;
+}
+
+.form-content textarea {
+    width: 100%;
+    height: 150px;
+    resize: none;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 8px;
+    border: 2px solid #dfdfdf;
+    margin-bottom: 18px;
+    margin-top: 15px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.input-field:focus,
+.mensagem:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.input-field::placeholder,
+.mensagem::placeholder {
+    color: #888;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.input-field:focus::placeholder,
+.mensagem:focus::placeholder {
+    color: #007BFF;
+    transform: scale(0.9); /* Efeito de zoom */
+    opacity: 0.6; 
+}
+
+.btn {
+    border: none;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 12px;  
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 1s;
+}
+
+.btn:hover {
+    background-color: #1e7921; 
+       transition: 1s;
+}
+
+/* Adicionando as boxes */
+
+.info-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .info-box {
+    width: 15%;
+    height: 80px;
+    padding: 20px;
+    background-color: #ffff; 
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 15px 30px rgba(0, 0, 0, 0.1); /* Efeito 3D */
+  }
+  
+  .info-box h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .info-box p {
+    font-size: 1rem;
+    color: #333;
+  }
