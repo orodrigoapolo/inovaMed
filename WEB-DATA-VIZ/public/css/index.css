@@ -1,14 +1,17 @@
 /* Configurações gerais */
 
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 body, ul, li, p {
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
     font-size: 1.2rem;
-    font-family: Arial;
 }
 
 * {
+    list-style: none;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -25,13 +28,116 @@ html {
 }
 
 .banner {
+    color: white;
+    background-image: url(../assets/imgs/logo\ 2\ 1080.jpg);
+    background-size: cover;
     width: 100vw;
-    height: fit-content;
+    height: 70vh;
 }
 
-.banner .imagem-fundo {
-    width: 100vw;
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar #logo {
+    margin-top: 1%;
+    margin-left: 3%;
+    width: 18vw;
+    height: 10vh;
+}
+
+.navbar_opcoes {
+    width: 20vw;
     height: fit-content;
-    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar_opcoes li{
+    margin-left: 2vw;
+}
+
+.navbar_opcoes a {
+    font-size: 1.3rem;
+    color: white;
+    padding: 20%;
+    margin: 10%;
+}
+
+.navbar_botoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 5%;
+}
+
+.navbar_botoes li {
+    margin-left: 2vw;
+}
+
+.navbar_botoes a {
+    padding: 10%;
+    margin: 10%;
+}
+
+.navbar_botoes button {
+    width: 7vw;
+    height: 6vh;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border: 2px solid white;
+    border-radius: 10%;
+    color: white;
+}
+
+.conteudo_banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 7%;
+}
+
+.texto h1 {
+    font-size: 4rem;
+    margin-bottom: 2%;
+}
+
+.texto p {
+    font-size: 1.5rem;
+    margin-bottom: 2%;
+}
+
+.texto #banner_botao_saiba_mais {
+    width: 7.5vw;
+    height: 6.5vh;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 10%;
+    color: white;
+    box-shadow: 0px 0px 20px 10px rgb(0, 0, 0, 0.2);
+}
+
+.boneco {
+    margin-right: 7%;
+}
+
+.boneco img {
+    width: 20vw;
+    height: 58vh;
 }
 
