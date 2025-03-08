@@ -16,6 +16,8 @@ html {
     scroll-behavior: smooth;
 }
 
+/* NAVBAR */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -289,3 +291,58 @@ html {
     font-size: 1rem;
     color: #333;
   }
+
+  /* FOOTER */
+
+.seta_topo {
+    width: 95vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 1%;
+}
+
+.footer {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.footer_conteudo {
+    background-image: url("../assets/imgs/fundo\ serviços.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.linha_footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+    margin-top: 4%;
+}
+
+.texto_icones_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 5%;
+    width: 90vw;
+}
+
+.icones_footer #img_github {
+    width: 40px;
+    height: 40px;
+}
+
+.icones_footer #img_linkedin {
+    width: 40px;
+    height: 40px;
+}

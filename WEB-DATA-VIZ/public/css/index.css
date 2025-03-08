@@ -216,7 +216,7 @@ html {
 }
 
 .missao h3 {
-    margin-bottom: 3%;
+    margin-bottom: 5%;
 }
 
 .missao .container_missao {
@@ -240,7 +240,7 @@ html {
 }
 
 .visao h3 {
-    margin-bottom: 3%;
+    margin-bottom: 5%;
 }
 
 .visao .container_visao {
@@ -256,7 +256,7 @@ html {
 }
 
 .valores h3 {
-    margin-bottom: 3%;
+    margin-bottom: 5%;
 }
 
 .valores {
@@ -283,7 +283,7 @@ html {
 
 .servicos {
     width: 100vw;
-    height: 90vh;
+    height: 95vh;
     background-image: url(../assets/imgs/fundo\ serviços.png);
     background-size: cover;
     background-repeat: round;
@@ -332,3 +332,109 @@ html {
 
 /* SOBRE TIME */
 
+.sobre_time {
+    height: fit-content;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+}
+
+.time_titulo p {
+    color: #4CAF50;
+    margin-bottom: 1%;
+}
+
+.time_titulo h1 {
+    margin-bottom: 3%;
+}
+
+.time_conteudo {
+    width: 90vw;
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.pessoa_time {
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+    text-align: center;
+}
+
+.pessoa_time img {
+    background-image: url("../assets/imgs/foto\ cinza.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 25vw;
+    height: 40vh;
+    border-radius: 3% / 5%;
+}
+
+.nome_cargo_time h4 {
+    margin: 1%;
+    margin-top: 3%;
+}
+
+.nome_cargo_time p {
+    margin: 1%;
+    color: #4CAF50;
+}
+
+/* FOOTER */
+
+.seta_topo {
+    width: 95vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 1%;
+}
+
+.footer {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.footer_conteudo {
+    background-image: url("../assets/imgs/fundo\ serviços.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.linha_footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+    margin-top: 4%;
+}
+
+.texto_icones_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 5%;
+    width: 90vw;
+}
+
+.icones_footer #img_github {
+    width: 40px;
+    height: 40px;
+}
+
+.icones_footer #img_linkedin {
+    width: 40px;
+    height: 40px;
+}
