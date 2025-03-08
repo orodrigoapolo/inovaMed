@@ -4,6 +4,8 @@ body {
 }
 
 * {
+    text-decoration: none;
+    list-style: none;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -12,6 +14,68 @@ body {
 
 html {
     scroll-behavior: smooth;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar #logo {
+    margin-top: 1%;
+    margin-left: 3%;
+    margin-bottom: 1%;
+    width: 18vw;
+    height: 10vh;
+}
+
+.navbar_opcoes {
+    width: 20vw;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar_opcoes li{
+    margin-left: 2vw;
+}
+
+.navbar_opcoes a {
+    font-size: 1.3rem;
+    color: #000B35;
+    padding: 20%;
+    margin: 10%;
+}
+
+.navbar_botoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 5%;
+}
+
+.navbar_botoes li {
+    margin-left: 2vw;
+}
+
+.navbar_botoes a {
+    padding: 10%;
+    margin: 10%;
+}
+
+.navbar_botoes button {
+    width: 7vw;
+    height: 6vh;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border: 2px solid #000B35;
+    border-radius: 10% / 20%;
+    color: #000B35;
 }
 
 .container-contato {
