@@ -1,0 +1,122 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.container-contato {
+    width: 100%;
+    text-align: left;
+    padding: 30px;
+    background: white;
+}
+
+.logo {
+    width: 300px; 
+    height: auto;
+    display: block;
+    margin-left: 3%;
+}
+
+.login-text {
+    position: absolute;
+    top: 100px;
+    right: 200px;
+    color: #333;
+    font-size: 16px;
+    text-align: right;
+    z-index: 10;
+}
+
+.title-text {
+    color: #2A6F97;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.title-text1 {
+    color: #2A6F97;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 54px;
+    margin-bottom: 16px;
+}
+
+.subtitle-text {
+    color: #4CAF50;
+    font-size: 18px;
+    margin-right: 74px;
+    font-weight: normal;
+}
+
+.wave {
+  
+    height: 300px; 
+    background-image: url('../assets/imgs/wave.svg'); 
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: bottom; 
+}
+
+
+/* Footer */
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: white;
+    margin-top: auto; /* Isso faz com que o footer fique na parte inferior da tela */
+}
+
+.footer_conteudo {
+    background-image: url("../assets/imgs/fundo\ serviços.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.linha_footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+    margin-top: 4%;
+}
+
+.texto_icones_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 5%;
+    width: 90vw;
+}
+
+.icones_footer #img_github {
+    width: 40px;
+    height: 40px;
+}
+
+.icones_footer #img_linkedin {
+    width: 40px;
+    height: 40px;
+}
