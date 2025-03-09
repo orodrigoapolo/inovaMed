@@ -21,7 +21,8 @@ html {
 .container-contato {
     width: 100%;
     text-align: left;
-    padding: 30px;
+    padding: 10px;
+    margin-bottom: 70px;
     background: white;
 }
 
@@ -34,12 +35,12 @@ html {
 
 .login-text {
     position: absolute;
-    top: 100px;
     right: 200px;
+   
     color: #333;
     font-size: 16px;
     text-align: right;
-    z-index: 10;
+ 
 }
 
 .title-text {
@@ -65,7 +66,7 @@ html {
 }
 
 .wave {
-  
+    top: 80px;
     height: 300px; 
     background-image: url('../assets/imgs/wave.svg'); 
     background-repeat: no-repeat;
@@ -74,20 +75,241 @@ html {
 }
 
 
+#login {
+    width: 100%;
+    background: #2A6F97;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -60px; 
+    padding-top: 0;
+    z-index: 10; 
+    position: relative; 
+}
+
+.login-container {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px; /* Ajuste o espaço abaixo do container de login */
+}
+
+.titulo-login {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.conteudo-login {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+    position: relative;  /* Permite mover o conteúdo de login dentro dele */
+}
+
+.login-card {
+    width: 35%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    background-color: #ffff;
+    border: 1px solid #ccc;
+    padding: 15px;
+    color: #333;
+    position: relative;  /* Garante que você possa mover o card de login */
+    top: -200px;  /* Subir o card de login */
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+.content .p {
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #555;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column; /* Coloca os campos um abaixo do outro */
+    width: 100%;
+    align-items: center; /* Alinha os itens no centro horizontalmente */
+    margin-bottom: 20px;
+}
+
+.input-item {
+    width: 80%; /* Ajusta a largura das inputs mais centralizada */
+    position: relative; /* Necessário para o posicionamento absoluto do ícone */
+    display: flex;
+    justify-content: center; /* Garante que os inputs sejam centralizados */
+    margin-bottom: 10px; /* Espaçamento entre os inputs */
+}
+
+/* Estilo para o ícone dentro do input */
+.input-item i {
+    position: absolute; /* Coloca o ícone dentro do campo de entrada */
+    left: 15px; /* Espaço da borda esquerda */
+    top: 45%; /* Centraliza verticalmente o ícone */
+    transform: translateY(-50%); /* Ajusta o alinhamento vertical do ícone */
+    font-size: 20px; /* Tamanho do ícone */
+    color: #2a2525;
+}
+
+/* Estilo para os inputs */
+.input-item input {
+    width: 100%; /* Ajusta a largura do input para preencher o container */
+    padding-left: 45px; /* Cria espaço à esquerda para o ícone e o texto */
+    height: 50px;
+    background-color: #ffffff;
+    border: 2px solid #dfdfdf;
+    margin-bottom: 18px;
+    border-radius: 15px;
+
+    font-size: 18px; /* Aumenta o tamanho da fonte */
+    font-weight: bold; /* Deixa o texto em negrito */
+    color: #3c3f41;
+    margin-top: 15px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Foco nos campos de input */
+.input-field:focus,
+.password:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.input-field::placeholder,
+.password::placeholder {
+    color: #888;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.input-field:focus::placeholder,
+.password:focus::placeholder {
+    color: #007BFF;
+    transform: scale(0.9); /* Efeito de zoom */
+    opacity: 0.6; 
+}
+
+/* Estilo para o botão */
+.btn {
+    margin-top: 20px;
+    align-self: center;
+    display: flex;
+    width: 40%;
+    border: none;
+    border-radius: 90px;
+    justify-content: center ;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 12px;  
+    font-size: 20px;
+    transition: 1s;
+}
+
+.btn:hover {
+    background-color: #1e7921; 
+    transition: 1s;
+} 
+
+
+/* Beneficios */
+
+
+.beneficios {
+
+    margin-top: 0px;
+    margin-left: 400px;
+    display: flex;
+    flex-direction: column;  /* Alinha os benefícios em uma coluna */
+    gap: 15px;  /* Espaço entre os benefícios */
+    width: 45%;  /* Ajuste o tamanho para ocupar o espaço ao lado do card de login */
+    top: -200px;
+    position: relative;
+ 
+}
+
+.title-beneficio { 
+    font-size: 25px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.beneficio-texto {
+    font-size: 18px;
+    color: #ffffff; /* Cor do texto */
+    text-align: left; /* Alinha o texto à esquerda */
+    font-weight: normal;
+}
+
+/* Estilo para a estrela antes do texto */
+.beneficio-texto i {
+    color: #ffcc00;  /* Cor da estrela */
+    font-size: 22px;  /* Tamanho da estrela */
+    margin-right: 10px;  /* Espaço entre a estrela e o texto */
+    color: #ffffff; /* Cor do texto */
+}
+
+/* Mini card de contato */
+.mini-card {
+    width: 30%;
+    padding: 20px;
+    background-color: #204E69;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    margin-left: 800px;
+    top: -200px;
+    position: relative;
+    margin-bottom: 0; /* Remover o grande espaço abaixo do mini card */
+}
+
+
 /* Footer */
 .footer {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    
+    justify-content: flex-start;
     color: white;
-    margin-top: auto; /* Isso faz com que o footer fique na parte inferior da tela */
+    margin-top: auto; /* Garante que o footer fique na parte inferior da tela */
 }
 
 .footer_conteudo {
-    background-image: url("../assets/imgs/fundo\ serviços.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 20vh;
+    background: radial-gradient(circle, #021440 , #1C4A64, #235C7E, #2A6F97);
+    height: 20vh; /* Ajuste a altura do footer */
     display: flex;
     flex-direction: column;
     justify-content: center;

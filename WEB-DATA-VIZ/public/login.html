@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/login.css"> 
+    <link rel="stylesheet" href="./css/login.css"> <!-- Seu arquivo CSS -->
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
 </head>
 <body>
+    <!-- Seção de logo (caso tenha) -->
     <section class="container-contato">
         <img src="./assets/imgs/logo azul sem fundo.png" id="logo" class="logo">
   
@@ -19,32 +20,87 @@
                     <p class="subtitle-text">O projeto que está transformando o Brasil!</p>
                 </div>
             </section>
-                
-            <div class="wave"></div>
 
-
-            <!-- Seção de Footer -->
-            <div id="footer" class="footer">
-                <div class="footer_conteudo">
-                    <div class="linha_footer">
-                        <h5>
-                            ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-                        </h5>
-                    </div>
-                    <div class="texto_icones_footer">
-                        <p>
-                            © 2025 InovaMed. Todos os direitos reservados.
-                        </p>
-                        <div class="icones_footer">
-                            <img id="img_github" src="assets/icon/github-logo-fill.png">
-                            <img id="img_linkedin" src="assets/icon/linkedin-logo-fill.png">
+                   <!-- Onda -->
+                    <div class="wave"></div>
+ 
+        <!-- Formulário de login -->
+    <div id="login">
+        <div class="login-container">
+            <div class="conteudo-login">
+                <!-- Formulário de Login -->
+                <div class="login-card">
+                    <div class="form-content">
+                        <h2 class="title">Digite suas credenciais</h2>
+                        <p class="subtitle">Faça login para acessar</p>
+                        
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="cod_empresa"></label>
+                                <i class="fa   fa-key"></i>
+                                <input type="text" id="cod_empresa" class="input-field" placeholder="Insira o Código do projeto">
+                            </div>
+                    
+                            <div class="input-item">
+                                <label for="loginn"></label>
+                                <i class='fa fa-user'></i>
+                                <input type="text" id="loginn" class="input-field" placeholder="Insira seu login"> 
+                            </div> 
+                        
+                            <div class="input-item">
+                                <label for="password"></label>
+                                <i class='fa fa-lock'></i>
+                                <input type="password" id="password" placeholder="Insira sua senha" class="input-field">
+                            </div>
                         </div>
+                        <button class="btn"><b>Entrar</b></button>
                     </div>
                 </div>
+                <div class="conteudo-beneficios">
+                    <div class="beneficio">
+                        <div class="beneficios">
+                            <h1 class="title-beneficio">Benefícios</h1>
+                            <p class="beneficio-texto">
+                                <i class="fa fa-star"></i>  Descrição do benefício 1.
+                            </p>
+                            <p class="beneficio-texto">
+                                <i class="fa fa-star"></i> Descrição do benefício 2.
+                            </p>
+                            <p class="beneficio-texto">
+                                <i class="fa fa-star"></i>  Descrição do benefício 3.
+                            </p>
+                        </div>
+
             </div>
+            </div>
+        </div>
+        <div class="mini-card">
+            <p>Tem alguma dúvida?<br> Entre em contato conosco ></p>
+        </div>
+    </div>
+    </div>
 
-
-
+    <!-- Formulário de login -->
+    
+ 
+    <!-- Footer -->
+    <div id="footer" class="footer">
+        <div class="footer_conteudo">
+            <div class="linha_footer">
+                <h5>
+                    ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                </h5>
+            </div>
+            <div class="texto_icones_footer">
+                <p>
+                    © 2025 InovaMed. Todos os direitos reservados.
+                </p>
+                <div class="icones_footer">
+                    <img id="img_github" src="assets/icon/github-logo-fill.png">
+                    <img id="img_linkedin" src="assets/icon/linkedin-logo-fill.png">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
-
