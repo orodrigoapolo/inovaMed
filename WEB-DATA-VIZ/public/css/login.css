@@ -36,11 +36,18 @@ html {
 .login-text {
     position: absolute;
     right: 200px;
-   
     color: #333;
     font-size: 16px;
     text-align: right;
- 
+}
+
+.highlight {
+    color: #4CAF50;  
+    text-decoration: none;  
+}
+
+.highlight:hover {
+    text-decoration: underline;  
 }
 
 .title-text {
@@ -74,7 +81,6 @@ html {
     background-position: bottom; 
 }
 
-
 #login {
     width: 100%;
     background: #2A6F97;
@@ -96,7 +102,7 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px; /* Ajuste o espaço abaixo do container de login */
+    margin-bottom: 20px;
 }
 
 .titulo-login {
@@ -112,7 +118,7 @@ html {
     align-items: center;
     width: 100%;
     gap: 30px;
-    position: relative;  /* Permite mover o conteúdo de login dentro dele */
+    position: relative;  
 }
 
 .login-card {
@@ -123,8 +129,8 @@ html {
     border: 1px solid #ccc;
     padding: 15px;
     color: #333;
-    position: relative;  /* Garante que você possa mover o card de login */
-    top: -200px;  /* Subir o card de login */
+    position: relative;  
+    top: -200px;  
 }
 
 .form-content {
@@ -149,54 +155,50 @@ html {
     font-size: 16px;
     margin-bottom: 20px;
     text-align: center;
-    color: #555;
+    color: #000000;
 }
 
 .input-group {
     display: flex;
-    flex-direction: column; /* Coloca os campos um abaixo do outro */
+    flex-direction: column;
     width: 100%;
-    align-items: center; /* Alinha os itens no centro horizontalmente */
+    align-items: center;
     margin-bottom: 20px;
 }
 
 .input-item {
-    width: 80%; /* Ajusta a largura das inputs mais centralizada */
-    position: relative; /* Necessário para o posicionamento absoluto do ícone */
+    width: 80%;
+    position: relative;
     display: flex;
-    justify-content: center; /* Garante que os inputs sejam centralizados */
-    margin-bottom: 10px; /* Espaçamento entre os inputs */
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
-/* Estilo para o ícone dentro do input */
 .input-item i {
-    position: absolute; /* Coloca o ícone dentro do campo de entrada */
-    left: 15px; /* Espaço da borda esquerda */
-    top: 45%; /* Centraliza verticalmente o ícone */
-    transform: translateY(-50%); /* Ajusta o alinhamento vertical do ícone */
-    font-size: 20px; /* Tamanho do ícone */
+    position: absolute;
+    left: 15px;
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: 20px;
     color: #2a2525;
 }
 
-/* Estilo para os inputs */
 .input-item input {
-    width: 100%; /* Ajusta a largura do input para preencher o container */
-    padding-left: 45px; /* Cria espaço à esquerda para o ícone e o texto */
+    width: 100%;
+    padding-left: 45px;
     height: 50px;
     background-color: #ffffff;
     border: 2px solid #dfdfdf;
     margin-bottom: 18px;
     border-radius: 15px;
-
-    font-size: 18px; /* Aumenta o tamanho da fonte */
-    font-weight: bold; /* Deixa o texto em negrito */
+    font-size: 18px;
+    font-weight: bold;
     color: #3c3f41;
     margin-top: 15px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
 
-/* Foco nos campos de input */
 .input-field:focus,
 .password:focus {
     border-color: #007BFF;
@@ -215,11 +217,10 @@ html {
 .input-field:focus::placeholder,
 .password:focus::placeholder {
     color: #007BFF;
-    transform: scale(0.9); /* Efeito de zoom */
+    transform: scale(0.9);
     opacity: 0.6; 
 }
 
-/* Estilo para o botão */
 .btn {
     margin-top: 20px;
     align-self: center;
@@ -239,23 +240,17 @@ html {
 .btn:hover {
     background-color: #1e7921; 
     transition: 1s;
-} 
-
-
-/* Beneficios */
-
+}
 
 .beneficios {
-
     margin-top: 0px;
     margin-left: 400px;
     display: flex;
-    flex-direction: column;  /* Alinha os benefícios em uma coluna */
-    gap: 15px;  /* Espaço entre os benefícios */
-    width: 45%;  /* Ajuste o tamanho para ocupar o espaço ao lado do card de login */
+    flex-direction: column;  
+    gap: 15px;  
+    width: 45%;  
     top: -200px;
     position: relative;
- 
 }
 
 .title-beneficio { 
@@ -266,20 +261,18 @@ html {
 
 .beneficio-texto {
     font-size: 18px;
-    color: #ffffff; /* Cor do texto */
-    text-align: left; /* Alinha o texto à esquerda */
+    color: #ffffff;
+    text-align: left;
     font-weight: normal;
 }
 
-/* Estilo para a estrela antes do texto */
 .beneficio-texto i {
-    color: #ffcc00;  /* Cor da estrela */
-    font-size: 22px;  /* Tamanho da estrela */
-    margin-right: 10px;  /* Espaço entre a estrela e o texto */
-    color: #ffffff; /* Cor do texto */
+    color: #ffcc00;
+    font-size: 22px;
+    margin-right: 10px;
+    color: #ffffff;
 }
 
-/* Mini card de contato */
 .mini-card {
     width: 30%;
     padding: 20px;
@@ -293,23 +286,31 @@ html {
     margin-left: 800px;
     top: -200px;
     position: relative;
-    margin-bottom: 0; /* Remover o grande espaço abaixo do mini card */
+    margin-bottom: 0;
 }
 
+.mini-card a {
+    color: #ffffff;
+    text-decoration: none;
+}
 
-/* Footer */
+.mini-card a:hover {
+    text-decoration: dashed;
+}
+
 .footer {
     display: flex;
     flex-direction: column;
-    
     justify-content: flex-start;
     color: white;
-    margin-top: auto; /* Garante que o footer fique na parte inferior da tela */
+    margin-top: auto; 
 }
 
 .footer_conteudo {
-    background: radial-gradient(circle, #021440 , #1C4A64, #235C7E, #2A6F97);
-    height: 20vh; /* Ajuste a altura do footer */
+    background-image: url("../assets/imgs/fundo\ serviços.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 20vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -341,4 +342,77 @@ html {
 .icones_footer #img_linkedin {
     width: 40px;
     height: 40px;
+}
+
+@media (max-width: 768px) {
+    .login-text {
+        position: relative;
+        top: 0;
+        right: 0;
+        font-size: 14px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .login-card {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .logo {
+        width: 200px;
+    }
+
+    .mini-card {
+        width: 90%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .logo {
+        width: 150px;
+        margin: 0 auto;
+    }
+
+    .conteudo-login {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .login-card {
+        width: 100%;
+    }
+
+    .beneficios {
+        width: 100%;
+        margin-top: 20px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .mini-card {
+        width: 100%;
+        margin-top: 30px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .site-footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .site-footer .left-side p,
+    .site-footer .right-side a {
+        font-size: 14px;
+    }
 }
