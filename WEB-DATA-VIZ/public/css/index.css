@@ -160,8 +160,9 @@ html {
 }
 
 .sobre_nos .imagem {
-    background-image: url(../assets/imgs/foto\ cinza.png);
+    background-image: url(../assets/imgs/imrs.avif);
     background-size: cover;
+    background-position-x: 90%;
     border-radius: 10%;
     width: 35vw;
     height: 80vh;
@@ -318,11 +319,12 @@ html {
 }
 
 .imagem_servicos img {
-    background-image: url(../assets/imgs/foto\ cinza.png);
+    background-image: url(../assets/imgs/tablet-drug-serious-touchscreen-pharmacy.jpg);
     background-size: cover;
+    background-position-y: 20%;
     border-radius: 5% / 20%;
     width: 50vw;
-    height: 20vh;
+    height: 40vh;
 }
 
 .texto_servicos {
