@@ -417,7 +417,14 @@ input, select, textarea {
         margin-left: auto;
     }
 
-    .footer_conteudo {
-        height: 100vh;
+    .site-footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .site-footer .left-side p,
+    .site-footer .right-side a {
+        font-size: 14px;
     }
 }
+
