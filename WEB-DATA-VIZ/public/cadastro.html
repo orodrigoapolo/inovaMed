@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="./css/cadastro.css"> <!-- Seu arquivo CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Seção de logo -->
+    <section class="container-contato">
+        <a href="./index.html">
+            <img src="./assets/imgs/logo azul sem fundo.png" id="logo" class="logo">
+        </a>
+  
+  
+        <!-- Seção de Texto -->
+        <div class="login-text">
+            <p class="title-text">Bem-vindo de volta! Faça login<br>
+            <p class="title-text1">para continuar sua jornada</p>
+            <p class="subtitle-text">O projeto que está transformando o Brasil!</p>
+        </div>
+    </section>
+
+    <!-- Onda -->
+    <div class="wave"></div>
+
+    <!-- Formulário de Cadastro -->
+    <div id="cadastro" class="container-cadastro">
+        <div class="cadastro-container">
+            <div class="conteudo-cadastro">
+                <div class="cadastro-card">
+                    <div class="form-content">
+                        <h2 class="title">Preencha seus dados</h2>
+                        <p class="subtitle">Já tem conta? <a href="#login" class="highlight">Faça login</a></p>
+                        
+                        <!-- Informações Cadastrais -->
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="email">E-mail</label>
+                                <i class="fa fa-envelope"></i>
+                                <input type="email" id="email" class="input-field" placeholder="Digite seu e-mail">
+                            </div>
+            
+                            <div class="input-item">
+                                <label for="senha">Senha</label>
+                                <i class="fa fa-lock"></i>
+                                <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                            </div>
+            
+                            <div class="input-item">
+                                <label for="confirmar_senha">Confirme a Senha</label>
+                                <i class="fa fa-lock"></i>
+                                <input type="password" id="confirmar_senha" class="input-field" placeholder="Confirme sua senha">
+                            </div>
+                        </div>
+            
+                        <!-- Informações Empresariais -->
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="codigo_empresa">Código da Empresa</label>
+                                <i class="fa fa-building"></i> <!-- Ícone para empresa -->
+                                <input type="text" id="codigo_empresa" class="input-field" placeholder="Digite o código da empresa">
+                            </div>
+            
+                            <div class="input-item">
+                                <label for="cargo">Cargo Exercido</label>
+                                <i class="fa fa-briefcase"></i> <!-- Ícone para cargo -->
+                                <select id="cargo" class="input-field">
+                                    <option value="outros">Selecione seu cargo</option>
+                                    <option value="coordenador_estadual">Coordenador Estadual</option>
+                                    <option value="coordenador_municipal">Coordenador Municipal</option>
+                                </select>
+                            </div>
+            
+                            <div class="input-item">
+                                <label for="estado">Estado em que atua</label>
+                                <i class="fa fa-map-marker-alt"></i> <!-- Ícone para estado -->
+                                <select id="estado" class="input-field">
+                                    <option value="outros">Selecione seu estado</option>
+                                    <option value="acre">Acre</option>
+                                    <option value="amazonas">Amazonas</option>
+                                    <option value="roraima">Roraima</option>
+                                    <option value="rondonia">Rondônia</option>
+                                    <option value="pará">Pará</option>
+                                    <option value="amapá">Amapá</option>
+                                    <option value="tocantins">Tocantins</option>
+                                    <option value="maranhão">Maranhão</option>
+                                    <option value="paraiba">Paraíba</option>
+                                    <option value="ceará">Ceará</option>
+                                </select>
+                            </div>
+                        </div>
+            
+                        <button class="btn"><b>Cadastrar</b></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conteudo-beneficios">
+                <div class="beneficio">
+                    <div class="beneficios">
+                        <h1 class="title-beneficio">Benefícios</h1>
+                        <p class="beneficio-texto">
+                            <i class="fa fa-star"></i>  Descrição do benefício 1.
+                        </p>
+                        <p class="beneficio-texto">
+                            <i class="fa fa-star"></i> Descrição do benefício 2.
+                        </p>
+                        <p class="beneficio-texto">
+                            <i class="fa fa-star"></i>  Descrição do benefício 3.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="mini-card">
+                <p> <a href="./contato.html">Tem alguma dúvida?<br> Entre em contato conosco</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer" class="footer">
+        <div class="footer_conteudo">
+            <div class="linha_footer">
+                <h5>
+                    ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+                </h5>
+            </div>
+            <div class="texto_icones_footer">
+                <p>
+                    © 2025 InovaMed. Todos os direitos reservados.
+                </p>
+                <div class="icones_footer">
+                    <img id="img_github" src="assets/icon/github-logo-fill.png">
+                    <img id="img_linkedin" src="assets/icon/linkedin-logo-fill.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

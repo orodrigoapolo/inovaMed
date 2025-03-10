@@ -1,0 +1,423 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.container-contato {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    margin-bottom: 70px;
+    background: white;
+}
+
+.logo {
+    width: 300px; 
+    height: auto;
+    display: block;
+    margin-left: 3%;
+    margin-bottom: 20px;
+}
+
+.login-text {
+    position: absolute;
+    left: 0;
+    color: #333;
+    font-size: 16px;
+    margin-top: 50px;
+    text-align: left;
+    margin-left: 80px;
+}
+
+.highlight {
+    color: #4CAF50;  
+    text-decoration: none;  
+}
+
+.highlight:hover {
+    text-decoration: underline;  
+}
+
+.title-text {
+    color: #2A6F97;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.title-text1 {
+    color: #2A6F97;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 54px;
+    margin-bottom: 16px;
+}
+
+.subtitle-text {
+    color: #4CAF50;
+    font-size: 18px;
+    margin-right: 74px;
+    font-weight: normal;
+}
+
+.wave {
+    top: 80px;
+    height: 300px; 
+    background-image: url('../assets/imgs/wave.svg'); 
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: bottom; 
+}
+
+#cadastro {
+    width: 100%;
+    background: #2A6F97;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -60px; 
+    padding-top: 0;
+    z-index: 10; 
+    position: relative; 
+}
+
+.cadastro-container {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    margin-left: 200px;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.titulo-login {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.conteudo-cadastro {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+    position: relative;  
+}
+
+.cadastro-card {
+    width: 65%;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    background-color: #ffff;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-left: 100px;
+    color: #333;
+    position: relative;
+    top: -230px;  
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    gap: 20px;
+}
+
+.content .p {
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #000000;
+}
+
+.input-item i {
+    position: absolute;
+    left: 10px;
+    top: 65%;
+    transform: translateY(-50%);
+    color: #605252;
+}
+
+.input-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.input-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 25px;
+}
+
+input, select, textarea {
+    padding-left: 35px;
+}
+
+.input-item label {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.input-item input,
+.input-item select {
+    width: 103%;
+    padding-left: 30px;
+    height: 60px;
+    font-size: 18px;
+    border: 2px solid #dfdfdf;
+    border-radius: 15px;
+    color: #54575a;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.input-item input:focus,
+.input-item select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.input-field:focus,
+.password:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.input-field::placeholder,
+.password::placeholder {
+    color: #888;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.input-field:focus::placeholder,
+.password:focus::placeholder {
+    color: #007BFF;
+    transform: scale(0.9);
+    opacity: 0.6; 
+}
+
+.btn {
+    margin-top: 20px;
+    align-self: center;
+    display: flex;
+    width: 40%;
+    border: none;
+    border-radius: 90px;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 12px;  
+    font-size: 20px;
+    transition: 1s;
+}
+
+.btn:hover {
+    background-color: #1e7921; 
+    transition: 1s;
+}
+
+.beneficios {
+    margin-top: 0px;
+    margin-right: 1200px;
+    display: flex;
+    flex-direction: column;  
+    gap: 15px;  
+    width: 45%;  
+    top: -350px;
+    position: relative;
+}
+
+.title-beneficio { 
+    font-size: 25px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.beneficio-texto {
+    font-size: 18px;
+    color: #ffffff;
+    text-align: left;
+    font-weight: normal;
+}
+
+.beneficio-texto i {
+    color: #ffcc00;
+    font-size: 22px;
+    margin-right: 10px;
+    color: #ffffff;
+}
+
+.mini-card {
+    width: 30%;
+    padding: 20px;
+    background-color: #204E69;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    margin-right: 1000px;
+    margin-top: 20px;
+    position: relative;
+    top: -250px;
+}
+
+.mini-card a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.mini-card a:hover {
+    text-decoration: dashed;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    color: white;
+    margin-top: auto; 
+}
+
+.footer_conteudo {
+    background-image: url("../assets/imgs/fundo\ serviços.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.linha_footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+    margin-top: 4%;
+}
+
+.texto_icones_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 5%;
+    width: 90vw;
+}
+
+.icones_footer #img_github {
+    width: 40px;
+    height: 40px;
+}
+
+.icones_footer #img_linkedin {
+    width: 40px;
+    height: 40px;
+}
+
+
+/* Para telas pequenas, como celulares */
+@media (max-width: 768px) {
+    .container-contato {
+        padding: 10px;
+    }
+
+    .logo {
+        width: 200px;
+        margin-left: 0;
+    }
+
+    .login-text {
+        margin-left: 20px;
+        font-size: 14px;
+    }
+
+    .cadastro-container {
+        margin-left: 0;
+        align-items: center;
+    }
+
+    .conteudo-cadastro {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cadastro-card {
+        width: 90%;
+        margin-left: 0;
+        top: 0;
+    }
+
+    .input-group {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .btn {
+        width: 80%;
+    }
+
+    .beneficios {
+        width: 100%;
+        top: 0;
+    }
+
+    .mini-card {
+        width: 80%;
+        margin-top: 200px;
+        margin-right: 35px;
+        margin-left: auto;
+    }
+
+    .footer_conteudo {
+        height: 100vh;
+    }
+}
