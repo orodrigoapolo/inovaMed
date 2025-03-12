@@ -46,7 +46,7 @@ html {
     align-items: center;
 }
 
-.navbar_modal_mobile {
+.modal_mobile, .navbar_modal_mobile {
     display: none;
 }
 
