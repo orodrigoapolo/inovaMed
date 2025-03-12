@@ -78,7 +78,7 @@ html {
 .wave {
     top: 80px;
     height: 300px; 
-    background-image: url('../assets/imgs/wave.svg'); 
+    background-image: url('../assets/imgs/wave.png'); 
     background-repeat: no-repeat;
     background-size: cover; 
     background-position: bottom; 
@@ -86,14 +86,14 @@ html {
 
 #cadastro {
     width: 100%;
-    background: #2A6F97;
+    background: #00121e;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -60px; 
+    /* margin-top: -60px;  */
     padding-top: 0;
     z-index: 10; 
     position: relative; 
@@ -425,6 +425,20 @@ input, select, textarea {
     .site-footer .left-side p,
     .site-footer .right-side a {
         font-size: 14px;
+    }
+
+    .seta_topo {
+        display: none;
+    }
+    .linha_footer {
+        display: none;
+    }
+    .texto_icones_footer {
+        flex-direction: column;
+    }
+    .texto_icones_footer p {
+        font-size: 0.8rem;
+        margin-bottom: 5%;
     }
 }
 

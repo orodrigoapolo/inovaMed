@@ -11,9 +11,31 @@
     
     <div id="index" class="index">
 
+        <div id="modal_mobile" class="modal_mobile">
+            <div id="container_modal" class="container_modal">
+                <div onclick="fechar_modal()" id="botao_fechar_modal_mobile" class="botao_fechar_modal_mobile">
+                    <img id="botao_fechar" src="assets/icon/x.png">
+                </div>
+                <div class="navbar_botoes_mobile">
+                    <li><a href="login.html"><button id="navbar_botao_entrar"><p>Entrar</p></button></a></li>
+                    <li><a href="cadastro.html"><button id="navbar_botao_cadastrar"><p>Cadastrar</p></button></a></li>
+                </div>
+                <div class="modal_contato">
+                    <h4>Quer utilizar nossos serviços?</h4>
+                    <p>Abra uma solicitação no nosso</p>
+                    <a href="contato.html">Fale Conosco</a>
+                </div>
+            </div>
+        </div>
+
         <div id="banner" class="banner">
             <div id="navbar" class="navbar">
-                <img src="assets/imgs/logo branca sem fundo.png" id="logo" class="logo">
+                <div class="navbar_logo">
+                    <img src="assets/imgs/logo branca sem fundo.png" id="logo" class="logo">
+                </div>
+                <div id="navbar_modal_mobile" class="navbar_modal_mobile">
+                    <img onclick="abrir_modal()" id="navbar_icone_lista" src="assets/icon/list.png">
+                </div>
                 <div class="navbar_opcoes">
                         <li><a href="#">Home</a></li>
                         <li><a href="#sobre_nos">Sobre</a></li>
@@ -21,8 +43,8 @@
                         <li><a href="contato.html">Contato</a></li>
                 </div>
                 <div class="navbar_botoes">
-                    <li><a href="login.html"><button id="navbar_botao_entrar">Entrar</button></a></li>
-                    <li><a href="cadastro.html"><button id="navbar_botao_cadastrar">Cadastrar</button></a></li>
+                    <li><a href="login.html"><button id="navbar_botao_entrar"><p>Entrar</p></button></a></li>
+                    <li><a href="cadastro.html"><button id="navbar_botao_cadastrar"><p>Cadastrar</p></button></a></li>
                 </div>
             </div>
             <div class="conteudo_banner">
@@ -33,8 +55,8 @@
                     <p>
                         Desenvolvemos o melhor ambiente para controle total do seu estoque de medicamentos 
                     </p>
-                    <a href="">
-                        <button id="banner_botao_saiba_mais">Saiba mais</button>
+                    <a href="#servicos">
+                        <button id="banner_botao_saiba_mais"><p>Saiba mais</p></button>
                     </a>
                 </div>
                 <div id="boneco" class="boneco">
@@ -50,10 +72,12 @@
                 <div class="sobre_nos_texto">
                     <p id="p_titulo">Sobre nós</p>
                     <h1>
-                        Textos teste para desenvolver quando for fazer
+                        InovaMed: Seu Parceiro na Gestão Eficiente de Estoque Farmaceutico
                     </h1>
+                    <div id="imagem_mobile">
+                    </div>
                     <p id="p_conteudo">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores similique cum rerum distinctio repellat error mollitia? Rem ducimus laudantium ratione ex maxime. Repellat dicta consectetur distinctio nobis obcaecati quisquam accusantium.Lorem ipsum dolor sit amet, conseXctetur adipisicing elit. Quia earum laudantium praesentium harum, hic at qui quo incidunt consequuntur cum, aliquam blanditiis sed quas iusto eum necessitatibus tempora nisi ab?
+                        Fundada em 2025, por apaixonado em transformar soluções tecnologias em serviços eficientes, a inovaMed busca proporcionar a melhor experiência para controle de estoque de medicamentos, disponibilizando gráficos e indicadores relevantes para que você possa tomar as decisões mais assertivas.
                     </p>
                 </div>
                 <div class="sobre_nos_mvv">
@@ -94,16 +118,16 @@
             <div class="servicos_conteudo">
                 <div class="titulo_servicos">
                     <h1>Nossos Serviços</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. A accusantium similique pariatur iste officiis quibusdam voluptate.
-                    </p>
+                    <h3>
+                        Controle de estoque de medicamentos para tratamento de asma na região Norte.
+                    </h3>
                 </div>
                 <div class="imagem_servicos">
                     <img>
                 </div>
                 <div class="texto_servicos">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae corporis iusto, omnis eos consectetur quod autem. Perferendis vel, iste corrupti odit est fugit deserunt minus, quod, commodi cumque neque tempore? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit accusantium voluptatem, cupiditate architecto recusandae consequatur aliquam. Odit quia libero neque eos ratione, adipisci nisi reiciendis voluptatem laboriosam tenetur aliquam exercitationem.
+                        Na região Norte, cerca de 20% da população sofre com asma, e enfrentam dificuldade para conseguir seus medicamentos por falta no estoque, o que dificulta o tratamento devido da doença. Nosso serviço traz relatórios atualizados sobre a quantidade dos medicamentos voltados para o tratamento da asma, facilitando o trabalho de gestão de estoque, podendo visualizar de forma clara dados sobre quantidade de medicamentos, indicar onde mais falta, visualizar datas de vencimento dos remédios, e muito mais. Nosso serviço é perfeito para você que trabalha como Coordenador Estadual ou Coordenador Municipal e precisa de visualização clara desses dados.
                     </p>
                 </div>
             </div>
@@ -216,3 +240,16 @@
 
 </body>
 </html>
+
+<script>
+
+    function abrir_modal() {
+        document.getElementById("modal_mobile").style.display = "flex"
+    }
+
+    function fechar_modal() {
+        document.getElementById("modal_mobile").style.display = "none"
+    }
+
+
+</script>

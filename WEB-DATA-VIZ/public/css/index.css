@@ -32,8 +32,8 @@ html {
 .banner {
     color: white;
     background-image: url(../assets/imgs/logo\ 2\ 1080.jpg);
-    background-size: contain;
-    background-repeat: round;
+    background-size: cover;
+    background-repeat: no-repeat;
     width: 100vw;
     height: 70vh;
 }
@@ -44,6 +44,10 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.navbar_modal_mobile {
+    display: none;
 }
 
 .navbar #logo {
@@ -101,6 +105,150 @@ html {
     color: white;
 }
 
+@media (max-width: 1280px) {
+    .navbar_botoes button {
+        width: 8vw;
+        padding-left: 2%;
+        padding-right: 2%;
+        border: 1px solid white;
+    }
+
+    .navbar_botoes button p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 1097px) {
+    .navbar_botoes button p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        all: unset;
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        margin-bottom: 5%;
+    }
+    .navbar_botoes {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    .navbar_botoes button {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    .navbar_opcoes {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    .navbar_logo {
+        height: 10vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .navbar_logo #logo {
+        width: 50vw;
+        height: 10vh;
+        margin-top: 5%;
+    }
+    .navbar_modal_mobile {
+        display: flex;
+        margin-left: 10%;
+        height: 10vh;
+        align-items: center;
+    }
+    .navbar_modal_mobile #navbar_icone_lista {
+        width: 38px;
+        height: 38px;
+        border: none;
+    }
+    .modal_mobile {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        z-index: 1;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgb(0, 0, 0, 0.6);
+        color: white;
+    }
+    .container_modal {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        width: 90vw;
+        height: 80vh;
+        background-image: url("../assets/imgs/fundo\ serviços.png");
+        background-size: cover;
+        border-bottom-left-radius: 10%;
+        border-bottom-right-radius: 10%;
+        box-shadow: 0px 0px 20px 10px rgb(0, 0, 0, 0.5);;
+    }
+    .botao_fechar_modal_mobile {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .navbar_botoes_mobile {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .navbar_botoes_mobile li {
+        margin-top: 2vw;
+    }
+    .navbar_botoes_mobile button {
+        width: 30vw;
+        height: 6vh;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        border: 2px solid white;
+        border-radius: 10% / 20%;
+        color: white;
+    }
+    .modal_contato {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 70vw;
+        text-align: center;
+    }
+    .modal_contato h4 {
+        width: 70vw;
+        font-size: 1.3rem;
+        font-weight: normal;
+    }
+    .modal_contato p {
+        margin: 2%;
+        margin-bottom: 1%;
+        font-size: 1rem;
+    }
+    .modal_contato a {
+        color: white;
+        font-size: 1rem;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
 /* BANNER */
 
 .conteudo_banner {
@@ -127,6 +275,10 @@ html {
     margin-bottom: 2%;
 }
 
+.banner_texto #banner_botao_saiba_mais p {
+    font-size: 1.2rem;
+}
+
 .banner_texto #banner_botao_saiba_mais {
     width: 7.5vw;
     height: 6.5vh;
@@ -146,6 +298,75 @@ html {
 .boneco img {
     width: 20vw;
     height: 58vh;
+}
+
+@media (max-width: 1280px) {
+    .banner{
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding-bottom: 2%;
+    }
+
+    .banner_texto #banner_botao_saiba_mais {
+        width: max-content;
+        height: max-content;
+        padding: 10%;
+    }
+
+    .banner_texto #banner_botao_saiba_mais p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 1097px) {
+    .banner {
+        height: fit-content;
+        padding-bottom: 2%;
+    }
+    .boneco img {
+        width: 0;
+        height: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner {
+        height: fit-content;
+        padding-bottom: 2%;
+    }
+    .banner_texto h1 {
+        font-size: 2rem;
+        text-align: center;
+        width: 85vw;
+    }
+    .banner_texto p {
+        text-align: center;
+        font-size: 1.2rem;
+        margin-top: 1%;
+        margin-bottom: 5%;
+    }
+    .banner_texto a {
+        width: 85vw;
+        height: min-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .banner_texto #banner_botao_saiba_mais {
+        width: 30vw;
+        height: 5vh;
+        padding: 0%;
+        margin-bottom: 4%;
+        border-radius: 5% / 15%;
+    }
+    .banner_texto #banner_botao_saiba_mais p {
+        width: 30vw;
+        font-size: 1rem;
+    }
+    .boneco img {
+        width: 0;
+        height: 0;
+    }
 }
 
 /* SOBRE NÓS */
@@ -280,6 +501,73 @@ html {
     border-radius: 2%;
 }
 
+@media (max-width: 1280px) {
+    .missao .container_missao {
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .visao .container_visao {
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .valores .container_valores {
+        width: fit-content;
+        height: fit-content;
+    }
+}
+
+@media (max-width: 768px) {
+    .sobre_nos {
+        display: flex;
+        flex-direction: column;
+    }
+    .sobre_nos .imagem {
+        display: none;
+    }
+    .sobre_nos #imagem_mobile {
+        background-image: url(../assets/imgs/imrs.avif);
+        background-size: cover;
+        background-position-x: 90%;
+        display: flex;
+        width: 90vw;
+        height: 30vh;
+        border-radius: 10% / 20%;
+        margin-bottom: 7%;
+    }
+    .sobre_nos_texto {
+        width: 85vw;
+        text-align: center;
+    }
+    .sobre_nos_texto #p_conteudo {
+        width: 85vw;
+        text-align: justify;
+    }
+    .sobre_nos_texto h1 {
+        font-size: 2rem;
+    }
+    .sobre_nos_texto #p_titulo {
+        font-size: 1rem;
+    }
+    .sobre_nos_mvv {
+        width: 85vw;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .missao, .visao, .valores {
+        margin: 0;
+        margin-top: 5%;
+        width: 80vw;
+    }
+    .missao .container_missao,.visao .container_visao,.valores .container_valores {
+        width: 80vw;
+        margin: 0;
+    }
+}
+
+
 /* NOSSOS SERVIÇOS */
 
 .servicos {
@@ -308,6 +596,10 @@ html {
     margin-bottom: 3%;
 }
 
+.titulo_servicos h3 {
+    margin-bottom: 3%;
+}
+
 .titulo_servicos p {
     margin-bottom: 3%;
 }
@@ -330,6 +622,39 @@ html {
 .texto_servicos {
     width: 70vw;
     margin-top: 3%;
+}
+
+@media (max-width: 1280px) {
+    .servicos {
+        height: fit-content;
+    }
+}
+
+@media (max-width: 768px) {
+    .titulo_servicos {
+        width: 85vw;
+    }
+    .titulo_servicos h1 {
+        font-size: 1.5rem;
+        margin-bottom: 6%;
+        font-weight: normal;
+    }
+    .imagem_servicos {
+        margin-top: 3%;
+        margin-bottom: 3%;
+        width: 85vw;
+    }
+    .imagem_servicos img {
+        margin-top: 3%;
+        margin-bottom: 3%;
+        width: 80vw;
+        height: 20vh;
+        border-radius: 10% / 20%;
+    }
+    .texto_servicos {
+        width: 85vw;
+        text-align: justify;
+    }
 }
 
 /* SOBRE TIME */
@@ -386,6 +711,38 @@ html {
     color: #4CAF50;
 }
 
+@media (max-width: 768px) {
+    .time_titulo {
+        width: 90vw;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .time_titulo p {
+        font-size: 1rem;
+    }
+    .time_titulo h1 {
+        font-size: 2rem;
+        margin-bottom: 6%;
+    }
+    .pessoa_time {
+        display: block;
+    }
+    .pessoa_time img {
+        width: 35vw;
+        height: 20vh;
+    }
+    .nome_cargo_time h4 {
+        width: 40vw;
+        font-size: 1rem;
+    }
+    .nome_cargo_time p {
+        font-size: 0.8rem;
+    }
+}
+
 /* FOOTER */
 
 .seta_topo {
@@ -439,4 +796,20 @@ html {
 .icones_footer #img_linkedin {
     width: 40px;
     height: 40px;
+}
+
+@media (max-width: 768px) {
+    .seta_topo {
+        display: none;
+    }
+    .linha_footer {
+        display: none;
+    }
+    .texto_icones_footer {
+        flex-direction: column;
+    }
+    .texto_icones_footer p {
+        font-size: 0.8rem;
+        margin-bottom: 5%;
+    }
 }
