@@ -82,6 +82,18 @@ html {
     border: 2px solid #000B35;
     border-radius: 10% / 20%;
     color: #000B35;
+    transition: 0.3s ease-in-out;
+}
+
+.navbar_botoes button:hover {
+    width: 7vw;
+    height: 6vh;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: #000B35;
+    border: none;
+    border-radius: 10% / 20%;
+    color: white;
 }
 
 .container-contato {
