@@ -364,57 +364,107 @@ input, select, textarea {
 }
 
 
-/* Para telas pequenas, como celulares */
+/* Responsividade*/
 @media (max-width: 768px) {
-    .container-contato {
-        padding: 10px;
+    .login-text {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-right: 20px;
+        flex-direction: column;
+        font-size: 5px;
+        text-align: center;
     }
 
     .logo {
-        width: 200px;
-        margin-left: 0;
-    }
-
-    .login-text {
-        margin-left: 20px;
-        font-size: 14px;
+        width: 180px;
+        margin: 0 auto;
     }
 
     .cadastro-container {
+        width: 100%;
+        padding: 20px;
         margin-left: 0;
+        margin-right: 0;
         align-items: center;
+        display: flex;
+        flex-direction: column;
     }
 
     .conteudo-cadastro {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
+        width: 100%;
     }
 
     .cadastro-card {
         width: 90%;
         margin-left: 0;
-        top: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
     }
 
     .input-group {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .input-item input,
+    .input-item select {
+        width: 100%;
+        padding-left: 34px;
     }
 
     .btn {
         width: 80%;
+        font-size: 16px;
+        padding: 12px;
     }
 
     .beneficios {
         width: 100%;
-        top: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-top: 140px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .title-beneficio {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: white;
+    }
+
+    .beneficio-texto {
+        font-size: 16px;
+        color: #ffffff;
+        text-align: left;
     }
 
     .mini-card {
-        width: 80%;
-        margin-top: 200px;
-        margin-right: 35px;
+        width: 90%;
+        margin-top: 20px;
         margin-left: auto;
+        margin-right: auto;
+        padding: 15px;
+        box-sizing: border-box;
+        text-align: center;
+        background-color: #204E69;
+        color: white;
+        font-size: 16px;
+    }
+
+    .mini-card a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .mini-card a:hover {
+        text-decoration: dashed;
     }
 
     .site-footer {
@@ -430,15 +480,19 @@ input, select, textarea {
     .seta_topo {
         display: none;
     }
+
     .linha_footer {
         display: none;
     }
+
     .texto_icones_footer {
         flex-direction: column;
     }
+
     .texto_icones_footer p {
         font-size: 0.8rem;
         margin-bottom: 5%;
     }
 }
+
 
