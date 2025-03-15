@@ -34,21 +34,23 @@ html {
 }
 
 .login-text {
-    top: 70px;
+    top: 50px;
     position: absolute;
     right: 200px;
+    
     color: #333;
     font-size: 16px;
     text-align: right;
 }
 
 .highlight {
-    color: #4CAF50;  
-    text-decoration: none;  
+    color: #106f13;  
+    font-weight: bold;
+    text-decoration: none; 
 }
 
 .highlight:hover {
-    text-decoration: underline;  
+    color: #007BFF; 
 }
 
 .title-text {
@@ -69,8 +71,12 @@ html {
 .subtitle-text {
     color: #4CAF50;
     font-size: 18px;
-    margin-right: 74px;
-    font-weight: normal;
+    margin-right: 44px;
+    font-weight: bold;
+    color: #106f13;  
+    font-weight: bold;
+    
+    
 }
 
 .wave {
@@ -127,7 +133,7 @@ html {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #ffff;
-    border: 1px solid #ccc;
+    border: 3px solid #211e1e;
     padding: 15px;
     color: #333;
     position: relative;  
@@ -194,11 +200,19 @@ html {
     border-radius: 15px;
     font-size: 18px;
     font-weight: bold;
-    color: #3c3f41;
+    color: #000000;
     margin-top: 15px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
+
+.input-group label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
 
 .input-field:focus,
 .password:focus {
@@ -208,7 +222,7 @@ html {
 
 .input-field::placeholder,
 .password::placeholder {
-    color: #888;
+    color: #000000;
     font-size: 16px;
     transition: all 0.3s ease;
     transform: scale(1);
@@ -249,7 +263,7 @@ html {
     display: flex;
     flex-direction: column;  
     gap: 15px;  
-    width: 45%;  
+    width: 65%;  
     top: -200px;
     position: relative;
 }
@@ -261,9 +275,9 @@ html {
 }
 
 .beneficio-texto {
-    font-size: 18px;
+    font-size: 20px;
     color: #ffffff;
-    text-align: left;
+     margin-right: 20px;
     font-weight: normal;
 }
 
@@ -290,14 +304,19 @@ html {
     margin-bottom: 0;
 }
 
+.mini-card:hover {
+
+        background-color: #1e7921; 
+        transition: 2s;
+    
+}
+
 .mini-card a {
     color: #ffffff;
     text-decoration: none;
 }
 
-.mini-card a:hover {
-    text-decoration: dashed;
-}
+
 
 .footer {
     display: flex;
@@ -348,7 +367,7 @@ html {
 @media (max-width: 768px) {
     .login-text {
         position: relative;
-        top: 0;
+        top: 10;
         right: 0;
         font-size: 14px;
         text-align: center;

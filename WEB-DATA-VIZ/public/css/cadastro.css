@@ -45,12 +45,13 @@ html {
 }
 
 .highlight {
-    color: #4CAF50;  
+    color: #106f13;  
+    font-weight: bold;
     text-decoration: none;  
 }
 
 .highlight:hover {
-    text-decoration: underline;  
+    color: #007BFF;  
 }
 
 .title-text {
@@ -69,10 +70,12 @@ html {
 }
 
 .subtitle-text {
-    color: #4CAF50;
+    color: #12c618;
     font-size: 18px;
     margin-right: 74px;
-    font-weight: normal;
+    font-weight: bold;
+    color: #106f13;  
+    
 }
 
 .wave {
@@ -131,7 +134,7 @@ html {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #ffff;
-    border: 1px solid #ccc;
+    border: px solid #211e1e;
     padding: 15px;
     margin-left: 100px;
     color: #333;
@@ -197,6 +200,8 @@ input, select, textarea {
 .input-item label {
     font-size: 16px;
     margin-bottom: 10px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
 }
 
 .input-item input,
@@ -207,7 +212,7 @@ input, select, textarea {
     font-size: 18px;
     border: 2px solid #dfdfdf;
     border-radius: 15px;
-    color: #54575a;
+    color: #000000;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
@@ -226,7 +231,7 @@ input, select, textarea {
 
 .input-field::placeholder,
 .password::placeholder {
-    color: #888;
+    color: #000000;
     font-size: 16px;
     transition: all 0.3s ease;
     transform: scale(1);
@@ -308,6 +313,12 @@ input, select, textarea {
     top: -250px;
 }
 
+.mini-card:hover {
+
+    background-color: #1e7921; 
+    transition: 2s;
+
+}
 .mini-card a {
     color: #ffffff;
     text-decoration: none;
@@ -368,12 +379,12 @@ input, select, textarea {
 @media (max-width: 768px) {
     .login-text {
         position: relative;
-        top: 0;
+        top:10px;
         right: 0;
         margin-right: 20px;
         flex-direction: column;
         font-size: 5px;
-        text-align: center;
+      
     }
 
     .logo {
