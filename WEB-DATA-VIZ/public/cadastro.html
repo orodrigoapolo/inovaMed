@@ -89,12 +89,36 @@
                                     <option value="tocantins">Tocantins</option>
                                 </select>
                             </div>
+                            <div id="validacao-senha">
+                                <div class="validacao-item">
+                                    <i id="icone-tamanho" class="fa fa-lock"></i>
+                                    <p id="validacao-tamanho">Mínimo 8 caracteres</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-maiuscula" class="fa fa-lock"></i>
+                                    <p id="validacao-maiuscula">Pelo menos uma letra maiúscula</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-minuscula" class="fa fa-lock"></i>
+                                    <p id="validacao-minuscula">Pelo menos uma letra minúscula</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-numero" class="fa fa-lock"></i>
+                                    <p id="validacao-numero">Pelo menos um número</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-caractere" class="fa fa-lock"></i>
+                                    <p id="validacao-caractere">Pelo menos um caractere especial</p>
+                                </div>
+                            </div>
+                            
                         </div>
             
-                        <button class="btn"><b>Cadastrar</b></button>
+                        <button id="botao-cadastrar" class="btn"><b>Cadastrar</b></button>
                     </div>
                 </div>
             </div>
+            
 
             <div class="conteudo-beneficios">
                 <div class="beneficio">
@@ -137,6 +161,144 @@
             </div>
         </div>
     </div>
+    <script>
+        // Adicionando evento input ao campo de senha
+        document.getElementById('senha').addEventListener('input', function() {
+            var senha = document.getElementById('senha').value;
+            var confirmarSenha = document.getElementById('confirmar_senha').value;
+
+    
+            // Flags de validação
+            var valido = true;
+    
+            // Validação: Tamanho mínimo de 8 caracteres
+
+            if (senha.length < 8) {
+                document.getElementById('icone-tamanho').classList.add('red');
+                document.getElementById('icone-tamanho').classList.remove('green');
+            } else {
+                document.getElementById('icone-tamanho').classList.add('green');
+                document.getElementById('icone-tamanho').classList.remove('red');
+            }
+    
+            // Validação: Pelo menos uma letra maiúscula
+            if (!/[A-Z]/.test(senha)) {
+                document.getElementById('icone-maiuscula').classList.add('red');
+                document.getElementById('icone-maiuscula').classList.remove('green');
+            } else {
+                document.getElementById('icone-maiuscula').classList.add('green');
+                document.getElementById('icone-maiuscula').classList.remove('red');
+            }
+    
+            // Validação: Pelo menos uma letra minúscula
+            if (!/[a-z]/.test(senha)) {
+                document.getElementById('icone-minuscula').classList.add('red');
+                document.getElementById('icone-minuscula').classList.remove('green');
+            } else {
+                document.getElementById('icone-minuscula').classList.add('green');
+                document.getElementById('icone-minuscula').classList.remove('red');
+            }
+    
+            // Validação: Pelo menos um número
+            if (!/\d/.test(senha)) {
+                document.getElementById('icone-numero').classList.add('red');
+                document.getElementById('icone-numero').classList.remove('green');
+            } else {
+                document.getElementById('icone-numero').classList.add('green');
+                document.getElementById('icone-numero').classList.remove('red');
+            }
+    
+            // Validação: Pelo menos um caractere especial
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+                document.getElementById('icone-caractere').classList.add('red');
+                document.getElementById('icone-caractere').classList.remove('green');
+            } else {
+                document.getElementById('icone-caractere').classList.add('green');
+                document.getElementById('icone-caractere').classList.remove('red');
+            }
+        });
+    
+        // A função de cadastro que será acionada ao clicar no botão
+        document.getElementById('botao-cadastrar').addEventListener('click', function() {
+            var senha = document.getElementById('senha').value;
+            var confirmarSenha = document.getElementById('confirmar_senha').value;
+            var email = document.getElementById('email').value;
+            var cargo = document.getElementById('cargo').value;
+            var estado = document.getElementById('estado').value;
+
+            
+    
+            // Flags de validação
+            var valido = true;
+            var mensagensErro = [];
+    
+
+            // Validação: Senha e Confirmar Senha são iguais
+            if (senha !== confirmarSenha) {
+             mensagensErro.push('As senhas não coincidem.');
+             valido = false;
+             }
+
+                 // Validação: E-mail no formato correto (tem que ter @ e .com)
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
+                valido = false;
+            }
+        
+            // Validação: Cargo selecionado (não pode ser "outros")
+            if (cargo === "outros" || cargo === "") {
+                mensagensErro.push('Você precisa selecionar um cargo.');
+                valido = false;
+            }
+        
+            // Validação: Estado selecionado (não pode ser "outros")
+            if (estado === "outros" || estado === "") {
+                mensagensErro.push('Você precisa selecionar um estado.');
+                valido = false;
+            }
+
+            // Validação: Tamanho mínimo de 8 caracteres
+
+            if (senha.length < 8) {
+                mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
+                valido = false;
+            }
+    
+            // Validação: Pelo menos uma letra maiúscula
+            if (!/[A-Z]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
+                valido = false;
+            }
+    
+            // Validação: Pelo menos uma letra minúscula
+            if (!/[a-z]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
+                valido = false;
+            }
+    
+            // Validação: Pelo menos um número
+            if (!/\d/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos um número.');
+                valido = false;
+            }
+    
+            // Validação: Pelo menos um caractere especial
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
+                valido = false;
+            }
+    
+            // Se houver erros, exibe um alerta
+            if (!valido) {
+                alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
+            } else {
+                alert('Cadastro realizado com sucesso!');
+                window.location.href = './login.html'; 
+            }
+        });
+    </script>
+    
 
 </body>
 </html>

@@ -134,7 +134,7 @@ html {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #ffff;
-    border: px solid #211e1e;
+    border: 3px solid #211e1e;
     padding: 15px;
     margin-left: 100px;
     color: #333;
@@ -244,6 +244,43 @@ input, select, textarea {
     transform: scale(0.9);
     opacity: 0.6; 
 }
+/* Mensagens de validação */
+#validacao-senha {
+    margin-top: 10px;
+    font-size: 14px;
+
+   
+    position: relative;     
+    left: 120%;               
+    
+
+}
+
+#validacao-senha .validacao-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#validacao-senha i {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+#validacao-senha p {    
+    margin: 5px 0;
+    color: black;
+    font-weight: normal;
+}
+
+#validacao-senha i.green {
+    color: green;
+}
+
+#validacao-senha i.red {
+    color: red;
+}
+
 
 .btn {
     margin-top: 20px;
@@ -266,6 +303,7 @@ input, select, textarea {
     transition: 1s;
 }
 
+/* Benefícios */
 .beneficios {
     margin-top: 0px;
     margin-right: 1200px;
@@ -273,7 +311,8 @@ input, select, textarea {
     flex-direction: column;  
     gap: 15px;  
     width: 45%;  
-    top: -350px;
+    
+    top: -650px;
     position: relative;
 }
 
@@ -307,10 +346,10 @@ input, select, textarea {
     font-size: 18px;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    margin-right: 1000px;
+    margin-right: 950px;
     margin-top: 20px;
     position: relative;
-    top: -250px;
+    top: -500px;
 }
 
 .mini-card:hover {
@@ -441,8 +480,16 @@ input, select, textarea {
         box-sizing: border-box;
         margin-top: 140px;
         margin-left: 0;
+        top: -300px;
+        position: relative;
         margin-right: 0;
     }
+
+    #validacao-senha
+     {
+        position: relative;
+        left: 100px;
+     }
 
     .title-beneficio {
         font-size: 20px;
@@ -456,6 +503,8 @@ input, select, textarea {
         text-align: left;
     }
 
+
+
     .mini-card {
         width: 90%;
         margin-top: 20px;
@@ -466,6 +515,8 @@ input, select, textarea {
         text-align: center;
         background-color: #204E69;
         color: white;
+        position: relative;
+        top: -200px;
         font-size: 16px;
     }
 
