@@ -109,7 +109,7 @@ html {
     margin-left: 200px;
     flex-direction: column;
     align-items: flex-end;
-    margin-bottom: 20px;
+   
 }
 
 .titulo-login {
@@ -251,7 +251,7 @@ input, select, textarea {
 
    
     position: relative;     
-    left: 120%;               
+    left: 35%;               
     
 
 }
@@ -259,16 +259,22 @@ input, select, textarea {
 #validacao-senha .validacao-item {
     display: flex;
     align-items: center;
+    display: none;
     margin-bottom: 10px;
+   
+    
 }
 
 #validacao-senha i {
     font-size: 18px;
-    margin-right: 10px;
+    position: relative;
+    top: 20px;
+
 }
 
 #validacao-senha p {    
     margin: 5px 0;
+    margin-left: 25px;
     color: black;
     font-weight: normal;
 }
@@ -372,6 +378,7 @@ input, select, textarea {
     flex-direction: column;
     justify-content: flex-start;
     color: white;
+
     margin-top: auto; 
 }
 

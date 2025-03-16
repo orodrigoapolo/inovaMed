@@ -45,15 +45,15 @@
                             </div>
             
                             <div class="input-item">
-                                <label for="senha">Senha</label>
+                                <label for="nome">Nome Completo</label>
                                 <i class="fa fa-lock"></i>
-                                <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                                <input type="nome" id="nome" class="input-field" placeholder="Digite seu nome comleto">
                             </div>
             
                             <div class="input-item">
-                                <label for="confirmar_senha">Confirme a Senha</label>
+                                <label for="cpf">CPF</label>
                                 <i class="fa fa-lock"></i>
-                                <input type="password" id="confirmar_senha" class="input-field" placeholder="Confirme sua senha">
+                                <input type="text" maxlength="11" id="cpf" class="input-field" placeholder="Confirme seu CPF">
                             </div>
                         </div>
             
@@ -74,8 +74,8 @@
                                     <option value="coordenador_municipal">Coordenador Municipal</option>
                                 </select>
                             </div>
-            
-                            <div class="input-item">
+
+                                <div class="input-item">
                                 <label for="estado">Estado em que atua</label>
                                 <i class="fa fa-map-marker-alt"></i> <!-- Ícone para estado -->
                                 <select id="estado" class="input-field">
@@ -89,7 +89,23 @@
                                     <option value="tocantins">Tocantins</option>
                                 </select>
                             </div>
-                            <div id="validacao-senha">
+                            <div class="input-item">
+                                <label for="senha">Senha</label>
+                                <i class="fa fa-lock"></i>
+                                <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                            </div>
+                            <div class="input-item">
+                                <label for="confirmar_senha">Confirme a Senha</label>
+                                <i class="fa fa-lock"></i>
+                                <input type="password" id="confirmar_senha" class="input-field" placeholder="Confirme sua senha">
+                            </div>
+                            <div class="input-item">
+                                <label for="nascimento">Data de Nascimento</label>
+                                <i class="fa fa-calendar"></i>
+                                <input type="date" id="nascimento" class="input-field" placeholder="Selecione sua data de nascimento">
+                            </div>
+                        </div>
+                                <div id="validacao-senha">
                                 <div class="validacao-item">
                                     <i id="icone-tamanho" class="fa fa-lock"></i>
                                     <p id="validacao-tamanho">Mínimo 8 caracteres</p>
@@ -110,9 +126,9 @@
                                     <i id="icone-caractere" class="fa fa-lock"></i>
                                     <p id="validacao-caractere">Pelo menos um caractere especial</p>
                                 </div>
-                            </div>
-                            
-                        </div>
+                                </div>
+                    
+                             
             
                         <button id="botao-cadastrar" class="btn"><b>Cadastrar</b></button>
                     </div>
@@ -162,61 +178,112 @@
         </div>
     </div>
     <script>
-        // Adicionando evento input ao campo de senha
-        document.getElementById('senha').addEventListener('input', function() {
-            var senha = document.getElementById('senha').value;
-            var confirmarSenha = document.getElementById('confirmar_senha').value;
+
+ const senhaInput = document.getElementById('senha');
+    const validacaoItens = document.querySelectorAll('.validacao-item');
+    const botaoCadastrar = document.getElementById('botao-cadastrar');
+
+    senhaInput.addEventListener('input', function () {
+        const senha = senhaInput.value;
+        
+        // Mostrar as validações apenas quando o usuário começar a digitar
+        if (senha.length > 0) {
+            validacaoItens.forEach(item => item.style.display = 'block');
+        } else {
+            validacaoItens.forEach(item => item.style.display = 'none');
+        }
+
+        // Validação de tamanho mínimo
+        if (senha.length >= 8) {
+            document.getElementById('icone-tamanho').classList.add('green');
+            document.getElementById('icone-tamanho').classList.remove('red');
+        } else {
+            document.getElementById('icone-tamanho').classList.add('red');
+            document.getElementById('icone-tamanho').classList.remove('green');
+        }
+
+        // Validação de maiúsculas
+        if (/[A-Z]/.test(senha)) {
+            document.getElementById('icone-maiuscula').classList.add('green');
+            document.getElementById('icone-maiuscula').classList.remove('red');
+        } else {
+            document.getElementById('icone-maiuscula').classList.add('red');
+            document.getElementById('icone-maiuscula').classList.remove('green');
+        }
+
+        // Validação de minúsculas
+        if (/[a-z]/.test(senha)) {
+            document.getElementById('icone-minuscula').classList.add('green');
+            document.getElementById('icone-minuscula').classList.remove('red');
+        } else {
+            document.getElementById('icone-minuscula').classList.add('red');
+            document.getElementById('icone-minuscula').classList.remove('green');
+        }
+
+        // Validação de números
+        if (/\d/.test(senha)) {
+            document.getElementById('icone-numero').classList.add('green');
+            document.getElementById('icone-numero').classList.remove('red');
+        } else {
+            document.getElementById('icone-numero').classList.add('red');
+            document.getElementById('icone-numero').classList.remove('green');
+        }
+
+        // Validação de caracteres especiais
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+            document.getElementById('icone-caractere').classList.add('green');
+            document.getElementById('icone-caractere').classList.remove('red');
+        } else {
+            document.getElementById('icone-caractere').classList.add('red');
+            document.getElementById('icone-caractere').classList.remove('green');
+        }
+    });
+
+    // Função para o botão de cadastro
+    botaoCadastrar.addEventListener('click', function () {
+        const senha = senhaInput.value;
+        const confirmarSenha = document.getElementById('confirmar_senha').value;
+        let mensagensErro = [];
+        let valido = true;
+
+        if (senha !== confirmarSenha) {
+            mensagensErro.push('As senhas não coincidem.');
+            valido = false;
+        }
+
+        if (senha.length < 8) {
+            mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
+            valido = false;
+        }
+        if (!/[A-Z]/.test(senha)) {
+            mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
+            valido = false;
+        }
+        if (!/[a-z]/.test(senha)) {
+            mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
+            valido = false;
+        }
+        if (!/\d/.test(senha)) {
+            mensagensErro.push('A senha precisa de pelo menos um número.');
+            valido = false;
+        }
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+            mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
+            valido = false;
+        }
+
+        if (!valido) {
+            alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
+        } else {
+            alert('Cadastro realizado com sucesso!');
+            window.location.href = './login.html';
+        }
+    });
+ 
+
+   
 
     
-            // Flags de validação
-            var valido = true;
-    
-            // Validação: Tamanho mínimo de 8 caracteres
-
-            if (senha.length < 8) {
-                document.getElementById('icone-tamanho').classList.add('red');
-                document.getElementById('icone-tamanho').classList.remove('green');
-            } else {
-                document.getElementById('icone-tamanho').classList.add('green');
-                document.getElementById('icone-tamanho').classList.remove('red');
-            }
-    
-            // Validação: Pelo menos uma letra maiúscula
-            if (!/[A-Z]/.test(senha)) {
-                document.getElementById('icone-maiuscula').classList.add('red');
-                document.getElementById('icone-maiuscula').classList.remove('green');
-            } else {
-                document.getElementById('icone-maiuscula').classList.add('green');
-                document.getElementById('icone-maiuscula').classList.remove('red');
-            }
-    
-            // Validação: Pelo menos uma letra minúscula
-            if (!/[a-z]/.test(senha)) {
-                document.getElementById('icone-minuscula').classList.add('red');
-                document.getElementById('icone-minuscula').classList.remove('green');
-            } else {
-                document.getElementById('icone-minuscula').classList.add('green');
-                document.getElementById('icone-minuscula').classList.remove('red');
-            }
-    
-            // Validação: Pelo menos um número
-            if (!/\d/.test(senha)) {
-                document.getElementById('icone-numero').classList.add('red');
-                document.getElementById('icone-numero').classList.remove('green');
-            } else {
-                document.getElementById('icone-numero').classList.add('green');
-                document.getElementById('icone-numero').classList.remove('red');
-            }
-    
-            // Validação: Pelo menos um caractere especial
-            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
-                document.getElementById('icone-caractere').classList.add('red');
-                document.getElementById('icone-caractere').classList.remove('green');
-            } else {
-                document.getElementById('icone-caractere').classList.add('green');
-                document.getElementById('icone-caractere').classList.remove('red');
-            }
-        });
     
         // A função de cadastro que será acionada ao clicar no botão
         document.getElementById('botao-cadastrar').addEventListener('click', function() {
