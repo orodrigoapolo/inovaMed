@@ -731,8 +731,53 @@ html {
     text-align: center;
 }
 
-.pessoa_time img {
-    background-image: url("../assets/imgs/foto\ cinza.png");
+.pessoa_time #img_eduarda {
+    background-image: url("../assets/imgs/imagem_eduarda.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 25vw;
+    height: 40vh;
+    border-radius: 3% / 5%;
+}
+
+.pessoa_time #img_guilherme {
+    background-image: url("../assets/imgs/imagem_guilherme.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 25vw;
+    height: 40vh;
+    border-radius: 3% / 5%;
+}
+
+.pessoa_time #img_izael {
+    background-image: url("../assets/imgs/imagem_izael.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 25vw;
+    height: 40vh;
+    border-radius: 3% / 5%;
+}
+
+.pessoa_time #img_joao {
+    background-image: url("../assets/imgs/imagem_joao.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 25vw;
+    height: 40vh;
+    border-radius: 3% / 5%;
+}
+
+.pessoa_time #img_leandro {
+    background-image: url("../assets/imgs/imagem_leandro.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 25vw;
+    height: 40vh;
+    border-radius: 3% / 5%;
+}
+
+.pessoa_time #img_rodrigo {
+    background-image: url("../assets/imgs/imagem_rodrigo.png");
     background-size: cover;
     background-repeat: no-repeat;
     width: 25vw;
@@ -770,6 +815,30 @@ html {
         display: block;
     }
     .pessoa_time img {
+        width: 35vw;
+        height: 20vh;
+    }
+    .pessoa_time #img_eduarda {
+        width: 35vw;
+        height: 20vh;
+    }
+    .pessoa_time #img_guilherme {
+        width: 35vw;
+        height: 20vh;
+    }
+    .pessoa_time #img_izael {
+        width: 35vw;
+        height: 20vh;
+    }
+    .pessoa_time #img_joao {
+        width: 35vw;
+        height: 20vh;
+    }
+    .pessoa_time #img_leandro {
+        width: 35vw;
+        height: 20vh;
+    }
+    .pessoa_time #img_rodrigo {
         width: 35vw;
         height: 20vh;
     }
