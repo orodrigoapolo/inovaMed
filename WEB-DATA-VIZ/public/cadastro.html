@@ -130,7 +130,7 @@
                     
                              
             
-                        <button id="botao-cadastrar" class="btn"><b>Cadastrar</b></button>
+                        <button id="botao-cadastrar" class="btn" onclick="cadastrar()"><b>Cadastrar</b></button>
                     </div>
                 </div>
             </div>
@@ -275,7 +275,7 @@
         if (!valido) {
             alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
         } else {
-            alert('Cadastro realizado com sucesso!');
+            alert('Cadastro realizado!');
             window.location.href = './login.html';
         }
     });
@@ -360,11 +360,12 @@
             if (!valido) {
                 alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
             } else {
-                alert('Cadastro realizado com sucesso!');
+                alert('Cadastro realizado!');
                 window.location.href = './login.html'; 
             }
         });
     </script>
+    <script src="./js/cadastrar.js"></script>
     
 
 </body>
