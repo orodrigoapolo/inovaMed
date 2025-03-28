@@ -34,20 +34,23 @@ html {
 }
 
 .login-text {
+    top: 50px;
     position: absolute;
     right: 200px;
+    
     color: #333;
     font-size: 16px;
     text-align: right;
 }
 
 .highlight {
-    color: #4CAF50;  
-    text-decoration: none;  
+    color: #106f13;  
+    font-weight: bold;
+    text-decoration: none; 
 }
 
 .highlight:hover {
-    text-decoration: underline;  
+    color: #007BFF; 
 }
 
 .title-text {
@@ -68,14 +71,18 @@ html {
 .subtitle-text {
     color: #4CAF50;
     font-size: 18px;
-    margin-right: 74px;
-    font-weight: normal;
+    margin-right: 44px;
+    font-weight: bold;
+    color: #106f13;  
+    font-weight: bold;
+    
+    
 }
 
 .wave {
     top: 80px;
     height: 300px; 
-    background-image: url('../assets/imgs/wave.svg'); 
+    background-image: url('../assets/imgs/wave.png'); 
     background-repeat: no-repeat;
     background-size: cover; 
     background-position: bottom; 
@@ -83,14 +90,14 @@ html {
 
 #login {
     width: 100%;
-    background: #2A6F97;
+    background: #00121e;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -60px; 
+    /* margin-top: -60px;  */
     padding-top: 0;
     z-index: 10; 
     position: relative; 
@@ -122,11 +129,11 @@ html {
 }
 
 .login-card {
-    width: 35%;
+    width: 50%;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #ffff;
-    border: 1px solid #ccc;
+    border: 3px solid #211e1e;
     padding: 15px;
     color: #333;
     position: relative;  
@@ -153,7 +160,7 @@ html {
 
 .subtitle {
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     text-align: center;
     color: #000000;
 }
@@ -193,11 +200,20 @@ html {
     border-radius: 15px;
     font-size: 18px;
     font-weight: bold;
-    color: #3c3f41;
+    color: #000000;
     margin-top: 15px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
+
+.input-group label {
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
 
 .input-field:focus,
 .password:focus {
@@ -207,7 +223,7 @@ html {
 
 .input-field::placeholder,
 .password::placeholder {
-    color: #888;
+    color: #000000;
     font-size: 16px;
     transition: all 0.3s ease;
     transform: scale(1);
@@ -244,11 +260,11 @@ html {
 
 .beneficios {
     margin-top: 0px;
-    margin-left: 400px;
+    margin-left: 300px;
     display: flex;
     flex-direction: column;  
     gap: 15px;  
-    width: 45%;  
+    width: 75%;  
     top: -200px;
     position: relative;
 }
@@ -260,9 +276,9 @@ html {
 }
 
 .beneficio-texto {
-    font-size: 18px;
+    font-size: 20px;
     color: #ffffff;
-    text-align: left;
+     margin-right: 20px;
     font-weight: normal;
 }
 
@@ -289,14 +305,19 @@ html {
     margin-bottom: 0;
 }
 
+.mini-card:hover {
+
+        background-color: #1e7921; 
+        transition: 2s;
+    
+}
+
 .mini-card a {
     color: #ffffff;
     text-decoration: none;
 }
 
-.mini-card a:hover {
-    text-decoration: dashed;
-}
+
 
 .footer {
     display: flex;
@@ -347,7 +368,7 @@ html {
 @media (max-width: 768px) {
     .login-text {
         position: relative;
-        top: 0;
+        top: 10;
         right: 0;
         font-size: 14px;
         text-align: center;
@@ -392,16 +413,17 @@ html {
         width: 100%;
     }
 
+    
     .beneficios {
         width: 100%;
-        margin-top: 20px;
+        margin-top: 80px;
         margin-left: 0;
         margin-right: 0;
     }
 
     .mini-card {
         width: 100%;
-        margin-top: 30px;
+        margin-top: 70px;
         margin-left: 0;
         margin-right: 0;
     }
@@ -414,5 +436,19 @@ html {
     .site-footer .left-side p,
     .site-footer .right-side a {
         font-size: 14px;
+    }
+
+    .seta_topo {
+        display: none;
+    }
+    .linha_footer {
+        display: none;
+    }
+    .texto_icones_footer {
+        flex-direction: column;
+    }
+    .texto_icones_footer p {
+        font-size: 0.8rem;
+        margin-bottom: 5%;
     }
 }

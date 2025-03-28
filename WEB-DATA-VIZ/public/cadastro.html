@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="stylesheet" href="./css/cadastro.css"> <!-- Seu arquivo CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="assets/icon/logo fundo azul.png" type="image/x-icon">
 </head>
+
 <body>
     <!-- Seção de logo -->
     <section class="container-contato">
         <a href="./index.html">
             <img src="./assets/imgs/logo azul sem fundo.png" id="logo" class="logo">
         </a>
-  
-  
+
+
         <!-- Seção de Texto -->
         <div class="login-text">
-            <p class="title-text">Bem-vindo de volta! Faça login<br>
+            <p class="title-text">Bem-vindo de volta! Faça o Cadastro<br>
             <p class="title-text1">para continuar sua jornada</p>
             <p class="subtitle-text">O projeto que está transformando o Brasil!</p>
         </div>
@@ -33,8 +36,8 @@
                 <div class="cadastro-card">
                     <div class="form-content">
                         <h2 class="title">Preencha seus dados</h2>
-                        <p class="subtitle">Já tem conta? <a href="./login.html" class="highlight">Faça login</a></p>
-                        
+                        <p class="subtitle">Já tem conta? <a href="./login.html" class="highlight">Faça o login </a></p>
+
                         <!-- Informações Cadastrais -->
                         <div class="input-group">
                             <div class="input-item">
@@ -42,28 +45,30 @@
                                 <i class="fa fa-envelope"></i>
                                 <input type="email" id="email" class="input-field" placeholder="Digite seu e-mail">
                             </div>
-            
+
                             <div class="input-item">
-                                <label for="senha">Senha</label>
+                                <label for="nome">Nome Completo</label>
                                 <i class="fa fa-lock"></i>
-                                <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                                <input type="nome" id="nome" class="input-field" placeholder="Digite seu nome comleto">
                             </div>
-            
+
                             <div class="input-item">
-                                <label for="confirmar_senha">Confirme a Senha</label>
+                                <label for="cpf">CPF</label>
                                 <i class="fa fa-lock"></i>
-                                <input type="password" id="confirmar_senha" class="input-field" placeholder="Confirme sua senha">
+                                <input type="text" maxlength="11" id="cpf" class="input-field"
+                                    placeholder="Confirme seu CPF">
                             </div>
                         </div>
-            
+
                         <!-- Informações Empresariais -->
                         <div class="input-group">
                             <div class="input-item">
-                                <label for="codigo_empresa">Código da Empresa</label>
+                                <label for="codigo_empresa">Código da Unidade</label>
                                 <i class="fa fa-building"></i> <!-- Ícone para empresa -->
-                                <input type="text" id="codigo_empresa" class="input-field" placeholder="Digite o código da empresa">
+                                <input type="text" id="codigo_empresa" class="input-field"
+                                    placeholder="Digite o código da unidade">
                             </div>
-            
+
                             <div class="input-item">
                                 <label for="cargo">Cargo Exercido</label>
                                 <i class="fa fa-briefcase"></i> <!-- Ícone para cargo -->
@@ -73,7 +78,7 @@
                                     <option value="coordenador_municipal">Coordenador Municipal</option>
                                 </select>
                             </div>
-            
+
                             <div class="input-item">
                                 <label for="estado">Estado em que atua</label>
                                 <i class="fa fa-map-marker-alt"></i> <!-- Ícone para estado -->
@@ -88,25 +93,67 @@
                                     <option value="tocantins">Tocantins</option>
                                 </select>
                             </div>
+                            <div class="input-item">
+                                <label for="senha">Senha</label>
+                                <i class="fa fa-lock"></i>
+                                <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                            </div>
+                            <div class="input-item">
+                                <label for="confirmar_senha">Confirme a Senha</label>
+                                <i class="fa fa-lock"></i>
+                                <input type="password" id="confirmar_senha" class="input-field"
+                                    placeholder="Confirme sua senha">
+                            </div>
+                            <div class="input-item">
+                                <label for="nascimento">Data de Nascimento</label>
+                                <i class="fa fa-calendar"></i>
+                                <input type="date" id="nascimento" class="input-field"
+                                    placeholder="Selecione sua data de nascimento">
+                            </div>
                         </div>
-            
-                        <button class="btn"><b>Cadastrar</b></button>
+                        <div id="validacao-senha">
+                            <div class="validacao-item">
+                                <i id="icone-tamanho" class="fa fa-lock"></i>
+                                <p id="validacao-tamanho">Mínimo 8 caracteres</p>
+                            </div>
+                            <div class="validacao-item">
+                                <i id="icone-maiuscula" class="fa fa-lock"></i>
+                                <p id="validacao-maiuscula">Pelo menos uma letra maiúscula</p>
+                            </div>
+                            <div class="validacao-item">
+                                <i id="icone-minuscula" class="fa fa-lock"></i>
+                                <p id="validacao-minuscula">Pelo menos uma letra minúscula</p>
+                            </div>
+                            <div class="validacao-item">
+                                <i id="icone-numero" class="fa fa-lock"></i>
+                                <p id="validacao-numero">Pelo menos um número</p>
+                            </div>
+                            <div class="validacao-item">
+                                <i id="icone-caractere" class="fa fa-lock"></i>
+                                <p id="validacao-caractere">Pelo menos um caractere especial</p>
+                            </div>
+                        </div>
+
+
+
+                        <button id="botao-cadastrar" class="btn" onclick="cadastrar()"><b>Cadastrar</b></button>
                     </div>
                 </div>
             </div>
+
 
             <div class="conteudo-beneficios">
                 <div class="beneficio">
                     <div class="beneficios">
                         <h1 class="title-beneficio">Benefícios</h1>
                         <p class="beneficio-texto">
-                            <i class="fa fa-star"></i>  Descrição do benefício 1.
+                            <i class="fa fa-star"></i> A solução que mantém você informado e seguro
                         </p>
                         <p class="beneficio-texto">
-                            <i class="fa fa-star"></i> Descrição do benefício 2.
+                            <i class="fa fa-star"></i> Controle de estoque eficiente para sua saúde
                         </p>
                         <p class="beneficio-texto">
-                            <i class="fa fa-star"></i>  Descrição do benefício 3.
+                            <i class="fa fa-star"></i> Solução rápida para garantir seu tratamento
                         </p>
                     </div>
                 </div>
@@ -136,6 +183,237 @@
             </div>
         </div>
     </div>
+    <script>
+
+        const validacaoItens = document.querySelectorAll('.validacao-item');
+        const botaoCadastrar = document.getElementById('botao-cadastrar');
+
+        senhaInput.addEventListener('input', function () {
+            var senha = senha.value;
+
+            // Mostrar as validações apenas quando o usuário começar a digitar
+            if (senha.length > 0) {
+                validacaoItens.forEach(item => item.style.display = 'block');
+            } else {
+                validacaoItens.forEach(item => item.style.display = 'none');
+            }
+
+            // Validação de tamanho mínimo
+            if (senha.length >= 8) {
+                document.getElementById('icone-tamanho').classList.add('green');
+                document.getElementById('icone-tamanho').classList.remove('red');
+            } else {
+                document.getElementById('icone-tamanho').classList.add('red');
+                document.getElementById('icone-tamanho').classList.remove('green');
+            }
+
+            // Validação de maiúsculas
+            if (/[A-Z]/.test(senha)) {
+                document.getElementById('icone-maiuscula').classList.add('green');
+                document.getElementById('icone-maiuscula').classList.remove('red');
+            } else {
+                document.getElementById('icone-maiuscula').classList.add('red');
+                document.getElementById('icone-maiuscula').classList.remove('green');
+            }
+
+            // Validação de minúsculas
+            if (/[a-z]/.test(senha)) {
+                document.getElementById('icone-minuscula').classList.add('green');
+                document.getElementById('icone-minuscula').classList.remove('red');
+            } else {
+                document.getElementById('icone-minuscula').classList.add('red');
+                document.getElementById('icone-minuscula').classList.remove('green');
+            }
+
+            // Validação de números
+            if (/\d/.test(senha)) {
+                document.getElementById('icone-numero').classList.add('green');
+                document.getElementById('icone-numero').classList.remove('red');
+            } else {
+                document.getElementById('icone-numero').classList.add('red');
+                document.getElementById('icone-numero').classList.remove('green');
+            }
+
+            // Validação de caracteres especiais
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+                document.getElementById('icone-caractere').classList.add('green');
+                document.getElementById('icone-caractere').classList.remove('red');
+            } else {
+                document.getElementById('icone-caractere').classList.add('red');
+                document.getElementById('icone-caractere').classList.remove('green');
+            }
+        });
+
+        function validarSenha() {
+            var senha = senha.value;
+            const confirmarSenha = document.getElementById('confirmar_senha').value;
+            let mensagensErro = [];
+
+            if (senha !== confirmarSenha) {
+                mensagensErro.push('As senhas não coincidem.');
+                return false;
+            }
+
+            if (senha.length < 8) {
+                mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
+                return false;
+            }
+            if (!/[A-Z]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
+                return false;
+            }
+            if (!/[a-z]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
+                return false;
+            }
+            if (!/\d/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos um número.');
+                return false;
+            }
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
+                return false;
+            }
+
+            return true;
+
+        }
+
+        function validarConfirmarSenha() {
+            var senha = document.getElementById('senha').value;
+            var confirmarSenha = document.getElementById('confirmar_senha').value;
+            var email = document.getElementById('email').value;
+            var cargo = document.getElementById('cargo').value;
+            var estado = document.getElementById('estado').value;
+
+            // Flags de validação
+            var mensagensErro = [];
+
+
+            // Validação: Senha e Confirmar Senha são iguais
+            if (senha !== confirmarSenha) {
+                mensagensErro.push('As senhas não coincidem.');
+                return false;
+            }
+
+            // Validação: E-mail no formato correto (tem que ter @ e .com)
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
+                return false;
+            }
+
+            // Validação: Cargo selecionado (não pode ser "outros")
+            if (cargo === "outros" || cargo === "") {
+                mensagensErro.push('Você precisa selecionar um cargo.');
+                return false;
+            }
+
+            // Validação: Estado selecionado (não pode ser "outros")
+            if (estado === "outros" || estado === "") {
+                mensagensErro.push('Você precisa selecionar um estado.');
+                return false;
+            }
+
+            // Validação: Tamanho mínimo de 8 caracteres
+
+            if (senha.length < 8) {
+                mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
+                return false;
+            }
+
+            // Validação: Pelo menos uma letra maiúscula
+            if (!/[A-Z]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
+                return false;
+            }
+
+            // Validação: Pelo menos uma letra minúscula
+            if (!/[a-z]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
+                return false;
+            }
+
+            // Validação: Pelo menos um número
+            if (!/\d/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos um número.');
+                return false;
+            }
+
+            // Validação: Pelo menos um caractere especial
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
+                return false;
+            }
+            return true;
+        }
+
+        function cadastrar() {
+            var emailVar = email.value;
+            var nomeVar = nome.value;
+            var cpfVar = cpf.value;
+            var codUnidadeVar = codigo_empresa.value;
+            var cargoVar = cargo.value;
+            var estadoVar = estado.value;
+            var senhaVar = senha.value;
+            var dtNascVar = nascimento.value;
+
+            // Se houver erros, exibe um alerta
+            if (!validarSenha || !validarConfirmarSenha) {
+                alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
+            } else {
+                fetch("/usuarios/cadastrar", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        // crie um atributo que recebe o valor recuperado aqui
+                        // Agora vá para o arquivo routes/usuario.js
+                        emailServer: emailVar,
+                        nomeServer: nomeVar,
+                        cpfServer: cpfVar,
+                        codUnidadeServer: codUnidadeVar,
+                        cargoServer: cargoVar,
+                        estadoServer: estadoVar,
+                        senhaServer: senhaVar,
+                        dataNascServer: dtNascVar
+                    }),
+                })
+                    .then(function (resposta) {
+                        console.log("resposta: ", resposta);
+
+                        if (resposta.ok) {
+                            //   cardErro.style.display = "block";
+
+                            //   mensagem_erro.innerHTML =
+                            //     "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                            setTimeout(() => {
+                                alert('Cadastrado');
+                                window.location = "login.html";
+                            }, "2000");
+
+                            //   limparFormulario();
+                            //   finalizarAguardar();
+                        } else {
+                            throw "Houve um erro ao tentar realizar o cadastro!";
+                        }
+                    })
+                    .catch(function (resposta) {
+                        console.log(`#ERRO: ${resposta}`);
+                        // finalizarAguardar();
+                    });
+
+                return false;
+            }
+        }
+            
+
+            
+        
+    </script>
 
 </body>
+
 </html>

@@ -45,12 +45,13 @@ html {
 }
 
 .highlight {
-    color: #4CAF50;  
+    color: #106f13;  
+    font-weight: bold;
     text-decoration: none;  
 }
 
 .highlight:hover {
-    text-decoration: underline;  
+    color: #007BFF;  
 }
 
 .title-text {
@@ -69,16 +70,18 @@ html {
 }
 
 .subtitle-text {
-    color: #4CAF50;
+    color: #12c618;
     font-size: 18px;
     margin-right: 74px;
-    font-weight: normal;
+    font-weight: bold;
+    color: #106f13;  
+    
 }
 
 .wave {
     top: 80px;
     height: 300px; 
-    background-image: url('../assets/imgs/wave.svg'); 
+    background-image: url('../assets/imgs/wave.png'); 
     background-repeat: no-repeat;
     background-size: cover; 
     background-position: bottom; 
@@ -86,14 +89,14 @@ html {
 
 #cadastro {
     width: 100%;
-    background: #2A6F97;
+    background: #00121e;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -60px; 
+    /* margin-top: -60px;  */
     padding-top: 0;
     z-index: 10; 
     position: relative; 
@@ -106,7 +109,7 @@ html {
     margin-left: 200px;
     flex-direction: column;
     align-items: flex-end;
-    margin-bottom: 20px;
+   
 }
 
 .titulo-login {
@@ -131,7 +134,7 @@ html {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
     background-color: #ffff;
-    border: 1px solid #ccc;
+    border: 3px solid #211e1e;
     padding: 15px;
     margin-left: 100px;
     color: #333;
@@ -197,6 +200,8 @@ input, select, textarea {
 .input-item label {
     font-size: 16px;
     margin-bottom: 10px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
 }
 
 .input-item input,
@@ -207,7 +212,7 @@ input, select, textarea {
     font-size: 18px;
     border: 2px solid #dfdfdf;
     border-radius: 15px;
-    color: #54575a;
+    color: #000000;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
@@ -226,7 +231,7 @@ input, select, textarea {
 
 .input-field::placeholder,
 .password::placeholder {
-    color: #888;
+    color: #000000;
     font-size: 16px;
     transition: all 0.3s ease;
     transform: scale(1);
@@ -239,6 +244,49 @@ input, select, textarea {
     transform: scale(0.9);
     opacity: 0.6; 
 }
+/* Mensagens de validação */
+#validacao-senha {
+    margin-top: 10px;
+    font-size: 14px;
+
+   
+    position: relative;     
+    left: 35%;               
+    
+
+}
+
+#validacao-senha .validacao-item {
+    display: flex;
+    align-items: center;
+    display: none;
+    margin-bottom: 10px;
+   
+    
+}
+
+#validacao-senha i {
+    font-size: 18px;
+    position: relative;
+    top: 20px;
+
+}
+
+#validacao-senha p {    
+    margin: 5px 0;
+    margin-left: 25px;
+    color: black;
+    font-weight: normal;
+}
+
+#validacao-senha i.green {
+    color: green;
+}
+
+#validacao-senha i.red {
+    color: red;
+}
+
 
 .btn {
     margin-top: 20px;
@@ -261,6 +309,7 @@ input, select, textarea {
     transition: 1s;
 }
 
+/* Benefícios */
 .beneficios {
     margin-top: 0px;
     margin-right: 1200px;
@@ -268,7 +317,8 @@ input, select, textarea {
     flex-direction: column;  
     gap: 15px;  
     width: 45%;  
-    top: -350px;
+    
+    top: -650px;
     position: relative;
 }
 
@@ -302,12 +352,18 @@ input, select, textarea {
     font-size: 18px;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    margin-right: 1000px;
+    margin-right: 950px;
     margin-top: 20px;
     position: relative;
-    top: -250px;
+    top: -500px;
 }
 
+.mini-card:hover {
+
+    background-color: #1e7921; 
+    transition: 2s;
+
+}
 .mini-card a {
     color: #ffffff;
     text-decoration: none;
@@ -322,6 +378,7 @@ input, select, textarea {
     flex-direction: column;
     justify-content: flex-start;
     color: white;
+
     margin-top: auto; 
 }
 
@@ -364,57 +421,119 @@ input, select, textarea {
 }
 
 
-/* Para telas pequenas, como celulares */
+/* Responsividade*/
 @media (max-width: 768px) {
-    .container-contato {
-        padding: 10px;
+    .login-text {
+        position: relative;
+        top:10px;
+        right: 0;
+        margin-right: 20px;
+        flex-direction: column;
+        font-size: 5px;
+      
     }
 
     .logo {
-        width: 200px;
-        margin-left: 0;
-    }
-
-    .login-text {
-        margin-left: 20px;
-        font-size: 14px;
+        width: 180px;
+        margin: 0 auto;
     }
 
     .cadastro-container {
+        width: 100%;
+        padding: 20px;
         margin-left: 0;
+        margin-right: 0;
         align-items: center;
+        display: flex;
+        flex-direction: column;
     }
 
     .conteudo-cadastro {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
+        width: 100%;
     }
 
     .cadastro-card {
         width: 90%;
         margin-left: 0;
-        top: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-bottom: 20px;
     }
 
     .input-group {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .input-item input,
+    .input-item select {
+        width: 100%;
+        padding-left: 34px;
     }
 
     .btn {
         width: 80%;
+        font-size: 16px;
+        padding: 12px;
     }
 
     .beneficios {
         width: 100%;
-        top: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        margin-top: 140px;
+        margin-left: 0;
+        top: -300px;
+        position: relative;
+        margin-right: 0;
     }
 
+    #validacao-senha
+     {
+        position: relative;
+        left: 100px;
+     }
+
+    .title-beneficio {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: white;
+    }
+
+    .beneficio-texto {
+        font-size: 16px;
+        color: #ffffff;
+        text-align: left;
+    }
+
+
+
     .mini-card {
-        width: 80%;
-        margin-top: 200px;
-        margin-right: 35px;
+        width: 90%;
+        margin-top: 20px;
         margin-left: auto;
+        margin-right: auto;
+        padding: 15px;
+        box-sizing: border-box;
+        text-align: center;
+        background-color: #204E69;
+        color: white;
+        position: relative;
+        top: -200px;
+        font-size: 16px;
+    }
+
+    .mini-card a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .mini-card a:hover {
+        text-decoration: dashed;
     }
 
     .site-footer {
@@ -426,5 +545,23 @@ input, select, textarea {
     .site-footer .right-side a {
         font-size: 14px;
     }
+
+    .seta_topo {
+        display: none;
+    }
+
+    .linha_footer {
+        display: none;
+    }
+
+    .texto_icones_footer {
+        flex-direction: column;
+    }
+
+    .texto_icones_footer p {
+        font-size: 0.8rem;
+        margin-bottom: 5%;
+    }
 }
+
 

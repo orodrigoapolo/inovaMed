@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="./css/login.css"> <!-- Seu arquivo CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="assets/icon/logo fundo azul.png" type="image/x-icon">
 </head>
 <body>
     <!-- Seção de logo (caso tenha) -->
@@ -37,25 +38,23 @@
                         <p class="subtitle">Não tem cadastro? <a href="./cadastro.html" class="highlight">Se cadastre</a></span></p>
                         
                         <div class="input-group">
+                            <label for="codigo_empresa">Código da Unidade</label>
                             <div class="input-item">
-                                <label for="cod_empresa"></label>
                                 <i class="fa fa-key"></i>
-                                <input type="text" id="cod_empresa" class="input-field" placeholder="Insira o Código da Empresa">
+                                <input type="text" id="cod_empresa" class="input-field" placeholder="Insira o Código da Unidade">
                             </div>
-                    
+                            <label for="loginn">Login</label>
                             <div class="input-item">
-                                <label for="loginn"></label>
                                 <i class='fa fa-user'></i>
                                 <input type="text" id="loginn" class="input-field" placeholder="Insira seu login"> 
                             </div> 
-                        
+                            <label for="password">Senha</label>
                             <div class="input-item">
-                                <label for="password"></label>
                                 <i class='fa fa-lock'></i>
                                 <input type="password" id="password" placeholder="Insira sua senha" class="input-field">
                             </div>
                         </div>
-                        <button class="btn"><b>Entrar</b></button>
+                        <button class="btn" onclick="entrar()"><b>Entrar</b></button>
                     </div>
                 </div>
                 <div class="conteudo-beneficios">
@@ -63,13 +62,13 @@
                         <div class="beneficios">
                             <h1 class="title-beneficio">Benefícios</h1>
                             <p class="beneficio-texto">
-                                <i class="fa fa-star"></i>  Descrição do benefício 1.
+                                <i class="fa fa-star"></i>  A solução que mantém você informado e seguro
                             </p>
                             <p class="beneficio-texto">
-                                <i class="fa fa-star"></i> Descrição do benefício 2.
+                                <i class="fa fa-star"></i> Controle de estoque eficiente para sua saúde
                             </p>
                             <p class="beneficio-texto">
-                                <i class="fa fa-star"></i>  Descrição do benefício 3.
+                                <i class="fa fa-star"></i> Solução rápida para garantir seu tratamento
                             </p>
                         </div>
 
@@ -107,3 +106,4 @@
     </div>
 </body>
 </html>
+<script src="./js/login.js"></script>

@@ -13,13 +13,37 @@
 
 <body>
 
+    <div id="modal_mobile" class="modal_mobile">
+        <div id="container_modal" class="container_modal">
+            <div onclick="fechar_modal()" id="botao_fechar_modal_mobile" class="botao_fechar_modal_mobile">
+                <img id="botao_fechar" src="assets/icon/x.png">
+            </div>
+            <div class="navbar_botoes_mobile">
+                <li><a href="login.html"><button id="navbar_botao_entrar"><p>Entrar</p></button></a></li>
+                <li><a href="cadastro.html"><button id="navbar_botao_cadastrar"><p>Cadastrar</p></button></a></li>
+            </div>
+            <div class="modal_contato">
+                <h4>Quer utilizar nossos serviços?</h4>
+                <p>Abra uma solicitação no nosso</p>
+                <a href="contato.html">Fale Conosco</a>
+            </div>
+        </div>
+    </div>
+
     <div id="navbar" class="navbar">
-        <img src="assets/imgs/logo azul sem fundo.png" id="logo" class="logo">
+        <div class="navbar_logo">
+            <a href="index.html">
+                <img src="assets/imgs/logo azul sem fundo.png" id="logo" class="logo">
+            </a>
+        </div>
+        <div id="navbar_modal_mobile" class="navbar_modal_mobile">
+            <img onclick="abrir_modal()" id="navbar_icone_lista" src="assets/icon/list (1).png">
+        </div>
         <div class="navbar_opcoes">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#sobre_nos">Sobre</a></li>
-                <li><a href="index.html#servicos">Serviços</a></li>
-                <li><a href="#">Contato</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#sobre_nos">Sobre</a></li>
+            <li><a href="index.html#servicos">Serviços</a></li>
+            <li><a href="#">Contato</a></li>
         </div>
         <div class="navbar_botoes">
             <li><a href="login.html"><button id="navbar_botao_entrar">Entrar</button></a></li>
@@ -37,7 +61,10 @@
 
             <div class="conteudo-fale">
                 <div class="informacoes">
-                    <p>Está buscando uma solução eficiente para o controle de estoque de medicamentos? A InovaMed oferece uma plataforma inteligente que garante a gestão adequada do estoque de remédios, contribuindo para a saúde e bem-estar de todos. Nossa equipe está pronta para fornecer todo o suporte necessário na otimização do seu estoque, com foco em precisão e eficiência.</p>
+                    <p>Está buscando uma solução eficiente para o controle de estoque de medicamentos? A InovaMed
+                        oferece uma plataforma inteligente que garante a gestão adequada do estoque de remédios,
+                        contribuindo para a saúde e bem-estar de todos. Nossa equipe está pronta para fornecer todo o
+                        suporte necessário na otimização do seu estoque, com foco em precisão e eficiência.</p>
                     <br>
                     <strong>• E-mail:</strong> contato@inovamed.com <br>
                     <strong>• Telefone:</strong> (11) 98765-4321 <br>
@@ -49,43 +76,45 @@
                     <div class="form-content">
                         <h2 class="title">Digite sua mensagem</h2>
                         <p class="subtitle">Nos ajude com a melhoria</p>
-                        
+
                         <div class="input-group">
                             <div class="input-item">
                                 <label for="username"></label>
-                                <input type="text" id="username"  class="input-field" placeholder="Digite seu nome">
+                                <input type="text" id="username" class="input-field" placeholder="Digite seu nome">
                             </div>
-                
+
                             <div class="input-item">
                                 <label for="email"></label>
-                                <input type="email" id="email"  class="input-field" placeholder="Digite seu e-mail">
+                                <input type="email" id="email" class="input-field" placeholder="Digite seu e-mail">
                             </div>
                         </div>
-                
+
                         <div class="message-box">
                             <label for="mensagem"></label>
-                            <textarea id="mensagem" placeholder="Digite sua mensagem"  class="input-field"></textarea>
+                            <textarea id="mensagem" placeholder="Digite sua mensagem" class="input-field"></textarea>
                         </div>
-                
+
                         <button class="btn">Enviar mensagem</button>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
     <div class="info-container">
         <div class="info-box">
-            <i class="fa-regular fa-phone"></i>
+            <i class="fa-solid fa-phone"></i>
             <!-- <h3>Telefone do Técnico</h3> -->
             <p>(11) 1234-5678</p>
         </div>
         <div class="info-box">
-            <!-- <h3>Telefone da Empresa</h3> --> 
-            <p>(11) 8765-4321</p>
+            <i class="fa-brands fa-instagram"></i>
+            <!-- <h3>Telefone da Empresa</h3> -->
+            <p>InovaMed</p>
         </div>
         <div class="info-box">
             <!-- <h3>Email</h3> -->
+            <i class="fa-solid fa-envelope"></i>
             <p>inovamed@outlook.com</p>
         </div>
     </div>
@@ -114,16 +143,25 @@
         </div>
     </div>
 
-<script>
-    window.addEventListener('scroll', function() {
-    const faleConosco = document.getElementById('fale-conosco');
-    const rect = faleConosco.getBoundingClientRect();
+    <script>
+        window.addEventListener('scroll', function () {
+            const faleConosco = document.getElementById('fale-conosco');
+            const rect = faleConosco.getBoundingClientRect();
 
-    if (rect.top <= window.innerHeight && rect.bottom >= 0) {
-        faleConosco.classList.add('visible');
-    }
-});
-</script>
+            if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+                faleConosco.classList.add('visible');
+            }
+        });
+
+        function abrir_modal() {
+            document.getElementById("modal_mobile").style.display = "flex"
+        }
+
+        function fechar_modal() {
+            document.getElementById("modal_mobile").style.display = "none"
+        }
+
+    </script>
 
 
 </body>
