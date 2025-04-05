@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InovMed | Dashboards</title>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="./js/Perfil_CE.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="./css/Perfil_CE.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+</head>
+
+<body>
+    <div class="janela">
+        <div class="header-left">
+            <img src="./assets/imgs/logo branca sem fundo.png" alt="Logo InovMed" class="logo" />
+
+            <div class="nav-icons">
+                <div class="btn-nav-white active">
+                    <a href="./dashboard_estatico.html">
+                        <i class="fas fa-chart-bar"></i>
+                    </a>
+                </div>
+
+                <div class="btn-nav">
+                    <a href="./dashboard_geral.html">
+                        <i class="fa-solid fa-circle-user"></i>
+                    </a>
+                </div>
+
+                <div class="btn-nav-white" id="novo_user">
+                    <a href="./novo_usuario.html">
+                        <i class="fas fa-gear"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <i class="fa-solid fa-power-off"></i>
+
+            </div>
+        </div>
+
+        <div class="dash">
+            <div class="div_animacao">
+                <h1 id="title_hello">Seu perfil</h1>
+            </div>
+            <div class="perfil-container">
+                <h2 class="subtitulo">Dados Pessoais</h2>
+
+                <div class="input-group">
+                    <div class="input-item">
+                        <label for="email">E-mail</label>
+                        <i class="fa fa-envelope"></i>
+                        <input type="email" id="email" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="nome">Nome Completo</label>
+                        <i class="fa fa-user"></i>
+                        <input type="text" id="nome" class="input-field" disabled >
+                    </div>
+
+                    <div class="input-item">
+                        <label for="cpf">CPF</label>
+                        <i class="fa fa-id-card"></i>
+                        <input type="text" maxlength="11" id="cpf" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="codigo_empresa">Código da Unidade</label>
+                        <i class="fa fa-building"></i>
+                        <input type="text" id="codigo_empresa" class="input-field" disabled >
+                    </div>
+
+                    <div class="input-item">
+                        <label for="cargo">Cargo Exercido</label>
+                        <i class="fa fa-briefcase"></i>
+                        <select id="cargo" class="input-field" disabled>
+                            <option value="outros"></option>
+                            <option value="coordenador_estadual">Coordenador Estadual</option>
+                            <option value="coordenador_municipal">Coordenador Municipal</option>
+                        </select>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="estado">Estado em que atua</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="estado" class="input-field" disabled>
+                            <option value="outros">Selecione seu estado</option>
+                            <option value="acre">Acre</option>
+                            <option value="amazonas">Amazonas</option>
+                            <option value="roraima">Roraima</option>
+                            <option value="rondonia">Rondônia</option>
+                            <option value="pará">Pará</option>
+                            <option value="amapá">Amapá</option>
+                            <option value="tocantins">Tocantins</option>
+                        </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="nascimento">Data de Nascimento</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <input type="date" id="nascimento" class="input-field" disabled >
+                    </div>
+                    <div class="input-item">
+                        <label for="genero">Gênero</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="genero" name="genero" class="input-field" disabled>
+                            <option value="">Selecione</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                            <option value="outro">Outro</option>
+                            <option value="nao_informar">Prefiro não informar</option>
+                          </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="senha">Senha</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="senha" class="input-field" disabled >
+                    </div>
+                </div>
+                <div class="botoes-acoes">
+                    <button class="btn-descartar" id="btn-descartar" onclick="descartarEdicao()" style="display: none;">
+                        <i class="fas fa-times"></i> Descartar
+                    </button>
+                    <button class="btn-editar" id="btn-editar" onclick="editarInformacoes()">
+                        <i class="fas fa-pen"></i> Editar Informações
+                    </button>
+
+                    <button class="btn-salvar" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
+                        <i class="fas fa-save"></i> Salvar Informações
+                    </button>
+                </div>
+                <button class="delete-btn" onclick="excluirConta()">Excluir Conta</button>
+            </div>
+                </div>
+    </div>
+
+    <div id="modal-confirm" class="modal-overlay hidden">
+        <div class="modal-box">
+          <h2>Tem certeza que deseja excluir sua conta?</h2>
+          <p>Você não irá mais ter acessos à nossa plataforma e aos dados aqui inclusos</p>
+          <div class="modal-buttons">
+            <button id="cancel-delete" class="btn cancelar">Cancelar</button>
+            <button id="confirm-delete" class="btn confirmar">Excluir Conta</button>
+          </div>
+        </div>
+      </div>
+
+      
+</body>
+
+</html>
