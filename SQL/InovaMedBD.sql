@@ -1,10 +1,10 @@
 -- -----------------------------------------------------
 -- Schema InovaMed
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS inovamed ;
+DROP SCHEMA IF EXISTS inovamed;
 
 CREATE SCHEMA IF NOT EXISTS inovamed DEFAULT CHARACTER SET utf8 ;
-USE inovamed ;
+USE inovamed;
 
 -- -----------------------------------------------------
 -- Table Estado
@@ -13,7 +13,9 @@ DROP TABLE IF EXISTS Estado ;
 
 CREATE TABLE IF NOT EXISTS Estado (
   idEstado INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(100) NULL
+  nome VARCHAR(100) NULL,
+  UF  VARCHAR(2) NULL,
+  cod INT
 );
 
 -- -----------------------------------------------------
@@ -24,6 +26,8 @@ DROP TABLE IF EXISTS Municipio ;
 CREATE TABLE IF NOT EXISTS Municipio (
   idMunicipio INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(200) NULL,
+  cod INT,
+  qtdPopulacao INT NULL,
   fkEstado INT NOT NULL,
   FOREIGN KEY (fkEstado) REFERENCES Estado (idEstado)
 );
@@ -79,18 +83,6 @@ CREATE TABLE IF NOT EXISTS Estoque (
   CATMAT VARCHAR(100) NULL,
   fkUnidade INT NOT NULL,
   FOREIGN KEY (fkUnidade) REFERENCES Unidade (idUnidade)
-);
-
--- -----------------------------------------------------
--- Table Populacao
--- -----------------------------------------------------
-DROP TABLE IF EXISTS Populacao ;
-
-CREATE TABLE IF NOT EXISTS Populacao (
-  idPopulacao INT PRIMARY KEY AUTO_INCREMENT,
-  qtdPopulacao INT NULL,
-  fkMunicipio INT NOT NULL,
-  FOREIGN KEY (fkMunicipio) REFERENCES Municipio (idMunicipio)
 );
 
 -- -----------------------------------------------------
