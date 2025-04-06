@@ -33,12 +33,12 @@ body {
 }
 
 .logo {
-    width: 140px;
-    margin-left: 80px;
+    width: 60px;
+    margin-left: 1px;
     height: auto;
     margin-top: 20px;
-    margin-bottom: 20px;
-}
+    margin-bottom: 60px;
+  }
 
 .nav-icons {
     margin-top: 200px;
