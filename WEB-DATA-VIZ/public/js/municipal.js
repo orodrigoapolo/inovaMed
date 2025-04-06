@@ -1,3 +1,57 @@
+function abrirDashboard() {
+    dash_municipal.style.display = "flex"
+    dash_perfil.style.display = "none"
+    dash_config.style.display = "none"
+}
+
+function abrirPerfil() {
+    dash_municipal.style.display = "none"
+    dash_perfil.style.display = "block"
+    dash_config.style.display = "none"
+}
+
+function abrirConfiguracoes() {
+    dash_municipal.style.display = "none"
+    dash_perfil.style.display = "none"
+    dash_config.style.display = "flex"
+    opcao_config_container.style.display = "block"
+    dash_contato_container.style.display = "none"
+    dash_parametro_container.style.display = "none"
+}
+
+function abrirContatos() {
+    opcao_config_container.style.display = "none"
+    dash_contato_container.style.display = "flex"
+    dash_parametro_container.style.display = "none"
+}
+
+function abrirParametros() {
+    opcao_config_container.style.display = "none"
+    dash_contato_container.style.display = "none"
+    dash_parametro_container.style.display = "flex"
+}
+
+// seleção dos filtros de dashboard
+
+ipt_estado.addEventListener('change', () => {
+    if (ipt_estado.checked) {
+        div_estado.classList.add("opcao-filtro-municipal-selecionado")
+        div_estado.classList.remove("opcao-filtro-municipal")
+    } else {
+        div_estado.classList.remove("opcao-filtro-municipal-selecionado")
+        div_estado.classList.add("opcao-filtro-municipal")
+    }
+})
+ipt_municipio.addEventListener('change', () => {
+    if (ipt_municipio.checked) {
+        div_municipio.classList.add("opcao-filtro-municipal-selecionado")
+        div_municipio.classList.remove("opcao-filtro-municipal")
+    } else {
+        div_municipio.classList.remove("opcao-filtro-municipal-selecionado")
+        div_municipio.classList.add("opcao-filtro-municipal")
+    }
+})
+
 document.addEventListener('DOMContentLoaded', function () {
     const inputs = document.querySelectorAll('.input-field');
     const btnEditar = document.getElementById('btn-editar');
