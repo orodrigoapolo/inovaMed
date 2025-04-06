@@ -9,6 +9,16 @@ public class Log {
     private LocalDateTime dtLog;
     private String tipo;
 
+    public Log() {
+    }
+
+    public Log(String titulo, String descricao, LocalDateTime dtLog, String tipo) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.dtLog = dtLog;
+        this.tipo = tipo;
+    }
+
     public Integer getIdLog() {
         return idLog;
     }

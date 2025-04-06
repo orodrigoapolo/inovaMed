@@ -16,7 +16,7 @@ public class LeitorExcel {
 
     public List<Municipio> extrarMunicipio(String nomeArquivo, InputStream arquivo) {
         try {
-            System.out.println("\nIniciando leitura do arquivo %s\n".formatted(nomeArquivo));
+//            System.out.println("\nIniciando leitura do arquivo %s\n".formatted(nomeArquivo));
 
             // Criando um objeto Workbook a partir do arquivo recebido
             Workbook workbook;
@@ -71,7 +71,7 @@ public class LeitorExcel {
             // Fechando o workbook após a leitura
             workbook.close();
 
-            System.out.println("\nLeitura do arquivo finalizada\n");
+//            System.out.println("\nLeitura do arquivo finalizada\n");
 
             return municipiosExtraidos;
         } catch (IOException e) {
