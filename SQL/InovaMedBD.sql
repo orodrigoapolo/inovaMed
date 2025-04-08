@@ -32,21 +32,6 @@ CREATE TABLE IF NOT EXISTS Municipio (
   FOREIGN KEY (fkEstado) REFERENCES Estado (idEstado)
 );
 
--- -----------------------------------------------------
--- Table Unidade
--- -----------------------------------------------------
-DROP TABLE IF EXISTS Unidade ;
-
-CREATE TABLE IF NOT EXISTS Unidade (
-  idUnidade INT PRIMARY KEY AUTO_INCREMENT,
-  CNES VARCHAR(45) NULL,
-  razaoSocial VARCHAR(45) NULL,
-  nomeFantasia VARCHAR(200) NULL,
-  telefone VARCHAR(11) NULL,
-  email VARCHAR(200) NULL,
-  fkMunicipio INT NOT NULL,
-  FOREIGN KEY (fkMunicipio) REFERENCES Municipio (idMunicipio)
-);
 
 -- -----------------------------------------------------
 -- Table Usuario
@@ -64,8 +49,10 @@ CREATE TABLE IF NOT EXISTS Usuario (
   genero VARCHAR(45) NULL,
   dtCriacao DATETIME NOT NULL,
   dtInativo DATETIME NULL,
-  fkUnidade INT NOT NULL,
-  FOREIGN KEY (fkUnidade) REFERENCES Unidade (idUnidade)
+  fkEstado INT NULL,
+  fkMunicipio INT NULL,
+  FOREIGN KEY (fkEstado) REFERENCES Estado (idEstado),
+  FOREIGN KEY (fkMunicipio) REFERENCES Municipio (idMunicipio)
 );
 
 -- -----------------------------------------------------
@@ -81,8 +68,8 @@ CREATE TABLE IF NOT EXISTS Estoque (
   dtEntrada DATE NULL,
   lote VARCHAR(100) NULL,
   CATMAT VARCHAR(100) NULL,
-  fkUnidade INT NOT NULL,
-  FOREIGN KEY (fkUnidade) REFERENCES Unidade (idUnidade)
+  fkMunicipio INT NOT NULL,
+  FOREIGN KEY (fkMunicipio) REFERENCES Municipio (idMunicipio)
 );
 
 -- -----------------------------------------------------
