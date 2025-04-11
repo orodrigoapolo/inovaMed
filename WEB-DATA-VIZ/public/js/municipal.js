@@ -31,27 +31,6 @@ function abrirParametros() {
     dash_parametro_container.style.display = "flex"
 }
 
-// seleção dos filtros de dashboard
-
-ipt_estado.addEventListener('change', () => {
-    if (ipt_estado.checked) {
-        div_estado.classList.add("opcao-filtro-municipal-selecionado")
-        div_estado.classList.remove("opcao-filtro-municipal")
-    } else {
-        div_estado.classList.remove("opcao-filtro-municipal-selecionado")
-        div_estado.classList.add("opcao-filtro-municipal")
-    }
-})
-ipt_municipio.addEventListener('change', () => {
-    if (ipt_municipio.checked) {
-        div_municipio.classList.add("opcao-filtro-municipal-selecionado")
-        div_municipio.classList.remove("opcao-filtro-municipal")
-    } else {
-        div_municipio.classList.remove("opcao-filtro-municipal-selecionado")
-        div_municipio.classList.add("opcao-filtro-municipal")
-    }
-})
-
 document.addEventListener('DOMContentLoaded', function () {
     const inputs = document.querySelectorAll('.input-field');
     const btnEditar = document.getElementById('btn-editar');

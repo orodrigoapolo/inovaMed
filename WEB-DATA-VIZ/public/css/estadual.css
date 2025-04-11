@@ -111,19 +111,40 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+.header-dashboard {
+  width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
 .titulo-dashboard {
   font-weight: normal;
   margin-bottom: 1%;
 }
 
-.dash-filtro {
+.filtro-tempo {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  width: 85vw;
-  height: 5vh;
 }
+
+.filtro-tempo p {
+  margin-right: 0.5%;
+  width: 10vw;
+}
+
+.filtro-tempo select {
+  width: fit-content;
+  height: 3vh;
+  background: transparent;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  border-radius: 5px;
+  box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+}
+/* 
 
 input[type="checkbox"] {
   display: none;
@@ -162,7 +183,7 @@ input[type="checkbox"] {
   padding-right: 15px;
   padding-left: 15px;
   cursor: pointer;
-}
+} */
 
 /* Parte das Informações */
 
