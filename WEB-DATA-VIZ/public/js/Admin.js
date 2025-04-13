@@ -1,3 +1,21 @@
+function abrirDashboard() {
+    dash_admin.style.display = "flex"
+    dash_perfil.style.display = "none"
+    dash_config.style.display = "none"
+}
+
+function abrirPerfil() {
+    dash_admin.style.display = "none"
+    dash_perfil.style.display = "block"
+    dash_config.style.display = "none"
+}
+
+function abrirConfiguracoes() {
+    dash_admin.style.display = "none"
+    dash_perfil.style.display = "none"
+    dash_config.style.display = "flex"
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const btnEditar = document.querySelector('.btn-editar');
     const btnExcluir = document.querySelector('.btn-excluir');
