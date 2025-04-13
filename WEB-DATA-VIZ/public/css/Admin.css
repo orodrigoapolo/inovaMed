@@ -101,6 +101,10 @@ body {
 
 @media (max-width: 768px) {
 
+    body {
+        padding-bottom: 60px;
+    }
+
     .header-left {
         position: fixed;
         top: unset;
@@ -161,6 +165,20 @@ body {
 .titulo-dashboard {
     font-family: 'Lato', sans-serif;
     font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .dash-admin {
+        display: flex;
+        font-family: 'Lato', sans-serif;
+        font-weight: normal;
+        margin-left: 15px;
+    }
+
+    .titulo-dashboard {
+        font-family: 'Lato', sans-serif;
+        font-weight: normal;
+    }
 }
 
 
@@ -258,16 +276,16 @@ body {
 .Perfil-edicao {
     position: relative;
     top: -45px;
-
     padding-bottom: 40px;
     padding-left: 15px;
     margin-left: 105px;
     margin-top: 30px;
-    border-radius: 12px;
     margin-bottom: 20px;
     width: 92%;
     height: 50%;
-    box-shadow: 0px 0px 20px 5px rgba(57, 56, 56, 0.3);
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
 }
 
 
@@ -288,7 +306,6 @@ body {
 .input-group {
     display: flex;
     flex-wrap: wrap;
-
     margin-bottom: 20px;
     margin-top: 10px;
     width: 100%;
@@ -305,9 +322,7 @@ body {
     position: relative;
     margin-top: 30px;
     margin-left: 22px;
-
     width: calc(25% - 40px);
-
     box-sizing: border-box;
 
 }
@@ -338,14 +353,13 @@ textarea {
     /* não ultrapassa o container */
     padding-left: 30px;
     height: 35px;
-
     font-size: 18px;
-    border: 2px solid #dfdfdf;
-    border-radius: 8px;
     color: #000000;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     box-sizing: border-box;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     /* importante! */
 }
 
@@ -504,14 +518,14 @@ textarea {
         color: rgb(106, 90, 90);
         font-size: 16px;
     }
-    
+
     #title_Usu {
         font-size: 1.5rem;
         font-weight: normal;
         color: #000000;
         margin-bottom: 2%;
     }
-    
+
     .acoes-usuarios {
         display: flex;
         flex-direction: row;
@@ -519,20 +533,20 @@ textarea {
         gap: 10px;
         margin-left: 0;
     }
-    
+
     .input-wrapper {
         position: relative;
         display: flex;
         align-items: center;
     }
-    
+
     .input-wrapper i {
         position: absolute;
         left: 10px;
         color: #888;
         font-size: 14px;
     }
-    
+
     .barra-pesquisa {
         padding: 8px 12px 8px 30px;
         border-radius: 15px;
@@ -543,7 +557,7 @@ textarea {
         border: none;
         background-color: transparent
     }
-    
+
     .btn-adicionar {
         background-color: #1e7921;
         color: white;
@@ -555,15 +569,15 @@ textarea {
         box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         transition: background-color 0.3s ease;
     }
-    
+
     .btn-adicionar i {
         margin-right: 5px;
     }
-    
+
     .btn-adicionar:hover {
         background-color: #27ae60;
     }
-    
+
     .Perfil-edicao {
         position: relative;
         top: -45px;
@@ -578,7 +592,7 @@ textarea {
         height: max-content;
         box-shadow: 0px 0px 20px 5px rgba(57, 56, 56, 0.3);
     }
-    
+
     .input-item i {
         position: absolute;
         left: 8px;
@@ -586,13 +600,13 @@ textarea {
         transform: translateY(-50%);
         color: #605252;
     }
-    
+
     .input-item label {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 20px;
         color: rgb(79, 71, 71);
     }
-    
+
     .input-group {
         display: flex;
         flex-wrap: wrap;
@@ -602,7 +616,7 @@ textarea {
         max-width: 1300px;
         /* limite opcional pra não ficar muito esticado */
     }
-    
+
     .input-item {
         display: flex;
         flex-direction: column;
@@ -614,19 +628,19 @@ textarea {
         margin-left: 12px;
         width: 80vw;
         box-sizing: border-box;
-    
+
     }
-    
+
     .input-field {
         background-color: #D9D9D9;
     }
-    
+
     input,
     select,
     textarea {
         padding-left: 35px;
     }
-    
+
     .input-item label {
         font-size: 18px;
         margin-bottom: 1px;
@@ -634,7 +648,7 @@ textarea {
         font-family: 'Barlow', 'Open Sans', 'Lato', sans-serif;
         color: rgb(70, 62, 62);
     }
-    
+
     .input-item input,
     .input-item select {
         width: 100%;
@@ -650,7 +664,7 @@ textarea {
         box-sizing: border-box;
         /* importante! */
     }
-    
+
     .acoes-usuario {
         display: flex;
         justify-content: flex-end;
@@ -660,7 +674,7 @@ textarea {
         margin-top: 40px;
         margin-left: 0;
     }
-    
+
     .btn-editar,
     .btn-excluir {
         border: none;
@@ -671,17 +685,17 @@ textarea {
         font-size: 30px;
         transition: background-color 0.3s ease, transform 0.2s ease;
     }
-    
+
     .btn-editar i {
         color: #207b23;
         /* verde */
     }
-    
+
     .btn-excluir i {
         color: #9c1d14;
         /* vermelho */
     }
-    
+
     .btn-editar:hover,
     .btn-excluir:hover {
         transform: scale(1.05);
@@ -781,13 +795,13 @@ textarea {
         font-family: 'Lato', sans-serif;
         font-weight: normal;
     }
-    
+
     .titulo-dash-log {
         font-family: 'Lato', sans-serif;
         font-weight: normal;
         margin-bottom: 2%;
     }
-    
+
     .log-header {
         display: flex;
         flex-direction: column;
@@ -799,7 +813,7 @@ textarea {
     .barra-pesquisa-log {
         width: 270px;
     }
-    
+
     .log-container {
         display: flex;
         flex-direction: column;
@@ -813,7 +827,7 @@ textarea {
         margin-top: 3%;
         height: max-content;
     }
-    
+
     .tipo-data-log {
         display: flex;
         flex-direction: row;
@@ -822,10 +836,11 @@ textarea {
         width: 90vw;
     }
 
-    .tipo-log, .data-log {
+    .tipo-log,
+    .data-log {
         width: 45vw;
     }
-    
+
     .tipo-log p,
     .data-log p,
     .titulo-log p,
@@ -833,12 +848,12 @@ textarea {
         font-size: 0.9rem;
         margin-bottom: 1%;
     }
-    
+
     .tipo-log p,
     .data-log p {
         margin-top: 0;
     }
-    
+
     #input_tipo_log,
     #input_data_log {
         width: 30vw;
@@ -848,7 +863,7 @@ textarea {
         border-radius: 5px;
         box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     }
-    
+
     #input_titulo_log,
     #input_descricao_log {
         width: 80vw;
