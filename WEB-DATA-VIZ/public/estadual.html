@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InovMed | Dashboards</title>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="./js/estadual.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="./css/estadual.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">      
+</head>
+
+<body>
+
+    <div class="janela">
+
+        <div class="header-left">
+            <img src="./assets/imgs/logo plus branca sem fundo.png" alt="Logo InovMed" class="logo" />
+
+            <div class="nav-icons">
+                <div class="btn-nav-white active" onclick="abrirDashboard()">
+                        <i class="fas fa-chart-bar"></i>
+                </div>
+
+                <div class="btn-nav" onclick="abrirPerfil()">
+                        <i class="fa-solid fa-circle-user"></i>
+                </div>
+
+                <div class="btn-nav-white" id="novo_user" onclick="abrirConfiguracoes()">
+                        <i class="fas fa-gear"></i>
+                </div>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <i class="fa-solid fa-power-off"></i>
+            </div>
+
+        </div>
+
+        <div class="dash-estadual" id="dash_estadual">
+            <div class="header-dashboard">
+                <h1 class="titulo-dashboard">
+                    Olá, fulano!
+                </h1>
+                <div class="periodo-atual">
+                    <p id="titulo-periodo-atual">
+                        Período atual: 
+                    </p>
+                    <p>
+                        dd/mm/aaaa
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dash-perfil" id="dash_perfil">
+            <div class="div_animacao">
+                <h1 id="title_hello">Seu perfil</h1>
+            </div>
+            <div class="perfil-container">
+                <h2 class="subtitulo">Dados Pessoais</h2>
+
+                <div class="input-group">
+                    <div class="input-item">
+                        <label for="nome">Nome Completo</label>
+                        <i class="fa fa-user"></i>
+                        <input type="text" id="nome" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="email">E-mail</label>
+                        <i class="fa fa-envelope"></i>
+                        <input type="email" id="email" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="cpf">CPF</label>
+                        <i class="fa fa-id-card"></i>
+                        <input type="text" maxlength="11" id="cpf" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="cargo">Cargo Exercido</label>
+                        <i class="fa fa-briefcase"></i>
+                        <select id="cargo" class="input-field" disabled>
+                            <option value="outros"></option>
+                            <option value="coordenador_estadual">Coordenador Estadual</option>
+                            <option value="coordenador_municipal">Coordenador Municipal</option>
+                        </select>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="estado">Estado em que atua</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="estado" class="input-field" disabled>
+                            <option value="outros">Selecione seu estado</option>
+                            <option value="acre">Acre</option>
+                            <option value="amazonas">Amazonas</option>
+                            <option value="roraima">Roraima</option>
+                            <option value="rondonia">Rondônia</option>
+                            <option value="pará">Pará</option>
+                            <option value="amapá">Amapá</option>
+                            <option value="tocantins">Tocantins</option>
+                        </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="nascimento">Data de Nascimento</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <input type="date" id="nascimento" class="input-field" disabled>
+                    </div>
+                    <div class="input-item">
+                        <label for="genero">Gênero</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="genero" name="genero" class="input-field" disabled>
+                            <option value="">Selecione</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                            <option value="outro">Outro</option>
+                            <option value="nao_informar">Prefiro não informar</option>
+                        </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="senha">Senha</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="senha" class="input-field" disabled>
+                    </div>
+                </div>
+                <div class="botoes-acoes">
+                    <button class="btn-descartar" id="btn-descartar" onclick="descartarEdicao()" style="display: none;">
+                        <i class="fas fa-times"></i> Descartar
+                    </button>
+                    <button class="btn-editar" id="btn-editar" onclick="editarInformacoes()">
+                        <i class="fas fa-pen"></i> Editar Informações
+                    </button>
+
+                    <button class="btn-salvar" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
+                        <i class="fas fa-save"></i> Salvar Informações
+                    </button>
+                </div>
+                <button class="delete-btn" onclick="excluirConta()">Excluir Conta</button>
+            </div>
+        </div>
+
+        <div id="modal-confirm" class="modal-overlay hidden">
+            <div class="modal-box">
+                <h2>Tem certeza que deseja excluir sua conta?</h2>
+                <p>Você não irá mais ter acessos à nossa plataforma e aos dados aqui inclusos</p>
+                <div class="modal-buttons">
+                    <button id="cancel-delete" class="btn cancelar">Cancelar</button>
+                    <button id="confirm-delete" class="btn confirmar">Excluir Conta</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dash-config" id="dash_config">
+            <div class="titulo-config">
+                <h1>Configurações</h1>
+            </div>
+
+            <div class="opcao-config-container" id="opcao_config_container">
+                <div class="opcao-config-contato" onclick="abrirContatos()">
+                    <div class="texto-config">
+                        <h1>
+                            Contato
+                        </h1>
+                        <p>
+                            Defina onde é importante você receber notificações sobre alertas e avisos 
+                        </p>
+                    </div>
+                    <div class="config-seta-imagem">
+                        <img src="assets/icon/caret-right.png">
+                    </div>
+                </div>
+                <div class="opcao-config-parametro" onclick="abrirParametros()">
+                    <div class="texto-config">
+                        <h1>
+                            Parâmetros
+                        </h1>
+                        <p>
+                            Defina os parâmetros e métricas que façam sentido com sua realidade 
+                        </p>
+                    </div>
+                    <div class="config-seta-imagem">
+                        <img src="assets/icon/caret-right.png">
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-contato-container" id="dash_contato_container">
+                <h1 class="titulo-contato">
+                    Contatos
+                </h1>
+                <div class="contato-container">
+                    <div class="contato-container-cima">
+                        <h1 class="nome-contato" id="nome_contato">
+                            Contato 1
+                        </h1>
+                        <div class="excluir-contato">
+                            <img src="assets/icon/trash.png">
+                        </div>
+                    </div>
+                    <div class="contato-container-input">
+                        <p class="email-contato">
+                            Email
+                        </p>
+                        <input type="text" id="input_email_contato">
+                    </div>
+                    <div class="botoes-acoes-contato">
+                        <button class="btn-editar-contato" id="btn-editar" onclick="editarInformacoes()">
+                            <i class="fas fa-pen"></i> Editar Informações
+                        </button>
+                        <button class="btn-descartar-contato" id="btn-descartar" onclick="descartarEdicao()" style="display: none;">
+                            <i class="fas fa-times"></i> Descartar
+                        </button>
+                        <button class="btn-salvar-contato" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
+                            <i class="fas fa-save"></i> Salvar Informações
+                        </button>
+                    </div>
+                </div>
+                <div class="adicionar-contato">
+                    <div id="adicionar_contato">
+                        <img src="assets/icon/plus-circle-thin.png">
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-parametro-container" id="dash_parametro_container">
+                <h1 class="titulo-parametro">
+                    Parâmetros
+                </h1>
+                <div class="parametro-container">
+                        <h1 class="nome-parametro">
+                            Medicamentos
+                        </h1>
+                    <div class="parametro-container-input">
+                        <p class="menor-valor-parametro">
+                            Menor quantidade (unidades)
+                        </p>
+                        <input type="text" id="input_parametro_menor_valor">
+                        <p class="descricao-input-parametro">
+                            Caso a quantidade de medicamentos esteja menor que esse valor, te notificaremos
+                        </p>
+                        <p class="maior-valor-parametro">
+                            Maior quantidade (unidades)
+                        </p>
+                        <input type="text" id="input_parametro_maior_valor">
+                        <p class="descricao-input-parametro">
+                            Caso a quantidade de medicamentos esteja maior que esse valor, te notificaremos
+                        </p>
+                    </div>
+                    <div class="botoes-acoes-parametros">
+                        <button class="btn-editar-parametros" id="btn-editar" onclick="editarInformacoes()">
+                            <i class="fas fa-pen"></i> Editar Informações
+                        </button>
+                        <button class="btn-descartar-parametros" id="btn-descartar" onclick="descartarEdicao()" style="display: none;">
+                            <i class="fas fa-times"></i> Descartar
+                        </button>
+                        <button class="btn-salvar-parametros" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
+                            <i class="fas fa-save"></i> Salvar Informações
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InovMed | Admin</title>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- <script src="./js/Perfil_CE.js" defer></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./js/admin.js" defer></script>
+    <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+</head>
+
+<body>
+    <div class="janela">
+
+        <div class="header-left">
+            <img src="./assets/imgs/logo plus branca sem fundo.png" alt="Logo InovMed" class="logo" />
+
+            <div class="nav-icons">
+                <div class="btn-nav-white active" onclick="abrirDashboard()">
+                        <i class="fas fa-chart-bar"></i>
+                </div>
+
+                <div class="btn-nav" onclick="abrirPerfil()">
+                        <i class="fa-solid fa-circle-user"></i>
+                </div>
+
+                <div class="btn-nav-white" id="novo_user" onclick="abrirConfiguracoes()">
+                        <i class="fas fa-gear"></i>
+                </div>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <i class="fa-solid fa-power-off"></i>
+            </div>
+
+        </div>
+
+        <div class="dash-admin" id="dash_admin">
+            <h1 class="titulo-dashboard">
+                Administrador
+            </h1>
+        </div>
+
+
+        <div class="dash-perfil" id="dash_perfil">
+
+            <div class="topo-usuarios">
+                <h1 id="title_Usu">Usuários Cadastrados</h1>
+                <div class="acoes-usuarios">
+                    <div class="input-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="barra-pesquisa" placeholder="Pesquisar por tipo, título ou descrição">
+                    </div>
+                    <button class="btn-adicionar"><i class="fas fa-user-plus"></i> Adicionar Usuário</button>
+                </div>
+            </div>
+
+            <div class="Perfil-edicao">
+
+                <div class="input-group">
+                    <div class="input-item">
+                        <label for="email">E-mail</label>
+                        <i class="fa fa-envelope"></i>
+                        <input type="email" id="email" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="nome">Nome Completo</label>
+                        <i class="fa fa-user"></i>
+                        <input type="text" id="nome" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="cpf">CPF</label>
+                        <i class="fa fa-id-card"></i>
+                        <input type="text" maxlength="11" id="cpf" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="cargo">Cargo Exercido</label>
+                        <i class="fa fa-briefcase"></i>
+                        <select id="cargo" class="input-field" disabled>
+                            <option value=""></option>
+                            <option value="coordenador_estadual">Coordenador Estadual</option>
+                            <option value="coordenador_municipal">Coordenador Municipal</option>
+                        </select>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="estado">Estado em que atua</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="estado" class="input-field" disabled>
+                            <option value="outros"></option>
+                            <option value="acre">Acre</option>
+                            <option value="amazonas">Amazonas</option>
+                            <option value="roraima">Roraima</option>
+                            <option value="rondonia">Rondônia</option>
+                            <option value="pará">Pará</option>
+                            <option value="amapá">Amapá</option>
+                            <option value="tocantins">Tocantins</option>
+                        </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="nascimento">Data de Nascimento</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <input type="date" id="nascimento" class="input-field" disabled>
+                    </div>
+                    <div class="input-item">
+                        <label for="genero">Gênero</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="genero" name="genero" class="input-field" disabled>
+                            <option value=""></option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                            <option value="outro">Outro</option>
+                            <option value="nao_informar">Prefiro não informar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="acoes-usuario">
+                    <button class="btn-editar"><i class="fa-solid fa-pencil"></i></button>
+                    <button class="btn-excluir"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="modalExcluir" class="modal-overlay hidden">
+            <div class="modal-box">
+                <h1>Tem certeza que deseja excluir essa conta?</h1>
+                <p>O usuário em questão não terá mais acesso à plataforma e aos dados atribuidos a ele</p>
+                <div class="modal-buttons">
+                    <button id="btnCancelarExclusao" class="btn cancelar">Cancelar</button>
+                    <button id="btnConfirmarExclusao" class="btn confirmar">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dash-config" id="dash_config">
+            <div class="dash-log">
+                <div class="log-header">
+                    <h1 class="titulo-dash-log">
+                        Log's do Sistema
+                    </h1>
+                    <div class="input-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="barra-pesquisa-log" placeholder="Pesquisar por nome, CPF e email">
+                    </div>
+                </div>
+                <!-- <div class="filtro-tipo-log">
+
+                    <label for="ipt_error" id="label_error">
+                        <div id="div_error" class="opcao-tipo-log">
+                            <p>ERROR</p>
+                        </div>
+                        <input type="checkbox" id="ipt_error" class="checkbox" value="error" />
+                    </label>
+
+                </div> -->
+                <div class="log-container">
+                    <div class="tipo-data-log">
+                        <div class="tipo-log">
+                            <p>
+                                Tipo
+                            </p>
+                            <input type="text" id="input_tipo_log">
+                        </div>
+                        <div class="data-log">
+                            <p>
+                                Data e horário da execução
+                            </p>
+                            <input type="text" id="input_data_log">
+                        </div>
+                    </div>
+                    <div class="titulo-log">
+                        <p>
+                            Título
+                        </p>
+                        <input type="text" id="input_titulo_log">
+                    </div>
+                    <div class="descricao-log">
+                        <p>
+                            Descrição
+                        </p>
+                        <input type="text" id="input_descricao_log">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

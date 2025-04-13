@@ -41,12 +41,6 @@
                         <!-- Informações Cadastrais -->
                         <div class="input-group">
                             <div class="input-item">
-                                <label for="email">E-mail</label>
-                                <i class="fa fa-envelope"></i>
-                                <input type="email" id="email" class="input-field" placeholder="Digite seu e-mail">
-                            </div>
-
-                            <div class="input-item">
                                 <label for="nome">Nome Completo</label>
                                 <i class="fa fa-lock"></i>
                                 <input type="nome" id="nome" class="input-field" placeholder="Digite seu nome comleto">
@@ -58,16 +52,29 @@
                                 <input type="text" maxlength="11" id="cpf" class="input-field"
                                     placeholder="Confirme seu CPF">
                             </div>
+
+                            <div class="input-item">
+                                <label for="nascimento">Data de Nascimento</label>
+                                <i class="fa fa-calendar"></i>
+                                <input type="date" id="nascimento" class="input-field"
+                                    placeholder="Selecione sua data de nascimento">
+                            </div>
+                            
                         </div>
 
                         <!-- Informações Empresariais -->
                         <div class="input-group">
                             <div class="input-item">
-                                <label for="codigo_empresa">Código da Unidade</label>
+                                <label for="codigo_empresa">Gênero</label>
                                 <i class="fa fa-building"></i> <!-- Ícone para empresa -->
-                                <input type="text" id="codigo_empresa" class="input-field"
-                                    placeholder="Digite o código da unidade">
+                                <select id="genero" class="input-field">
+                                    <option value="outros">Selecione seu gênero</option>
+                                    <option value="coordenador_estadual">Masculino</option>
+                                    <option value="coordenador_municipal">Feminino</option>
+                                </select>
                             </div>
+
+                            
 
                             <div class="input-item">
                                 <label for="cargo">Cargo Exercido</label>
@@ -93,6 +100,12 @@
                                     <option value="tocantins">Tocantins</option>
                                 </select>
                             </div>
+                            
+                            <div class="input-item">
+                                <label for="email">E-mail</label>
+                                <i class="fa fa-envelope"></i>
+                                <input type="email" id="email" class="input-field" placeholder="Digite seu e-mail">
+                            </div>
                             <div class="input-item">
                                 <label for="senha">Senha</label>
                                 <i class="fa fa-lock"></i>
@@ -104,12 +117,7 @@
                                 <input type="password" id="confirmar_senha" class="input-field"
                                     placeholder="Confirme sua senha">
                             </div>
-                            <div class="input-item">
-                                <label for="nascimento">Data de Nascimento</label>
-                                <i class="fa fa-calendar"></i>
-                                <input type="date" id="nascimento" class="input-field"
-                                    placeholder="Selecione sua data de nascimento">
-                            </div>
+                           
                         </div>
                         <div id="validacao-senha">
                             <div class="validacao-item">
@@ -184,20 +192,19 @@
         </div>
     </div>
     <script>
-
         const validacaoItens = document.querySelectorAll('.validacao-item');
         const botaoCadastrar = document.getElementById('botao-cadastrar');
-
-        senhaInput.addEventListener('input', function () {
-            var senha = senha.value;
-
+    
+        document.getElementById('senha').addEventListener('input', function () {
+            var senha = document.getElementById('senha').value;
+    
             // Mostrar as validações apenas quando o usuário começar a digitar
             if (senha.length > 0) {
                 validacaoItens.forEach(item => item.style.display = 'block');
             } else {
                 validacaoItens.forEach(item => item.style.display = 'none');
             }
-
+    
             // Validação de tamanho mínimo
             if (senha.length >= 8) {
                 document.getElementById('icone-tamanho').classList.add('green');
@@ -206,7 +213,7 @@
                 document.getElementById('icone-tamanho').classList.add('red');
                 document.getElementById('icone-tamanho').classList.remove('green');
             }
-
+    
             // Validação de maiúsculas
             if (/[A-Z]/.test(senha)) {
                 document.getElementById('icone-maiuscula').classList.add('green');
@@ -215,7 +222,7 @@
                 document.getElementById('icone-maiuscula').classList.add('red');
                 document.getElementById('icone-maiuscula').classList.remove('green');
             }
-
+    
             // Validação de minúsculas
             if (/[a-z]/.test(senha)) {
                 document.getElementById('icone-minuscula').classList.add('green');
@@ -224,7 +231,7 @@
                 document.getElementById('icone-minuscula').classList.add('red');
                 document.getElementById('icone-minuscula').classList.remove('green');
             }
-
+    
             // Validação de números
             if (/\d/.test(senha)) {
                 document.getElementById('icone-numero').classList.add('green');
@@ -233,7 +240,7 @@
                 document.getElementById('icone-numero').classList.add('red');
                 document.getElementById('icone-numero').classList.remove('green');
             }
-
+    
             // Validação de caracteres especiais
             if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
                 document.getElementById('icone-caractere').classList.add('green');
@@ -243,133 +250,94 @@
                 document.getElementById('icone-caractere').classList.remove('green');
             }
         });
-
+    
         function validarSenha() {
-            var senha = senha.value;
+            var senha = document.getElementById('senha').value;
             const confirmarSenha = document.getElementById('confirmar_senha').value;
             let mensagensErro = [];
-
+    
             if (senha !== confirmarSenha) {
                 mensagensErro.push('As senhas não coincidem.');
-                return false;
             }
-
             if (senha.length < 8) {
                 mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
-                return false;
             }
             if (!/[A-Z]/.test(senha)) {
                 mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
-                return false;
             }
             if (!/[a-z]/.test(senha)) {
                 mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
-                return false;
             }
             if (!/\d/.test(senha)) {
                 mensagensErro.push('A senha precisa de pelo menos um número.');
-                return false;
             }
             if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
                 mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
-                return false;
             }
-
-            return true;
-
+    
+            return mensagensErro;
         }
-
+    
         function validarConfirmarSenha() {
             var senha = document.getElementById('senha').value;
             var confirmarSenha = document.getElementById('confirmar_senha').value;
             var email = document.getElementById('email').value;
             var cargo = document.getElementById('cargo').value;
             var estado = document.getElementById('estado').value;
-
-            // Flags de validação
             var mensagensErro = [];
-
-
+    
             // Validação: Senha e Confirmar Senha são iguais
             if (senha !== confirmarSenha) {
                 mensagensErro.push('As senhas não coincidem.');
-                return false;
             }
-
-            // Validação: E-mail no formato correto (tem que ter @ e .com)
+    
+            // Validação: E-mail no formato correto
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
-                return false;
             }
-
-            // Validação: Cargo selecionado (não pode ser "outros")
+    
+            // Validação: Cargo selecionado
             if (cargo === "outros" || cargo === "") {
                 mensagensErro.push('Você precisa selecionar um cargo.');
-                return false;
             }
-
-            // Validação: Estado selecionado (não pode ser "outros")
+    
+            // Validação: Estado selecionado
             if (estado === "outros" || estado === "") {
                 mensagensErro.push('Você precisa selecionar um estado.');
-                return false;
             }
-
-            // Validação: Tamanho mínimo de 8 caracteres
-
-            if (senha.length < 8) {
-                mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
-                return false;
+    
+            // Validação: Senha
+            var senhaErros = validarSenha();
+            if (senhaErros.length > 0) {
+                mensagensErro = mensagensErro.concat(senhaErros);
             }
-
-            // Validação: Pelo menos uma letra maiúscula
-            if (!/[A-Z]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
-                return false;
-            }
-
-            // Validação: Pelo menos uma letra minúscula
-            if (!/[a-z]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
-                return false;
-            }
-
-            // Validação: Pelo menos um número
-            if (!/\d/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos um número.');
-                return false;
-            }
-
-            // Validação: Pelo menos um caractere especial
-            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
-                return false;
-            }
-            return true;
+    
+            return mensagensErro;
         }
-
+    
         function cadastrar() {
-            var emailVar = email.value;
-            var nomeVar = nome.value;
-            var cpfVar = cpf.value;
-            var codUnidadeVar = codigo_empresa.value;
-            var cargoVar = cargo.value;
-            var estadoVar = estado.value;
-            var senhaVar = senha.value;
-            var dtNascVar = nascimento.value;
-
+            var mensagensErro = validarConfirmarSenha();
+    
             // Se houver erros, exibe um alerta
-            if (!validarSenha || !validarConfirmarSenha) {
+            if (mensagensErro.length > 0) {
                 alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
             } else {
+                var emailVar = document.getElementById('email').value;
+                var nomeVar = document.getElementById('nome').value;
+                var cpfVar = document.getElementById('cpf').value;
+                var codUnidadeVar = document.getElementById('codigo_empresa').value;
+                var cargoVar = document.getElementById('cargo').value;
+                var estadoVar = document.getElementById('estado').value;
+                var senhaVar = document.getElementById('senha').value;
+                var dtNascVar = document.getElementById('nascimento').value;
+    
                 fetch("/usuarios/cadastrar", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        // crie um atributo que recebe o valor recuperado aqui
-                        // Agora vá para o arquivo routes/usuario.js
                         emailServer: emailVar,
                         nomeServer: nomeVar,
                         cpfServer: cpfVar,
@@ -381,39 +349,22 @@
                     }),
                 })
                     .then(function (resposta) {
-                        console.log("resposta: ", resposta);
-
                         if (resposta.ok) {
-                            //   cardErro.style.display = "block";
-
-                            //   mensagem_erro.innerHTML =
-                            //     "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
                             setTimeout(() => {
-                                alert('Cadastrado');
+                                alert('Cadastro realizado com sucesso! Redirecionando para tela de Login...');
                                 window.location = "login.html";
-                            }, "2000");
-
-                            //   limparFormulario();
-                            //   finalizarAguardar();
+                            }, 2000);
                         } else {
                             throw "Houve um erro ao tentar realizar o cadastro!";
                         }
                     })
                     .catch(function (resposta) {
                         console.log(`#ERRO: ${resposta}`);
-                        // finalizarAguardar();
                     });
-
+    
                 return false;
             }
         }
-            
-
-            
-        
     </script>
-
 </body>
-
 </html>
