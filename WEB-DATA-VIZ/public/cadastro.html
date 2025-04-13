@@ -41,12 +41,6 @@
                         <!-- Informações Cadastrais -->
                         <div class="input-group">
                             <div class="input-item">
-                                <label for="email">E-mail</label>
-                                <i class="fa fa-envelope"></i>
-                                <input type="email" id="email" class="input-field" placeholder="Digite seu e-mail">
-                            </div>
-
-                            <div class="input-item">
                                 <label for="nome">Nome Completo</label>
                                 <i class="fa fa-lock"></i>
                                 <input type="nome" id="nome" class="input-field" placeholder="Digite seu nome comleto">
@@ -58,16 +52,29 @@
                                 <input type="text" maxlength="11" id="cpf" class="input-field"
                                     placeholder="Confirme seu CPF">
                             </div>
+
+                            <div class="input-item">
+                                <label for="nascimento">Data de Nascimento</label>
+                                <i class="fa fa-calendar"></i>
+                                <input type="date" id="nascimento" class="input-field"
+                                    placeholder="Selecione sua data de nascimento">
+                            </div>
+                            
                         </div>
 
                         <!-- Informações Empresariais -->
                         <div class="input-group">
                             <div class="input-item">
-                                <label for="codigo_empresa">Código da Unidade</label>
+                                <label for="codigo_empresa">Gênero</label>
                                 <i class="fa fa-building"></i> <!-- Ícone para empresa -->
-                                <input type="text" id="codigo_empresa" class="input-field"
-                                    placeholder="Digite o código da unidade">
+                                <select id="genero" class="input-field">
+                                    <option value="outros">Selecione seu gênero</option>
+                                    <option value="coordenador_estadual">Masculino</option>
+                                    <option value="coordenador_municipal">Feminino</option>
+                                </select>
                             </div>
+
+                            
 
                             <div class="input-item">
                                 <label for="cargo">Cargo Exercido</label>
@@ -93,6 +100,12 @@
                                     <option value="tocantins">Tocantins</option>
                                 </select>
                             </div>
+                            
+                            <div class="input-item">
+                                <label for="email">E-mail</label>
+                                <i class="fa fa-envelope"></i>
+                                <input type="email" id="email" class="input-field" placeholder="Digite seu e-mail">
+                            </div>
                             <div class="input-item">
                                 <label for="senha">Senha</label>
                                 <i class="fa fa-lock"></i>
@@ -104,12 +117,7 @@
                                 <input type="password" id="confirmar_senha" class="input-field"
                                     placeholder="Confirme sua senha">
                             </div>
-                            <div class="input-item">
-                                <label for="nascimento">Data de Nascimento</label>
-                                <i class="fa fa-calendar"></i>
-                                <input type="date" id="nascimento" class="input-field"
-                                    placeholder="Selecione sua data de nascimento">
-                            </div>
+                           
                         </div>
                         <div id="validacao-senha">
                             <div class="validacao-item">
