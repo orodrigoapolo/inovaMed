@@ -62,7 +62,7 @@ DROP TABLE IF EXISTS Estoque ;
 
 CREATE TABLE IF NOT EXISTS Estoque (
   idEstoque INT PRIMARY KEY AUTO_INCREMENT,
-  nomeFarmaco INT NOT NULL,
+  nomeFarmaco VARCHAR(255) NOT NULL,
   qtdFarmaco INT NULL,
   dtValidade DATE NULL,
   dtEntrada DATE NULL,
