@@ -29,12 +29,15 @@ function entrar() {
                 console.log(json);
                 console.log(JSON.stringify(json));
 
-                sessionStorage.EMAIL_USUARIO = json.email;
-                sessionStorage.SENHA_USUARIO = json.senha;
-                sessionStorage.ID_USUARIO = json.idUsuario;
+                sessionStorage.EMAIL_USUARIO = json[0].email;
+                sessionStorage.SENHA_USUARIO = json[0].senha;
+                sessionStorage.ID_USUARIO = json[0].idUsuario;
+                sessionStorage.NOME_USUARIO = json[0].nome;
 
-                alert('Logado com sucesso');
-                window.location = "cadastro.html";
+                setTimeout(() => {
+                    alert('Logado!');
+                    window.location = "Admin.html";
+                }, "1000");
             });
         } else {
             console.log('Houve um erro ao tentar realizar o login!');

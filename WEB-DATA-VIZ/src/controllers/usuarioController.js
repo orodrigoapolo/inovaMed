@@ -40,11 +40,9 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var nome = req.body.nomeServer;
     var cpf = req.body.cpfServer;
-    var codUnidade = req.body.codUnidadeServer;
     var cargo = req.body.cargoServer;
-    var estado = req.body.estadoServer;
     var senha = req.body.senhaServer;
-    var dataNasc = req.body.dataNascServer;
+    var dtNasc = req.body.dtNascServer;
 
     // Faça as validações dos valores
     if (email == undefined) {
@@ -53,20 +51,16 @@ function cadastrar(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (cpf == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (codUnidade == undefined) {
-        res.status(400).send("Sua senha está undefined!");
     } else if (cargo == undefined) {
-        res.status(400).send("Sua senha está undefined!");
-    } else if (estado == undefined) {
         res.status(400).send("Sua senha está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (dataNasc == undefined) {
+    } else if (dtNasc == undefined) {
         res.status(400).send("Sua empresa a vincular está undefined!");
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(email, nome, cpf, codUnidade, cargo, estado, senha, dataNasc)
+        usuarioModel.cadastrar(email, nome, cpf, cargo, senha, dtNasc)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -84,7 +78,25 @@ function cadastrar(req, res) {
     }
 }
 
+function listar(req, res) {
+
+    var idUsuario = req.params.idUsuario;
+
+    usuarioModel.listar(idUsuario).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao listar usuários", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    listar
 }

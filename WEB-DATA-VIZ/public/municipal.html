@@ -46,7 +46,7 @@
         <div class="dash-municipal" id="dash_municipal">
             <div class="header-dashboard">
                 <h1 class="titulo-dashboard">
-                    Olá, fulano!
+                    Olá, <span id="nomeUsuario"></span>!
                 </h1>
                 <div class="filtro-tempo">
                     <p>
@@ -278,3 +278,6 @@
 </body>
 
 </html>
+<script>
+    nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
+</script>
