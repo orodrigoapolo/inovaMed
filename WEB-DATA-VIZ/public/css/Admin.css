@@ -100,7 +100,6 @@ body {
 }
 
 @media (max-width: 768px) {
-
     body {
         padding-bottom: 60px;
     }
@@ -188,6 +187,7 @@ body {
     display: none;
     font-family: 'Lato', sans-serif;
     font-weight: normal;
+    width: 100vw;
 }
 
 .topo-usuarios {
@@ -221,7 +221,7 @@ body {
 .acoes-usuarios {
     display: flex;
     align-items: center;
-    margin-left: 560px;
+    margin-left: 38%;
     gap: 20px;
 }
 
@@ -281,7 +281,7 @@ body {
     margin-left: 105px;
     margin-top: 30px;
     margin-bottom: 20px;
-    width: 92%;
+    width: 90%;
     height: 50%;
     border: 1px solid rgb(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -324,13 +324,10 @@ body {
     margin-left: 22px;
     width: calc(25% - 40px);
     box-sizing: border-box;
-
 }
 
 .input-field {
     background-color: #D9D9D9;
-
-
 }
 
 input,
@@ -397,7 +394,7 @@ textarea {
     display: flex;
     gap: 10px;
     margin-top: 20px;
-    margin-left: 1280px;
+    margin-left: 90%;
 }
 
 .btn-editar,
@@ -502,6 +499,107 @@ textarea {
     display: none;
 }
 
+@media (max-width: 1400px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .topo-usuarios {
+        margin-left: 100px;
+        width: 100vw;
+    }
+
+    .acoes-usuarios {
+        margin-left: 30%;
+    }
+}
+
+@media (max-width: 1280px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .topo-usuarios {
+        margin-left: 90px;
+        width: 100vw;
+    }
+
+    .acoes-usuarios {
+        margin-left: 20%;
+    }
+
+    .Perfil-edicao {
+        margin-left: 90px;
+    }
+}
+
+@media (max-width: 1097px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .logo {
+        width: 40px;
+    }
+
+    .nav-icons {
+        margin-top: 30px;
+    }
+
+    .topo-usuarios {
+        margin-left: 70px;
+        width: 100vw;
+    }
+
+    .acoes-usuarios {
+        margin-left: 10%;
+    }
+
+    .Perfil-edicao {
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .logo {
+        width: 40px;
+    }
+
+    .nav-icons {
+        margin-top: 30px;
+    }
+
+    .topo-usuarios {
+        margin-left: 60px;
+        width: 100vw;
+    }
+
+    #title_Usu {
+        font-size: 1.2rem;
+    }
+
+    .acoes-usuarios {
+        margin-left: 10%;
+    }
+
+    .Perfil-edicao {
+        margin-left: 60px;
+    }
+
+    .input-item label {
+        font-size: 13px;
+    }
+
+    .btn-editar,
+    .btn-excluir {
+        font-size: 20px;
+    }
+}
+
 @media (max-width: 768px) {
 
     .topo-usuarios {
@@ -550,12 +648,11 @@ textarea {
     .barra-pesquisa {
         padding: 8px 12px 8px 30px;
         border-radius: 15px;
-        border: 1px solid #ccc;
         font-size: 14px;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         width: 100px;
-        border: none;
-        background-color: transparent
+        background-color: transparent;
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     }
 
     .btn-adicionar {
@@ -586,11 +683,12 @@ textarea {
         margin-left: 15px;
         margin-top: 30px;
         margin-right: 10px;
-        border-radius: 12px;
         margin-bottom: 20px;
         width: 90vw;
         height: max-content;
-        box-shadow: 0px 0px 20px 5px rgba(57, 56, 56, 0.3);
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 10px;
+        box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     }
 
     .input-item i {
@@ -656,10 +754,10 @@ textarea {
         padding-left: 30px;
         height: 35px;
         font-size: 18px;
-        border: 2px solid #dfdfdf;
-        border-radius: 8px;
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 10px;
+        box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
         color: #000000;
-        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease;
         box-sizing: border-box;
         /* importante! */
@@ -738,11 +836,10 @@ textarea {
 .barra-pesquisa-log {
     padding: 8px 12px 8px 30px;
     border-radius: 15px;
-    border: 1px solid #ccc;
     font-size: 14px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     width: 300px;
-    border: none;
     background-color: transparent
 }
 
@@ -786,6 +883,18 @@ textarea {
     border: 1px solid rgb(0, 0, 0, 0.2);
     border-radius: 5px;
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1097px) {
+    .dash-config {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 900px) {
+    .dash-config {
+        margin-left: 70px;
+    }
 }
 
 @media (max-width: 768px) {
