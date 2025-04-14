@@ -22,8 +22,8 @@ function cadastrar(email, nome, cpf, cargo, senha, dtNasc) {
     return database.executar(instrucaoSql);
 }
 
-function listar(idUsuario) {
-    var instrucaoSql = `SELECT * FROM Usuario WHERE idUsuario = 2`;
+function listar() {
+    var instrucaoSql = `SELECT * FROM Usuario;`;
   
     return database.executar(instrucaoSql);
   }

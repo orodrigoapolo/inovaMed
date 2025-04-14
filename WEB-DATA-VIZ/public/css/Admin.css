@@ -179,16 +179,13 @@ body {
 
 .Perfil-edicao {
     position: relative;
-    top: -45px;
-
-   padding-bottom: 40px;
-   padding-left: 15px;
     margin-left: 105px;
     margin-top: 30px;
-    border-radius: 12px;
     margin-bottom: 20px;
     width: 92%;
-    height: 50%;
+    height: auto; /* Ajuste para altura automática */
+    padding-bottom: 40px;
+    padding-left: 15px;
     box-shadow: 0px 0px 20px 5px rgba(57, 56, 56, 0.3);
 }
 

@@ -80,9 +80,7 @@ function cadastrar(req, res) {
 
 function listar(req, res) {
 
-    var idUsuario = req.params.idUsuario;
-
-    usuarioModel.listar(idUsuario).then(function (resultado) {
+    usuarioModel.listar().then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
