@@ -53,6 +53,7 @@ function listar() {
                         <i class="fa fa-briefcase"></i>
                         <select id="cargo${i}" class="input-field" disabled>
                             <option value="" ${json[i].cargo === "" ? "selected" : ""}></option>
+                            <option value="Administrador" ${json[i].cargo === "Administrador" ? "selected" : ""}>Administrador</option>
                             <option value="coordenador_estadual" ${json[i].cargo === "coordenador_estadual" ? "selected" : ""}>Coordenador Estadual</option>
                             <option value="coordenador_municipal" ${json[i].cargo === "coordenador_municipal" ? "selected" : ""}>Coordenador Municipal</option>
                         </select>
