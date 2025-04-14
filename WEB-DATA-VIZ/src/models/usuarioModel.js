@@ -16,7 +16,7 @@ function cadastrar(email, nome, cpf, genero, cargo, senha, dataNasc, fkEstado) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        INSERT INTO usuario (idUsuario, email, nome, cpf, genero, cargo, senha, dtNasc, Estado_idEstado) VALUES (default, '${email}', '${nome}', '${cpf}', '${genero}', '${cargo}', '${senha}', '${dataNasc}', ${fkEstado});
+        INSERT INTO usuario (idUsuario, email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado) VALUES (default, '${email}', '${nome}', '${cpf}', '${genero}', '${cargo}', '${senha}', '${dataNasc}', ${fkEstado});
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
