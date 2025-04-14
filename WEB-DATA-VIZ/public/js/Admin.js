@@ -61,14 +61,14 @@ function listar() {
                                 <label for="estado">Estado em que atua</label>
                                 <i class="fa fa-map-marker-alt"></i>
                                 <select id="estado${i}" class="input-field" disabled>
-                                    <option value="outros" ${json[i].Estado_idEstado === "" ? "selected" : ""}></option>
-                                    <option value="1" ${json[i].Estado_idEstado === 1 ? "selected" : ""}>Acre</option>
-                                    <option value="2" ${json[i].Estado_idEstado === 2 ? "selected" : ""}>Amapá</option>
-                                    <option value="3" ${json[i].Estado_idEstado === 3 ? "selected" : ""}>Amazonas</option>
-                                    <option value="4" ${json[i].Estado_idEstado === 4 ? "selected" : ""}>Pará</option>
-                                    <option value="5" ${json[i].Estado_idEstado === 5 ? "selected" : ""}>Rondônia</option>
-                                    <option value="6" ${json[i].Estado_idEstado === 6 ? "selected" : ""}>Roraima</option>
-                                    <option value="7" ${json[i].Estado_idEstado === 7 ? "selected" : ""}>Tocantins</option>
+                                    <option value="outros" ${json[i].fkEstado === "" ? "selected" : ""}></option>
+                                    <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Acre</option>
+                                    <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Amapá</option>
+                                    <option value="3" ${json[i].fkEstado === 3 ? "selected" : ""}>Amazonas</option>
+                                    <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Pará</option>
+                                    <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Rondônia</option>
+                                    <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Roraima</option>
+                                    <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                 </select>
                             </div>
                             <div class="input-item">
@@ -81,7 +81,7 @@ function listar() {
                                 <i class="fa fa-map-marker-alt"></i>
                                 <select id="genero" name="genero" class="input-field" disabled>
                                     <option value="" ${json[i].genero === "" ? "selected" : ""}></option>
-                                    <option value="masculino" ${json[i].genero === "Masculino" ? "selected" : ""}>Masculino</option>
+                                    <option value="masculino" ${json[i].genero === "masculino" ? "selected" : ""}>Masculino</option>
                                     <option value="feminino" ${json[i].genero === "feminino" ? "selected" : ""}>Feminino</option>
                                     <option value="outros" ${json[i].genero === "Outros"}>Outros</option>
                                     <option value="nao_informar" ${json[i].genero === "Prefiro não informar" ? "selected" : ""}>Prefiro não informar</option>
