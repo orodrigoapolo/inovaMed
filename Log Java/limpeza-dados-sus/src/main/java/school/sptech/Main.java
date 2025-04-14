@@ -21,7 +21,7 @@ public class Main {
 
         try {
             logDao.save(new Log("leitorDadosSUS", "Lendo o caminho do arquivo", LocalDateTime.now(), "Leitura de arquivo"));
-            String estoqueAbril = "./planilhas/Posicao_Estoque_06-04-2024_filtrado_parte_1.xlsx";
+            String estoqueAbril = System.getenv("estoqueAbril");
 
             // Carregando o arquivo excel
             logDao.save(new Log("leitorDadosSUS", "Iniciando leitura do arquivo", LocalDateTime.now(), "Leitura de arquivo"));
