@@ -30,11 +30,10 @@ function entrar() {
                 console.log(JSON.stringify(json));
 
                 sessionStorage.EMAIL_USUARIO = json.email;
-                sessionStorage.SENHA_USUARIO = json.senha;
                 sessionStorage.ID_USUARIO = json.idUsuario;
 
                 alert('Logado com sucesso');
-                window.location = "cadastro.html";
+                window.location = "Admin.html";
             });
         } else {
             console.log('Houve um erro ao tentar realizar o login!');

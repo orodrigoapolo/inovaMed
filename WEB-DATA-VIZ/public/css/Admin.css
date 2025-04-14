@@ -275,14 +275,11 @@ body {
 
 .Perfil-edicao {
     position: relative;
-    top: -45px;
-    padding-bottom: 40px;
-    padding-left: 15px;
     margin-left: 105px;
     margin-top: 30px;
     margin-bottom: 20px;
-    width: 90%;
-    height: 50%;
+    width: 92%;
+    height: auto;
     border: 1px solid rgb(0, 0, 0, 0.2);
     border-radius: 10px;
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);

@@ -18,6 +18,14 @@ function autenticar(req, res) {
 
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
+
+                        res.json({
+                            idUsuario: resultadoAutenticar[0].idUsuario,
+                            nome: resultadoAutenticar[0].nome,
+                            email: resultadoAutenticar[0].email,
+                            senha: resultadoAutenticar[0].senha,
+                        });
+
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
@@ -40,9 +48,9 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var nome = req.body.nomeServer;
     var cpf = req.body.cpfServer;
-    var codUnidade = req.body.codUnidadeServer;
+    var genero = req.body.generoServer;
     var cargo = req.body.cargoServer;
-    var estado = req.body.estadoServer;
+    var fkEstado = req.body.fkEstadoServer;
     var senha = req.body.senhaServer;
     var dataNasc = req.body.dataNascServer;
 
@@ -53,11 +61,11 @@ function cadastrar(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (cpf == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (codUnidade == undefined) {
+    } else if (genero == undefined) {
         res.status(400).send("Sua senha está undefined!");
     } else if (cargo == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (estado == undefined) {
+    } else if (fkEstado == undefined) {
         res.status(400).send("Sua senha está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
@@ -66,7 +74,7 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(email, nome, cpf, codUnidade, cargo, estado, senha, dataNasc)
+        usuarioModel.cadastrar(email, nome, cpf, genero, cargo, senha, dataNasc, fkEstado)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -84,7 +92,23 @@ function cadastrar(req, res) {
     }
 }
 
+function listar(req, res) {
+    usuarioModel.listar().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os objetivos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+  
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    listar
 }
