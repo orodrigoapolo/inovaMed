@@ -102,6 +102,34 @@ body {
   top: -80px;
 }
 
+@media (max-width: 1097px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .logo {
+    width: 40px;
+  }
+
+  .nav-icons {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .logo {
+    width: 40px;
+  }
+
+  .nav-icons {
+    margin-top: 30px;
+  }
+}
+
 @media (max-width: 768px) {
 
   body {
@@ -200,6 +228,26 @@ body {
   width: 7vw;
 }
 
+@media (max-width: 1097px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .dash-estadual {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .dash-estadual {
+    margin-left: 70px;
+  }
+}
+
 @media (max-width: 768px) {
   .dash-estadual {
     display: flex;
@@ -275,7 +323,6 @@ body {
   margin-left: 20px;
 }
 
-
 .perfil-container {
   position: relative;
   top: -45px;
@@ -337,8 +384,6 @@ body {
 
 .input-field {
   background-color: #D9D9D9;
-
-
 }
 
 input,
@@ -364,7 +409,8 @@ textarea {
   color: #000000;
   border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 10px;
-  box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);  transition: all 0.3s ease;
+  box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
   box-sizing: border-box;
   /* importante! */
 }
@@ -396,7 +442,6 @@ textarea {
   transform: scale(0.9);
   opacity: 0.6;
 }
-
 
 /*  Editar informações */
 
@@ -442,7 +487,6 @@ textarea {
 }
 
 .btn-editar:hover {
-
   transform: scale(1.05);
 }
 
@@ -451,7 +495,6 @@ textarea {
 }
 
 .btn-descartar:hover {
-
   transform: scale(1.05);
 }
 
@@ -470,17 +513,14 @@ textarea {
   color: white;
   border: none;
   font-weight: bold;
-
   border-radius: 12px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-
 }
 
 .delete-btn:hover {
-
   transform: scale(1.05);
 }
 
@@ -579,6 +619,210 @@ textarea {
   display: none;
 }
 
+@media (max-width: 1400px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .dash-perfil {
+    width: 87vw;
+  }
+
+  .perfil-container {
+    position: relative;
+    top: -45px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 105px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    width: 87vw;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+
+  .btn-editar {
+    background-color: #1e7921;
+    color: white;
+    border: none;
+    margin-left: 950px;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-descartar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 770px;
+    /* Joga esse botão pro lado direito */
+  }
+}
+
+@media (max-width: 1280px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .dash-perfil {
+    width: 87vw;
+  }
+
+  .perfil-container {
+    position: relative;
+    top: -45px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 105px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    width: 85vw;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+
+  .btn-editar {
+    background-color: #1e7921;
+    color: white;
+    border: none;
+    margin-left: 770px;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-descartar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 600px;
+    /* Joga esse botão pro lado direito */
+  }
+}
+
+@media (max-width: 1097px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .perfil-container {
+    position: relative;
+    top: -45px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 85px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    width: 85vw;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+
+  .btn-editar {
+    background-color: #1e7921;
+    color: white;
+    border: none;
+    margin-left: 600px;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-descartar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 420px;
+    /* Joga esse botão pro lado direito */
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .perfil-container {
+    position: relative;
+    top: -45px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 70px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    width: 85vw;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+
+  .btn-editar {
+    background-color: #1e7921;
+    color: white;
+    border: none;
+    margin-left: 500px;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-descartar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 320px;
+    /* Joga esse botão pro lado direito */
+  }
+}
+
 @media (max-width: 768px) {
   .dash-perfil {
     display: none;
@@ -611,13 +855,18 @@ textarea {
   .perfil-container {
     position: relative;
     top: -45px;
-    padding: 4%;
+    padding-bottom: 40px;
+    padding-left: 15px;
     margin-left: 15px;
-    margin-top: 20px;
-    border-radius: 12px;
-    margin-bottom: 0;
-    width: 85vw;
-    box-shadow: 0px 0px 20px 5px rgba(57, 56, 56, 0.3);
+    margin-top: 30px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    width: 90vw;
+    height: max-content;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+
   }
 
   .subtitulo {
@@ -689,12 +938,12 @@ textarea {
     padding-left: 30px;
     height: 45px;
     font-size: 18px;
-    border: 2px solid #dfdfdf;
     border-radius: 15px;
     color: #000000;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     box-sizing: border-box;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     /* importante! */
   }
 
@@ -819,6 +1068,26 @@ textarea {
   width: 64px;
   height: 64px;
   opacity: 0.8;
+}
+
+@media (max-width: 1097px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .dash-config {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .dash-config {
+    margin-left: 70px;
+  }
 }
 
 @media (max-width: 768px) {

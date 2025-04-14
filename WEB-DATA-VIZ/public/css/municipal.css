@@ -77,8 +77,6 @@ body {
   transition: transform 0.2s ease;
 }
 
-
-
 .btn-nav-white i:hover,
 .btn-nav i:hover,
 .btn-logout i:hover {
@@ -100,6 +98,34 @@ body {
   display: flex;
   position: relative;
   top: -80px;
+}
+
+@media (max-width: 1097px) {
+  body {
+      overflow-x: hidden;
+  }
+
+  .logo {
+      width: 40px;
+  }
+
+  .nav-icons {
+      margin-top: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+      overflow-x: hidden;
+  }
+
+  .logo {
+      width: 40px;
+  }
+
+  .nav-icons {
+      margin-top: 30px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -199,6 +225,26 @@ body {
   width: 7vw;
 }
 
+@media (max-width: 1097px) {
+  body {
+      overflow-x: hidden;
+  }
+
+  .dash-municipal {
+    margin-left: 70px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+      overflow-x: hidden;
+  }
+
+  .dash-municipal {
+    margin-left: 70px;
+  }
+}
+
 @media (max-width: 768px) {
   .dash-municipal {
     display: flex;
@@ -214,12 +260,12 @@ body {
     justify-content: space-around;
     flex-direction: row;
   }
-  
+
   .titulo-dashboard {
     font-weight: normal;
     margin-bottom: 1%;
   }
-  
+
   .periodo-atual {
     display: flex;
     flex-direction: column;
@@ -231,13 +277,13 @@ body {
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     padding: 1%;
   }
-  
+
   .periodo-atual p {
     margin-bottom: 2%;
     margin-top: 2%;
     margin-right: 1%;
   }
-  
+
   #titulo-periodo-atual {
     width: 25vw;
   }
@@ -577,13 +623,218 @@ textarea {
   display: none;
 }
 
+
+@media (max-width: 1400px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .dash-perfil {
+    width: 87vw;
+  }
+
+  .perfil-container {
+    position: relative;
+    top: -45px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 105px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    width: 87vw;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+
+  .btn-editar {
+    background-color: #1e7921;
+    color: white;
+    border: none;
+    margin-left: 950px;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-descartar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 770px;
+    /* Joga esse botão pro lado direito */
+  }
+}
+
+@media (max-width: 1280px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .dash-perfil {
+    width: 87vw;
+  }
+
+  .perfil-container {
+    position: relative;
+    top: -45px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 105px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    width: 85vw;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+
+  .btn-editar {
+    background-color: #1e7921;
+    color: white;
+    border: none;
+    margin-left: 770px;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-descartar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 600px;
+    /* Joga esse botão pro lado direito */
+  }
+}
+
+@media (max-width: 1097px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .perfil-container {
+    position: relative;
+    top: -45px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 85px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    width: 85vw;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+
+  .btn-editar {
+    background-color: #1e7921;
+    color: white;
+    border: none;
+    margin-left: 600px;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-descartar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 420px;
+    /* Joga esse botão pro lado direito */
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .perfil-container {
+    position: relative;
+    top: -45px;
+    padding-left: 30px;
+    padding-top: 30px;
+    margin-left: 70px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    width: 85vw;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+
+  .btn-editar {
+    background-color: #1e7921;
+    color: white;
+    border: none;
+    margin-left: 500px;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-descartar {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin-left: 320px;
+    /* Joga esse botão pro lado direito */
+  }
+}
+
 @media (max-width: 768px) {
   .dash-perfil {
     display: none;
     font-family: 'Lato', sans-serif;
     font-weight: normal;
   }
-  
+
   .dash-perfil .div_animacao {
     margin-left: 20px;
     width: auto;
@@ -599,31 +850,32 @@ textarea {
   .dash-perfil .div_animacao #title_hello {
     font-weight: normal;
   }
-  
+
   .subtitulo {
     color: rgb(64, 57, 57);
     font-size: 20px;
     margin-left: 20px;
   }
-  
+
   .perfil-container {
     position: relative;
     top: -45px;
     padding: 4%;
     margin-left: 15px;
     margin-top: 20px;
-    border-radius: 12px;
     margin-bottom: 0;
     width: 85vw;
-    box-shadow: 0px 0px 20px 5px rgba(57, 56, 56, 0.3);
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
   }
-  
+
   .subtitulo {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 10px;
   }
-  
+
   .input-item i {
     position: absolute;
     left: 8px;
@@ -631,13 +883,13 @@ textarea {
     transform: translateY(-50%);
     color: #605252;
   }
-  
+
   .input-item label {
     /* font-family: Arial, Helvetica, sans-serif; */
     font-size: 20px;
     color: rgb(79, 71, 71);
   }
-  
+
   .input-group {
     display: flex;
     flex-direction: column;
@@ -647,7 +899,7 @@ textarea {
     max-width: 1300px;
     /* limite opcional pra não ficar muito esticado */
   }
-  
+
   .input-item {
     display: flex;
     flex-direction: column;
@@ -662,24 +914,24 @@ textarea {
     box-sizing: border-box;
     /* garante que padding e border não quebrem o layout */
   }
-  
+
   .input-field {
     background-color: #D9D9D9;
   }
-  
+
   input,
   select,
   textarea {
     padding-left: 35px;
   }
-  
+
   .input-item label {
     font-size: 16px;
     margin-bottom: 5px;
     font-weight: bold;
     color: rgb(0, 0, 0);
   }
-  
+
   .input-item input,
   .input-item select {
     width: 100%;
@@ -687,10 +939,10 @@ textarea {
     padding-left: 30px;
     height: 45px;
     font-size: 18px;
-    border: 2px solid #dfdfdf;
-    border-radius: 15px;
     color: #000000;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     box-sizing: border-box;
     /* importante! */
@@ -704,7 +956,7 @@ textarea {
     margin-top: 50px;
     gap: 20px;
   }
-  
+
   .btn-editar {
     background-color: #1e7921;
     color: white;
@@ -718,7 +970,7 @@ textarea {
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   }
-  
+
   /* Botão descartar */
   .btn-descartar {
     background-color: #e74c3c;
@@ -733,9 +985,9 @@ textarea {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     margin-left: 0;
   }
-  
+
   /* Deletar perfil */
-  
+
   .delete-btn {
     margin-left: 85px;
     margin-top: 50px;
@@ -755,9 +1007,9 @@ textarea {
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   }
-  
+
   /*  Salvar opções */
-  
+
   .btn-salvar {
     background-color: #1e7921;
     color: white;
@@ -771,7 +1023,7 @@ textarea {
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   }
-  
+
 }
 
 /* CONFIGURAÇÕES */
@@ -819,6 +1071,27 @@ textarea {
   opacity: 0.8;
 }
 
+
+@media (max-width: 1097px) {
+  body {
+      overflow-x: hidden;
+  }
+
+  .dash-config {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+      overflow-x: hidden;
+  }
+
+  .dash-config {
+    margin-left: 70px;
+  }
+}
+
 @media (max-width: 768px) {
   .dash-config {
     display: none;
@@ -826,17 +1099,17 @@ textarea {
     margin-left: 15px;
     margin-top: 1%;
   }
-  
+
   .opcao-config-container {
     display: none;
   }
-  
+
   .dash-config h1,
   .dash-config p {
     font-family: 'Lato', sans-serif;
     font-weight: normal;
   }
-  
+
   .opcao-config-contato,
   .opcao-config-parametro {
     display: flex;
@@ -851,19 +1124,19 @@ textarea {
     padding: 4%;
     cursor: pointer;
   }
-  
+
   .opcao-config-contato h1,
   .opcao-config-parametro h1 {
     margin: 0;
     font-size: 1.5rem;
   }
-  
+
   .opcao-config-contato p,
   .opcao-config-parametro p {
     margin: 0;
     font-size: 0.9rem;
   }
-  
+
   .config-seta-imagem {
     width: 32px;
     height: 32px;
@@ -947,11 +1220,11 @@ textarea {
     display: none;
     flex-direction: column;
   }
-  
+
   .titulo-contato {
     margin-top: 0;
   }
-  
+
   .contato-container {
     display: flex;
     flex-direction: column;
@@ -961,35 +1234,35 @@ textarea {
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     padding: 4%;
   }
-  
+
   .contato-container-cima {
     width: 85vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .nome-contato {
     margin-top: 0;
     font-size: 1.5rem;
   }
-  
+
   .excluir-contato img {
     width: 32px;
     height: 32px;
     cursor: pointer;
   }
-  
+
   .contato-container-input {
     margin-left: 1%;
   }
-  
+
   .email-contato {
     font-size: 1.2rem;
     margin-top: 0%;
     margin-bottom: 0.3%;
   }
-  
+
   #input_email_contato {
     width: 70vw;
     height: 3.8vh;
@@ -998,7 +1271,7 @@ textarea {
     border-radius: 5px;
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
   }
-  
+
   .adicionar-contato {
     width: 85vw;
     margin: 1%;
@@ -1065,20 +1338,20 @@ textarea {
     display: none;
     flex-direction: column;
   }
-  
+
   .titulo-parametro {
     margin-top: 0;
   }
-  
+
   .parametro-container-input {
     margin-left: 1%;
   }
-  
+
   .nome-parametro {
     font-size: 1.5rem;
     margin-top: 0;
   }
-  
+
   .parametro-container {
     display: flex;
     flex-direction: column;
@@ -1088,14 +1361,14 @@ textarea {
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     padding: 4%;
   }
-  
+
   .menor-valor-parametro,
   .maior-valor-parametro {
     font-size: 1.2rem;
     margin-top: 0%;
     margin-bottom: 0.3%;
   }
-  
+
   #input_parametro_menor_valor,
   #input_parametro_maior_valor {
     width: 70vw;
@@ -1105,7 +1378,7 @@ textarea {
     border-radius: 5px;
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
   }
-  
+
   .descricao-input-parametro {
     font-size: 0.8rem;
     margin-top: 0.7%;
