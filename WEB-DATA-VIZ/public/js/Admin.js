@@ -146,16 +146,16 @@ function adicionarEventosBotoes(json) {
         const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}`);
         let editando = false;
 
-        // Evento de editar
+        
         btnEditar.addEventListener('click', () => {
             editando = !editando;
             campos.forEach(campo => campo.disabled = !editando);
             btnEditar.innerHTML = editando
-                ? '<i class="fa-solid fa-check"></i>' // Mostrar o ícone de salvar
-                : '<i class="fa-solid fa-pencil"></i>'; // Mostrar o ícone de editar
+                ? '<i class="fa-solid fa-check"></i>' 
+                : '<i class="fa-solid fa-pencil"></i>'; 
 
             if (!editando) {
-                // Salvar os dados (se necessário)
+              
                 const dados = {
                     email: document.getElementById(`email${i}`).value,
                     nome: document.getElementById(`nome${i}`).value,
@@ -170,13 +170,26 @@ function adicionarEventosBotoes(json) {
             }
         });
 
-        // Evento de excluir
+    
         btnExcluir.addEventListener('click', () => {
-            const confirmacao = confirm("Deseja realmente excluir esse usuário?");
-            if (confirmacao) {
+            const modalExcluir = document.getElementById('modalExcluir');
+            const btnCancelarExclusao = document.getElementById('btnCancelarExclusao');
+            const btnConfirmarExclusao = document.getElementById('btnConfirmarExclusao');
+
+        
+            modalExcluir.classList.remove('hidden');
+
+           
+            btnCancelarExclusao.addEventListener('click', () => {
+                modalExcluir.classList.add('hidden'); 
+            });
+
+         
+            btnConfirmarExclusao.addEventListener('click', () => {
                 document.querySelectorAll('.Perfil-edicao')[i].remove();
-                alert('Usuário excluído com sucesso!');
-            }
+                modalExcluir.classList.add('hidden');
+          
+            });
         });
     }
 }
