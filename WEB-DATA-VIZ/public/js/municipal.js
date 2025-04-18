@@ -103,4 +103,52 @@ document.addEventListener('DOMContentLoaded', function () {
             input.dataset.originalValue = input.value;
         }
     });
+// Funções para os parâmetros
+
+const inputParametroMenorValor = document.getElementById('input_parametro_menor_valor');
+const inputParametroMaiorValor = document.getElementById('input_parametro_maior_valor');
+const btnEditarParametro = document.getElementById('btn-editar-parametro');
+const btnSalvarParametro = document.getElementById('btn-salvar-parametro');
+const btnDescartarParametro = document.getElementById('btn-descartar-parametro');
+
+
+window.editarInformacoesParametro = function () {
+    inputParametroMenorValor.disabled = false;
+    inputParametroMaiorValor.disabled = false;
+
+    btnSalvarParametro.style.display = 'inline-block';
+    btnDescartarParametro.style.display = 'inline-block';
+    btnEditarParametro.style.display = 'none';
+};
+
+
+window.descartarEdicaoParametro = function () {
+    inputParametroMenorValor.disabled = true;
+    inputParametroMaiorValor.disabled = true;
+
+    btnSalvarParametro.style.display = 'none';
+    btnDescartarParametro.style.display = 'none';
+    btnEditarParametro.style.display = 'inline-block';
+
+  
+    inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
+    inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
+    alert("Parâmetros descartados com sucesso!");
+};
+
+
+window.salvarInformacoesParametro = function () {
+    inputParametroMenorValor.disabled = true;
+    inputParametroMaiorValor.disabled = true;
+
+    inputParametroMenorValor.dataset.originalValue = inputParametroMenorValor.value;
+    inputParametroMaiorValor.dataset.originalValue = inputParametroMaiorValor.value;
+
+    btnSalvarParametro.style.display = 'none';
+    btnDescartarParametro.style.display = 'none';
+    btnEditarParametro.style.display = 'inline-block';
+    
+    alert("Parâmetros salvos com sucesso!");
+};
+
 });

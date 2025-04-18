@@ -197,3 +197,131 @@ function adicionarEventosBotoes(json) {
 document.addEventListener('DOMContentLoaded', () => {
     listar();
 });
+
+function criarCardVazio() {
+    const containerCards = document.getElementById('cards_usuarios');
+    const novoCard = document.createElement('div');
+    novoCard.classList.add('Perfil-edicao');
+
+    novoCard.innerHTML = `
+        <div class="input-group">
+            <div class="input-item">
+                <label for="email">E-mail</label>
+                <i class="fa fa-envelope"></i>
+                <input type="email" value="" class="input-field">
+            </div>
+            <div class="input-item">
+                <label for="nome">Nome Completo</label>
+                <i class="fa fa-user"></i>
+                <input type="text" value="" class="input-field">
+            </div>
+            <div class="input-item">
+                <label for="cpf">CPF</label>
+                <i class="fa fa-id-card"></i>
+                <input type="text" maxlength="11" value="" class="input-field">
+            </div>
+            <div class="input-item">
+                <label for="cargo">Cargo Exercido</label>
+                <i class="fa fa-briefcase"></i>
+                <select class="input-field">
+                    <option value=""></option>
+                    <option value="coordenador_estadual">Coordenador Estadual</option>
+                    <option value="coordenador_municipal">Coordenador Municipal</option>
+                </select>
+            </div>
+            <div class="input-item">
+                <label for="estado">Estado em que atua</label>
+                <i class="fa fa-map-marker-alt"></i>
+                <select class="input-field">
+                    <option value=""></option>
+                    <option value="1">Acre</option>
+                    <option value="2">Amapá</option>
+                    <option value="3">Amazonas</option>
+                    <option value="4">Pará</option>
+                    <option value="5">Rondônia</option>
+                    <option value="6">Roraima</option>
+                    <option value="7">Tocantins</option>
+                </select>
+            </div>
+            <div class="input-item">
+                <label for="nascimento">Data de Nascimento</label>
+                <i class="fa fa-calendar"></i>
+                <input type="date" value="" class="input-field">
+            </div>
+            <div class="input-item">
+                <label for="genero">Gênero</label>
+                <i class="fa fa-transgender"></i>
+                <select class="input-field">
+                    <option value=""></option>
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outros">Outros</option>
+                    <option value="nao_informar">Prefiro não informar</option>
+                </select>
+            </div>
+        </div>
+        <div class="acoes-usuario">
+            <button class="btn-editar"><i class="fa-solid fa-check"></i></button>
+            <button class="btn-excluir"><i class="fa-solid fa-times" style="color: red;"></i></button>
+        </div>
+    `;
+
+    containerCards.appendChild(novoCard);
+
+    aplicarEventosCardEdicaoInicial(novoCard);
+}
+
+function aplicarEventosCardEdicaoInicial(card) {
+    const btnEditar = card.querySelector('.btn-editar');
+    const btnExcluir = card.querySelector('.btn-excluir');
+    const campos = card.querySelectorAll('.input-field');
+    let editando = true;
+
+    // Já deixar campos habilitados
+    campos.forEach(campo => campo.disabled = false);
+
+    btnEditar.addEventListener('click', () => {
+        editando = !editando;
+        campos.forEach(campo => campo.disabled = !editando);
+        btnEditar.innerHTML = editando
+            ? '<i class="fa-solid fa-check"></i>'
+            : '<i class="fa-solid fa-pencil"></i>';
+        btnExcluir.innerHTML = editando
+            ? '<i class="fa-solid fa-times" style="color: red;"></i>'
+            : '<i class="fas fa-trash-alt"></i>';
+
+        if (!editando) {
+            alert('Dados salvos com sucesso!');
+        }
+    });
+
+    btnExcluir.addEventListener('click', () => {
+        if (editando) {
+            campos.forEach(campo => campo.disabled = true);
+            btnEditar.innerHTML = '<i class="fa-solid fa-pencil"></i>';
+            btnExcluir.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            editando = false;
+            alert('Edição descartada!');
+        } else {
+            const modalExcluir = document.getElementById('modalExcluir');
+            const btnCancelar = document.getElementById('btnCancelarExclusao');
+            const btnConfirmar = document.getElementById('btnConfirmarExclusao');
+
+            modalExcluir.classList.remove('hidden');
+
+            btnCancelar.onclick = () => {
+                modalExcluir.classList.add('hidden');
+            };
+
+            btnConfirmar.onclick = () => {
+                card.remove();
+                modalExcluir.classList.add('hidden');
+                alert('Usuário excluído com sucesso!');
+            };
+        }
+    });
+}
+
+
+
+document.querySelector('.btn-adicionar').addEventListener('click', criarCardVazio);

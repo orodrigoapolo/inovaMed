@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnConfirmDelete = document.getElementById('confirm-delete');
     const btnCancelDelete = document.getElementById('cancel-delete');
 
-    // Habilitar edição
+ 
     window.editarInformacoes = function () {
         inputs.forEach(input => input.disabled = false);
         btnSalvar.style.display = 'inline-block';
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnEditar.style.display = 'none';
     };
 
-    // Descartar mudanças
+ 
     window.descartarEdicao = function () {
         inputs.forEach(input => {
             input.disabled = true;
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnEditar.style.display = 'inline-block';
     };
 
-    // Salvar mudanças
+ 
     window.salvarInformacoes = function () {
         inputs.forEach(input => {
             input.disabled = true;
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Informações salvas com sucesso!");
     };
 
-    // Exclusão de conta
+ 
     window.excluirConta = function () {
         modal.classList.remove('hidden');
     };
@@ -92,10 +92,10 @@ document.addEventListener('DOMContentLoaded', function () {
     btnConfirmDelete.addEventListener('click', () => {
         modal.classList.add('hidden');
         alert("Conta excluída com sucesso!");
-        // Aqui você pode redirecionar ou fazer uma chamada para deletar a conta
+   
     });
 
-    // Armazenar valores iniciais
+
     inputs.forEach(input => {
         if (input.tagName === 'SELECT') {
             input.dataset.originalIndex = input.selectedIndex;
@@ -103,4 +103,54 @@ document.addEventListener('DOMContentLoaded', function () {
             input.dataset.originalValue = input.value;
         }
     });
+
+
+    // Funções para os parâmetros
+
+    const inputParametroMenorValor = document.getElementById('input_parametro_menor_valor');
+    const inputParametroMaiorValor = document.getElementById('input_parametro_maior_valor');
+    const btnEditarParametro = document.getElementById('btn-editar-parametro');
+    const btnSalvarParametro = document.getElementById('btn-salvar-parametro');
+    const btnDescartarParametro = document.getElementById('btn-descartar-parametro');
+
+ 
+    window.editarInformacoesParametro = function () {
+        inputParametroMenorValor.disabled = false;
+        inputParametroMaiorValor.disabled = false;
+
+        btnSalvarParametro.style.display = 'inline-block';
+        btnDescartarParametro.style.display = 'inline-block';
+        btnEditarParametro.style.display = 'none';
+    };
+
+   
+    window.descartarEdicaoParametro = function () {
+        inputParametroMenorValor.disabled = true;
+        inputParametroMaiorValor.disabled = true;
+
+        btnSalvarParametro.style.display = 'none';
+        btnDescartarParametro.style.display = 'none';
+        btnEditarParametro.style.display = 'inline-block';
+
+      
+        inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
+        inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
+        alert("Parâmetros descartados com sucesso!");
+    };
+
+    
+    window.salvarInformacoesParametro = function () {
+        inputParametroMenorValor.disabled = true;
+        inputParametroMaiorValor.disabled = true;
+
+        inputParametroMenorValor.dataset.originalValue = inputParametroMenorValor.value;
+        inputParametroMaiorValor.dataset.originalValue = inputParametroMaiorValor.value;
+
+        btnSalvarParametro.style.display = 'none';
+        btnDescartarParametro.style.display = 'none';
+        btnEditarParametro.style.display = 'inline-block';
+        
+        alert("Parâmetros salvos com sucesso!");
+    };
+
 });

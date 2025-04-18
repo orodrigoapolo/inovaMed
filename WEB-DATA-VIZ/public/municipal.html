@@ -236,7 +236,7 @@
                 <h1 class="titulo-parametro">
                     Parâmetros
                 </h1>
-                <div class="parametro-container">
+                <div class="parametro-container" >
                         <h1 class="nome-parametro">
                             Medicamentos
                         </h1>
@@ -244,33 +244,31 @@
                         <p class="menor-valor-parametro">
                             Menor quantidade (unidades)
                         </p>
-                        <input type="text" id="input_parametro_menor_valor">
+                        <input type="text" id="input_parametro_menor_valor" disabled>
                         <p class="descricao-input-parametro">
                             Caso a quantidade de medicamentos esteja menor que esse valor, te notificaremos
                         </p>
                         <p class="maior-valor-parametro">
                             Maior quantidade (unidades)
                         </p>
-                        <input type="text" id="input_parametro_maior_valor">
+                        <input type="text" id="input_parametro_maior_valor" disabled>
                         <p class="descricao-input-parametro">
                             Caso a quantidade de medicamentos esteja maior que esse valor, te notificaremos
                         </p>
                     </div>
                     <div class="botoes-acoes-parametros">
-                        <button class="btn-editar-parametros" id="btn-editar" onclick="editarInformacoes()">
+                        <button class="btn-editar" id="btn-editar-parametro" onclick="editarInformacoesParametro()">
                             <i class="fas fa-pen"></i> Editar Informações
                         </button>
-                        <button class="btn-descartar-parametros" id="btn-descartar" onclick="descartarEdicao()" style="display: none;">
+                        <button class="btn-descartar" id="btn-descartar-parametro" onclick="descartarEdicaoParametro()" style="display: none;">
                             <i class="fas fa-times"></i> Descartar
                         </button>
-                        <button class="btn-salvar-parametros" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
+                        <button class="btn-salvar" id="btn-salvar-parametro" onclick="salvarInformacoesParametro()" style="display: none;">
                             <i class="fas fa-save"></i> Salvar Informações
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
 </body>
