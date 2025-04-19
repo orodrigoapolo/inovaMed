@@ -30,7 +30,13 @@ function entrar() {
                 console.log(JSON.stringify(json));
 
                 sessionStorage.EMAIL_USUARIO = json.email;
-                sessionStorage.ID_USUARIO = json.idUsuario; 
+                sessionStorage.ID_USUARIO = json.idUsuario;  
+                sessionStorage.SENHA_USUARIO = json.senha;
+                sessionStorage.NOME_USUARIO = json.nome;   
+                sessionStorage.CPF_USUARIO = json.cpf;   
+                sessionStorage.CARGO_USUARIO = json.cargo;   
+                sessionStorage.DT_NASC = json.dtNasc;   
+                sessionStorage.GENERO_USUARIO = json.genero;   
 
                 alert('Logado com sucesso');
                 if (json.cargo == 'administrador') {

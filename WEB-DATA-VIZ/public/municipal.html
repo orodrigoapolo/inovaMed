@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./css/municipal.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">      
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/icon/logo fundo azul.png" type="image/x-icon">
 </head>
 
@@ -26,15 +26,15 @@
 
             <div class="nav-icons">
                 <div class="btn-nav-white active" onclick="abrirDashboard()">
-                        <i class="fas fa-chart-bar"></i>
+                    <i class="fas fa-chart-bar"></i>
                 </div>
 
                 <div class="btn-nav" onclick="abrirPerfil()">
-                        <i class="fa-solid fa-circle-user"></i>
+                    <i class="fa-solid fa-circle-user"></i>
                 </div>
 
                 <div class="btn-nav-white" id="novo_user" onclick="abrirConfiguracoes()">
-                        <i class="fas fa-gear"></i>
+                    <i class="fas fa-gear"></i>
                 </div>
             </div>
 
@@ -47,11 +47,11 @@
         <div class="dash-municipal" id="dash_municipal">
             <div class="header-dashboard">
                 <h1 class="titulo-dashboard">
-                    Olá, fulano!
+                    Olá, <span id="nomeUsuario"></span>!
                 </h1>
                 <div class="periodo-atual">
                     <p id="titulo-periodo-atual">
-                        Período atual: 
+                        Período atual:
                     </p>
                     <p>
                         dd/mm/aaaa
@@ -172,7 +172,7 @@
                             Contato
                         </h1>
                         <p>
-                            Defina onde é importante você receber notificações sobre alertas e avisos 
+                            Defina onde é importante você receber notificações sobre alertas e avisos
                         </p>
                     </div>
                     <div class="config-seta-imagem">
@@ -185,7 +185,7 @@
                             Parâmetros
                         </h1>
                         <p>
-                            Defina os parâmetros e métricas que façam sentido com sua realidade 
+                            Defina os parâmetros e métricas que façam sentido com sua realidade
                         </p>
                     </div>
                     <div class="config-seta-imagem">
@@ -217,10 +217,12 @@
                         <button class="btn-editar-contato" id="btn-editar" onclick="editarInformacoes()">
                             <i class="fas fa-pen"></i> Editar Informações
                         </button>
-                        <button class="btn-descartar-contato" id="btn-descartar" onclick="descartarEdicao()" style="display: none;">
+                        <button class="btn-descartar-contato" id="btn-descartar" onclick="descartarEdicao()"
+                            style="display: none;">
                             <i class="fas fa-times"></i> Descartar
                         </button>
-                        <button class="btn-salvar-contato" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
+                        <button class="btn-salvar-contato" id="btn-salvar" onclick="salvarInformacoes()"
+                            style="display: none;">
                             <i class="fas fa-save"></i> Salvar Informações
                         </button>
                     </div>
@@ -236,10 +238,10 @@
                 <h1 class="titulo-parametro">
                     Parâmetros
                 </h1>
-                <div class="parametro-container" >
-                        <h1 class="nome-parametro">
-                            Medicamentos
-                        </h1>
+                <div class="parametro-container">
+                    <h1 class="nome-parametro">
+                        Medicamentos
+                    </h1>
                     <div class="parametro-container-input">
                         <p class="menor-valor-parametro">
                             Menor quantidade (unidades)
@@ -260,10 +262,12 @@
                         <button class="btn-editar" id="btn-editar-parametro" onclick="editarInformacoesParametro()">
                             <i class="fas fa-pen"></i> Editar Informações
                         </button>
-                        <button class="btn-descartar" id="btn-descartar-parametro" onclick="descartarEdicaoParametro()" style="display: none;">
+                        <button class="btn-descartar" id="btn-descartar-parametro" onclick="descartarEdicaoParametro()"
+                            style="display: none;">
                             <i class="fas fa-times"></i> Descartar
                         </button>
-                        <button class="btn-salvar" id="btn-salvar-parametro" onclick="salvarInformacoesParametro()" style="display: none;">
+                        <button class="btn-salvar" id="btn-salvar-parametro" onclick="salvarInformacoesParametro()"
+                            style="display: none;">
                             <i class="fas fa-save"></i> Salvar Informações
                     </div>
                 </div>
@@ -275,3 +279,21 @@
 
 </html>
 <script src="./js/sessao.js"></script>
+<script>
+    nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+    nome.value = sessionStorage.NOME_USUARIO;
+    email.value = sessionStorage.EMAIL_USUARIO;
+    cpf.value = sessionStorage.CPF_USUARIO;
+    cargo.value = sessionStorage.CARGO_USUARIO;
+    genero.value = sessionStorage.GENERO_USUARIO;
+    senha.value = sessionStorage.SENHA_USUARIO;
+
+    var dataCompleta = new Date(sessionStorage.DT_NASC);
+    var dia = String(dataCompleta.getDate()).padStart(2, '0');
+    var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
+    var ano = dataCompleta.getFullYear();
+    var dataFormatada = `${ano}-${mes}-${dia}`;
+
+    nascimento.value = dataFormatada;
+</script>

@@ -24,7 +24,10 @@ function autenticar(req, res) {
                             nome: resultadoAutenticar[0].nome,
                             email: resultadoAutenticar[0].email,
                             senha: resultadoAutenticar[0].senha,
-                            cargo: resultadoAutenticar[0].cargo
+                            cargo: resultadoAutenticar[0].cargo,
+                            cpf: resultadoAutenticar[0].cpf,
+                            dtNasc: resultadoAutenticar[0].dtNasc,
+                            genero: resultadoAutenticar[0].genero
                         });
 
                     } else if (resultadoAutenticar.length == 0) {

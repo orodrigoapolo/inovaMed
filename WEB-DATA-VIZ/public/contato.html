@@ -21,8 +21,12 @@
                 <img id="botao_fechar" src="assets/icon/x.png">
             </div>
             <div class="navbar_botoes_mobile">
-                <li><a href="login.html"><button id="navbar_botao_entrar"><p>Entrar</p></button></a></li>
-                <li><a href="cadastro.html"><button id="navbar_botao_cadastrar"><p>Cadastrar</p></button></a></li>
+                <li><a href="login.html"><button id="navbar_botao_entrar">
+                            <p>Entrar</p>
+                        </button></a></li>
+                <li><a href="cadastro.html"><button id="navbar_botao_cadastrar">
+                            <p>Cadastrar</p>
+                        </button></a></li>
             </div>
             <div class="modal_contato">
                 <h4>Quer utilizar nossos serviços?</h4>
@@ -96,7 +100,7 @@
                             <textarea id="mensagem" placeholder="Digite sua mensagem" class="input-field"></textarea>
                         </div>
 
-                        <button class="btn">Enviar mensagem</button>
+                        <button class="btn" onclick="publicar()">Enviar mensagem</button>
                     </div>
                 </div>
 
@@ -145,6 +149,7 @@
         </div>
     </div>
 
+    <script src="./js/telaFaleConosco.js"></script>
     <script>
         window.addEventListener('scroll', function () {
             const faleConosco = document.getElementById('fale-conosco');
@@ -164,7 +169,6 @@
         }
 
     </script>
-
 
 </body>
 

@@ -124,7 +124,7 @@ function listar() {
 function deletarUsuario(idUsuario) {
     console.log("Criar função de apagar post escolhido - ID" + idUsuario);
     fetch(`/usuarios/deletarUsuario/${idUsuario}`, {
-      method: "DELETE",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json"
       }
@@ -202,7 +202,6 @@ function adicionarEventosBotoes(json) {
         
             modalExcluir.classList.remove('hidden');
 
-           
             btnCancelarExclusao.addEventListener('click', () => {
                 modalExcluir.classList.add('hidden'); 
             });
