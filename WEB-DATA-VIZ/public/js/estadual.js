@@ -23,6 +23,7 @@ function abrirContatos() {
     opcao_config_container.style.display = "none"
     dash_contato_container.style.display = "flex"
     dash_parametro_container.style.display = "none"
+    listar();
 }
 
 function abrirParametros() {
@@ -154,3 +155,39 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 });
+
+function listar() {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    fetch(`/contatoAvisos/listar/${idUsuario}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO listar()!");
+
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json); // Verifique o conteúdo retornado
+                if (json.length > 0) {
+                    console.log("Número de usuários:", json.length);
+
+                    input_email_contato.value = json[0].email;
+                } else {
+                    console.log("Nenhum usuário encontrado.");
+                }
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar a listagem!");
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    });
+}
+
