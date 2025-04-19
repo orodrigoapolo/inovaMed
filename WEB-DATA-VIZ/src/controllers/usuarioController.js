@@ -24,6 +24,7 @@ function autenticar(req, res) {
                             nome: resultadoAutenticar[0].nome,
                             email: resultadoAutenticar[0].email,
                             senha: resultadoAutenticar[0].senha,
+                            cargo: resultadoAutenticar[0].cargo
                         });
 
                     } else if (resultadoAutenticar.length == 0) {
@@ -105,10 +106,28 @@ function listar(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
-  
+
+function deletarUsuario(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    usuarioModel.deletarUsuario(idUsuario)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao deletar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
 
 module.exports = {
     autenticar,
     cadastrar,
-    listar
+    listar,
+    deletarUsuario
 }

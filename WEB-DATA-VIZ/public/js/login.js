@@ -30,10 +30,16 @@ function entrar() {
                 console.log(JSON.stringify(json));
 
                 sessionStorage.EMAIL_USUARIO = json.email;
-                sessionStorage.ID_USUARIO = json.idUsuario;
+                sessionStorage.ID_USUARIO = json.idUsuario; 
 
                 alert('Logado com sucesso');
-                window.location = "Admin.html";
+                if (json.cargo == 'administrador') {
+                    window.location = "Admin.html";
+                } else if (json.cargo == 'coordenador_estadual') {
+                    window.location = "estadual.html";
+                } else if (json.cargo == 'coordenador_municipal') {
+                    window.location = "municipal.html";
+                }
             });
         } else {
             console.log('Houve um erro ao tentar realizar o login!');

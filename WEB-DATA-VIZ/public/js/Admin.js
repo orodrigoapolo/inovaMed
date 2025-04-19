@@ -55,6 +55,7 @@ function listar() {
                                         <option value="" ${json[i].cargo === "" ? "selected" : ""}></option>
                                         <option value="coordenador_estadual" ${json[i].cargo === "coordenador_estadual" ? "selected" : ""}>Coordenador Estadual</option>
                                         <option value="coordenador_municipal" ${json[i].cargo === "coordenador_municipal" ? "selected" : ""}>Coordenador Municipal</option>
+                                        <option value="administrador" ${json[i].cargo === "administrador" ? "selected" : ""}>Administrador</option>
                                     </select>
                                 </div>
 
@@ -119,6 +120,28 @@ function listar() {
         console.log(erro);
     });
 }
+
+function deletarUsuario(idUsuario) {
+    console.log("Criar função de apagar post escolhido - ID" + idUsuario);
+    fetch(`/usuarios/deletarUsuario/${idUsuario}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(function (resposta) {
+  
+      if (resposta.ok) {
+        window.alert(`Usuário deletado com sucesso!`);
+        window.location.reload()
+      } else if (resposta.status == 404) {
+        window.alert("Deu 404!");
+      } else {
+        throw ("Houve um erro ao tentar deletar usuário! Código da resposta: " + resposta.status);
+      }
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+  }
 
 function abrirDashboard() {
     dash_admin.style.display = "flex"
@@ -227,6 +250,7 @@ function criarCardVazio() {
                     <option value=""></option>
                     <option value="coordenador_estadual">Coordenador Estadual</option>
                     <option value="coordenador_municipal">Coordenador Municipal</option>
+                    <option value="administrador">Administrador</option>
                 </select>
             </div>
             <div class="input-item">
