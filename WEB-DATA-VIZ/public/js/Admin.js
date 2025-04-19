@@ -13,7 +13,7 @@ function listar() {
                 console.log(json); // Verifique o conteúdo retornado
                 if (json.length > 0) {
                     console.log("Número de usuários:", json.length);
-                    
+
                     // Limpar os cards de usuários antes de adicionar novamente
                     const containerCards = document.getElementById('cards_usuarios');
                     containerCards.innerHTML = '';
@@ -28,7 +28,7 @@ function listar() {
                         var nascimento = dataFormatada;
 
                         containerCards.innerHTML += `
-                        <div class="Perfil-edicao">
+                        <div id="card-usuario-${json[i].idUsuario}" class="Perfil-edicao">
                             <div class="input-group">
                                 <div class="input-item">
                                     <label for="email">E-mail</label>
@@ -124,24 +124,24 @@ function listar() {
 function deletarUsuario(idUsuario) {
     console.log("Criar função de apagar post escolhido - ID" + idUsuario);
     fetch(`/usuarios/deletarUsuario/${idUsuario}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      }
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
     }).then(function (resposta) {
-  
-      if (resposta.ok) {
-        window.alert(`Usuário deletado com sucesso!`);
-        window.location.reload()
-      } else if (resposta.status == 404) {
-        window.alert("Deu 404!");
-      } else {
-        throw ("Houve um erro ao tentar deletar usuário! Código da resposta: " + resposta.status);
-      }
+
+        if (resposta.ok) {
+            window.alert(`Usuário deletado com sucesso!`);
+            window.location.reload()
+        } else if (resposta.status == 404) {
+            window.alert("Deu 404!");
+        } else {
+            throw ("Houve um erro ao tentar deletar usuário! Código da resposta: " + resposta.status);
+        }
     }).catch(function (resposta) {
-      console.log(`#ERRO: ${resposta}`);
+        console.log(`#ERRO: ${resposta}`);
     });
-  }
+}
 
 function abrirDashboard() {
     dash_admin.style.display = "flex"
@@ -169,16 +169,16 @@ function adicionarEventosBotoes(json) {
         const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}`);
         let editando = false;
 
-        
+
         btnEditar.addEventListener('click', () => {
             editando = !editando;
             campos.forEach(campo => campo.disabled = !editando);
             btnEditar.innerHTML = editando
-                ? '<i class="fa-solid fa-check"></i>' 
-                : '<i class="fa-solid fa-pencil"></i>'; 
+                ? '<i class="fa-solid fa-check"></i>'
+                : '<i class="fa-solid fa-pencil"></i>';
 
             if (!editando) {
-              
+
                 const dados = {
                     email: document.getElementById(`email${i}`).value,
                     nome: document.getElementById(`nome${i}`).value,
@@ -193,24 +193,45 @@ function adicionarEventosBotoes(json) {
             }
         });
 
-    
+
         btnExcluir.addEventListener('click', () => {
             const modalExcluir = document.getElementById('modalExcluir');
             const btnCancelarExclusao = document.getElementById('btnCancelarExclusao');
             const btnConfirmarExclusao = document.getElementById('btnConfirmarExclusao');
 
-        
+
             modalExcluir.classList.remove('hidden');
 
             btnCancelarExclusao.addEventListener('click', () => {
-                modalExcluir.classList.add('hidden'); 
+                modalExcluir.classList.add('hidden');
             });
 
-         
+
             btnConfirmarExclusao.addEventListener('click', () => {
-                document.querySelectorAll('.Perfil-edicao')[i].remove();
-                modalExcluir.classList.add('hidden');
-          
+                btnConfirmarExclusao.addEventListener('click', () => {
+                    const usuarioId = json[i].idUsuario;
+
+                    fetch(`/usuarios/deletarUsuario/${usuarioId}`, {
+                        method: 'PUT',
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }).then(resposta => {
+                        if (resposta.ok) {
+                            alert('Usuário excluído com sucesso!');
+
+                            const cardUsuario = document.getElementById(`card-usuario-${usuarioId}`);
+                            if (cardUsuario) cardUsuario.remove();
+                        } else {
+                            alert('Erro ao excluir o usuário.');
+                        }
+                        modalExcluir.classList.add('hidden');
+                    }).catch(erro => {
+                        console.log(erro);
+
+                        modalExcluir.classList.add('hidden');
+                    });
+                });
             });
         });
     }
