@@ -147,7 +147,7 @@ function deletarUsuario(req, res) {
 module.exports = {
     autenticar,
     cadastrar,
-    listar
+    listar,
     cadastrar,
     listar,
     deletarUsuario
