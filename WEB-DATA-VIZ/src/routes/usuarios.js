@@ -16,4 +16,8 @@ router.get("/listar", function (req, res) {
     usuarioController.listar(req, res);
 });
 
+router.put("/deletarUsuario/:idUsuario", function (req, res) {
+    usuarioController.deletarUsuario(req, res);
+})
+
 module.exports = router;
