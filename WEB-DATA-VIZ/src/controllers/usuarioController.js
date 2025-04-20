@@ -56,7 +56,7 @@ function cadastrar(req, res) {
     var cargo = req.body.cargoServer;
     var fkEstado = req.body.fkEstadoServer;
     var senha = req.body.senhaServer;
-    var dataNasc = req.body.dataNascServer;
+    var dtNasc = req.body.dtNascServer;
 
     // Faça as validações dos valores
     if (email == undefined) {
@@ -73,11 +73,12 @@ function cadastrar(req, res) {
         res.status(400).send("Sua senha está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (dataNasc == undefined) {
+    } else if (dtNasc == undefined) {
         res.status(400).send("Sua empresa a vincular está undefined!");
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.cadastrar(email, nome, cpf, cargo, senha, dtNasc)
         usuarioModel.cadastrar(email, nome, cpf, genero, cargo, senha, dataNasc, fkEstado)
             .then(
                 function (resultado) {
@@ -94,6 +95,21 @@ function cadastrar(req, res) {
                 }
             );
     }
+}
+
+function listar(req, res) {
+
+    usuarioModel.listar().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao listar usuários", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
 }
 
 function listar(req, res) {
@@ -130,6 +146,8 @@ function deletarUsuario(req, res) {
 
 module.exports = {
     autenticar,
+    cadastrar,
+    listar
     cadastrar,
     listar,
     deletarUsuario

@@ -42,6 +42,12 @@ function deletarUsuario(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function listar() {
+    var instrucaoSql = `SELECT * FROM Usuario;`;
+  
+    return database.executar(instrucaoSql);
+  }
+
 module.exports = {
     autenticar,
     cadastrar,

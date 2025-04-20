@@ -14,7 +14,7 @@
     <link rel="icon" href="assets/icon/logo fundo azul.png" type="image/x-icon">
 </head>
 
-<body onload="validarSessao()">
+<body onload="listar(), validarSessao()">
     <div class="janela">
 
         <div class="header-left">
@@ -46,6 +46,9 @@
             </h1>
         </div>
 
+        
+
+        <div class="dash-perfil" id="listaUsuarios">
 
         <div class="dash-perfil" id="dash_perfil">
 
@@ -60,6 +63,7 @@
                 </div>
             </div>
 
+            <div class="Perfil-edicao" style="display: none;">
             <div class="cards-usuarios" id="cards_usuarios"></div>
 
             <div class="Perfil-edicao" style="display: none;">
@@ -200,5 +204,6 @@
 </body>
 
 </html>
+<script src="./js/perfil.js"></script>
 <script src="./js/Admin.js"></script>
 <script src="./js/sessao.js"></script>
