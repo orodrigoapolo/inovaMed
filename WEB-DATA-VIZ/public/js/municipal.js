@@ -149,7 +149,7 @@ window.salvarInformacoesParametro = function () {
     btnDescartarParametro.style.display = 'none';
     btnEditarParametro.style.display = 'inline-block';
     
-    alert("Parâmetros salvos com sucesso!");
+    configurar();
 };
 
 });
@@ -187,5 +187,40 @@ function listar() {
     }).catch(function (erro) {
         console.log(erro);
     });
+}
+
+function configurar() {
+      // Se houver erros, exibe um alerta
+      var maxVar = document.getElementById('input_parametro_maior_valor').value;
+      var minVar = document.getElementById('input_parametro_menor_valor').value;
+      var idUsuario = sessionStorage.ID_USUARIO;
+    if (!maxVar || !minVar) {
+        alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
+    } else {
+        fetch(`/parametros/configurar/${idUsuario}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                maxServer: maxVar,
+                minServer: minVar
+            }),
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    setTimeout(() => {
+                        alert('Configuração realizada com sucesso!');
+                    }, 2000);
+                } else {
+                    throw "Houve um erro ao tentar realizar a configuração!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
 }
 
