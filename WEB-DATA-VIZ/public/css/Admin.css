@@ -223,6 +223,22 @@ body {
     height: 35vh;
   }
 
+  #graficoUsuariosEstado {
+    width: 100% !important;
+    height: 350px !important; /* você pode ajustar esse valor */
+  }
+  
+  #graficoIdadeCoordenadores{
+    width: 100% !important;
+    height: 250px !important; /* você pode ajustar esse valor */
+  }
+  
+  #graficoGeneroUsuarios{
+      width:300px!important;
+    height: 350px !important; /* você pode ajustar esse valor */
+  }
+  
+
 @media (max-width: 768px) {
     .dash-admin {
         display: flex;

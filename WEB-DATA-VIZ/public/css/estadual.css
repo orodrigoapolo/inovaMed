@@ -249,11 +249,24 @@ body {
   justify-content: center;
   align-items: center;
   padding: 2%;
+  flex-direction: column; 
   width: 19vw;
-  height: 10vh;
+  height: 200px;
   border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+}
+.kpi-titulo {
+  font-size: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.kpi-valor1 {
+  font-size: 1.8rem; /* Diminuir o tamanho do valor */
+  font-weight: bold;
+  color: #007BFF;
+  margin-top: 0.5rem;
 }
 
 .grupo-grafico {
@@ -283,6 +296,27 @@ body {
   width: 31vw;
   height: 35vh;
 }
+#graficoBarras {
+  width: 100% !important;
+  height: 350px !important; /* você pode ajustar esse valor */
+}
+
+#graficoTendencia{
+  width: 100% !important;
+  height: 350px !important; /* você pode ajustar esse valor */
+}
+
+#graficoVencimento{
+    width: 100% !important;
+  height: 350px !important; /* você pode ajustar esse valor */
+}
+
+#graficoTendenciaResumo{
+  width: 100% !important;
+  height: 350px !important; /* você pode ajustar esse valor */
+}
+
+
 
 @media (max-width: 1097px) {
   body {

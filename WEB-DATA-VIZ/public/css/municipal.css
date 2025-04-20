@@ -238,7 +238,7 @@ body {
   flex-direction: column;
   align-items: center;
   width: 20vw;
-  height: 88vh;
+
 }
 
 .kpi-container {
@@ -247,7 +247,7 @@ body {
   align-items: center;
   padding: 2%;
   width: 19vw;
-  height: 10vh;
+  height: 200px;
   border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
@@ -258,6 +258,7 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+ 
   width: 70vw;
   height: 88vh;
 }
@@ -271,6 +272,7 @@ body {
   margin-left: 1%;
   width: 31vw;
   height: 35vh;
+ 
   border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
@@ -280,6 +282,28 @@ body {
   width: 31vw;
   height: 35vh;
 }
+
+#graficoBarras {
+  width: 100% !important;
+  height: 350px !important; /* você pode ajustar esse valor */
+}
+
+#graficoTendencia{
+  width: 100% !important;
+  height: 350px !important; /* você pode ajustar esse valor */
+}
+
+#graficoVencimento{
+    width: 100% !important;
+  height: 350px !important; /* você pode ajustar esse valor */
+}
+
+#graficoTendenciaResumo{
+  width: 100% !important;
+  height: 350px !important; /* você pode ajustar esse valor */
+}
+
+
 
 @media (max-width: 1097px) {
   body {
