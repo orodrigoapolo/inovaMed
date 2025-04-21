@@ -20,4 +20,8 @@ router.put("/deletarUsuario/:idUsuario", function (req, res) {
     usuarioController.deletarUsuario(req, res);
 })
 
+router.get("/buscar/:nome/:email/:cpf/:cargo/:genero", function (req, res) {
+    usuarioController.buscar(req, res);
+});
+
 module.exports = router;

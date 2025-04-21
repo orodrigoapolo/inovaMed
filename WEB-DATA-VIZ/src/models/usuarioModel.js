@@ -42,9 +42,19 @@ function deletarUsuario(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function buscar(nome, email, cpf, cargo, genero) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():");
+    var instrucaoSql = `
+        SELECT * FROM usuario WHERE nome LIKE '%${nome}%' OR email LIKE '%${email}%' OR cpf LIKE '%${cpf}%' OR cargo LIKE '%${cargo}%' OR genero LIKE '%${genero}%';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     listar,
-    deletarUsuario
+    deletarUsuario,
+    buscar
 };

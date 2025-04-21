@@ -129,9 +129,29 @@ function deletarUsuario(req, res) {
         );
 }
 
+function buscar(req, res) {
+    var nome = req.params.nome;
+    var email = req.params.email;
+    var cpf = req.params.cpf;
+    var cargo = req.params.cargo;
+    var genero = req.params.genero;
+    usuarioModel.buscar(nome, email, cpf, cargo, genero).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os objetivos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     listar,
-    deletarUsuario
+    deletarUsuario,
+    buscar
 }
