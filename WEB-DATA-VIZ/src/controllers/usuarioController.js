@@ -27,7 +27,8 @@ function autenticar(req, res) {
                             cargo: resultadoAutenticar[0].cargo,
                             cpf: resultadoAutenticar[0].cpf,
                             dtNasc: resultadoAutenticar[0].dtNasc,
-                            genero: resultadoAutenticar[0].genero
+                            genero: resultadoAutenticar[0].genero,
+                            dtInativo: resultadoAutenticar[0].dtInativo
                         });
 
                     } else if (resultadoAutenticar.length == 0) {
