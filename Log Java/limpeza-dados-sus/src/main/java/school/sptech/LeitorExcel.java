@@ -16,12 +16,12 @@ import java.util.Date;
 import java.util.List;
 
 public class LeitorExcel {
-    public List<DadosSUS> extrairDados(String estoqueAbril, InputStream arquivo) {
+    public List<DadosSUS> extrairDados(String nomeArquivo, InputStream arquivo) {
         try {
-            System.out.println("\nIniciando a leitura do arquivo %s\n".formatted(estoqueAbril));
+            System.out.println("\nIniciando a leitura do arquivo %s\n".formatted(nomeArquivo));
 
             Workbook workbook;
-            if (estoqueAbril.endsWith(".xlsx")) {
+            if (nomeArquivo.endsWith(".xlsx")) {
                 workbook = new XSSFWorkbook(arquivo);
             } else {
                 workbook = new HSSFWorkbook(arquivo);
@@ -44,23 +44,31 @@ public class LeitorExcel {
                     continue;
                 }
 
-                DadosSUS dados = new DadosSUS();
-                Municipio municipio = new Municipio();
-                municipio.setNome(row.getCell(2).getStringCellValue());
-                dados.setEstado(row.getCell(0).getStringCellValue());
-                dados.setMunicipio(municipio);
-                dados.setDtEntrada(row.getCell(14).getStringCellValue());
-                dados.setCatmat(row.getCell(15).getStringCellValue());
-                dados.setNomeFarmaco(row.getCell(16).getStringCellValue());
-                dados.setQtdFarmaco((int) row.getCell(17).getNumericCellValue());
-                dados.setLote(row.getCell(18).getStringCellValue());
-                dados.setDtValidade(row.getCell(19).getStringCellValue());
-                dadosExtraidos.add(dados);
+                if (row.getCell(16).getStringCellValue().contains("SALBUTAMOL") ||
+                        row.getCell(16).getStringCellValue().contains("FORMOTEROL") ||
+                        row.getCell(16).getStringCellValue().contains("PREDNISONA") ||
+                        row.getCell(16).getStringCellValue().contains("BECLOMETASONA") ||
+                        row.getCell(16).getStringCellValue().contains("FUMARATO")) {
+                    DadosSUS dados = new DadosSUS();
+                    Municipio municipio = new Municipio();
+                    municipio.setNome(row.getCell(2).getStringCellValue());
+                    dados.setEstado(row.getCell(0).getStringCellValue());
+                    dados.setMunicipio(municipio);
+                    dados.setDtEntrada(row.getCell(14).getStringCellValue());
+                    dados.setCatmat(row.getCell(15).getStringCellValue());
+                    dados.setNomeFarmaco(row.getCell(16).getStringCellValue());
+                    dados.setQtdFarmaco((int) row.getCell(17).getNumericCellValue());
+                    dados.setLote(row.getCell(18).getStringCellValue());
+                    dados.setDtValidade(row.getCell(19).getStringCellValue());
+                    dadosExtraidos.add(dados);
+                }
             }
 
             workbook.close();
 
             System.out.println("\nLeitura do arquivo finalizada\n");
+
+            // aqui vc pode inserir na tabela Planilha o nome do arquivo.
 
             return dadosExtraidos;
         } catch (IOException e) {
