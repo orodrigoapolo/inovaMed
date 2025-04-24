@@ -153,6 +153,7 @@ function buscar(req, res) {
 function editar(req, res) {
     var idUsuario = req.params.idUsuario;
     var email = req.params.email; 
+    var senha = req.params.senha; 
     var nome = req.params.nome;
     var cpf = req.params.cpf;
     var cargo = req.params.cargo;    
@@ -160,7 +161,7 @@ function editar(req, res) {
     var dtNasc = req.params.dtNasc;
     var genero = req.params.genero;
 
-    usuarioModel.editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero)
+    usuarioModel.editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, genero)
         .then(
             function (resultado) {
                 res.json(resultado);

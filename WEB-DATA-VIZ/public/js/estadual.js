@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnSalvar.style.display = 'none';
         btnDescartar.style.display = 'none';
         btnEditar.style.display = 'inline-block';
-        alert("Informações salvas com sucesso!");
+        editar();
     };
 
 
@@ -208,6 +208,46 @@ function deletarUsuario(idUsuario) {
             window.alert("Deu 404!");
         } else {
             throw ("Houve um erro ao tentar deletar usuário! Código da resposta: " + resposta.status);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+}
+
+function editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    var email = document.getElementById(`email`).value
+    var senha = document.getElementById(`senha`).value
+    var nome = document.getElementById(`nome`).value
+    var cpf = document.getElementById(`cpf`).value
+    var cargo = document.getElementById(`cargo`).value
+    var estado = document.getElementById(`estado`).value
+    var dtNasc = document.getElementById(`nascimento`).value
+    var genero = document.getElementById(`genero`).value;
+
+
+    fetch(`/usuarios/editar/${idUsuario}/${email}/${senha}/${nome}/${cpf}/${cargo}/${estado}/${dtNasc}/${genero}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+
+        if (resposta.ok) {
+            sessionStorage.EMAIL_USUARIO = email;
+            sessionStorage.NOME_USUARIO = nome;
+            sessionStorage.CPF_USUARIO = cpf;
+            sessionStorage.CARGO_USUARIO = cargo;
+            sessionStorage.GENERO_USUARIO = genero;
+            sessionStorage.SENHA_USUARIO = senha;
+            sessionStorage.FK_ESTADO = estado;
+            sessionStorage.DT_NASC = dtNasc;
+            
+            window.alert(`Usuário editado com sucesso!`);
+        } else if (resposta.status == 404) {
+            window.alert("Deu 404!");
+        } else {
+            throw ("Houve um erro ao tentar editar usuário! Código da resposta: " + resposta.status);
         }
     }).catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);

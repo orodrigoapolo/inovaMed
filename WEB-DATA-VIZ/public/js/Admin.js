@@ -1,3 +1,5 @@
+const { json } = require("express");
+
 function listar() {
     fetch(`/usuarios/listar`, {
         method: "GET",
@@ -278,13 +280,14 @@ function deletarUsuario(idUsuario) {
 
 function editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero) {
     var idUsuario = sessionStorage.ID_CONTAINER;
-    var email = sessionStorage.EMAIL_CONTAINER;
-    var nome = sessionStorage.NOME_CONTAINER;
-    var cpf = sessionStorage.CPF_CONTAINER;
-    var cargo = sessionStorage.CARGO_CONTAINER;
-    var estado = sessionStorage.ESTADO_CONTAINER;
-    var dtNasc = sessionStorage.DTNASC_CONTAINER;
-    var genero = sessionStorage.GENERO_CONTAINER;
+    var email = document.getElementById(`email${idUsuario-1}`).value;
+    var nome = document.getElementById(`nome${idUsuario-1}`).value;
+    var cpf = document.getElementById(`cpf${idUsuario-1}`).value;
+    var cargo = document.getElementById(`cargo${idUsuario-1}`).value;
+    var estado = document.getElementById(`estado${idUsuario-1}`).value;
+    var dtNasc = document.getElementById(`nascimento${idUsuario-1}`).value;
+    var genero = document.getElementById(`genero${idUsuario-1}`).value;
+
     fetch(`/usuarios/editar/${idUsuario}/${email}/${nome}/${cpf}/${cargo}/${estado}/${dtNasc}/${genero}`, {
         method: "PUT",
         headers: {

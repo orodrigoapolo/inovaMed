@@ -281,7 +281,7 @@
 <script src="./js/sessao.js"></script>
 <script>
     nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
-
+    
     nome.value = sessionStorage.NOME_USUARIO;
     email.value = sessionStorage.EMAIL_USUARIO;
     cpf.value = sessionStorage.CPF_USUARIO;
@@ -289,12 +289,12 @@
     genero.value = sessionStorage.GENERO_USUARIO;
     senha.value = sessionStorage.SENHA_USUARIO;
     estado.value = sessionStorage.FK_ESTADO;
-
+    
     var dataCompleta = new Date(sessionStorage.DT_NASC);
     var dia = String(dataCompleta.getDate()).padStart(2, '0');
     var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
     var ano = dataCompleta.getFullYear();
     var dataFormatada = `${ano}-${mes}-${dia}`;
-
+    
     nascimento.value = dataFormatada;
 </script>
