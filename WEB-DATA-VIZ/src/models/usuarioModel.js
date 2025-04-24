@@ -51,10 +51,20 @@ function buscar(nome, email, cpf, cargo, genero) {
     return database.executar(instrucaoSql);
 }
 
+function editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():");
+    var instrucaoSql = `
+        UPDATE usuario SET nome = '${nome}', cpf = ${cpf}, email = '${email}', cargo = '${cargo}', dtNasc = '${dtNasc}', genero = '${genero}', fkEstado = ${estado} WHERE idUsuario = ${idUsuario};
+    `;  
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     listar,
     deletarUsuario,
-    buscar
+    buscar,
+    editar
 };

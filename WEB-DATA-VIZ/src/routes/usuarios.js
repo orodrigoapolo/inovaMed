@@ -24,4 +24,8 @@ router.get("/buscar/:nome/:email/:cpf/:cargo/:genero", function (req, res) {
     usuarioController.buscar(req, res);
 });
 
+router.put("/editar/:idUsuario/:email/:nome/:cpf/:cargo/:fkEstado/:dtNasc/:genero", function (req, res) {
+    usuarioController.editar(req, res);
+})
+
 module.exports = router;

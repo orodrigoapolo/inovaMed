@@ -276,6 +276,35 @@ function deletarUsuario(idUsuario) {
     });
 }
 
+function editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero) {
+    var idUsuario = sessionStorage.ID_CONTAINER;
+    var email = sessionStorage.EMAIL_CONTAINER;
+    var nome = sessionStorage.NOME_CONTAINER;
+    var cpf = sessionStorage.CPF_CONTAINER;
+    var cargo = sessionStorage.CARGO_CONTAINER;
+    var estado = sessionStorage.ESTADO_CONTAINER;
+    var dtNasc = sessionStorage.DTNASC_CONTAINER;
+    var genero = sessionStorage.GENERO_CONTAINER;
+    fetch(`/usuarios/editar/${idUsuario}/${email}/${nome}/${cpf}/${cargo}/${estado}/${dtNasc}/${genero}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+
+        if (resposta.ok) {
+            window.alert(`Usuário editado com sucesso!`);
+            listar();
+        } else if (resposta.status == 404) {
+            window.alert("Deu 404!");
+        } else {
+            throw ("Houve um erro ao tentar editar usuário! Código da resposta: " + resposta.status);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+}
+
 function abrirDashboard() {
     dash_admin.style.display = "flex"
     dash_perfil.style.display = "none"
@@ -304,6 +333,21 @@ function adicionarEventosBotoes(json) {
 
 
         btnEditar.addEventListener('click', () => {
+            sessionStorage.ID_CONTAINER = json[i].idUsuario;
+            sessionStorage.NOME_CONTAINER = json[i].nome;
+            sessionStorage.CPF_CONTAINER = json[i].cpf;
+            sessionStorage.EMAIL_CONTAINER = json[i].email;
+            sessionStorage.CARGO_CONTAINER = json[i].cargo;
+
+            var dataCompleta = new Date(json[i].dtNasc);
+            var dia = String(dataCompleta.getDate()).padStart(2, '0');
+            var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
+            var ano = dataCompleta.getFullYear();
+            var dataFormatada = `${ano}-${mes}-${dia}`;
+
+            sessionStorage.DTNASC_CONTAINER = dataFormatada;
+            sessionStorage.GENERO_CONTAINER = json[i].genero;
+            sessionStorage.ESTADO_CONTAINER = json[i].fkEstado;
             editando = !editando;
             campos.forEach(campo => campo.disabled = !editando);
             btnEditar.innerHTML = editando
@@ -311,18 +355,7 @@ function adicionarEventosBotoes(json) {
                 : '<i class="fa-solid fa-pencil"></i>';
 
             if (!editando) {
-
-                const dados = {
-                    email: document.getElementById(`email${i}`).value,
-                    nome: document.getElementById(`nome${i}`).value,
-                    cpf: document.getElementById(`cpf${i}`).value,
-                    cargo: document.getElementById(`cargo${i}`).value,
-                    estado: document.getElementById(`estado${i}`).value,
-                    nascimento: document.getElementById(`nascimento${i}`).value,
-                    genero: document.getElementById(`genero${i}`).value
-                };
-                console.log('Dados salvos:', dados);
-                alert('Dados salvos com sucesso!');
+                editar();
             }
         });
 

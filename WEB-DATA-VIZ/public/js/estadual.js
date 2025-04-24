@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnConfirmDelete = document.getElementById('confirm-delete');
     const btnCancelDelete = document.getElementById('cancel-delete');
 
- 
+
     window.editarInformacoes = function () {
         inputs.forEach(input => input.disabled = false);
         btnSalvar.style.display = 'inline-block';
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnEditar.style.display = 'none';
     };
 
- 
+
     window.descartarEdicao = function () {
         inputs.forEach(input => {
             input.disabled = true;
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnEditar.style.display = 'inline-block';
     };
 
- 
+
     window.salvarInformacoes = function () {
         inputs.forEach(input => {
             input.disabled = true;
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Informações salvas com sucesso!");
     };
 
- 
+
     window.excluirConta = function () {
         modal.classList.remove('hidden');
     };
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     btnConfirmDelete.addEventListener('click', () => {
         modal.classList.add('hidden');
         alert("Conta excluída com sucesso!");
-   
+        deletarUsuario();
     });
 
 
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnSalvarParametro = document.getElementById('btn-salvar-parametro');
     const btnDescartarParametro = document.getElementById('btn-descartar-parametro');
 
- 
+
     window.editarInformacoesParametro = function () {
         inputParametroMenorValor.disabled = false;
         inputParametroMaiorValor.disabled = false;
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnEditarParametro.style.display = 'none';
     };
 
-   
+
     window.descartarEdicaoParametro = function () {
         inputParametroMenorValor.disabled = true;
         inputParametroMaiorValor.disabled = true;
@@ -133,13 +133,13 @@ document.addEventListener('DOMContentLoaded', function () {
         btnDescartarParametro.style.display = 'none';
         btnEditarParametro.style.display = 'inline-block';
 
-      
+
         inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
         inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
         alert("Parâmetros descartados com sucesso!");
     };
 
-    
+
     window.salvarInformacoesParametro = function () {
         inputParametroMenorValor.disabled = true;
         inputParametroMaiorValor.disabled = true;
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnSalvarParametro.style.display = 'none';
         btnDescartarParametro.style.display = 'none';
         btnEditarParametro.style.display = 'inline-block';
-        
+
         alert("Parâmetros salvos com sucesso!");
     };
 
@@ -188,6 +188,29 @@ function listar() {
 
     }).catch(function (erro) {
         console.log(erro);
+    });
+}
+
+function deletarUsuario(idUsuario) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    console.log("Criar função de apagar post escolhido - ID" + idUsuario);
+    fetch(`/usuarios/deletarUsuario/${idUsuario}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+
+        if (resposta.ok) {
+            sessionStorage.clear();
+            window.location = "../login.html";
+        } else if (resposta.status == 404) {
+            window.alert("Deu 404!");
+        } else {
+            throw ("Houve um erro ao tentar deletar usuário! Código da resposta: " + resposta.status);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
     });
 }
 

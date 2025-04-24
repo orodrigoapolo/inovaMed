@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     btnConfirmDelete.addEventListener('click', () => {
         modal.classList.add('hidden');
         alert("Conta excluída com sucesso!");
+        deletarUsuario();
         // Aqui você pode redirecionar ou fazer uma chamada para deletar a conta
     });
 
@@ -104,53 +105,53 @@ document.addEventListener('DOMContentLoaded', function () {
             input.dataset.originalValue = input.value;
         }
     });
-// Funções para os parâmetros
+    // Funções para os parâmetros
 
-const inputParametroMenorValor = document.getElementById('input_parametro_menor_valor');
-const inputParametroMaiorValor = document.getElementById('input_parametro_maior_valor');
-const btnEditarParametro = document.getElementById('btn-editar-parametro');
-const btnSalvarParametro = document.getElementById('btn-salvar-parametro');
-const btnDescartarParametro = document.getElementById('btn-descartar-parametro');
-
-
-window.editarInformacoesParametro = function () {
-    inputParametroMenorValor.disabled = false;
-    inputParametroMaiorValor.disabled = false;
-
-    btnSalvarParametro.style.display = 'inline-block';
-    btnDescartarParametro.style.display = 'inline-block';
-    btnEditarParametro.style.display = 'none';
-};
+    const inputParametroMenorValor = document.getElementById('input_parametro_menor_valor');
+    const inputParametroMaiorValor = document.getElementById('input_parametro_maior_valor');
+    const btnEditarParametro = document.getElementById('btn-editar-parametro');
+    const btnSalvarParametro = document.getElementById('btn-salvar-parametro');
+    const btnDescartarParametro = document.getElementById('btn-descartar-parametro');
 
 
-window.descartarEdicaoParametro = function () {
-    inputParametroMenorValor.disabled = true;
-    inputParametroMaiorValor.disabled = true;
+    window.editarInformacoesParametro = function () {
+        inputParametroMenorValor.disabled = false;
+        inputParametroMaiorValor.disabled = false;
 
-    btnSalvarParametro.style.display = 'none';
-    btnDescartarParametro.style.display = 'none';
-    btnEditarParametro.style.display = 'inline-block';
-
-  
-    inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
-    inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
-    alert("Parâmetros descartados com sucesso!");
-};
+        btnSalvarParametro.style.display = 'inline-block';
+        btnDescartarParametro.style.display = 'inline-block';
+        btnEditarParametro.style.display = 'none';
+    };
 
 
-window.salvarInformacoesParametro = function () {
-    inputParametroMenorValor.disabled = true;
-    inputParametroMaiorValor.disabled = true;
+    window.descartarEdicaoParametro = function () {
+        inputParametroMenorValor.disabled = true;
+        inputParametroMaiorValor.disabled = true;
 
-    inputParametroMenorValor.dataset.originalValue = inputParametroMenorValor.value;
-    inputParametroMaiorValor.dataset.originalValue = inputParametroMaiorValor.value;
+        btnSalvarParametro.style.display = 'none';
+        btnDescartarParametro.style.display = 'none';
+        btnEditarParametro.style.display = 'inline-block';
 
-    btnSalvarParametro.style.display = 'none';
-    btnDescartarParametro.style.display = 'none';
-    btnEditarParametro.style.display = 'inline-block';
-    
-    configurar();
-};
+
+        inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
+        inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
+        alert("Parâmetros descartados com sucesso!");
+    };
+
+
+    window.salvarInformacoesParametro = function () {
+        inputParametroMenorValor.disabled = true;
+        inputParametroMaiorValor.disabled = true;
+
+        inputParametroMenorValor.dataset.originalValue = inputParametroMenorValor.value;
+        inputParametroMaiorValor.dataset.originalValue = inputParametroMaiorValor.value;
+
+        btnSalvarParametro.style.display = 'none';
+        btnDescartarParametro.style.display = 'none';
+        btnEditarParametro.style.display = 'inline-block';
+
+        configurar();
+    };
 
 });
 
@@ -190,10 +191,10 @@ function listar() {
 }
 
 function configurar() {
-      // Se houver erros, exibe um alerta
-      var maxVar = document.getElementById('input_parametro_maior_valor').value;
-      var minVar = document.getElementById('input_parametro_menor_valor').value;
-      var idUsuario = sessionStorage.ID_USUARIO;
+    // Se houver erros, exibe um alerta
+    var maxVar = document.getElementById('input_parametro_maior_valor').value;
+    var minVar = document.getElementById('input_parametro_menor_valor').value;
+    var idUsuario = sessionStorage.ID_USUARIO;
     if (!maxVar || !minVar) {
         alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
     } else {
@@ -222,5 +223,28 @@ function configurar() {
 
         return false;
     }
+}
+
+function deletarUsuario(idUsuario) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    console.log("Criar função de apagar post escolhido - ID" + idUsuario);
+    fetch(`/usuarios/deletarUsuario/${idUsuario}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+
+        if (resposta.ok) {
+            sessionStorage.clear();
+            window.location = "../login.html";
+        } else if (resposta.status == 404) {
+            window.alert("Deu 404!");
+        } else {
+            throw ("Houve um erro ao tentar deletar usuário! Código da resposta: " + resposta.status);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
 }
 

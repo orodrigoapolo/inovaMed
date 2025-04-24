@@ -148,10 +148,36 @@ function buscar(req, res) {
     });
 }
 
+function editar(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var email = req.params.email; 
+    var nome = req.params.nome;
+    var cpf = req.params.cpf;
+    var cargo = req.params.cargo;    
+    var estado = req.params.fkEstado;
+    var dtNasc = req.params.dtNasc;
+    var genero = req.params.genero;
+
+    usuarioModel.editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao editar usuário: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     listar,
     deletarUsuario,
-    buscar
+    buscar,
+    editar
 }
