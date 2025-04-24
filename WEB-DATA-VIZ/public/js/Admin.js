@@ -93,6 +93,33 @@ function listar() {
                                         <option value="nao_informar" ${json[i].genero === "Prefiro não informar" ? "selected" : ""}>Prefiro não informar</option>
                                     </select>
                                 </div>
+                                <div class="input-item">
+                                    <label for="senha">Senha</label>
+                                    <i class="fa fa-lock"></i>
+                                    <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                                </div>
+                            </div>
+                            <div id="validacao-senha">
+                                <div class="validacao-item">
+                                    <i id="icone-tamanho" class="fa fa-lock"></i>
+                                    <p id="validacao-tamanho">Mínimo 8 caracteres</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-maiuscula" class="fa fa-lock"></i>
+                                    <p id="validacao-maiuscula">Pelo menos uma letra maiúscula</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-minuscula" class="fa fa-lock"></i>
+                                    <p id="validacao-minuscula">Pelo menos uma letra minúscula</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-numero" class="fa fa-lock"></i>
+                                    <p id="validacao-numero">Pelo menos um número</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-caractere" class="fa fa-lock"></i>
+                                    <p id="validacao-caractere">Pelo menos um caractere especial</p>
+                                </div>
                             </div>
 
                             <div class="acoes-usuario">
@@ -317,6 +344,7 @@ function abrirDashboard() {
 function abrirPerfil() {
     dash_admin.style.display = "none"
     dash_perfil.style.display = "block"
+    listaUsuarios.style.display = "block"
     dash_config.style.display = "none"
     listar();
 }
@@ -416,67 +444,97 @@ function criarCardVazio() {
     novoCard.classList.add('Perfil-edicao');
 
     novoCard.innerHTML = `
-        <div class="input-group">
-            <div class="input-item">
-                <label for="email">E-mail</label>
-                <i class="fa fa-envelope"></i>
-                <input type="email" value="" class="input-field">
-            </div>
-            <div class="input-item">
-                <label for="nome">Nome Completo</label>
-                <i class="fa fa-user"></i>
-                <input type="text" value="" class="input-field">
-            </div>
-            <div class="input-item">
-                <label for="cpf">CPF</label>
-                <i class="fa fa-id-card"></i>
-                <input type="text" maxlength="11" value="" class="input-field">
-            </div>
-            <div class="input-item">
-                <label for="cargo">Cargo Exercido</label>
-                <i class="fa fa-briefcase"></i>
-                <select class="input-field">
-                    <option value=""></option>
-                    <option value="coordenador_estadual">Coordenador Estadual</option>
-                    <option value="coordenador_municipal">Coordenador Municipal</option>
-                    <option value="administrador">Administrador</option>
-                </select>
-            </div>
-            <div class="input-item">
-                <label for="estado">Estado em que atua</label>
-                <i class="fa fa-map-marker-alt"></i>
-                <select class="input-field">
-                    <option value=""></option>
-                    <option value="1">Acre</option>
-                    <option value="2">Amapá</option>
-                    <option value="3">Amazonas</option>
-                    <option value="4">Pará</option>
-                    <option value="5">Rondônia</option>
-                    <option value="6">Roraima</option>
-                    <option value="7">Tocantins</option>
-                </select>
-            </div>
-            <div class="input-item">
-                <label for="nascimento">Data de Nascimento</label>
-                <i class="fa fa-calendar"></i>
-                <input type="date" value="" class="input-field">
-            </div>
-            <div class="input-item">
-                <label for="genero">Gênero</label>
-                <i class="fa fa-transgender"></i>
-                <select class="input-field">
-                    <option value=""></option>
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                    <option value="outros">Outros</option>
-                    <option value="nao_informar">Prefiro não informar</option>
-                </select>
-            </div>
-        </div>
-        <div class="acoes-usuario">
-            <button class="btn-editar"><i class="fa-solid fa-check"></i></button>
-            <button class="btn-excluir"><i class="fa-solid fa-times" style="color: red;"></i></button>
-        </div>
+        <div class="input-group" >
+                    <div class="input-item">
+                        <label for="email">E-mail</label>
+                        <i class="fa fa-envelope"></i>
+                        <input type="email" id="email" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="nome">Nome Completo</label>
+                        <i class="fa fa-user"></i>
+                        <input type="text" id="nome" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="cpf">CPF</label>
+                        <i class="fa fa-id-card"></i>
+                        <input type="text" maxlength="11" id="cpf" class="input-field" disabled>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="cargo">Cargo Exercido</label>
+                        <i class="fa fa-briefcase"></i>
+                        <select id="cargo" class="input-field" disabled>
+                            <option value=""></option>
+                            <option value="coordenador_estadual">Coordenador Estadual</option>
+                            <option value="coordenador_municipal">Coordenador Municipal</option>
+                        </select>
+                    </div>
+
+                    <div class="input-item">
+                        <label for="estado">Estado em que atua</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="estado" class="input-field" disabled>
+                            <option value="outros"></option>
+                            <option value="1">Acre</option>
+                            <option value="2">Amapá</option>
+                            <option value="3">Amazonas</option>
+                            <option value="4">Pará</option>
+                            <option value="5">Rondônia</option>
+                            <option value="6">Roraima</option>
+                            <option value="7">Tocantins</option>
+                        </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="nascimento">Data de Nascimento</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <input type="date" id="nascimento" class="input-field" disabled>
+                    </div>
+                    <div class="input-item">
+                        <label for="genero">Gênero</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="genero" name="genero" class="input-field" disabled>
+                            <option value=""></option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                            <option value="outro">Outro</option>
+                            <option value="nao_informar">Prefiro não informar</option>
+                        </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="senha">Senha</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                    </div>
+                </div>
+                <div id="validacao-senha">
+                    <div class="validacao-item">
+                        <i id="icone-tamanho" class="fa fa-lock"></i>
+                        <p id="validacao-tamanho">Mínimo 8 caracteres</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-maiuscula" class="fa fa-lock"></i>
+                        <p id="validacao-maiuscula">Pelo menos uma letra maiúscula</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-minuscula" class="fa fa-lock"></i>
+                        <p id="validacao-minuscula">Pelo menos uma letra minúscula</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-numero" class="fa fa-lock"></i>
+                        <p id="validacao-numero">Pelo menos um número</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-caractere" class="fa fa-lock"></i>
+                        <p id="validacao-caractere">Pelo menos um caractere especial</p>
+                    </div>
+                </div>
+                <div class="acoes-usuario">
+                    <button class="btn-editar"><i class="fa-solid fa-pencil"></i></button>
+                    <button class="btn-excluir"><i class="fas fa-trash-alt"></i></button>
+                </div>
     `;
 
     containerCards.appendChild(novoCard);
@@ -538,3 +596,132 @@ function aplicarEventosCardEdicaoInicial(card) {
 
 
 document.querySelector('.btn-adicionar').addEventListener('click', criarCardVazio);
+
+        const validacaoItens = document.querySelectorAll('.validacao-item');
+        const botaoCadastrar = document.getElementById('botao-cadastrar');
+
+
+        document.getElementById('senha').addEventListener('input', function () {
+            var senha = document.getElementById('senha').value;
+
+
+            // Mostrar as validações apenas quando o usuário começar a digitar
+            if (senha.length > 0) {
+                validacaoItens.forEach(item => item.style.display = 'flex');
+            } else {
+                validacaoItens.forEach(item => item.style.display = 'none');
+            }
+
+
+            // Validação de tamanho mínimo
+            if (senha.length >= 8) {
+                document.getElementById('icone-tamanho').classList.add('green');
+                document.getElementById('icone-tamanho').classList.remove('red');
+            } else {
+                document.getElementById('icone-tamanho').classList.add('red');
+                document.getElementById('icone-tamanho').classList.remove('green');
+            }
+
+
+            // Validação de maiúsculas
+            if (/[A-Z]/.test(senha)) {
+                document.getElementById('icone-maiuscula').classList.add('green');
+                document.getElementById('icone-maiuscula').classList.remove('red');
+            } else {
+                document.getElementById('icone-maiuscula').classList.add('red');
+                document.getElementById('icone-maiuscula').classList.remove('green');
+            }
+
+
+            // Validação de minúsculas
+            if (/[a-z]/.test(senha)) {
+                document.getElementById('icone-minuscula').classList.add('green');
+                document.getElementById('icone-minuscula').classList.remove('red');
+            } else {
+                document.getElementById('icone-minuscula').classList.add('red');
+                document.getElementById('icone-minuscula').classList.remove('green');
+            }
+
+
+            // Validação de números
+            if (/\d/.test(senha)) {
+                document.getElementById('icone-numero').classList.add('green');
+                document.getElementById('icone-numero').classList.remove('red');
+            } else {
+                document.getElementById('icone-numero').classList.add('red');
+                document.getElementById('icone-numero').classList.remove('green');
+            }
+
+
+            // Validação de caracteres especiais
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+                document.getElementById('icone-caractere').classList.add('green');
+                document.getElementById('icone-caractere').classList.remove('red');
+            } else {
+                document.getElementById('icone-caractere').classList.add('red');
+                document.getElementById('icone-caractere').classList.remove('green');
+            }
+        });
+
+
+        function validarSenha() {
+            var senha = document.getElementById('senha').value;
+            let mensagensErro = [];
+
+            if (senha.length < 8) {
+                mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
+            }
+            if (!/[A-Z]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
+            }
+            if (!/[a-z]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
+            }
+            if (!/\d/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos um número.');
+            }
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+                mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
+            }
+
+
+            return mensagensErro;
+        }
+
+
+        function validarConfirmarSenha() {
+            var senha = document.getElementById('senha').value;
+            var email = document.getElementById('email').value;
+            var cargo = document.getElementById('cargo').value;
+            var estado = document.getElementById('estado').value;
+            var mensagensErro = [];
+
+
+            // Validação: E-mail no formato correto
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
+            }
+
+
+            // Validação: Cargo selecionado
+            if (cargo === "outros" || cargo === "") {
+                mensagensErro.push('Você precisa selecionar um cargo.');
+            }
+
+
+            // Validação: Estado selecionado
+            if (estado === "outros" || estado === "") {
+                mensagensErro.push('Você precisa selecionar um estado.');
+            }
+
+
+            // Validação: Senha
+            var senhaErros = validarSenha();
+            if (senhaErros.length > 0) {
+                mensagensErro = mensagensErro.concat(senhaErros);
+            }
+
+
+            return mensagensErro;
+        }
