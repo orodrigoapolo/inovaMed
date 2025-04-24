@@ -3,7 +3,7 @@ var database = require("../database/config")
 function autenticar(email, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
     var instrucaoSql = `
-        SELECT idUsuario, nome, email, senha, cargo, cpf, dtNasc, genero FROM usuario WHERE email = '${email}' AND senha = '${senha}';
+        SELECT idUsuario, nome, email, senha, cargo, cpf, dtNasc, genero, dtInativo, fkEstado, fkMunicipio FROM usuario WHERE email = '${email}' AND senha = '${senha}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -42,15 +42,29 @@ function deletarUsuario(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-function listar() {
-    var instrucaoSql = `SELECT * FROM Usuario;`;
-  
+function buscar(nome, email, cpf, cargo, genero) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():");
+    var instrucaoSql = `
+        SELECT * FROM usuario WHERE nome LIKE '%${nome}%' OR email LIKE '%${email}%' OR cpf LIKE '%${cpf}%' OR cargo LIKE '%${cargo}%' OR genero LIKE '%${genero}%';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
-  }
+}
+
+function editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, genero) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():");
+    var instrucaoSql = `
+        UPDATE usuario SET nome = '${nome}', cpf = ${cpf}, email = '${email}', senha = '${senha}', cargo = '${cargo}', dtNasc = '${dtNasc}', genero = '${genero}', fkEstado = ${estado} WHERE idUsuario = ${idUsuario};
+    `;  
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 module.exports = {
     autenticar,
     cadastrar,
     listar,
-    deletarUsuario
+    deletarUsuario,
+    buscar,
+    editar
 };

@@ -123,14 +123,14 @@
                         <label for="estado">Estado em que atua</label>
                         <i class="fa fa-map-marker-alt"></i>
                         <select id="estado" class="input-field" disabled>
-                            <option value="outros">Selecione seu estado</option>
-                            <option value="acre">Acre</option>
-                            <option value="amazonas">Amazonas</option>
-                            <option value="roraima">Roraima</option>
-                            <option value="rondonia">Rondônia</option>
-                            <option value="pará">Pará</option>
-                            <option value="amapá">Amapá</option>
-                            <option value="tocantins">Tocantins</option>
+                            <option value="outros"></option>
+                            <option value="1">Acre</option>
+                            <option value="2">Amapá</option>
+                            <option value="3">Amazonas</option>
+                            <option value="4">Pará</option>
+                            <option value="5">Rondônia</option>
+                            <option value="6">Roraima</option>
+                            <option value="7">Tocantins</option>
                         </select>
                     </div>
                     <div class="input-item">
@@ -642,19 +642,20 @@ const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
 <script src="./js/sessao.js"></script>
 <script>
     nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
-
+    
     nome.value = sessionStorage.NOME_USUARIO;
     email.value = sessionStorage.EMAIL_USUARIO;
     cpf.value = sessionStorage.CPF_USUARIO;
     cargo.value = sessionStorage.CARGO_USUARIO;
     genero.value = sessionStorage.GENERO_USUARIO;
     senha.value = sessionStorage.SENHA_USUARIO;
-
+    estado.value = sessionStorage.FK_ESTADO;
+    
     var dataCompleta = new Date(sessionStorage.DT_NASC);
     var dia = String(dataCompleta.getDate()).padStart(2, '0');
     var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
     var ano = dataCompleta.getFullYear();
     var dataFormatada = `${ano}-${mes}-${dia}`;
-
+    
     nascimento.value = dataFormatada;
 </script>

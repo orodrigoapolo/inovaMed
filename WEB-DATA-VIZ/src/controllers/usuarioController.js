@@ -27,7 +27,10 @@ function autenticar(req, res) {
                             cargo: resultadoAutenticar[0].cargo,
                             cpf: resultadoAutenticar[0].cpf,
                             dtNasc: resultadoAutenticar[0].dtNasc,
-                            genero: resultadoAutenticar[0].genero
+                            genero: resultadoAutenticar[0].genero,
+                            dtInativo: resultadoAutenticar[0].dtInativo,
+                            fkEstado: resultadoAutenticar[0].fkEstado,
+                            fkMunicipio: resultadoAutenticar[0].fkMunicipio
                         });
 
                     } else if (resultadoAutenticar.length == 0) {
@@ -144,11 +147,56 @@ function deletarUsuario(req, res) {
         );
 }
 
+function buscar(req, res) {
+    var nome = req.params.nome;
+    var email = req.params.email;
+    var cpf = req.params.cpf;
+    var cargo = req.params.cargo;
+    var genero = req.params.genero;
+    usuarioModel.buscar(nome, email, cpf, cargo, genero).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os objetivos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function editar(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var email = req.params.email; 
+    var senha = req.params.senha; 
+    var nome = req.params.nome;
+    var cpf = req.params.cpf;
+    var cargo = req.params.cargo;    
+    var estado = req.params.fkEstado;
+    var dtNasc = req.params.dtNasc;
+    var genero = req.params.genero;
+
+    usuarioModel.editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, genero)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao editar usuário: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     listar,
-    cadastrar,
-    listar,
-    deletarUsuario
+    deletarUsuario,
+    buscar,
+    editar
 }
