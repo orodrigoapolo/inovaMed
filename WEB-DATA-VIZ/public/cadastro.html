@@ -197,8 +197,10 @@
         const validacaoItens = document.querySelectorAll('.validacao-item');
         const botaoCadastrar = document.getElementById('botao-cadastrar');
 
+
         document.getElementById('senha').addEventListener('input', function () {
             var senha = document.getElementById('senha').value;
+
 
             // Mostrar as validações apenas quando o usuário começar a digitar
             if (senha.length > 0) {
@@ -206,6 +208,7 @@
             } else {
                 validacaoItens.forEach(item => item.style.display = 'none');
             }
+
 
             // Validação de tamanho mínimo
             if (senha.length >= 8) {
@@ -216,6 +219,7 @@
                 document.getElementById('icone-tamanho').classList.remove('green');
             }
 
+
             // Validação de maiúsculas
             if (/[A-Z]/.test(senha)) {
                 document.getElementById('icone-maiuscula').classList.add('green');
@@ -224,6 +228,7 @@
                 document.getElementById('icone-maiuscula').classList.add('red');
                 document.getElementById('icone-maiuscula').classList.remove('green');
             }
+
 
             // Validação de minúsculas
             if (/[a-z]/.test(senha)) {
@@ -234,6 +239,7 @@
                 document.getElementById('icone-minuscula').classList.remove('green');
             }
 
+
             // Validação de números
             if (/\d/.test(senha)) {
                 document.getElementById('icone-numero').classList.add('green');
@@ -242,6 +248,7 @@
                 document.getElementById('icone-numero').classList.add('red');
                 document.getElementById('icone-numero').classList.remove('green');
             }
+
 
             // Validação de caracteres especiais
             if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
@@ -253,10 +260,12 @@
             }
         });
 
+
         function validarSenha() {
             var senha = document.getElementById('senha').value;
             const confirmarSenha = document.getElementById('confirmar_senha').value;
             let mensagensErro = [];
+
 
             if (senha !== confirmarSenha) {
                 mensagensErro.push('As senhas não coincidem.');
@@ -277,8 +286,10 @@
                 mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
             }
 
+
             return mensagensErro;
         }
+
 
         function validarConfirmarSenha() {
             var senha = document.getElementById('senha').value;
@@ -288,10 +299,12 @@
             var estado = document.getElementById('estado').value;
             var mensagensErro = [];
 
+
             // Validação: Senha e Confirmar Senha são iguais
             if (senha !== confirmarSenha) {
                 mensagensErro.push('As senhas não coincidem.');
             }
+
 
             // Validação: E-mail no formato correto
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -299,15 +312,18 @@
                 mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
             }
 
+
             // Validação: Cargo selecionado
             if (cargo === "outros" || cargo === "") {
                 mensagensErro.push('Você precisa selecionar um cargo.');
             }
 
+
             // Validação: Estado selecionado
             if (estado === "outros" || estado === "") {
                 mensagensErro.push('Você precisa selecionar um estado.');
             }
+
 
             // Validação: Senha
             var senhaErros = validarSenha();
@@ -315,16 +331,27 @@
                 mensagensErro = mensagensErro.concat(senhaErros);
             }
 
+
             return mensagensErro;
         }
 
+
         function cadastrar() {
             var mensagensErro = validarConfirmarSenha();
+
 
             // Se houver erros, exibe um alerta
             if (mensagensErro.length > 0) {
                 alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
             } else {
+                var emailVar = email.value;
+                var nomeVar = nome.value;
+                var cpfVar = cpf.value;
+                var cargoVar = cargo.value;
+                var senhaVar = senha.value;
+                var dtNascVar = nascimento.value;
+
+                // Enviando o valor da nova input
                 var emailVar = document.getElementById('email').value;
                 var nomeVar = document.getElementById('nome').value;
                 var cpfVar = document.getElementById('cpf').value;
@@ -340,6 +367,8 @@
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
+                        // crie um atributo que recebe o valor recuperado aqui
+                        // Agora vá para o arquivo routes/usuario.js
                         emailServer: emailVar,
                         nomeServer: nomeVar,
                         cpfServer: cpfVar,
@@ -347,27 +376,40 @@
                         cargoServer: cargoVar,
                         fkEstadoServer: fkEstadoVar,
                         senhaServer: senhaVar,
-                        dataNascServer: dtNascVar
+                        dtNascServer: dtNascVar
                     }),
                 })
                     .then(function (resposta) {
+                        console.log("resposta: ", resposta);
+
                         if (resposta.ok) {
+                            //   cardErro.style.display = "block";
+
+                            //   mensagem_erro.innerHTML =
+                            //     "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
                             setTimeout(() => {
-                                alert('Cadastro realizado com sucesso! Redirecionando para tela de Login...');
+                                alert('Cadastrado com sucesso!');
                                 window.location = "login.html";
-                            }, 2000);
+                            }, "1000");
+
+                            //   limparFormulario();
+                            //   finalizarAguardar();
                         } else {
                             throw "Houve um erro ao tentar realizar o cadastro!";
                         }
                     })
                     .catch(function (resposta) {
                         console.log(`#ERRO: ${resposta}`);
+                        // finalizarAguardar();
                     });
+
 
                 return false;
             }
         }
     </script>
 </body>
+
 
 </html>

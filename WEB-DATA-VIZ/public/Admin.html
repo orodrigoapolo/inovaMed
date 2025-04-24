@@ -12,9 +12,11 @@
     <link rel="stylesheet" href="./css/admin.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link rel="icon" href="assets/icon/logo fundo azul.png" type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="validarSessao()">
+<body onload="listar(), validarSessao()">
     <div class="janela">
 
         <div class="header-left">
@@ -44,8 +46,28 @@
             <h1 class="titulo-dashboard">
                 Administrador
             </h1>
+            <div class="conteudo-dashboard-admin">
+                <div class="grupo-kpi">
+                    <div class="kpi-container">
+                    </div>
+                </div>
+                <div class="grupo-grafico">
+                    <div class="grafico-container">
+                        <canvas id=""></canvas>
+                    </div>
+                    <div class="grafico-container">
+                        <canvas id=""></canvas>
+                    </div>
+                    <div class="grafico-container">
+                        <canvas id=""></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        
+
+        <div class="dash-perfil" id="listaUsuarios">
 
         <div class="dash-perfil" id="dash_perfil">
 
@@ -60,11 +82,14 @@
                 </div>
             </div>
 
+            <!-- <div class="Perfil-edicao" style="display: none;"> -->
             <div class="cards-usuarios" id="cards_usuarios"></div>
 
             <div class="Perfil-edicao" style="display: none;">
+            <!-- <div class="Perfil-edicao""> -->
 
-                <div class="input-group" style="display: none;">
+                <div class="input-group" style="display: none;">    
+                <!-- <div class="input-group" > -->
                     <div class="input-item">
                         <label for="email">E-mail</label>
                         <i class="fa fa-envelope"></i>
@@ -122,6 +147,33 @@
                             <option value="outro">Outro</option>
                             <option value="nao_informar">Prefiro não informar</option>
                         </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="senha">Senha</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                    </div>
+                </div>
+                <div id="validacao-senha">
+                    <div class="validacao-item">
+                        <i id="icone-tamanho" class="fa fa-lock"></i>
+                        <p id="validacao-tamanho">Mínimo 8 caracteres</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-maiuscula" class="fa fa-lock"></i>
+                        <p id="validacao-maiuscula">Pelo menos uma letra maiúscula</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-minuscula" class="fa fa-lock"></i>
+                        <p id="validacao-minuscula">Pelo menos uma letra minúscula</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-numero" class="fa fa-lock"></i>
+                        <p id="validacao-numero">Pelo menos um número</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-caractere" class="fa fa-lock"></i>
+                        <p id="validacao-caractere">Pelo menos um caractere especial</p>
                     </div>
                 </div>
                 <div class="acoes-usuario">
@@ -200,5 +252,6 @@
 </body>
 
 </html>
+<script src="./js/perfil.js"></script>
 <script src="./js/Admin.js"></script>
 <script src="./js/sessao.js"></script>
