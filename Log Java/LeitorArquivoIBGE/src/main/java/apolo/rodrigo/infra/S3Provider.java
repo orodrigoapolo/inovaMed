@@ -1,4 +1,4 @@
-package sptech.school.client;
+package apolo.rodrigo.infra;
 
 import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.regions.Region;

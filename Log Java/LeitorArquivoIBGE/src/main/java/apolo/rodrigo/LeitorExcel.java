@@ -8,9 +8,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class LeitorExcel {
 
@@ -58,12 +60,12 @@ public class LeitorExcel {
 
                 Municipio municipio = new Municipio();
                 Estado estado = new Estado();
-                estado.setNome(cidades.get(nomeEstado));
+                estado.setNome(removerAcentos(cidades.get(nomeEstado)));
                 estado.setUF(row.getCell(0).getStringCellValue());
                 estado.setCod((int) row.getCell(1).getNumericCellValue());
                 municipio.setEstado(estado);
                 municipio.setCod((int) row.getCell(2).getNumericCellValue());
-                municipio.setNome(row.getCell(3).getStringCellValue());
+                municipio.setNome(removerAcentos(row.getCell(3).getStringCellValue()));
                 municipio.setQtdPopulacao(populacao);
                 municipiosExtraidos.add(municipio);
             }
@@ -78,5 +80,13 @@ public class LeitorExcel {
             // Caso ocorra algum erro durante a leitura do arquivo uma exceção será lançada
             throw new RuntimeException(e);
         }
+    }
+
+    private static String removerAcentos(String str) {
+
+        String normalizada = Normalizer.normalize(str, Normalizer.Form.NFD);
+
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalizada).replaceAll("");
     }
 }
