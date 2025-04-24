@@ -38,6 +38,8 @@ function entrar() {
                 sessionStorage.DT_NASC = json.dtNasc;
                 sessionStorage.GENERO_USUARIO = json.genero;
                 sessionStorage.DT_INATIVO = json.dtInativo;
+                sessionStorage.FK_ESTADO = json.fkEstado;
+                sessionStorage.FK_MUNICIPIO = json.fkMunicipio;
 
                 if (json.dtInativo == null) {
                     alert('Logado com sucesso'); 
