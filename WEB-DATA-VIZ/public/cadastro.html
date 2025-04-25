@@ -103,6 +103,13 @@
                                 </select>
                             </div>
 
+                            <div id="input_item_municipio" class="input-item" style="display: none;">
+                                <label for="municipio">Município em que atua</label>
+                                <i class="fa fa-map-marker-alt"></i> <!-- Ícone para municipio -->
+                                <select id="municipio" class="input-field"  >
+                                </select>
+                            </div>
+
                             <div class="input-item">
                                 <label for="email">E-mail</label>
                                 <i class="fa fa-envelope"></i>
@@ -257,6 +264,18 @@
             } else {
                 document.getElementById('icone-caractere').classList.add('red');
                 document.getElementById('icone-caractere').classList.remove('green');
+            }
+        });
+
+        document.getElementById('cargo').addEventListener('input', function () {
+            var cargo = document.getElementById('cargo').value;
+
+            console.log(cargo)
+
+            if (cargo == "coordenador_municipal") {
+                input_item_municipio.style.display = "flex"
+            } else {
+                input_item_municipio.style.display = "none"
             }
         });
 
