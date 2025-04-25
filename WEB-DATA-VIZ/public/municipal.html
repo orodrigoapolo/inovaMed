@@ -20,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="validarSessao()">
+<body onload="validarSessao(); listar2()">
 
     <div class="janela">
 
@@ -133,6 +133,12 @@
                             <option value="5">Rondônia</option>
                             <option value="6">Roraima</option>
                             <option value="7">Tocantins</option>
+                        </select>
+                    </div>
+                    <div id="input_item_municipio" class="input-item">
+                        <label for="municipio">Município em que atua</label>
+                        <i class="fa fa-map-marker-alt"></i> <!-- Ícone para municipio -->
+                        <select id="municipio" class="input-field" disabled>
                         </select>
                     </div>
                     <div class="input-item">
@@ -665,6 +671,48 @@
     genero.value = sessionStorage.GENERO_USUARIO;
     senha.value = sessionStorage.SENHA_USUARIO;
     estado.value = sessionStorage.FK_ESTADO;
+    function listar2(fkEstado) {
+            var fkEstado = document.getElementById('estado').value;
+            fetch(`/municipios/listar/${fkEstado}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO listar()!");
+
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+                            console.log("Número de usuários:", json.length);
+                            
+                            municipio.innerHTML = "";
+
+                            for (let i = 0; i < json.length; i++) {
+                                municipio.innerHTML += `
+                            <option value="${json[i].idMunicipio}">${json[i].nome}</option>
+                        `
+                            }
+                            municipio.value = sessionStorage.FK_MUNICIPIO;
+                        } else {
+                            console.log("Nenhum município encontrado.");
+                        }
+                    });
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar a listagem!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            });
+        }
+    
 
     var dataCompleta = new Date(sessionStorage.DT_NASC);
     var dia = String(dataCompleta.getDate()).padStart(2, '0');

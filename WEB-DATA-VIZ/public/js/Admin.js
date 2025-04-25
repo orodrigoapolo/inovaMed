@@ -1,5 +1,3 @@
-const { json } = require("express");
-
 function listar() {
     fetch(`/usuarios/listar`, {
         method: "GET",
