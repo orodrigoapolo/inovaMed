@@ -476,6 +476,7 @@ function criarCardVazio() {
                             <option value=""></option>
                             <option value="coordenador_estadual">Coordenador Estadual</option>
                             <option value="coordenador_municipal">Coordenador Municipal</option>
+                            <option value="administrador">Administrador</option>
                         </select>
                     </div>
 
