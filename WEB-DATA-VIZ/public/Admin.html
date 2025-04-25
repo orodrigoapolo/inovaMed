@@ -53,13 +53,13 @@
                 </div>
                 <div class="grupo-grafico">
                     <div class="grafico-container">
-                        <canvas id=""></canvas>
+                        <canvas id="graficoUsuariosEstado"></canvas>
                     </div>
                     <div class="grafico-container">
-                        <canvas id=""></canvas>
+                        <canvas id="graficoIdadeCoordenadores"></canvas>
                     </div>
                     <div class="grafico-container">
-                        <canvas id=""></canvas>
+                        <canvas id="graficoGeneroUsuarios"></canvas>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                 <div class="acoes-usuarios">
                     <div class="input-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="barra-pesquisa" placeholder="Pesquisar por tipo, título ou descrição">
+                        <input type="text" class="barra-pesquisa" id="barra_pesquisa" oninput="buscar()" placeholder="Pesquisar por tipo, título ou descrição">
                     </div>
                     <button class="btn-adicionar"><i class="fas fa-user-plus"></i> Adicionar Usuário</button>
                 </div>
@@ -252,6 +252,170 @@
 </body>
 
 </html>
-<script src="./js/perfil.js"></script>
-<script src="./js/Admin.js"></script>
-<script src="./js/sessao.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const ctx = document.getElementById('graficoUsuariosEstado').getContext('2d');
+
+const graficoUsuariosEstado = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'], // Região Norte
+        datasets: [
+            {
+                label: 'Coordenadores Municipais',
+                data: [12, 8, 25, 30, 15, 10, 18],
+                backgroundColor: '#28a745', // Verde
+                barThickness: 30
+            },
+            {
+                label: 'Coordenadores Estaduais',
+                data: [5, 3, 10, 12, 6, 4, 7],
+                backgroundColor: '#007bff', // Azul
+                barThickness: 30
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Usuários por Estado (Região Norte)',
+                font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+            },
+            legend: {
+                position: 'bottom'
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                title: {
+                    display: true,
+                    text: 'Estados',
+                    font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                }
+            },
+            y: {
+                stacked: true,
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Quantidade de Usuários',
+                    font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                }
+            }
+        }
+    }
+});
+
+const ctxGenero = document.getElementById('graficoGeneroUsuarios').getContext('2d');
+
+const graficoGeneroUsuarios = new Chart(ctxGenero, {
+    type: 'pie',
+    data: {
+        labels: ['Feminino', 'Masculino', 'Outro', 'Não informado'],
+        datasets: [{
+            label: 'Distribuição por Gênero',
+            data: [320, 280, 30, 50],
+            backgroundColor: ['#007bff', '#28a745', '#ffc107', '#6c757d'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Distribuição de Usuários por Gênero',
+                font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+const ctxIdade = document.getElementById('graficoIdadeCoordenadores').getContext('2d');
+
+const graficoIdadeCoordenadores = new Chart(ctxIdade, {
+    type: 'bar',
+    data: {
+        labels: ['18-25', '26-35', '36-49', '50+'],
+        datasets: [
+            {
+                label: 'Coordenadores Municipais',
+                data: [12, 30, 25, 8],
+                
+                backgroundColor: '#28a745'
+            },
+            {
+                label: 'Coordenadores Estaduais',
+                data: [5, 15, 20, 10],
+                backgroundColor: '#007bff'            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Faixa Etária dos Coordenadores',
+                font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+            },
+            legend: {
+                position: 'bottom'
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Faixa Etária',
+                    font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Quantidade de Coordenadores',
+                    font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                }
+            }
+        }
+    }
+});
+
+
+
+</script>
+
+
+
+
+<script src="./js/perfil.js"defer></script>
+<script src="./js/Admin.js" defer></script>
+<!-- <script src="./js/sessao.js" defer></script> -->

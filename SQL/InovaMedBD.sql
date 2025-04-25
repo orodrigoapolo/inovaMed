@@ -142,3 +142,4 @@ CREATE TABLE IF NOT EXISTS FaleConosco (
 	dt_solicitacao DATETIME DEFAULT NOW(),
     status VARCHAR(45)
 );
+

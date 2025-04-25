@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="./css/municipal.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/icon/logo fundo azul.png" type="image/x-icon">
@@ -65,18 +66,19 @@
                     <div class="kpi-container">
                     </div>
                 </div>
+                
                 <div class="grupo-grafico">
                     <div class="grafico-container">
-                        <canvas id=""></canvas>
+                        <canvas id="graficoTendencia"></canvas>   
                     </div>
                     <div class="grafico-container">
-                        <canvas id=""></canvas>
+                        <canvas id="graficoBarras"></canvas>   
                     </div>
                     <div class="grafico-container">
-                        <canvas id=""></canvas>
+                        <canvas id="graficoTendenciaResumo"></canvas>
                     </div>
                     <div class="grafico-container">
-                        <canvas id=""></canvas>
+                        <canvas id="graficoVencimento"></canvas>
                     </div>
                 </div>
             </div>
@@ -123,14 +125,14 @@
                         <label for="estado">Estado em que atua</label>
                         <i class="fa fa-map-marker-alt"></i>
                         <select id="estado" class="input-field" disabled>
-                            <option value="outros">Selecione seu estado</option>
-                            <option value="acre">Acre</option>
-                            <option value="amazonas">Amazonas</option>
-                            <option value="roraima">Roraima</option>
-                            <option value="rondonia">Rondônia</option>
-                            <option value="pará">Pará</option>
-                            <option value="amapá">Amapá</option>
-                            <option value="tocantins">Tocantins</option>
+                            <option value="outros"></option>
+                            <option value="1">Acre</option>
+                            <option value="2">Amapá</option>
+                            <option value="3">Amazonas</option>
+                            <option value="4">Pará</option>
+                            <option value="5">Rondônia</option>
+                            <option value="6">Roraima</option>
+                            <option value="7">Tocantins</option>
                         </select>
                     </div>
                     <div class="input-item">
@@ -296,7 +298,383 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // GRÁFICO DE BARRAS
+            const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
+            const graficoBarras = new Chart(ctxBarras, {
+                type: 'bar',
+                data: {
+                    labels: ['Remédio 1', 'Remédio 2', 'Remédio 3', 'Remédio 4'],
+                    datasets: [
+                        {
+                            label: 'Período Anterior',
+                            data: [60, 70, 85, 90],
+                            backgroundColor: 'rgb(255, 99, 132)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Período Atual',
+                            data: [80, 125, 100, 130],
+                            backgroundColor: 'rgba(54, 162, 235)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Comparação de quantidade de remédios por período',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: 0,
+                            max: 140,
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    }
+                }
+            });
+
+            // GRÁFICO DE TENDÊNCIA
+            const ctxTendencia = document.getElementById('graficoTendencia').getContext('2d');
+            const graficoTendencia = new Chart(ctxTendencia, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    datasets: [
+                        {
+                            label: 'Remédio X',
+                            data: [30, 35, 40, 45, 50, 48, 47, 49, 52, 54, 58, 60],
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'transparent',
+                            tension: 0.3,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                        },
+                        {
+                            label: 'Remédio Y',
+                            data: [20, 25, 28, 30, 35, 36, 33, 34, 38, 40, 42, 45],
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'transparent',
+                            borderDash: [5, 5],
+                            tension: 0.3,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                        },
+                        {
+                            label: 'Remédio Z',
+                            data: [10, 15, 18, 20, 22, 21, 19, 22, 24, 26, 28, 30],
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            backgroundColor: 'transparent',
+                            tension: 0.3,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                        },
+                        {
+                            label: 'Media pessoas com asma',
+                            data: [25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25],
+                            borderColor: 'rgba(75, 192, 192, )',
+                            borderDash: [10, 5],
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            pointRadius: 0,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Histórico mensal de medicamentos comprados por mês',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 15,
+                                padding: 10
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Quantidade',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Meses',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // GRÁFICO DE VENCIMENTO DE LOTES
+            // GRÁFICO DE VENCIMENTO DE LOTES
+            const ctxVencimento = document.getElementById('graficoVencimento').getContext('2d');
+
+            const lotes = [
+                { nome: 'Lote A', remedio: 'Remédio X', vencimento: '2025-05-01', quantidade: 50 },
+                { nome: 'Lote B', remedio: 'Remédio Y', vencimento: '2025-05-10', quantidade: 30 },
+                { nome: 'Lote C', remedio: 'Remédio Z', vencimento: '2025-05-15', quantidade: 40 },
+                { nome: 'Lote D', remedio: 'Remédio X', vencimento: '2025-05-20', quantidade: 20 },
+                { nome: 'Lote E', remedio: 'Remédio Y', vencimento: '2025-05-25', quantidade: 60 }
+            ];
+
+            // Ordenar por data de vencimento
+            lotes.sort((a, b) => new Date(a.vencimento) - new Date(b.vencimento));
+            const labelsVenc = lotes.map(l => l.vencimento);
+            const dataVenc = lotes.map(l => l.quantidade);
+            const infoVenc = lotes.map(l => `${l.nome} - ${l.remedio}`);
+
+            // Cores diferentes para cada barra
+            const cores = [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)'
+            ];
+            const coresBorda = cores.map(c => c.replace('0.6', '1'));
+
+            const graficoVencimento = new Chart(ctxVencimento, {
+                type: 'bar',
+                data: {
+                    labels: labelsVenc,
+                    datasets: [{
+                        label: 'Quantidade por Lote',
+                        data: dataVenc,
+                        backgroundColor: cores,
+                        borderColor: coresBorda,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Remédios Próximos ao Vencimento',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    const quantidade = context.raw;
+                                    const info = infoVenc[context.dataIndex];
+                                    return `${info}: ${quantidade} unidades`;
+                                }
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                generateLabels: function () {
+                                    // Exibe as legendas como os lotes/remédios
+                                    return infoVenc.map((info, index) => ({
+                                        text: info,
+                                        fillStyle: cores[index],
+                                        strokeStyle: coresBorda[index],
+                                        lineWidth: 1,
+                                        hidden: false,
+                                        index: index
+                                    }));
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Quantidade',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Data de Vencimento',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const ctxTendencia2 = document.getElementById('graficoTendenciaResumo').getContext('2d');
+
+            const graficoTendencia2 = new Chart(ctxTendencia2, {
+                type: 'line',
+                data: {
+                    labels: ['Mês Anterior', 'Mês Atual', 'Próximo Mês'],
+                    datasets: [
+                        {
+                            label: 'Remédio X',
+                            data: [80, 90, 120],
+                            borderColor: 'rgba(30, 144, 255, 1)',  // Azul Médio Escuro
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 5,
+                            pointBackgroundColor: 'rgba(173, 216, 230, 1)'  // Azul Claro
+                        },
+                        {
+                            label: 'Remédio Y',
+                            data: [90, 60, 70],
+                            borderColor: 'rgba(34, 139, 34, 1)',  // Verde Médio Escuro
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 5,
+                            pointBackgroundColor: 'rgba(144, 238, 144, 1)'  // Verde Claro
+                        },
+                        {
+                            label: 'Remédio Z',
+                            data: [20, 40, 65],
+                            borderColor: 'rgba(255, 204, 0, 1)',  // Amarelo Médio Escuro
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 5,
+                            pointBackgroundColor: 'rgba(255, 255, 102, 1)'  // Amarelo Claro
+                        }
+
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Tendência de Compra por Remédio',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 20,
+                                padding: 10
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Quantidade Comprada',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Período',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                autoSkip: false,
+
+                            },
+
+                        }
+                    }
+                }
+            });
+
+        });
+
+
+
+    </script>
+
 
 </body>
 
+
 </html>
+<script src="./js/sessao.js"></script>
+<script>
+    nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
+    
+    nome.value = sessionStorage.NOME_USUARIO;
+    email.value = sessionStorage.EMAIL_USUARIO;
+    cpf.value = sessionStorage.CPF_USUARIO;
+    cargo.value = sessionStorage.CARGO_USUARIO;
+    genero.value = sessionStorage.GENERO_USUARIO;
+    senha.value = sessionStorage.SENHA_USUARIO;
+    estado.value = sessionStorage.FK_ESTADO;
+    
+    var dataCompleta = new Date(sessionStorage.DT_NASC);
+    var dia = String(dataCompleta.getDate()).padStart(2, '0');
+    var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
+    var ano = dataCompleta.getFullYear();
+    var dataFormatada = `${ano}-${mes}-${dia}`;
+    
+    nascimento.value = dataFormatada;
+    
+</script>
+
+</html> 

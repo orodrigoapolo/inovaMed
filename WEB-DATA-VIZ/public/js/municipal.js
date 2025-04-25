@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnSalvar.style.display = 'none';
         btnDescartar.style.display = 'none';
         btnEditar.style.display = 'inline-block';
-        alert("Informações salvas com sucesso!");
+        editar();
     };
 
     // Exclusão de conta
@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     btnConfirmDelete.addEventListener('click', () => {
         modal.classList.add('hidden');
         alert("Conta excluída com sucesso!");
+        deletarUsuario();
         // Aqui você pode redirecionar ou fazer uma chamada para deletar a conta
     });
 
@@ -104,53 +105,53 @@ document.addEventListener('DOMContentLoaded', function () {
             input.dataset.originalValue = input.value;
         }
     });
-// Funções para os parâmetros
+    // Funções para os parâmetros
 
-const inputParametroMenorValor = document.getElementById('input_parametro_menor_valor');
-const inputParametroMaiorValor = document.getElementById('input_parametro_maior_valor');
-const btnEditarParametro = document.getElementById('btn-editar-parametro');
-const btnSalvarParametro = document.getElementById('btn-salvar-parametro');
-const btnDescartarParametro = document.getElementById('btn-descartar-parametro');
-
-
-window.editarInformacoesParametro = function () {
-    inputParametroMenorValor.disabled = false;
-    inputParametroMaiorValor.disabled = false;
-
-    btnSalvarParametro.style.display = 'inline-block';
-    btnDescartarParametro.style.display = 'inline-block';
-    btnEditarParametro.style.display = 'none';
-};
+    const inputParametroMenorValor = document.getElementById('input_parametro_menor_valor');
+    const inputParametroMaiorValor = document.getElementById('input_parametro_maior_valor');
+    const btnEditarParametro = document.getElementById('btn-editar-parametro');
+    const btnSalvarParametro = document.getElementById('btn-salvar-parametro');
+    const btnDescartarParametro = document.getElementById('btn-descartar-parametro');
 
 
-window.descartarEdicaoParametro = function () {
-    inputParametroMenorValor.disabled = true;
-    inputParametroMaiorValor.disabled = true;
+    window.editarInformacoesParametro = function () {
+        inputParametroMenorValor.disabled = false;
+        inputParametroMaiorValor.disabled = false;
 
-    btnSalvarParametro.style.display = 'none';
-    btnDescartarParametro.style.display = 'none';
-    btnEditarParametro.style.display = 'inline-block';
-
-  
-    inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
-    inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
-    alert("Parâmetros descartados com sucesso!");
-};
+        btnSalvarParametro.style.display = 'inline-block';
+        btnDescartarParametro.style.display = 'inline-block';
+        btnEditarParametro.style.display = 'none';
+    };
 
 
-window.salvarInformacoesParametro = function () {
-    inputParametroMenorValor.disabled = true;
-    inputParametroMaiorValor.disabled = true;
+    window.descartarEdicaoParametro = function () {
+        inputParametroMenorValor.disabled = true;
+        inputParametroMaiorValor.disabled = true;
 
-    inputParametroMenorValor.dataset.originalValue = inputParametroMenorValor.value;
-    inputParametroMaiorValor.dataset.originalValue = inputParametroMaiorValor.value;
+        btnSalvarParametro.style.display = 'none';
+        btnDescartarParametro.style.display = 'none';
+        btnEditarParametro.style.display = 'inline-block';
 
-    btnSalvarParametro.style.display = 'none';
-    btnDescartarParametro.style.display = 'none';
-    btnEditarParametro.style.display = 'inline-block';
-    
-    alert("Parâmetros salvos com sucesso!");
-};
+
+        inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
+        inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
+        alert("Parâmetros descartados com sucesso!");
+    };
+
+
+    window.salvarInformacoesParametro = function () {
+        inputParametroMenorValor.disabled = true;
+        inputParametroMaiorValor.disabled = true;
+
+        inputParametroMenorValor.dataset.originalValue = inputParametroMenorValor.value;
+        inputParametroMaiorValor.dataset.originalValue = inputParametroMaiorValor.value;
+
+        btnSalvarParametro.style.display = 'none';
+        btnDescartarParametro.style.display = 'none';
+        btnEditarParametro.style.display = 'inline-block';
+
+        configurar();
+    };
 
 });
 
@@ -186,6 +187,104 @@ function listar() {
 
     }).catch(function (erro) {
         console.log(erro);
+    });
+}
+
+function configurar() {
+    // Se houver erros, exibe um alerta
+    var maxVar = document.getElementById('input_parametro_maior_valor').value;
+    var minVar = document.getElementById('input_parametro_menor_valor').value;
+    var idUsuario = sessionStorage.ID_USUARIO;
+    if (!maxVar || !minVar) {
+        alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
+    } else {
+        fetch(`/parametros/configurar/${idUsuario}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                maxServer: maxVar,
+                minServer: minVar
+            }),
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    setTimeout(() => {
+                        alert('Configuração realizada com sucesso!');
+                    }, 2000);
+                } else {
+                    throw "Houve um erro ao tentar realizar a configuração!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+}
+
+function deletarUsuario(idUsuario) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    console.log("Criar função de apagar post escolhido - ID" + idUsuario);
+    fetch(`/usuarios/deletarUsuario/${idUsuario}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+
+        if (resposta.ok) {
+            sessionStorage.clear();
+            window.location = "../login.html";
+        } else if (resposta.status == 404) {
+            window.alert("Deu 404!");
+        } else {
+            throw ("Houve um erro ao tentar deletar usuário! Código da resposta: " + resposta.status);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+    });
+}
+
+function editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, genero) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    var email = document.getElementById(`email`).value
+    var senha = document.getElementById(`senha`).value
+    var nome = document.getElementById(`nome`).value
+    var cpf = document.getElementById(`cpf`).value
+    var cargo = document.getElementById(`cargo`).value
+    var estado = document.getElementById(`estado`).value
+    var dtNasc = document.getElementById(`nascimento`).value
+    var genero = document.getElementById(`genero`).value;
+
+
+    fetch(`/usuarios/editar/${idUsuario}/${email}/${senha}/${nome}/${cpf}/${cargo}/${estado}/${dtNasc}/${genero}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+
+        if (resposta.ok) {
+            sessionStorage.EMAIL_USUARIO = email;
+            sessionStorage.NOME_USUARIO = nome;
+            sessionStorage.CPF_USUARIO = cpf;
+            sessionStorage.CARGO_USUARIO = cargo;
+            sessionStorage.GENERO_USUARIO = genero;
+            sessionStorage.SENHA_USUARIO = senha;
+            sessionStorage.FK_ESTADO = estado;
+            sessionStorage.DT_NASC = dtNasc;
+            
+            window.alert(`Usuário editado com sucesso!`);
+        } else if (resposta.status == 404) {
+            window.alert("Deu 404!");
+        } else {
+            throw ("Houve um erro ao tentar editar usuário! Código da resposta: " + resposta.status);
+        }
+    }).catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
     });
 }
 
