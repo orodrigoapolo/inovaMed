@@ -312,14 +312,14 @@ function deletarUsuario(idUsuario) {
 
 function editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, genero) {
     var idUsuario = sessionStorage.ID_CONTAINER;
-    var email = document.getElementById(`email${idUsuario-1}`).value;
-    var senha = document.getElementById(`senha${idUsuario-1}`).value;
-    var nome = document.getElementById(`nome${idUsuario-1}`).value;
-    var cpf = document.getElementById(`cpf${idUsuario-1}`).value;
-    var cargo = document.getElementById(`cargo${idUsuario-1}`).value;
-    var estado = document.getElementById(`estado${idUsuario-1}`).value;
-    var dtNasc = document.getElementById(`nascimento${idUsuario-1}`).value;
-    var genero = document.getElementById(`genero${idUsuario-1}`).value;
+    var email = document.getElementById(`email${idUsuario - 1}`).value;
+    var senha = document.getElementById(`senha${idUsuario - 1}`).value;
+    var nome = document.getElementById(`nome${idUsuario - 1}`).value;
+    var cpf = document.getElementById(`cpf${idUsuario - 1}`).value;
+    var cargo = document.getElementById(`cargo${idUsuario - 1}`).value;
+    var estado = document.getElementById(`estado${idUsuario - 1}`).value;
+    var dtNasc = document.getElementById(`nascimento${idUsuario - 1}`).value;
+    var genero = document.getElementById(`genero${idUsuario - 1}`).value;
 
     fetch(`/usuarios/editar/${idUsuario}/${email}/${senha}/${nome}/${cpf}/${cargo}/${estado}/${dtNasc}/${genero}`, {
         method: "PUT",
@@ -365,8 +365,38 @@ function adicionarEventosBotoes(json) {
         const btnEditar = document.querySelectorAll('.btn-editar')[i];
         const btnExcluir = document.querySelectorAll('.btn-excluir')[i];
 
-        const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}`);
+        const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}`);
         let editando = false;
+
+        // AQUI COMEÇA A VALIDAÇÃO DE SENHA AO DIGITAR
+        const campoSenha = document.querySelector(`#senha${i}`);
+        const card = document.querySelector(`#card-usuario-${json[i].idUsuario}`);
+
+        const iconeTamanho = card.querySelector('#icone-tamanho');
+        const iconeMaiuscula = card.querySelector('#icone-maiuscula');
+        const iconeMinuscula = card.querySelector('#icone-minuscula');
+        const iconeNumero = card.querySelector('#icone-numero');
+        const iconeCaractere = card.querySelector('#icone-caractere');
+
+        campoSenha.addEventListener('input', () => {
+            const senha = campoSenha.value;
+
+            iconeTamanho.classList.toggle('green', senha.length >= 8);
+            iconeTamanho.classList.toggle('red', senha.length < 8);
+
+            iconeMaiuscula.classList.toggle('green', /[A-Z]/.test(senha));
+            iconeMaiuscula.classList.toggle('red', !/[A-Z]/.test(senha));
+
+            iconeMinuscula.classList.toggle('green', /[a-z]/.test(senha));
+            iconeMinuscula.classList.toggle('red', !/[a-z]/.test(senha));
+
+            iconeNumero.classList.toggle('green', /\d/.test(senha));
+            iconeNumero.classList.toggle('red', !/\d/.test(senha));
+
+            iconeCaractere.classList.toggle('green', /[!@#$%^&*(),.?":{}|<>]/.test(senha));
+            iconeCaractere.classList.toggle('red', !/[!@#$%^&*(),.?":{}|<>]/.test(senha));
+        });
+
 
 
         btnEditar.addEventListener('click', () => {
@@ -603,131 +633,131 @@ function aplicarEventosCardEdicaoInicial(card) {
 
 document.querySelector('.btn-adicionar').addEventListener('click', criarCardVazio);
 
-        const validacaoItens = document.querySelectorAll('.validacao-item');
-        const botaoCadastrar = document.getElementById('botao-cadastrar');
+const validacaoItens = document.querySelectorAll('.validacao-item');
+const botaoCadastrar = document.getElementById('botao-cadastrar');
 
 
-        document.getElementById('senha').addEventListener('input', function () {
-            var senha = document.getElementById('senha').value;
+document.getElementById('senha').addEventListener('input', function () {
+    var senha = document.getElementById('senha').value;
 
 
-            // Mostrar as validações apenas quando o usuário começar a digitar
-            if (senha.length > 0) {
-                validacaoItens.forEach(item => item.style.display = 'flex');
-            } else {
-                validacaoItens.forEach(item => item.style.display = 'none');
-            }
+    // Mostrar as validações apenas quando o usuário começar a digitar
+    if (senha.length > 0) {
+        validacaoItens.forEach(item => item.style.display = 'flex');
+    } else {
+        validacaoItens.forEach(item => item.style.display = 'none');
+    }
 
 
-            // Validação de tamanho mínimo
-            if (senha.length >= 8) {
-                document.getElementById('icone-tamanho').classList.add('green');
-                document.getElementById('icone-tamanho').classList.remove('red');
-            } else {
-                document.getElementById('icone-tamanho').classList.add('red');
-                document.getElementById('icone-tamanho').classList.remove('green');
-            }
+    // Validação de tamanho mínimo
+    if (senha.length >= 8) {
+        document.getElementById('icone-tamanho').classList.add('green');
+        document.getElementById('icone-tamanho').classList.remove('red');
+    } else {
+        document.getElementById('icone-tamanho').classList.add('red');
+        document.getElementById('icone-tamanho').classList.remove('green');
+    }
 
 
-            // Validação de maiúsculas
-            if (/[A-Z]/.test(senha)) {
-                document.getElementById('icone-maiuscula').classList.add('green');
-                document.getElementById('icone-maiuscula').classList.remove('red');
-            } else {
-                document.getElementById('icone-maiuscula').classList.add('red');
-                document.getElementById('icone-maiuscula').classList.remove('green');
-            }
+    // Validação de maiúsculas
+    if (/[A-Z]/.test(senha)) {
+        document.getElementById('icone-maiuscula').classList.add('green');
+        document.getElementById('icone-maiuscula').classList.remove('red');
+    } else {
+        document.getElementById('icone-maiuscula').classList.add('red');
+        document.getElementById('icone-maiuscula').classList.remove('green');
+    }
 
 
-            // Validação de minúsculas
-            if (/[a-z]/.test(senha)) {
-                document.getElementById('icone-minuscula').classList.add('green');
-                document.getElementById('icone-minuscula').classList.remove('red');
-            } else {
-                document.getElementById('icone-minuscula').classList.add('red');
-                document.getElementById('icone-minuscula').classList.remove('green');
-            }
+    // Validação de minúsculas
+    if (/[a-z]/.test(senha)) {
+        document.getElementById('icone-minuscula').classList.add('green');
+        document.getElementById('icone-minuscula').classList.remove('red');
+    } else {
+        document.getElementById('icone-minuscula').classList.add('red');
+        document.getElementById('icone-minuscula').classList.remove('green');
+    }
 
 
-            // Validação de números
-            if (/\d/.test(senha)) {
-                document.getElementById('icone-numero').classList.add('green');
-                document.getElementById('icone-numero').classList.remove('red');
-            } else {
-                document.getElementById('icone-numero').classList.add('red');
-                document.getElementById('icone-numero').classList.remove('green');
-            }
+    // Validação de números
+    if (/\d/.test(senha)) {
+        document.getElementById('icone-numero').classList.add('green');
+        document.getElementById('icone-numero').classList.remove('red');
+    } else {
+        document.getElementById('icone-numero').classList.add('red');
+        document.getElementById('icone-numero').classList.remove('green');
+    }
 
 
-            // Validação de caracteres especiais
-            if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
-                document.getElementById('icone-caractere').classList.add('green');
-                document.getElementById('icone-caractere').classList.remove('red');
-            } else {
-                document.getElementById('icone-caractere').classList.add('red');
-                document.getElementById('icone-caractere').classList.remove('green');
-            }
-        });
+    // Validação de caracteres especiais
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+        document.getElementById('icone-caractere').classList.add('green');
+        document.getElementById('icone-caractere').classList.remove('red');
+    } else {
+        document.getElementById('icone-caractere').classList.add('red');
+        document.getElementById('icone-caractere').classList.remove('green');
+    }
+});
 
 
-        function validarSenha() {
-            var senha = document.getElementById('senha').value;
-            let mensagensErro = [];
+function validarSenha() {
+    var senha = document.getElementById('senha').value;
+    let mensagensErro = [];
 
-            if (senha.length < 8) {
-                mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
-            }
-            if (!/[A-Z]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
-            }
-            if (!/[a-z]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
-            }
-            if (!/\d/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos um número.');
-            }
-            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
-            }
-
-
-            return mensagensErro;
-        }
+    if (senha.length < 8) {
+        mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
+    }
+    if (!/[A-Z]/.test(senha)) {
+        mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
+    }
+    if (!/[a-z]/.test(senha)) {
+        mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
+    }
+    if (!/\d/.test(senha)) {
+        mensagensErro.push('A senha precisa de pelo menos um número.');
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+        mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
+    }
 
 
-        function validarConfirmarSenha() {
-            var senha = document.getElementById('senha').value;
-            var email = document.getElementById('email').value;
-            var cargo = document.getElementById('cargo').value;
-            var estado = document.getElementById('estado').value;
-            var mensagensErro = [];
+    return mensagensErro;
+}
 
 
-            // Validação: E-mail no formato correto
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
-            }
+function validarConfirmarSenha() {
+    var senha = document.getElementById('senha').value;
+    var email = document.getElementById('email').value;
+    var cargo = document.getElementById('cargo').value;
+    var estado = document.getElementById('estado').value;
+    var mensagensErro = [];
 
 
-            // Validação: Cargo selecionado
-            if (cargo === "outros" || cargo === "") {
-                mensagensErro.push('Você precisa selecionar um cargo.');
-            }
+    // Validação: E-mail no formato correto
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
+    }
 
 
-            // Validação: Estado selecionado
-            if (estado === "outros" || estado === "") {
-                mensagensErro.push('Você precisa selecionar um estado.');
-            }
+    // Validação: Cargo selecionado
+    if (cargo === "outros" || cargo === "") {
+        mensagensErro.push('Você precisa selecionar um cargo.');
+    }
 
 
-            // Validação: Senha
-            var senhaErros = validarSenha();
-            if (senhaErros.length > 0) {
-                mensagensErro = mensagensErro.concat(senhaErros);
-            }
+    // Validação: Estado selecionado
+    if (estado === "outros" || estado === "") {
+        mensagensErro.push('Você precisa selecionar um estado.');
+    }
 
 
-            return mensagensErro;
-        }
+    // Validação: Senha
+    var senhaErros = validarSenha();
+    if (senhaErros.length > 0) {
+        mensagensErro = mensagensErro.concat(senhaErros);
+    }
+
+
+    return mensagensErro;
+}
