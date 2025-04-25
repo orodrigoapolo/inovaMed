@@ -195,7 +195,7 @@ module.exports = {
     autenticar,
     cadastrar,
     listar,
-    deletarUsuario,
     buscar,
-    editar
+    editar,
+    deletarUsuario
 }
