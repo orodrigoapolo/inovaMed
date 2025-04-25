@@ -91,7 +91,7 @@
                             <div class="input-item">
                                 <label for="estado">Estado em que atua</label>
                                 <i class="fa fa-map-marker-alt"></i> <!-- Ícone para estado -->
-                                <select id="estado" class="input-field">
+                                <select id="estado" class="input-field" onclick="listar()">
                                     <option value="outros">Selecione seu estado</option>
                                     <option value="1">Acre</option>
                                     <option value="2">Amapá</option>
@@ -100,6 +100,13 @@
                                     <option value="5">Rondônia</option>
                                     <option value="6">Roraima</option>
                                     <option value="7">Tocantins</option>
+                                </select>
+                            </div>
+
+                            <div id="input_item_municipio" class="input-item" style="display: none;">
+                                <label for="municipio">Município em que atua</label>
+                                <i class="fa fa-map-marker-alt"></i> <!-- Ícone para municipio -->
+                                <select id="municipio" class="input-field">
                                 </select>
                             </div>
 
@@ -260,6 +267,17 @@
             }
         });
 
+        document.getElementById('cargo').addEventListener('input', function () {
+            var cargo = document.getElementById('cargo').value;
+
+            console.log(cargo)
+
+            if (cargo == "coordenador_municipal") {
+                input_item_municipio.style.display = "flex"
+            } else {
+                input_item_municipio.style.display = "none"
+            }
+        });
 
         function validarSenha() {
             var senha = document.getElementById('senha').value;
@@ -344,12 +362,6 @@
             if (mensagensErro.length > 0) {
                 alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
             } else {
-                var emailVar = email.value;
-                var nomeVar = nome.value;
-                var cpfVar = cpf.value;
-                var cargoVar = cargo.value;
-                var senhaVar = senha.value;
-                var dtNascVar = nascimento.value;
 
                 // Enviando o valor da nova input
                 var emailVar = document.getElementById('email').value;
@@ -358,6 +370,7 @@
                 var generoVar = document.getElementById('genero').value;
                 var cargoVar = document.getElementById('cargo').value;
                 var fkEstadoVar = document.getElementById('estado').value;
+                var fkMunicipioVar = document.getElementById('municipio').value;
                 var senhaVar = document.getElementById('senha').value;
                 var dtNascVar = document.getElementById('nascimento').value;
 
@@ -375,6 +388,7 @@
                         generoServer: generoVar,
                         cargoServer: cargoVar,
                         fkEstadoServer: fkEstadoVar,
+                        fkMunicipioServer: fkMunicipioVar,
                         senhaServer: senhaVar,
                         dtNascServer: dtNascVar
                     }),
@@ -407,6 +421,48 @@
 
                 return false;
             }
+        }
+
+        function listar(fkEstado) {
+            var fkEstado = document.getElementById('estado').value;
+            fetch(`/municipios/listar/${fkEstado}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO listar()!");
+
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+                            console.log("Número de usuários:", json.length);
+                            
+                            municipio.innerHTML = "";
+
+                            for (let i = 0; i < json.length; i++) {
+                                municipio.innerHTML += `
+                            <option value="${json[i].idMunicipio}">${json[i].nome}</option>
+                        `
+                            }
+
+                        } else {
+                            console.log("Nenhum município encontrado.");
+                        }
+                    });
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar a listagem!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            });
         }
     </script>
 </body>

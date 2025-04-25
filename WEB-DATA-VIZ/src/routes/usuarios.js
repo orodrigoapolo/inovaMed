@@ -28,4 +28,8 @@ router.put("/editar/:idUsuario/:email/:senha/:nome/:cpf/:cargo/:fkEstado/:dtNasc
     usuarioController.editar(req, res);
 })
 
+router.post("/novoUsuario", function (req, res) {
+    usuarioController.novoUsuario(req, res);
+})
+
 module.exports = router;
