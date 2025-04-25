@@ -569,7 +569,7 @@ function criarCardVazio() {
                     </div>
                 </div>
                 <div class="acoes-usuario">
-                    <button class="btn-editar"><i class="fa-solid fa-pencil"></i></button>
+                    <button class="btn-editar" onclick="novoUsuario()"><i class="fa-solid fa-pencil"></i></button>
                     <button class="btn-excluir"><i class="fas fa-trash-alt"></i></button>
                 </div>
     `;
@@ -602,7 +602,6 @@ function aplicarEventosCardEdicaoInicial(card) {
             : '<i class="fas fa-trash-alt"></i>';
 
         if (!editando) {
-            alert('Dados salvos com sucesso!');
         }
     });
 
@@ -759,4 +758,71 @@ function validarConfirmarSenha() {
 
 
     return mensagensErro;
+}
+
+function novoUsuario() {
+    var mensagensErro = validarConfirmarSenha();
+
+
+    // Se houver erros, exibe um alerta
+    if (mensagensErro.length > 0) {
+        alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
+    } else {
+
+        // Enviando o valor da nova input
+        var emailVar = document.getElementById('email').value;
+        var nomeVar = document.getElementById('nome').value;
+        var cpfVar = document.getElementById('cpf').value;
+        var generoVar = document.getElementById('genero').value;
+        var cargoVar = document.getElementById('cargo').value;
+        var fkEstadoVar = document.getElementById('estado').value;
+        var senhaVar = document.getElementById('senha').value;
+        var dtNascVar = document.getElementById('nascimento').value;
+
+        fetch("/usuarios/novoUsuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                emailServer: emailVar,
+                nomeServer: nomeVar,
+                cpfServer: cpfVar,
+                generoServer: generoVar,
+                cargoServer: cargoVar,
+                fkEstadoServer: fkEstadoVar,
+                senhaServer: senhaVar,
+                dtNascServer: dtNascVar
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    //   cardErro.style.display = "block";
+
+                    //   mensagem_erro.innerHTML =
+                    //     "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                    setTimeout(() => {
+                        alert('Cadastrado com sucesso!');
+                        listar();
+                    }, "1000");
+
+                    //   limparFormulario();
+                    //   finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+
+        return false;
+    }
 }
