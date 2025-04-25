@@ -343,6 +343,61 @@ body {
   #titulo-periodo-atual {
     width: 25vw;
   }
+
+  .conteudo-dashboard-municipal {
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 2%;
+  }
+  
+  .grupo-kpi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95vw;
+    height: fit-content;
+    margin: 2%;
+  }
+  
+  .kpi-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    width: 90vw;
+    height: 30vh;
+  }
+  
+  .grupo-grafico {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 95vw;
+    height: fit-content;
+    margin: 2%;
+    margin-bottom: 5%;
+  }
+  
+  .grafico-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 90vw;
+    height: 30vh;
+  }
+  
+  .grafico-container canvas {
+    width: 90vw;
+    height: 35vh;
+  }
 }
 
 /* Parte das Informações */
@@ -1269,6 +1324,10 @@ textarea {
   justify-content: center;
   align-items: center;
   opacity: 0.5;
+}
+
+#adicionar_contato {
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
