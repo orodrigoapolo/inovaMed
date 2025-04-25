@@ -584,15 +584,18 @@ function aplicarEventosCardEdicaoInicial(card) {
     const campos = card.querySelectorAll('.input-field');
     let editando = true;
 
-    // Já deixar campos habilitados
     campos.forEach(campo => campo.disabled = false);
+
+ 
+    btnEditar.innerHTML = '<i class="fa-solid fa-check"></i>';
+    btnExcluir.innerHTML = '<i class="fa-solid fa-times" style="color: red;"></i>';
 
     btnEditar.addEventListener('click', () => {
         editando = !editando;
         campos.forEach(campo => campo.disabled = !editando);
         btnEditar.innerHTML = editando
             ? '<i class="fa-solid fa-check"></i>'
-            : '<i class="fa-solid fa-pencil"></i>';
+            : '<i class="fa-solid fa-pencil"></i>'; 
         btnExcluir.innerHTML = editando
             ? '<i class="fa-solid fa-times" style="color: red;"></i>'
             : '<i class="fas fa-trash-alt"></i>';
@@ -604,22 +607,19 @@ function aplicarEventosCardEdicaoInicial(card) {
 
     btnExcluir.addEventListener('click', () => {
         if (editando) {
-            campos.forEach(campo => campo.disabled = true);
-            btnEditar.innerHTML = '<i class="fa-solid fa-pencil"></i>';
-            btnExcluir.innerHTML = '<i class="fas fa-trash-alt"></i>';
-            editando = false;
-            alert('Edição descartada!');
+            card.remove(); 
+            alert('Novo usuário descartado!');
         } else {
             const modalExcluir = document.getElementById('modalExcluir');
             const btnCancelar = document.getElementById('btnCancelarExclusao');
             const btnConfirmar = document.getElementById('btnConfirmarExclusao');
-
+    
             modalExcluir.classList.remove('hidden');
-
+    
             btnCancelar.onclick = () => {
                 modalExcluir.classList.add('hidden');
             };
-
+    
             btnConfirmar.onclick = () => {
                 card.remove();
                 modalExcluir.classList.add('hidden');
@@ -627,11 +627,9 @@ function aplicarEventosCardEdicaoInicial(card) {
             };
         }
     });
+    
 }
 
-
-
-document.querySelector('.btn-adicionar').addEventListener('click', criarCardVazio);
 
 const validacaoItens = document.querySelectorAll('.validacao-item');
 const botaoCadastrar = document.getElementById('botao-cadastrar');
