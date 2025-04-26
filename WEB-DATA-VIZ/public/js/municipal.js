@@ -153,6 +153,48 @@ document.addEventListener('DOMContentLoaded', function () {
         configurar();
     };
 
+    // Funções para contato
+
+    const inputEmailContato = document.getElementById('input_email_contato');
+    const btnEditarContato = document.getElementById('btn-editar-contato');
+    const btnSalvarContato = document.getElementById('btn-salvar-contato');
+    const btnDescartarContato = document.getElementById('btn-descartar-contato');
+
+
+    window.editarInformacoesContato = function () {
+        inputEmailContato.disabled = false;
+
+        btnSalvarContato.style.display = 'inline-block';
+        btnDescartarContato.style.display = 'inline-block';
+        btnEditarContato.style.display = 'none';
+    };
+
+
+    window.descartarEdicaoContato = function () {
+        inputEmailContato.disabled = true;
+
+        btnSalvarContato.style.display = 'none';
+        btnDescartarContato.style.display = 'none';
+        btnEditarContato.style.display = 'inline-block';
+
+
+        inputEmailContato.value = inputEmailContato.dataset.originalValue || '';
+        alert("Contato descartado com sucesso!");
+    };
+
+
+    window.salvarInformacoesContato = function () {
+        inputEmailContato.disabled = true;
+
+        inputEmailContato.dataset.originalValue = inputEmailContato.value;
+
+        btnSalvarContato.style.display = 'none';
+        btnDescartarContato.style.display = 'none';
+        btnEditarContato.style.display = 'inline-block';
+
+        // configurar();
+    };
+
 });
 
 function listar() {
