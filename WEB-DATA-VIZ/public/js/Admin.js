@@ -627,16 +627,12 @@ function aplicarEventosCardEdicaoInicial(card) {
     });
     
 }
-
-
 const validacaoItens = document.querySelectorAll('.validacao-item');
 const botaoCadastrar = document.getElementById('botao-cadastrar');
 
 document.getElementById('senha').addEventListener('input', function () {
     var senha = document.getElementById('senha').value;
 
-
-
     // Mostrar as validações apenas quando o usuário começar a digitar
     if (senha.length > 0) {
         validacaoItens.forEach(item => item.style.display = 'flex');
@@ -694,64 +690,6 @@ document.getElementById('senha').addEventListener('input', function () {
         document.getElementById('icone-caractere').classList.remove('green');
     }
 });
-    // Mostrar as validações apenas quando o usuário começar a digitar
-    if (senha.length > 0) {
-        validacaoItens.forEach(item => item.style.display = 'flex');
-    } else {
-        validacaoItens.forEach(item => item.style.display = 'none');
-    }
-
-
-    // Validação de tamanho mínimo
-    if (senha.length >= 8) {
-        document.getElementById('icone-tamanho').classList.add('green');
-        document.getElementById('icone-tamanho').classList.remove('red');
-    } else {
-        document.getElementById('icone-tamanho').classList.add('red');
-        document.getElementById('icone-tamanho').classList.remove('green');
-    }
-
-
-    // Validação de maiúsculas
-    if (/[A-Z]/.test(senha)) {
-        document.getElementById('icone-maiuscula').classList.add('green');
-        document.getElementById('icone-maiuscula').classList.remove('red');
-    } else {
-        document.getElementById('icone-maiuscula').classList.add('red');
-        document.getElementById('icone-maiuscula').classList.remove('green');
-    }
-
-
-    // Validação de minúsculas
-    if (/[a-z]/.test(senha)) {
-        document.getElementById('icone-minuscula').classList.add('green');
-        document.getElementById('icone-minuscula').classList.remove('red');
-    } else {
-        document.getElementById('icone-minuscula').classList.add('red');
-        document.getElementById('icone-minuscula').classList.remove('green');
-    }
-
-
-    // Validação de números
-    if (/\d/.test(senha)) {
-        document.getElementById('icone-numero').classList.add('green');
-        document.getElementById('icone-numero').classList.remove('red');
-    } else {
-        document.getElementById('icone-numero').classList.add('red');
-        document.getElementById('icone-numero').classList.remove('green');
-    }
-
-
-    // Validação de caracteres especiais
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
-        document.getElementById('icone-caractere').classList.add('green');
-        document.getElementById('icone-caractere').classList.remove('red');
-    } else {
-        document.getElementById('icone-caractere').classList.add('red');
-        document.getElementById('icone-caractere').classList.remove('green');
-    }
-});
-
 
 function validarSenha() {
     var senha = document.getElementById('senha').value;
