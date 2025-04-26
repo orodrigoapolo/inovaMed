@@ -1419,6 +1419,18 @@ textarea {
     align-items: center;
     opacity: 0.5;
   }
+
+  .botoes-acoes-contato {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 4%;
+  }
+
+  .botoes-acoes-contato button {
+    margin-bottom: 4%;
+  }
 }
 
 /* PARAMETROS */
@@ -1521,5 +1533,17 @@ textarea {
   .descricao-input-parametro {
     font-size: 0.8rem;
     margin-top: 0.7%;
+  }
+
+  .botoes-acoes-parametros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 4%;
+  }
+
+  .botoes-acoes-parametros button {
+    margin-bottom: 4%;
   }
 }

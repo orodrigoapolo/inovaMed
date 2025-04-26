@@ -126,14 +126,14 @@ body {
         display: none;
     }
 
-    .nav-icons {
+    .header-left .nav-icons {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 80px;
-        margin-top: 0;
+        margin-top: 0px;
         margin-bottom: 0;
-    }
+      }
 
     .btn-nav-white,
     .nav-icons,
@@ -407,7 +407,7 @@ body {
     margin-left: 105px;
     margin-top: 30px;
     margin-bottom: 20px;
-    width: 92%;
+    width: 90%;
     height: auto; /* Ajuste para altura automática */
     padding-bottom: 40px;
     padding-left: 15px;
@@ -522,6 +522,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .validacao-item {
@@ -530,6 +531,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .validacao-item #icone-tamanho, #icone-maiuscula, #icone-minuscula, #icone-numero, #icone-caractere {
@@ -713,11 +715,16 @@ textarea {
     }
 
     .acoes-usuarios {
-        margin-left: 10%;
+        margin-left: 8%;
     }
 
     .Perfil-edicao {
         margin-left: 70px;
+        width: 89%;
+    }
+
+    .Perfil-edicao .acoes-usuario { 
+        margin-left: 85%;
     }
 }
 
@@ -744,7 +751,7 @@ textarea {
     }
 
     .acoes-usuarios {
-        margin-left: 10%;
+        margin-left: 8%;
     }
 
     .Perfil-edicao {
@@ -924,7 +931,7 @@ textarea {
         /* importante! */
     }
 
-    .acoes-usuario {
+    .Perfil-edicao .acoes-usuario {
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -959,6 +966,15 @@ textarea {
     .btn-excluir:hover {
         transform: scale(1.05);
     }
+
+    #validacao-senha {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+
+
 
 }
 
