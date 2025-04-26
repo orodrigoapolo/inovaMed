@@ -149,7 +149,7 @@ function listar() {
 }
 
 function buscar(nome, email, cpf, cargo, genero) {
-    const pesquisa = document.getElementById('barra_pesquisa').value;
+    const pesquisa = document.getElementById('barra-pesquisa').value;
     var nome = pesquisa;
     var email = pesquisa;
     var cpf = pesquisa;
