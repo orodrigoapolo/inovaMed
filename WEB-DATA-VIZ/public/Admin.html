@@ -9,12 +9,14 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <!-- <script src="./js/Perfil_CE.js" defer></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="./js/admin.js" defer></script>
     <link rel="stylesheet" href="./css/admin.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="icon" href="assets/icon/logo fundo azul.png" type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body onload="listar(), validarSessao()">
     <div class="janela">
 
         <div class="header-left">
@@ -44,8 +46,44 @@
             <h1 class="titulo-dashboard">
                 Administrador
             </h1>
-        </div>
+            <div class="conteudo-dashboard-admin">
+                  <!-- Iniício KPIs -->
+                  <div class="grupo-kpi">
+                    <div class="kpi-container">
+                        <h3 class="kpi-titulo">Total de usuários cadastrados
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div><div class="kpi-container">
+                        <h3 class="kpi-titulo">Quantidades de cordenadores inativos no sistema
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div><div class="kpi-container">
+                        <h3 class="kpi-titulo">Estado com maior presença de cordenadores
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div>
+                        </div>
+                        <div class="grupo-grafico">
+                            <div class="grafico-container">
+                                <canvas id="graficoUsuariosEstado"></canvas>
+                            </div>
+                            <div class="grafico-container">
+                                <canvas id="graficoIdadeCoordenadores"></canvas>
+                            </div>
+                            <div class="grafico-container">
+                                <canvas id="graficoGeneroUsuarios"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+
+        
+
+        <div class="dash-perfil" id="listaUsuarios">
 
         <div class="dash-perfil" id="dash_perfil">
 
@@ -54,15 +92,20 @@
                 <div class="acoes-usuarios">
                     <div class="input-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="barra-pesquisa" placeholder="Pesquisar por tipo, título ou descrição">
+                        <input type="text" id="barra-pesquisa" class="barra-pesquisa" oninput="buscar()" placeholder="Pesquisar por tipo, título ou descrição">
                     </div>
-                    <button class="btn-adicionar"><i class="fas fa-user-plus"></i> Adicionar Usuário</button>
+                    <button class="btn-adicionar" onclick="criarCardVazio()"><i class="fas fa-user-plus"></i> Adicionar Usuário</button>
                 </div>
             </div>
 
-            <div class="Perfil-edicao">
+            <!-- <div class="Perfil-edicao" style="display: none;"> -->
+            <div class="cards-usuarios" id="cards_usuarios"></div>
 
-                <div class="input-group">
+            <div class="Perfil-edicao" style="display: none;">
+            <!-- <div class="Perfil-edicao""> -->
+
+                <div class="input-group" style="display: none;">    
+                <!-- <div class="input-group" > -->
                     <div class="input-item">
                         <label for="email">E-mail</label>
                         <i class="fa fa-envelope"></i>
@@ -96,13 +139,13 @@
                         <i class="fa fa-map-marker-alt"></i>
                         <select id="estado" class="input-field" disabled>
                             <option value="outros"></option>
-                            <option value="acre">Acre</option>
-                            <option value="amazonas">Amazonas</option>
-                            <option value="roraima">Roraima</option>
-                            <option value="rondonia">Rondônia</option>
-                            <option value="pará">Pará</option>
-                            <option value="amapá">Amapá</option>
-                            <option value="tocantins">Tocantins</option>
+                            <option value="1">Acre</option>
+                            <option value="2">Amapá</option>
+                            <option value="3">Amazonas</option>
+                            <option value="4">Pará</option>
+                            <option value="5">Rondônia</option>
+                            <option value="6">Roraima</option>
+                            <option value="7">Tocantins</option>
                         </select>
                     </div>
                     <div class="input-item">
@@ -120,6 +163,33 @@
                             <option value="outro">Outro</option>
                             <option value="nao_informar">Prefiro não informar</option>
                         </select>
+                    </div>
+                    <div class="input-item">
+                        <label for="senha">Senha</label>
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                    </div>
+                </div>
+                <div id="validacao-senha">
+                    <div class="validacao-item">
+                        <i id="icone-tamanho" class="fa fa-lock"></i>
+                        <p id="validacao-tamanho">Mínimo 8 caracteres</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-maiuscula" class="fa fa-lock"></i>
+                        <p id="validacao-maiuscula">Pelo menos uma letra maiúscula</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-minuscula" class="fa fa-lock"></i>
+                        <p id="validacao-minuscula">Pelo menos uma letra minúscula</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-numero" class="fa fa-lock"></i>
+                        <p id="validacao-numero">Pelo menos um número</p>
+                    </div>
+                    <div class="validacao-item">
+                        <i id="icone-caractere" class="fa fa-lock"></i>
+                        <p id="validacao-caractere">Pelo menos um caractere especial</p>
                     </div>
                 </div>
                 <div class="acoes-usuario">
@@ -198,3 +268,170 @@
 </body>
 
 </html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const ctx = document.getElementById('graficoUsuariosEstado').getContext('2d');
+
+const graficoUsuariosEstado = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'], // Região Norte
+        datasets: [
+            {
+                label: 'Coordenadores Municipais',
+                data: [12, 8, 25, 30, 15, 10, 18],
+                backgroundColor: '#28a745', // Verde
+                barThickness: 30
+            },
+            {
+                label: 'Coordenadores Estaduais',
+                data: [5, 3, 10, 12, 6, 4, 7],
+                backgroundColor: '#007bff', // Azul
+                barThickness: 30
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Usuários por Estado (Região Norte)',
+                font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+            },
+            legend: {
+                position: 'bottom'
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                title: {
+                    display: true,
+                    text: 'Estados',
+                    font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                }
+            },
+            y: {
+                stacked: true,
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Quantidade de Usuários',
+                    font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                }
+            }
+        }
+    }
+});
+
+const ctxGenero = document.getElementById('graficoGeneroUsuarios').getContext('2d');
+
+const graficoGeneroUsuarios = new Chart(ctxGenero, {
+    type: 'pie',
+    data: {
+        labels: ['Feminino', 'Masculino', 'Outro', 'Não informado'],
+        datasets: [{
+            label: 'Distribuição por Gênero',
+            data: [320, 280, 30, 50],
+            backgroundColor: ['#007bff', '#28a745', '#ffc107', '#6c757d'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Distribuição de Usuários por Gênero',
+                font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+const ctxIdade = document.getElementById('graficoIdadeCoordenadores').getContext('2d');
+
+const graficoIdadeCoordenadores = new Chart(ctxIdade, {
+    type: 'bar',
+    data: {
+        labels: ['18-25', '26-35', '36-49', '50+'],
+        datasets: [
+            {
+                label: 'Coordenadores Municipais',
+                data: [12, 30, 25, 8],
+                
+                backgroundColor: '#28a745'
+            },
+            {
+                label: 'Coordenadores Estaduais',
+                data: [5, 15, 20, 10],
+                backgroundColor: '#007bff'            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Faixa Etária dos Coordenadores',
+                font: {
+                                size: 18,
+                                weight: 'bold'
+                            },
+            },
+            legend: {
+                position: 'bottom'
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Faixa Etária',
+                    font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Quantidade de Coordenadores',
+                    font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                }
+            }
+        }
+    }
+});
+
+
+
+</script>
+
+
+
+
+<script src="./js/perfil.js"defer></script>
+<script src="./js/Admin.js" defer></script>
+<script src="./js/sessao.js" defer></script>

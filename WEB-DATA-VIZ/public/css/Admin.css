@@ -100,7 +100,6 @@ body {
 }
 
 @media (max-width: 768px) {
-
     body {
         padding-bottom: 60px;
     }
@@ -127,14 +126,14 @@ body {
         display: none;
     }
 
-    .nav-icons {
+    .header-left .nav-icons {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 80px;
-        margin-top: 0;
+        margin-top: 0px;
         margin-bottom: 0;
-    }
+      }
 
     .btn-nav-white,
     .nav-icons,
@@ -159,6 +158,7 @@ body {
     display: flex;
     font-family: 'Lato', sans-serif;
     font-weight: normal;
+    flex-direction: column;
     margin-left: 100px;
 }
 
@@ -167,18 +167,159 @@ body {
     font-weight: normal;
 }
 
+.conteudo-dashboard-admin {
+    width: 90vw;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1%;
+  }
+  
+  .grupo-kpi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20vw;
+    gap: 20px;
+    height: 88vh;
+  }
+  .kpi-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    flex-direction: column; 
+    width: 19vw;
+    height: 176px;
+    border: 3px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+  .kpi-titulo {
+    font-size: 20px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .kpi-valor1 {
+    font-size: 1.8rem; /* Diminuir o tamanho do valor */
+    font-weight: bold;
+    color: #007BFF;
+    margin-top: 0.5rem;
+  }
+  
+  .grupo-grafico {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 70vw;
+    height: 88vh;
+  }
+  
+  .grafico-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    margin-left: 1%;
+    width: 31vw;
+    height: 35vh;
+    border: 3px solid rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+  }
+  
+  .grafico-container canvas {
+    width: 31vw;
+    height: 35vh;
+  }
+
+  #graficoUsuariosEstado {
+    width: 100% !important;
+    height: 350px !important; /* você pode ajustar esse valor */
+  }
+  
+  #graficoIdadeCoordenadores{
+    width: 100% !important;
+    height: 250px !important; /* você pode ajustar esse valor */
+  }
+  
+  #graficoGeneroUsuarios{
+      width:300px!important;
+    height: 350px !important; /* você pode ajustar esse valor */
+  }
+  
+
 @media (max-width: 768px) {
     .dash-admin {
         display: flex;
         font-family: 'Lato', sans-serif;
         font-weight: normal;
-        margin-left: 15px;
+        margin-left: 0;
     }
 
     .titulo-dashboard {
+        margin-left: 15px;
         font-family: 'Lato', sans-serif;
         font-weight: normal;
     }
+
+    .conteudo-dashboard-admin {
+        width: 100vw;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin-bottom: 2%;
+      }
+      
+      .grupo-kpi {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 95vw;
+        height: fit-content;
+        margin: 2%;
+      }
+      
+      .kpi-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2%;
+        width: 90vw;
+        height: 30vh;
+      }
+      
+      .grupo-grafico {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 95vw;
+        height: fit-content;
+        margin: 2%;
+        margin-bottom: 5%;
+      }
+      
+      .grafico-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2%;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        width: 90vw;
+        height: 30vh;
+      }
+      
+      .grafico-container canvas {
+        width: 90vw;
+        height: 35vh;
+      }
 }
 
 
@@ -188,6 +329,7 @@ body {
     display: none;
     font-family: 'Lato', sans-serif;
     font-weight: normal;
+    width: 100vw;
 }
 
 .topo-usuarios {
@@ -221,7 +363,7 @@ body {
 .acoes-usuarios {
     display: flex;
     align-items: center;
-    margin-left: 560px;
+    margin-left: 38%;
     gap: 20px;
 }
 
@@ -275,14 +417,15 @@ body {
 
 .Perfil-edicao {
     position: relative;
-    top: -45px;
-    padding-bottom: 40px;
-    padding-left: 15px;
     margin-left: 105px;
     margin-top: 30px;
     margin-bottom: 20px;
-    width: 92%;
-    height: 50%;
+    width: 90%;
+    height: auto; /* Ajuste para altura automática */
+    padding-bottom: 40px;
+    padding-left: 15px;
+    box-shadow: 0px 0px 20px 5px rgba(57, 56, 56, 0.3);
+    height: auto;
     border: 1px solid rgb(0, 0, 0, 0.2);
     border-radius: 10px;
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
@@ -309,7 +452,7 @@ body {
     margin-bottom: 20px;
     margin-top: 10px;
     width: 100%;
-    max-width: 1300px;
+    /* max-width: 1300px; */
     /* limite opcional pra não ficar muito esticado */
 }
 
@@ -324,13 +467,10 @@ body {
     margin-left: 22px;
     width: calc(25% - 40px);
     box-sizing: border-box;
-
 }
 
 .input-field {
     background-color: #D9D9D9;
-
-
 }
 
 input,
@@ -391,20 +531,53 @@ textarea {
     opacity: 0.6;
 }
 
+#validacao-senha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.validacao-item {
+    width: max-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.validacao-item #icone-tamanho, #icone-maiuscula, #icone-minuscula, #icone-numero, #icone-caractere {
+    width: fit-content;
+    height: fit-content;
+    margin: 4%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#validacao-senha i.green {
+    color: green;
+}
+
+#validacao-senha i.red {
+    color: red;
+}
+
 /* Ações Usuários */
 
 .acoes-usuario {
     display: flex;
     gap: 10px;
     margin-top: 20px;
-    margin-left: 1280px;
+    margin-left: 90%;
 }
 
 .btn-editar,
 .btn-excluir {
     border: none;
     position: relative;
-    top: -190px;
+    /* top: -190px; */
     background-color: transparent;
     cursor: pointer;
     font-size: 30px;
@@ -502,6 +675,112 @@ textarea {
     display: none;
 }
 
+@media (max-width: 1400px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .topo-usuarios {
+        margin-left: 100px;
+        width: 100vw;
+    }
+
+    .acoes-usuarios {
+        margin-left: 30%;
+    }
+}
+
+@media (max-width: 1280px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .topo-usuarios {
+        margin-left: 90px;
+        width: 100vw;
+    }
+
+    .acoes-usuarios {
+        margin-left: 20%;
+    }
+
+    .Perfil-edicao {
+        margin-left: 90px;
+    }
+}
+
+@media (max-width: 1097px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .logo {
+        width: 40px;
+    }
+
+    .nav-icons {
+        margin-top: 30px;
+    }
+
+    .topo-usuarios {
+        margin-left: 70px;
+        width: 100vw;
+    }
+
+    .acoes-usuarios {
+        margin-left: 8%;
+    }
+
+    .Perfil-edicao {
+        margin-left: 70px;
+        width: 89%;
+    }
+
+    .Perfil-edicao .acoes-usuario { 
+        margin-left: 85%;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .logo {
+        width: 40px;
+    }
+
+    .nav-icons {
+        margin-top: 30px;
+    }
+
+    .topo-usuarios {
+        margin-left: 60px;
+        width: 100vw;
+    }
+
+    #title_Usu {
+        font-size: 1.2rem;
+    }
+
+    .acoes-usuarios {
+        margin-left: 8%;
+    }
+
+    .Perfil-edicao {
+        margin-left: 60px;
+    }
+
+    .input-item label {
+        font-size: 13px;
+    }
+
+    .btn-editar,
+    .btn-excluir {
+        font-size: 20px;
+    }
+}
+
 @media (max-width: 768px) {
 
     .topo-usuarios {
@@ -550,12 +829,11 @@ textarea {
     .barra-pesquisa {
         padding: 8px 12px 8px 30px;
         border-radius: 15px;
-        border: 1px solid #ccc;
         font-size: 14px;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         width: 100px;
-        border: none;
-        background-color: transparent
+        background-color: transparent;
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     }
 
     .btn-adicionar {
@@ -586,11 +864,12 @@ textarea {
         margin-left: 15px;
         margin-top: 30px;
         margin-right: 10px;
-        border-radius: 12px;
         margin-bottom: 20px;
         width: 90vw;
         height: max-content;
-        box-shadow: 0px 0px 20px 5px rgba(57, 56, 56, 0.3);
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 10px;
+        box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     }
 
     .input-item i {
@@ -656,16 +935,16 @@ textarea {
         padding-left: 30px;
         height: 35px;
         font-size: 18px;
-        border: 2px solid #dfdfdf;
-        border-radius: 8px;
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 10px;
+        box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
         color: #000000;
-        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease;
         box-sizing: border-box;
         /* importante! */
     }
 
-    .acoes-usuario {
+    .Perfil-edicao .acoes-usuario {
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -700,6 +979,15 @@ textarea {
     .btn-excluir:hover {
         transform: scale(1.05);
     }
+
+    #validacao-senha {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+
+
 
 }
 
@@ -738,11 +1026,10 @@ textarea {
 .barra-pesquisa-log {
     padding: 8px 12px 8px 30px;
     border-radius: 15px;
-    border: 1px solid #ccc;
     font-size: 14px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgb(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     width: 300px;
-    border: none;
     background-color: transparent
 }
 
@@ -786,6 +1073,18 @@ textarea {
     border: 1px solid rgb(0, 0, 0, 0.2);
     border-radius: 5px;
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1097px) {
+    .dash-config {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 900px) {
+    .dash-config {
+        margin-left: 70px;
+    }
 }
 
 @media (max-width: 768px) {

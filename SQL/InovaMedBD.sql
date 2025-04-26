@@ -129,3 +129,17 @@ CREATE TABLE IF NOT EXISTS Log (
   dtLog DATETIME NULL,
   tipo VARCHAR(100) NULL
 );
+
+-- -----------------------------------------------------
+-- Tabela FaleConosco
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS FaleConosco;
+CREATE TABLE IF NOT EXISTS FaleConosco (
+    idFale INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(200),
+    email VARCHAR(200),
+    mensagem VARCHAR(255),
+	dt_solicitacao DATETIME DEFAULT NOW(),
+    status VARCHAR(45)
+);
+

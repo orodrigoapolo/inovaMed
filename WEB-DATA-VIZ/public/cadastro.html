@@ -59,22 +59,24 @@
                                 <input type="date" id="nascimento" class="input-field"
                                     placeholder="Selecione sua data de nascimento">
                             </div>
-                            
+
                         </div>
 
                         <!-- Informações Empresariais -->
                         <div class="input-group">
                             <div class="input-item">
-                                <label for="codigo_empresa">Gênero</label>
+                                <label for="genero">Gênero</label>
                                 <i class="fa fa-building"></i> <!-- Ícone para empresa -->
                                 <select id="genero" class="input-field">
-                                    <option value="outros">Selecione seu gênero</option>
-                                    <option value="coordenador_estadual">Masculino</option>
-                                    <option value="coordenador_municipal">Feminino</option>
+                                    <option value="">Selecione seu gênero</option>
+                                    <option value="masculino">Masculino</option>
+                                    <option value="feminino">Feminino</option>
+                                    <option value="outros">Outros</option>
+                                    <option value="nao_informar">Prefiro não informar</option>
                                 </select>
                             </div>
 
-                            
+
 
                             <div class="input-item">
                                 <label for="cargo">Cargo Exercido</label>
@@ -89,18 +91,25 @@
                             <div class="input-item">
                                 <label for="estado">Estado em que atua</label>
                                 <i class="fa fa-map-marker-alt"></i> <!-- Ícone para estado -->
-                                <select id="estado" class="input-field">
+                                <select id="estado" class="input-field" onclick="listar()">
                                     <option value="outros">Selecione seu estado</option>
-                                    <option value="acre">Acre</option>
-                                    <option value="amazonas">Amazonas</option>
-                                    <option value="roraima">Roraima</option>
-                                    <option value="rondonia">Rondônia</option>
-                                    <option value="pará">Pará</option>
-                                    <option value="amapá">Amapá</option>
-                                    <option value="tocantins">Tocantins</option>
+                                    <option value="1">Acre</option>
+                                    <option value="2">Amapá</option>
+                                    <option value="3">Amazonas</option>
+                                    <option value="4">Pará</option>
+                                    <option value="5">Rondônia</option>
+                                    <option value="6">Roraima</option>
+                                    <option value="7">Tocantins</option>
                                 </select>
                             </div>
-                            
+
+                            <div id="input_item_municipio" class="input-item" style="display: none;">
+                                <label for="municipio">Município em que atua</label>
+                                <i class="fa fa-map-marker-alt"></i> <!-- Ícone para municipio -->
+                                <select id="municipio" class="input-field">
+                                </select>
+                            </div>
+
                             <div class="input-item">
                                 <label for="email">E-mail</label>
                                 <i class="fa fa-envelope"></i>
@@ -117,7 +126,7 @@
                                 <input type="password" id="confirmar_senha" class="input-field"
                                     placeholder="Confirme sua senha">
                             </div>
-                           
+
                         </div>
                         <div id="validacao-senha">
                             <div class="validacao-item">
@@ -194,17 +203,20 @@
     <script>
         const validacaoItens = document.querySelectorAll('.validacao-item');
         const botaoCadastrar = document.getElementById('botao-cadastrar');
-    
+
+
         document.getElementById('senha').addEventListener('input', function () {
             var senha = document.getElementById('senha').value;
-    
+
+
             // Mostrar as validações apenas quando o usuário começar a digitar
             if (senha.length > 0) {
                 validacaoItens.forEach(item => item.style.display = 'block');
             } else {
                 validacaoItens.forEach(item => item.style.display = 'none');
             }
-    
+
+
             // Validação de tamanho mínimo
             if (senha.length >= 8) {
                 document.getElementById('icone-tamanho').classList.add('green');
@@ -213,7 +225,8 @@
                 document.getElementById('icone-tamanho').classList.add('red');
                 document.getElementById('icone-tamanho').classList.remove('green');
             }
-    
+
+
             // Validação de maiúsculas
             if (/[A-Z]/.test(senha)) {
                 document.getElementById('icone-maiuscula').classList.add('green');
@@ -222,7 +235,8 @@
                 document.getElementById('icone-maiuscula').classList.add('red');
                 document.getElementById('icone-maiuscula').classList.remove('green');
             }
-    
+
+
             // Validação de minúsculas
             if (/[a-z]/.test(senha)) {
                 document.getElementById('icone-minuscula').classList.add('green');
@@ -231,7 +245,8 @@
                 document.getElementById('icone-minuscula').classList.add('red');
                 document.getElementById('icone-minuscula').classList.remove('green');
             }
-    
+
+
             // Validação de números
             if (/\d/.test(senha)) {
                 document.getElementById('icone-numero').classList.add('green');
@@ -240,7 +255,8 @@
                 document.getElementById('icone-numero').classList.add('red');
                 document.getElementById('icone-numero').classList.remove('green');
             }
-    
+
+
             // Validação de caracteres especiais
             if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
                 document.getElementById('icone-caractere').classList.add('green');
@@ -250,12 +266,25 @@
                 document.getElementById('icone-caractere').classList.remove('green');
             }
         });
-    
+
+        document.getElementById('cargo').addEventListener('input', function () {
+            var cargo = document.getElementById('cargo').value;
+
+            console.log(cargo)
+
+            if (cargo == "coordenador_municipal") {
+                input_item_municipio.style.display = "flex"
+            } else {
+                input_item_municipio.style.display = "none"
+            }
+        });
+
         function validarSenha() {
             var senha = document.getElementById('senha').value;
             const confirmarSenha = document.getElementById('confirmar_senha').value;
             let mensagensErro = [];
-    
+
+
             if (senha !== confirmarSenha) {
                 mensagensErro.push('As senhas não coincidem.');
             }
@@ -274,10 +303,12 @@
             if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
                 mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
             }
-    
+
+
             return mensagensErro;
         }
-    
+
+
         function validarConfirmarSenha() {
             var senha = document.getElementById('senha').value;
             var confirmarSenha = document.getElementById('confirmar_senha').value;
@@ -285,86 +316,156 @@
             var cargo = document.getElementById('cargo').value;
             var estado = document.getElementById('estado').value;
             var mensagensErro = [];
-    
+
+
             // Validação: Senha e Confirmar Senha são iguais
             if (senha !== confirmarSenha) {
                 mensagensErro.push('As senhas não coincidem.');
             }
-    
+
+
             // Validação: E-mail no formato correto
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
             }
-    
+
+
             // Validação: Cargo selecionado
             if (cargo === "outros" || cargo === "") {
                 mensagensErro.push('Você precisa selecionar um cargo.');
             }
-    
+
+
             // Validação: Estado selecionado
             if (estado === "outros" || estado === "") {
                 mensagensErro.push('Você precisa selecionar um estado.');
             }
-    
+
+
             // Validação: Senha
             var senhaErros = validarSenha();
             if (senhaErros.length > 0) {
                 mensagensErro = mensagensErro.concat(senhaErros);
             }
-    
+
+
             return mensagensErro;
         }
-    
+
+
         function cadastrar() {
             var mensagensErro = validarConfirmarSenha();
-    
+
+
             // Se houver erros, exibe um alerta
             if (mensagensErro.length > 0) {
                 alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
             } else {
+
+                // Enviando o valor da nova input
                 var emailVar = document.getElementById('email').value;
                 var nomeVar = document.getElementById('nome').value;
                 var cpfVar = document.getElementById('cpf').value;
-                var codUnidadeVar = document.getElementById('codigo_empresa').value;
+                var generoVar = document.getElementById('genero').value;
                 var cargoVar = document.getElementById('cargo').value;
-                var estadoVar = document.getElementById('estado').value;
+                var fkEstadoVar = document.getElementById('estado').value;
+                var fkMunicipioVar = document.getElementById('municipio').value;
                 var senhaVar = document.getElementById('senha').value;
                 var dtNascVar = document.getElementById('nascimento').value;
-    
+
                 fetch("/usuarios/cadastrar", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
+                        // crie um atributo que recebe o valor recuperado aqui
+                        // Agora vá para o arquivo routes/usuario.js
                         emailServer: emailVar,
                         nomeServer: nomeVar,
                         cpfServer: cpfVar,
-                        codUnidadeServer: codUnidadeVar,
+                        generoServer: generoVar,
                         cargoServer: cargoVar,
-                        estadoServer: estadoVar,
+                        fkEstadoServer: fkEstadoVar,
+                        fkMunicipioServer: fkMunicipioVar,
                         senhaServer: senhaVar,
-                        dataNascServer: dtNascVar
+                        dtNascServer: dtNascVar
                     }),
                 })
                     .then(function (resposta) {
+                        console.log("resposta: ", resposta);
+
                         if (resposta.ok) {
+                            //   cardErro.style.display = "block";
+
+                            //   mensagem_erro.innerHTML =
+                            //     "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
                             setTimeout(() => {
-                                alert('Cadastro realizado com sucesso! Redirecionando para tela de Login...');
+                                alert('Cadastrado com sucesso!');
                                 window.location = "login.html";
-                            }, 2000);
+                            }, "1000");
+
+                            //   limparFormulario();
+                            //   finalizarAguardar();
                         } else {
                             throw "Houve um erro ao tentar realizar o cadastro!";
                         }
                     })
                     .catch(function (resposta) {
                         console.log(`#ERRO: ${resposta}`);
+                        // finalizarAguardar();
                     });
-    
+
+
                 return false;
             }
         }
+
+        function listar(fkEstado) {
+            var fkEstado = document.getElementById('estado').value;
+            fetch(`/municipios/listar/${fkEstado}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO listar()!");
+
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+                            console.log("Número de usuários:", json.length);
+                            
+                            municipio.innerHTML = "";
+
+                            for (let i = 0; i < json.length; i++) {
+                                municipio.innerHTML += `
+                            <option value="${json[i].idMunicipio}">${json[i].nome}</option>
+                        `
+                            }
+
+                        } else {
+                            console.log("Nenhum município encontrado.");
+                        }
+                    });
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar a listagem!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            });
+        }
     </script>
 </body>
+
+
 </html>
