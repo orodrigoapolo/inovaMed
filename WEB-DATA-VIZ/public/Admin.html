@@ -24,15 +24,15 @@
 
             <div class="nav-icons">
                 <div class="btn-nav-white active" onclick="abrirDashboard()">
-                        <i class="fas fa-chart-bar"></i>
+                    <i class="fas fa-chart-bar"></i>
                 </div>
 
                 <div class="btn-nav" onclick="abrirPerfil()">
-                        <i class="fa-solid fa-circle-user"></i>
+                    <i class="fa-solid fa-circle-user"></i>
                 </div>
 
                 <div class="btn-nav-white" id="novo_user" onclick="abrirConfiguracoes()">
-                        <i class="fas fa-gear"></i>
+                    <i class="fas fa-gear"></i>
                 </div>
             </div>
 
@@ -47,166 +47,186 @@
                 Administrador
             </h1>
             <div class="conteudo-dashboard-admin">
+
+                <!-- Iniício KPIs -->
                 <div class="grupo-kpi">
                     <div class="kpi-container">
+                        <h3 class="kpi-titulo">Total de usuários cadastrados
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div><div class="kpi-container">
+                        <h3 class="kpi-titulo">Quantidades de cordenadores inativos no sistema
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div><div class="kpi-container">
+                        <h3 class="kpi-titulo">Estado com maior presença de cordenadores
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div>
+                        </div>
+                        <div class="grupo-grafico">
+                            <div class="grafico-container">
+                                <canvas id="graficoUsuariosEstado"></canvas>
+                            </div>
+                            <div class="grafico-container">
+                                <canvas id="graficoIdadeCoordenadores"></canvas>
+                            </div>
+                            <div class="grafico-container">
+                                <canvas id="graficoGeneroUsuarios"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="grupo-grafico">
-                    <div class="grafico-container">
-                        <canvas id="graficoUsuariosEstado"></canvas>
-                    </div>
-                    <div class="grafico-container">
-                        <canvas id="graficoIdadeCoordenadores"></canvas>
-                    </div>
-                    <div class="grafico-container">
-                        <canvas id="graficoGeneroUsuarios"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        
 
-        <div class="dash-perfil" id="listaUsuarios">
 
-        <div class="dash-perfil" id="dash_perfil">
+                <div class="dash-perfil" id="listaUsuarios">
 
-            <div class="topo-usuarios">
-                <h1 id="title_Usu">Usuários Cadastrados</h1>
-                <div class="acoes-usuarios">
-                    <div class="input-wrapper">
-                        <i class="fas fa-search"></i>
-                        <input type="text" class="barra-pesquisa" id="barra_pesquisa" oninput="buscar()" placeholder="Pesquisar por tipo, título ou descrição">
-                    </div>
-                    <button class="btn-adicionar" onclick="criarCardVazio()"><i class="fas fa-user-plus"></i> Adicionar Usuário</button>
-                </div>
-            </div>
+                    <div class="dash-perfil" id="dash_perfil">
 
-            <!-- <div class="Perfil-edicao" style="display: none;"> -->
-            <div class="cards-usuarios" id="cards_usuarios"></div>
+                        <div class="topo-usuarios">
+                            <h1 id="title_Usu">Usuários Cadastrados</h1>
+                            <div class="acoes-usuarios">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" class="barra-pesquisa" id="barra_pesquisa" oninput="buscar()"
+                                        placeholder="Pesquisar por tipo, título ou descrição">
+                                </div>
+                                <button class="btn-adicionar" onclick="criarCardVazio()"><i
+                                        class="fas fa-user-plus"></i> Adicionar Usuário</button>
+                            </div>
+                        </div>
 
-            <div class="Perfil-edicao" style="display: none;">
-            <!-- <div class="Perfil-edicao""> -->
+                        <!-- <div class="Perfil-edicao" style="display: none;"> -->
+                        <div class="cards-usuarios" id="cards_usuarios"></div>
 
-                <div class="input-group" style="display: none;">    
-                <!-- <div class="input-group" > -->
-                    <div class="input-item">
-                        <label for="email">E-mail</label>
-                        <i class="fa fa-envelope"></i>
-                        <input type="email" id="email" class="input-field" disabled>
+                        <div class="Perfil-edicao" style="display: none;">
+                            <!-- <div class="Perfil-edicao""> -->
+
+                            <div class="input-group" style="display: none;">
+                                <!-- <div class="input-group" > -->
+                                <div class="input-item">
+                                    <label for="email">E-mail</label>
+                                    <i class="fa fa-envelope"></i>
+                                    <input type="email" id="email" class="input-field" disabled>
+                                </div>
+
+                                <div class="input-item">
+                                    <label for="nome">Nome Completo</label>
+                                    <i class="fa fa-user"></i>
+                                    <input type="text" id="nome" class="input-field" disabled>
+                                </div>
+
+                                <div class="input-item">
+                                    <label for="cpf">CPF</label>
+                                    <i class="fa fa-id-card"></i>
+                                    <input type="text" maxlength="11" id="cpf" class="input-field" disabled>
+                                </div>
+
+                                <div class="input-item">
+                                    <label for="cargo">Cargo Exercido</label>
+                                    <i class="fa fa-briefcase"></i>
+                                    <select id="cargo" class="input-field" disabled>
+                                        <option value=""></option>
+                                        <option value="coordenador_estadual">Coordenador Estadual</option>
+                                        <option value="coordenador_municipal">Coordenador Municipal</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-item">
+                                    <label for="estado">Estado em que atua</label>
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <select id="estado" class="input-field" disabled>
+                                        <option value="outros"></option>
+                                        <option value="1">Acre</option>
+                                        <option value="2">Amapá</option>
+                                        <option value="3">Amazonas</option>
+                                        <option value="4">Pará</option>
+                                        <option value="5">Rondônia</option>
+                                        <option value="6">Roraima</option>
+                                        <option value="7">Tocantins</option>
+                                    </select>
+                                </div>
+                                <div class="input-item">
+                                    <label for="nascimento">Data de Nascimento</label>
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <input type="date" id="nascimento" class="input-field" disabled>
+                                </div>
+                                <div class="input-item">
+                                    <label for="genero">Gênero</label>
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <select id="genero" name="genero" class="input-field" disabled>
+                                        <option value=""></option>
+                                        <option value="masculino">Masculino</option>
+                                        <option value="feminino">Feminino</option>
+                                        <option value="outro">Outro</option>
+                                        <option value="nao_informar">Prefiro não informar</option>
+                                    </select>
+                                </div>
+                                <div class="input-item">
+                                    <label for="senha">Senha</label>
+                                    <i class="fa fa-lock"></i>
+                                    <input type="password" id="senha" class="input-field"
+                                        placeholder="Digite sua senha">
+                                </div>
+                            </div>
+                            <div id="validacao-senha">
+                                <div class="validacao-item">
+                                    <i id="icone-tamanho" class="fa fa-lock"></i>
+                                    <p id="validacao-tamanho">Mínimo 8 caracteres</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-maiuscula" class="fa fa-lock"></i>
+                                    <p id="validacao-maiuscula">Pelo menos uma letra maiúscula</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-minuscula" class="fa fa-lock"></i>
+                                    <p id="validacao-minuscula">Pelo menos uma letra minúscula</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-numero" class="fa fa-lock"></i>
+                                    <p id="validacao-numero">Pelo menos um número</p>
+                                </div>
+                                <div class="validacao-item">
+                                    <i id="icone-caractere" class="fa fa-lock"></i>
+                                    <p id="validacao-caractere">Pelo menos um caractere especial</p>
+                                </div>
+                            </div>
+                            <div class="acoes-usuario">
+                                <button class="btn-editar"><i class="fa-solid fa-pencil"></i></button>
+                                <button class="btn-excluir"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="input-item">
-                        <label for="nome">Nome Completo</label>
-                        <i class="fa fa-user"></i>
-                        <input type="text" id="nome" class="input-field" disabled>
+                    <div id="modalExcluir" class="modal-overlay hidden">
+                        <div class="modal-box">
+                            <h1>Tem certeza que deseja excluir essa conta?</h1>
+                            <p>O usuário em questão não terá mais acesso à plataforma e aos dados atribuidos a ele</p>
+                            <div class="modal-buttons">
+                                <button id="btnCancelarExclusao" class="btn cancelar">Cancelar</button>
+                                <button id="btnConfirmarExclusao" class="btn confirmar">Confirmar</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="input-item">
-                        <label for="cpf">CPF</label>
-                        <i class="fa fa-id-card"></i>
-                        <input type="text" maxlength="11" id="cpf" class="input-field" disabled>
-                    </div>
-
-                    <div class="input-item">
-                        <label for="cargo">Cargo Exercido</label>
-                        <i class="fa fa-briefcase"></i>
-                        <select id="cargo" class="input-field" disabled>
-                            <option value=""></option>
-                            <option value="coordenador_estadual">Coordenador Estadual</option>
-                            <option value="coordenador_municipal">Coordenador Municipal</option>
-                        </select>
-                    </div>
-
-                    <div class="input-item">
-                        <label for="estado">Estado em que atua</label>
-                        <i class="fa fa-map-marker-alt"></i>
-                        <select id="estado" class="input-field" disabled>
-                            <option value="outros"></option>
-                            <option value="1">Acre</option>
-                            <option value="2">Amapá</option>
-                            <option value="3">Amazonas</option>
-                            <option value="4">Pará</option>
-                            <option value="5">Rondônia</option>
-                            <option value="6">Roraima</option>
-                            <option value="7">Tocantins</option>
-                        </select>
-                    </div>
-                    <div class="input-item">
-                        <label for="nascimento">Data de Nascimento</label>
-                        <i class="fa fa-map-marker-alt"></i>
-                        <input type="date" id="nascimento" class="input-field" disabled>
-                    </div>
-                    <div class="input-item">
-                        <label for="genero">Gênero</label>
-                        <i class="fa fa-map-marker-alt"></i>
-                        <select id="genero" name="genero" class="input-field" disabled>
-                            <option value=""></option>
-                            <option value="masculino">Masculino</option>
-                            <option value="feminino">Feminino</option>
-                            <option value="outro">Outro</option>
-                            <option value="nao_informar">Prefiro não informar</option>
-                        </select>
-                    </div>
-                    <div class="input-item">
-                        <label for="senha">Senha</label>
-                        <i class="fa fa-lock"></i>
-                        <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
-                    </div>
-                </div>
-                <div id="validacao-senha">
-                    <div class="validacao-item">
-                        <i id="icone-tamanho" class="fa fa-lock"></i>
-                        <p id="validacao-tamanho">Mínimo 8 caracteres</p>
-                    </div>
-                    <div class="validacao-item">
-                        <i id="icone-maiuscula" class="fa fa-lock"></i>
-                        <p id="validacao-maiuscula">Pelo menos uma letra maiúscula</p>
-                    </div>
-                    <div class="validacao-item">
-                        <i id="icone-minuscula" class="fa fa-lock"></i>
-                        <p id="validacao-minuscula">Pelo menos uma letra minúscula</p>
-                    </div>
-                    <div class="validacao-item">
-                        <i id="icone-numero" class="fa fa-lock"></i>
-                        <p id="validacao-numero">Pelo menos um número</p>
-                    </div>
-                    <div class="validacao-item">
-                        <i id="icone-caractere" class="fa fa-lock"></i>
-                        <p id="validacao-caractere">Pelo menos um caractere especial</p>
-                    </div>
-                </div>
-                <div class="acoes-usuario">
-                    <button class="btn-editar"><i class="fa-solid fa-pencil"></i></button>
-                    <button class="btn-excluir"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-
-        </div>
-
-        <div id="modalExcluir" class="modal-overlay hidden">
-            <div class="modal-box">
-                <h1>Tem certeza que deseja excluir essa conta?</h1>
-                <p>O usuário em questão não terá mais acesso à plataforma e aos dados atribuidos a ele</p>
-                <div class="modal-buttons">
-                    <button id="btnCancelarExclusao" class="btn cancelar">Cancelar</button>
-                    <button id="btnConfirmarExclusao" class="btn confirmar">Confirmar</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="dash-config" id="dash_config">
-            <div class="dash-log">
-                <div class="log-header">
-                    <h1 class="titulo-dash-log">
-                        Log's do Sistema
-                    </h1>
-                    <div class="input-wrapper">
-                        <i class="fas fa-search"></i>
-                        <input type="text" class="barra-pesquisa-log" placeholder="Pesquisar por nome, CPF e email">
-                    </div>
-                </div>
-                <!-- <div class="filtro-tipo-log">
+                    <div class="dash-config" id="dash_config">
+                        <div class="dash-log">
+                            <div class="log-header">
+                                <h1 class="titulo-dash-log">
+                                    Log's do Sistema
+                                </h1>
+                                <div class="input-wrapper">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" class="barra-pesquisa-log"
+                                        placeholder="Pesquisar por nome, CPF e email">
+                                </div>
+                            </div>
+                            <!-- <div class="filtro-tipo-log">
 
                     <label for="ipt_error" id="label_error">
                         <div id="div_error" class="opcao-tipo-log">
@@ -216,38 +236,38 @@
                     </label>
 
                 </div> -->
-                <div class="log-container">
-                    <div class="tipo-data-log">
-                        <div class="tipo-log">
-                            <p>
-                                Tipo
-                            </p>
-                            <input type="text" id="input_tipo_log">
+                            <div class="log-container">
+                                <div class="tipo-data-log">
+                                    <div class="tipo-log">
+                                        <p>
+                                            Tipo
+                                        </p>
+                                        <input type="text" id="input_tipo_log">
+                                    </div>
+                                    <div class="data-log">
+                                        <p>
+                                            Data e horário da execução
+                                        </p>
+                                        <input type="text" id="input_data_log">
+                                    </div>
+                                </div>
+                                <div class="titulo-log">
+                                    <p>
+                                        Título
+                                    </p>
+                                    <input type="text" id="input_titulo_log">
+                                </div>
+                                <div class="descricao-log">
+                                    <p>
+                                        Descrição
+                                    </p>
+                                    <input type="text" id="input_descricao_log">
+                                </div>
+                            </div>
                         </div>
-                        <div class="data-log">
-                            <p>
-                                Data e horário da execução
-                            </p>
-                            <input type="text" id="input_data_log">
-                        </div>
                     </div>
-                    <div class="titulo-log">
-                        <p>
-                            Título
-                        </p>
-                        <input type="text" id="input_titulo_log">
-                    </div>
-                    <div class="descricao-log">
-                        <p>
-                            Descrição
-                        </p>
-                        <input type="text" id="input_descricao_log">
-                    </div>
-                </div>
-            </div>
-        </div>
 
-    </div>
+                </div>
 
 </body>
 
@@ -255,159 +275,160 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
-const ctx = document.getElementById('graficoUsuariosEstado').getContext('2d');
+    const ctx = document.getElementById('graficoUsuariosEstado').getContext('2d');
 
-const graficoUsuariosEstado = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'], // Região Norte
-        datasets: [
-            {
-                label: 'Coordenadores Municipais',
-                data: [12, 8, 25, 30, 15, 10, 18],
-                backgroundColor: '#28a745', // Verde
-                barThickness: 30
-            },
-            {
-                label: 'Coordenadores Estaduais',
-                data: [5, 3, 10, 12, 6, 4, 7],
-                backgroundColor: '#007bff', // Azul
-                barThickness: 30
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Usuários por Estado (Região Norte)',
-                font: {
-                                size: 18,
-                                weight: 'bold'
-                            },
-            },
-            legend: {
-                position: 'bottom'
-            }
+    const graficoUsuariosEstado = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'], // Região Norte
+            datasets: [
+                {
+                    label: 'Coordenadores Municipais',
+                    data: [12, 8, 25, 30, 15, 10, 18],
+                    backgroundColor: '#28a745', // Verde
+                    barThickness: 30
+                },
+                {
+                    label: 'Coordenadores Estaduais',
+                    data: [5, 3, 10, 12, 6, 4, 7],
+                    backgroundColor: '#007bff', // Azul
+                    barThickness: 30
+                }
+            ]
         },
-        scales: {
-            x: {
-                stacked: true,
+        options: {
+            responsive: true,
+            plugins: {
                 title: {
                     display: true,
-                    text: 'Estados',
+                    text: 'Usuários por Estado (Região Norte)',
                     font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
+                        size: 18,
+                        weight: 'bold'
+                    },
+                },
+                legend: {
+                    position: 'bottom'
                 }
             },
-            y: {
-                stacked: true,
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Quantidade de Usuários',
-                    font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
+            scales: {
+                x: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'Estados',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantidade de Usuários',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                    }
                 }
             }
         }
-    }
-});
+    });
 
-const ctxGenero = document.getElementById('graficoGeneroUsuarios').getContext('2d');
+    const ctxGenero = document.getElementById('graficoGeneroUsuarios').getContext('2d');
 
-const graficoGeneroUsuarios = new Chart(ctxGenero, {
-    type: 'pie',
-    data: {
-        labels: ['Feminino', 'Masculino', 'Outro', 'Não informado'],
-        datasets: [{
-            label: 'Distribuição por Gênero',
-            data: [320, 280, 30, 50],
-            backgroundColor: ['#007bff', '#28a745', '#ffc107', '#6c757d'],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Distribuição de Usuários por Gênero',
-                font: {
-                                size: 18,
-                                weight: 'bold'
-                            },
-            },
-            legend: {
-                position: 'bottom'
-            }
-        }
-    }
-});
-const ctxIdade = document.getElementById('graficoIdadeCoordenadores').getContext('2d');
-
-const graficoIdadeCoordenadores = new Chart(ctxIdade, {
-    type: 'bar',
-    data: {
-        labels: ['18-25', '26-35', '36-49', '50+'],
-        datasets: [
-            {
-                label: 'Coordenadores Municipais',
-                data: [12, 30, 25, 8],
-                
-                backgroundColor: '#28a745'
-            },
-            {
-                label: 'Coordenadores Estaduais',
-                data: [5, 15, 20, 10],
-                backgroundColor: '#007bff'            }
-        ]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Faixa Etária dos Coordenadores',
-                font: {
-                                size: 18,
-                                weight: 'bold'
-                            },
-            },
-            legend: {
-                position: 'bottom'
-            }
+    const graficoGeneroUsuarios = new Chart(ctxGenero, {
+        type: 'pie',
+        data: {
+            labels: ['Feminino', 'Masculino', 'Outro', 'Não informado'],
+            datasets: [{
+                label: 'Distribuição por Gênero',
+                data: [320, 280, 30, 50],
+                backgroundColor: ['#007bff', '#28a745', '#ffc107', '#6c757d'],
+                borderWidth: 1
+            }]
         },
-        scales: {
-            x: {
+        options: {
+            responsive: true,
+            plugins: {
                 title: {
                     display: true,
-                    text: 'Faixa Etária',
+                    text: 'Distribuição de Usuários por Gênero',
                     font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                }
-            },
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Quantidade de Coordenadores',
-                    font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
+                        size: 18,
+                        weight: 'bold'
+                    },
+                },
+                legend: {
+                    position: 'bottom'
                 }
             }
         }
-    }
-});
+    });
+    const ctxIdade = document.getElementById('graficoIdadeCoordenadores').getContext('2d');
+
+    const graficoIdadeCoordenadores = new Chart(ctxIdade, {
+        type: 'bar',
+        data: {
+            labels: ['18-25', '26-35', '36-49', '50+'],
+            datasets: [
+                {
+                    label: 'Coordenadores Municipais',
+                    data: [12, 30, 25, 8],
+
+                    backgroundColor: '#28a745'
+                },
+                {
+                    label: 'Coordenadores Estaduais',
+                    data: [5, 15, 20, 10],
+                    backgroundColor: '#007bff'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Faixa Etária dos Coordenadores',
+                    font: {
+                        size: 18,
+                        weight: 'bold'
+                    },
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Faixa Etária',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantidade de Coordenadores',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                    }
+                }
+            }
+        }
+    });
 
 
 
@@ -416,6 +437,6 @@ const graficoIdadeCoordenadores = new Chart(ctxIdade, {
 
 
 
-<script src="./js/perfil.js"defer></script>
+<script src="./js/perfil.js" defer></script>
 <script src="./js/Admin.js" defer></script>
 <script src="./js/sessao.js" defer></script>

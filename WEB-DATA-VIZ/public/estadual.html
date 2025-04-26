@@ -12,9 +12,9 @@
 
     <link rel="stylesheet" href="./css/estadual.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">      
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -26,15 +26,15 @@
 
             <div class="nav-icons">
                 <div class="btn-nav-white active" onclick="abrirDashboard()">
-                        <i class="fas fa-chart-bar"></i>
+                    <i class="fas fa-chart-bar"></i>
                 </div>
 
                 <div class="btn-nav" onclick="abrirPerfil()">
-                        <i class="fa-solid fa-circle-user"></i>
+                    <i class="fa-solid fa-circle-user"></i>
                 </div>
 
                 <div class="btn-nav-white" id="novo_user" onclick="abrirConfiguracoes()">
-                        <i class="fas fa-gear"></i>
+                    <i class="fas fa-gear"></i>
                 </div>
             </div>
 
@@ -59,18 +59,36 @@
                 </div>
             </div>
             <div class="conteudo-dashboard-estadual">
+                <!-- Iniício KPIs -->
+
                 <div class="grupo-kpi">
                     <div class="kpi-container">
-                        <h3 class="kpi-titulo">% da população atendida com base na quantidade de medicamento disponível
+                        <h3 class="kpi-titulo">Quantidade de população que sofre com asma
                         </h3>
-                        <p class="kpi-valor1">75%</p>                    </div>
-                </div>                
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div>
+                    <div class="kpi-container">
+                        <h3 class="kpi-titulo">% da população com asma atendida com base na quantidade de medicamento disponível
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div>
+                    <div class="kpi-container">
+                        <h3 class="kpi-titulo">Meses com mais consumo de medicamentos
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div>
+                    <!-- Final KPIs -->
+
+                </div>
                 <div class="grupo-grafico">
                     <div class="grafico-container">
-                        <canvas id="graficoTendencia"></canvas>   
+                        <canvas id="graficoTendencia"></canvas>
                     </div>
                     <div class="grafico-container">
-                        <canvas id="graficoBarras"></canvas>   
+                        <canvas id="graficoBarras"></canvas>
                     </div>
                     <div class="grafico-container">
                         <canvas id="graficoRemediosNorte"></canvas>
@@ -200,7 +218,7 @@
                             Contato
                         </h1>
                         <p>
-                            Defina onde é importante você receber notificações sobre alertas e avisos 
+                            Defina onde é importante você receber notificações sobre alertas e avisos
                         </p>
                     </div>
                     <div class="config-seta-imagem">
@@ -213,7 +231,7 @@
                             Parâmetros
                         </h1>
                         <p>
-                            Defina os parâmetros e métricas que façam sentido com sua realidade 
+                            Defina os parâmetros e métricas que façam sentido com sua realidade
                         </p>
                     </div>
                     <div class="config-seta-imagem">
@@ -249,8 +267,7 @@
                             style="display: none;">
                             <i class="fas fa-times"></i> Descartar
                         </button>
-                        <button class="btn-salvar" id="btn-salvar" onclick="salvarInformacoes()"
-                            style="display: none;">
+                        <button class="btn-salvar" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
                             <i class="fas fa-save"></i> Salvar Informações
                         </button>
                     </div>
@@ -267,9 +284,9 @@
                     Parâmetros
                 </h1>
                 <div class="parametro-container">
-                        <h1 class="nome-parametro">
-                            Medicamentos
-                        </h1>
+                    <h1 class="nome-parametro">
+                        Medicamentos
+                    </h1>
                     <div class="parametro-container-input">
                         <p class="menor-valor-parametro">
                             Menor quantidade (unidades)
@@ -376,7 +393,7 @@
                         {
                             label: 'Remédio Y',
                             data: [20, 25, 28, 30, 35, 36, 33, 34, 38, 40, 42, 45],
-                            borderColor:'rgba(54, 162, 235',
+                            borderColor: 'rgba(54, 162, 235',
                             backgroundColor: 'transparent',
                             borderDash: [5, 5],
                             tension: 0.3,
@@ -563,77 +580,77 @@
                 }
             });
             const ctxRemediosNorte = document.getElementById('graficoRemediosNorte').getContext('2d');
-const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
-    type: 'bar',
-    data: {
-        labels: ['Acre', 'Amazonas', 'Rondônia', 'Roraima', 'Pará', 'Amapá', 'Tocantins'], // Estados da Região Norte
-        datasets: [
-            {
-                label: 'Remédio X',
-                data: [20, 40, 30, 15, 50, 25, 10], 
-                backgroundColor: 'rgba(34, 139, 34, 0.6)', 
-                borderColor: 'rgba(75, 192, 192, 1)', 
-                borderWidth: 1
-            },
-            {
-                label: 'Remédio Y',
-                data: [40, 20, 45, 25, 35, 30, 15], 
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)', 
-                borderWidth: 1
-            },
-            {
-                label: 'Remédio Z',
-                data: [30, 30, 20, 30, 40, 35, 20], 
-                backgroundColor: 'rgba(255, 206, 86, 0.6)', 
-                borderColor: 'rgba(255, 206, 86, 1)', 
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Quantidade de Remédios por Estado (Região Norte)',
-                font: {
-                    size: 18,
-                    weight: 'bold'
-                }
-            },
-            legend: {
-                position: 'top',
-                labels: {
-                    boxWidth: 20,
-                    padding: 10
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Quantidade',
-                    font: {
-                        weight: 'bold',
-                        size: 14
+            const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
+                type: 'bar',
+                data: {
+                    labels: ['Acre', 'Amazonas', 'Rondônia', 'Roraima', 'Pará', 'Amapá', 'Tocantins'], // Estados da Região Norte
+                    datasets: [
+                        {
+                            label: 'Remédio X',
+                            data: [20, 40, 30, 15, 50, 25, 10],
+                            backgroundColor: 'rgba(34, 139, 34, 0.6)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Remédio Y',
+                            data: [40, 20, 45, 25, 35, 30, 15],
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Remédio Z',
+                            data: [30, 30, 20, 30, 40, 35, 20],
+                            backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Quantidade de Remédios por Estado (Região Norte)',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 20,
+                                padding: 10
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Quantidade',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Estados',
+                                font: {
+                                    weight: 'bold',
+                                    size: 14
+                                }
+                            }
+                        }
                     }
                 }
-            },
-            x: {
-                title: {
-                    display: true,
-                    text: 'Estados',
-                    font: {
-                        weight: 'bold',
-                        size: 14
-                    }
-                }
-            }
-        }
-    }
-});
+            });
 
 
 
@@ -647,7 +664,7 @@ const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
 <script src="./js/sessao.js"></script>
 <script>
     nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
-    
+
     nome.value = sessionStorage.NOME_USUARIO;
     email.value = sessionStorage.EMAIL_USUARIO;
     cpf.value = sessionStorage.CPF_USUARIO;
@@ -657,52 +674,52 @@ const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
     estado.value = sessionStorage.FK_ESTADO;
 
     function listar2(fkEstado) {
-            var fkEstado = document.getElementById('estado').value;
-            fetch(`/municipios/listar/${fkEstado}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            }).then(function (resposta) {
-                console.log("ESTOU NO THEN DO listar()!");
+        var fkEstado = document.getElementById('estado').value;
+        fetch(`/municipios/listar/${fkEstado}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO listar()!");
 
-                if (resposta.ok) {
-                    console.log(resposta);
-                    resposta.json().then(json => {
-                        console.log(json); // Verifique o conteúdo retornado
-                        if (json.length > 0) {
-                            console.log("Número de usuários:", json.length);
-                            
-                            municipio.innerHTML = "";
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                    console.log(json); // Verifique o conteúdo retornado
+                    if (json.length > 0) {
+                        console.log("Número de usuários:", json.length);
 
-                            for (let i = 0; i < json.length; i++) {
-                                municipio.innerHTML += `
+                        municipio.innerHTML = "";
+
+                        for (let i = 0; i < json.length; i++) {
+                            municipio.innerHTML += `
                             <option value="${json[i].idMunicipio}">${json[i].nome}</option>
                         `
-                            }
-                            municipio.value = sessionStorage.FK_MUNICIPIO;
-                        } else {
-                            console.log("Nenhum município encontrado.");
                         }
-                    });
+                        municipio.value = sessionStorage.FK_MUNICIPIO;
+                    } else {
+                        console.log("Nenhum município encontrado.");
+                    }
+                });
 
-                } else {
-                    console.log("Houve um erro ao tentar realizar a listagem!");
-                    resposta.text().then(texto => {
-                        console.error(texto);
-                    });
-                }
+            } else {
+                console.log("Houve um erro ao tentar realizar a listagem!");
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
 
-            }).catch(function (erro) {
-                console.log(erro);
-            });
-        }
-    
+        }).catch(function (erro) {
+            console.log(erro);
+        });
+    }
+
     var dataCompleta = new Date(sessionStorage.DT_NASC);
     var dia = String(dataCompleta.getDate()).padStart(2, '0');
     var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
     var ano = dataCompleta.getFullYear();
     var dataFormatada = `${ano}-${mes}-${dia}`;
-    
+
     nascimento.value = dataFormatada;
 </script>

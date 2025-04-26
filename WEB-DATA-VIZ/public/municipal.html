@@ -64,7 +64,25 @@
             <div class="conteudo-dashboard-municipal">
                 <div class="grupo-kpi">
                     <div class="kpi-container">
+                        <h3 class="kpi-titulo">Quantidade de população que sofre com asma
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
                     </div>
+                    <div class="kpi-container">
+                        <h3 class="kpi-titulo">% da população com asma atendida com base na quantidade de medicamento disponível
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div>
+                    <div class="kpi-container">
+                        <h3 class="kpi-titulo">Meses com mais consumo de medicamentos
+                        </h3>
+                        <p class="kpi-valor1">XPTO</p>
+                        
+                    </div>
+                    <!-- Final KPIs -->
+
                 </div>
 
                 <div class="grupo-grafico">
@@ -251,8 +269,7 @@
                             style="display: none;">
                             <i class="fas fa-times"></i> Descartar
                         </button>
-                        <button class="btn-salvar" id="btn-salvar" onclick="salvarInformacoes()"
-                            style="display: none;">
+                        <button class="btn-salvar" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
                             <i class="fas fa-save"></i> Salvar Informações
                         </button>
                     </div>
@@ -672,47 +689,47 @@
     senha.value = sessionStorage.SENHA_USUARIO;
     estado.value = sessionStorage.FK_ESTADO;
     function listar2(fkEstado) {
-            var fkEstado = document.getElementById('estado').value;
-            fetch(`/municipios/listar/${fkEstado}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            }).then(function (resposta) {
-                console.log("ESTOU NO THEN DO listar()!");
+        var fkEstado = document.getElementById('estado').value;
+        fetch(`/municipios/listar/${fkEstado}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO listar()!");
 
-                if (resposta.ok) {
-                    console.log(resposta);
-                    resposta.json().then(json => {
-                        console.log(json); // Verifique o conteúdo retornado
-                        if (json.length > 0) {
-                            console.log("Número de usuários:", json.length);
-                            
-                            municipio.innerHTML = "";
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                    console.log(json); // Verifique o conteúdo retornado
+                    if (json.length > 0) {
+                        console.log("Número de usuários:", json.length);
 
-                            for (let i = 0; i < json.length; i++) {
-                                municipio.innerHTML += `
+                        municipio.innerHTML = "";
+
+                        for (let i = 0; i < json.length; i++) {
+                            municipio.innerHTML += `
                             <option value="${json[i].idMunicipio}">${json[i].nome}</option>
                         `
-                            }
-                            municipio.value = sessionStorage.FK_MUNICIPIO;
-                        } else {
-                            console.log("Nenhum município encontrado.");
                         }
-                    });
+                        municipio.value = sessionStorage.FK_MUNICIPIO;
+                    } else {
+                        console.log("Nenhum município encontrado.");
+                    }
+                });
 
-                } else {
-                    console.log("Houve um erro ao tentar realizar a listagem!");
-                    resposta.text().then(texto => {
-                        console.error(texto);
-                    });
-                }
+            } else {
+                console.log("Houve um erro ao tentar realizar a listagem!");
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
 
-            }).catch(function (erro) {
-                console.log(erro);
-            });
-        }
-    
+        }).catch(function (erro) {
+            console.log(erro);
+        });
+    }
+
 
     var dataCompleta = new Date(sessionStorage.DT_NASC);
     var dia = String(dataCompleta.getDate()).padStart(2, '0');
@@ -721,6 +738,7 @@
     var dataFormatada = `${ano}-${mes}-${dia}`;
 
     nascimento.value = dataFormatada;
-    
+
 </script>
+
 </html>
