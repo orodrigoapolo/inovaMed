@@ -248,19 +248,17 @@ function deletarUsuario(idUsuario) {
     });
 }
 
-function editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, genero) {
+function editar(idUsuario, email, senha, nome, cpf, dtNasc, genero) {
     var idUsuario = sessionStorage.ID_USUARIO;
     var email = document.getElementById(`email`).value
     var senha = document.getElementById(`senha`).value
     var nome = document.getElementById(`nome`).value
     var cpf = document.getElementById(`cpf`).value
-    var cargo = document.getElementById(`cargo`).value
-    var estado = document.getElementById(`estado`).value
     var dtNasc = document.getElementById(`nascimento`).value
     var genero = document.getElementById(`genero`).value;
 
 
-    fetch(`/usuarios/editar/${idUsuario}/${email}/${senha}/${nome}/${cpf}/${cargo}/${estado}/${dtNasc}/${genero}`, {
+    fetch(`/municipios/editar/${idUsuario}/${email}/${senha}/${nome}/${cpf}/${dtNasc}/${genero}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -271,10 +269,8 @@ function editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, gener
             sessionStorage.EMAIL_USUARIO = email;
             sessionStorage.NOME_USUARIO = nome;
             sessionStorage.CPF_USUARIO = cpf;
-            sessionStorage.CARGO_USUARIO = cargo;
             sessionStorage.GENERO_USUARIO = genero;
             sessionStorage.SENHA_USUARIO = senha;
-            sessionStorage.FK_ESTADO = estado;
             sessionStorage.DT_NASC = dtNasc;
             
             window.alert(`Usuário editado com sucesso!`);

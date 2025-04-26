@@ -133,6 +133,12 @@
                             <option value="7">Tocantins</option>
                         </select>
                     </div>
+                    <div id="input_item_municipio" class="input-item">
+                        <label for="municipio">Município em que atua</label>
+                        <i class="fa fa-map-marker-alt"></i> <!-- Ícone para municipio -->
+                        <select id="municipio" class="input-field" disabled>
+                        </select>
+                    </div>
                     <div class="input-item">
                         <label for="nascimento">Data de Nascimento</label>
                         <i class="fa fa-map-marker-alt"></i>
@@ -638,9 +644,6 @@ const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
 </body>
 
 </html>
-<script>
-    nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
-</script>
 <script src="./js/sessao.js"></script>
 <script>
     nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
@@ -652,6 +655,48 @@ const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
     genero.value = sessionStorage.GENERO_USUARIO;
     senha.value = sessionStorage.SENHA_USUARIO;
     estado.value = sessionStorage.FK_ESTADO;
+
+    function listar2(fkEstado) {
+            var fkEstado = document.getElementById('estado').value;
+            fetch(`/municipios/listar/${fkEstado}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO listar()!");
+
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+                            console.log("Número de usuários:", json.length);
+                            
+                            municipio.innerHTML = "";
+
+                            for (let i = 0; i < json.length; i++) {
+                                municipio.innerHTML += `
+                            <option value="${json[i].idMunicipio}">${json[i].nome}</option>
+                        `
+                            }
+                            municipio.value = sessionStorage.FK_MUNICIPIO;
+                        } else {
+                            console.log("Nenhum município encontrado.");
+                        }
+                    });
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar a listagem!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            });
+        }
     
     var dataCompleta = new Date(sessionStorage.DT_NASC);
     var dia = String(dataCompleta.getDate()).padStart(2, '0');

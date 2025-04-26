@@ -89,4 +89,5 @@ public class LeitorExcel {
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(normalizada).replaceAll("");
     }
+
 }

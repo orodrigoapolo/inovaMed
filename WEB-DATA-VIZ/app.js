@@ -23,6 +23,7 @@ var contatoRouter = require("./src/routes/contato");
 var faleConoscoRouter = require("./src/routes/faleConosco");
 var contatoAvisosRouter = require("./src/routes/contatoAvisos");
 var parametrosRouter = require("./src/routes/parametros");
+var municipiosRouter = require("./src/routes/municipios");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -38,6 +39,7 @@ app.use("/contato", contatoRouter);
 app.use("/faleConosco", faleConoscoRouter);
 app.use("/contatoAvisos", contatoAvisosRouter);
 app.use("/parametros", parametrosRouter);
+app.use("/municipios", municipiosRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

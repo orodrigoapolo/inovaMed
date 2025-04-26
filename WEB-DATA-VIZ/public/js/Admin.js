@@ -1,5 +1,3 @@
-const { json } = require("express");
-
 function listar() {
     fetch(`/usuarios/listar`, {
         method: "GET",
@@ -96,7 +94,7 @@ function listar() {
                                 <div class="input-item">
                                     <label for="senha">Senha</label>
                                     <i class="fa fa-lock"></i>
-                                    <input type="password" id="senha" class="input-field" placeholder="Digite sua senha">
+                                    <input type="password" id="senha${i}" value="${json[i].senha}" class="input-field" placeholder="Digite sua senha" disabled>
                                 </div>
                             </div>
                             <div id="validacao-senha">
@@ -252,6 +250,11 @@ function buscar(nome, email, cpf, cargo, genero) {
                                         <option value="nao_informar" ${json[i].genero === "Prefiro não informar" ? "selected" : ""}>Prefiro não informar</option>
                                     </select>
                                 </div>
+                                <div class="input-item">
+                                    <label for="senha">Senha</label>
+                                    <i class="fa fa-lock"></i>
+                                    <input type="password" id="senha${i}" value="${json[i].senha}" class="input-field" placeholder="Digite sua senha" disabled>
+                                </div>
                             </div>
 
                             <div class="acoes-usuario">
@@ -305,17 +308,18 @@ function deletarUsuario(idUsuario) {
     });
 }
 
-function editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero) {
+function editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, genero) {
     var idUsuario = sessionStorage.ID_CONTAINER;
-    var email = document.getElementById(`email${idUsuario-1}`).value;
-    var nome = document.getElementById(`nome${idUsuario-1}`).value;
-    var cpf = document.getElementById(`cpf${idUsuario-1}`).value;
-    var cargo = document.getElementById(`cargo${idUsuario-1}`).value;
-    var estado = document.getElementById(`estado${idUsuario-1}`).value;
-    var dtNasc = document.getElementById(`nascimento${idUsuario-1}`).value;
-    var genero = document.getElementById(`genero${idUsuario-1}`).value;
+    var email = document.getElementById(`email${idUsuario - 1}`).value;
+    var senha = document.getElementById(`senha${idUsuario - 1}`).value;
+    var nome = document.getElementById(`nome${idUsuario - 1}`).value;
+    var cpf = document.getElementById(`cpf${idUsuario - 1}`).value;
+    var cargo = document.getElementById(`cargo${idUsuario - 1}`).value;
+    var estado = document.getElementById(`estado${idUsuario - 1}`).value;
+    var dtNasc = document.getElementById(`nascimento${idUsuario - 1}`).value;
+    var genero = document.getElementById(`genero${idUsuario - 1}`).value;
 
-    fetch(`/usuarios/editar/${idUsuario}/${email}/${nome}/${cpf}/${cargo}/${estado}/${dtNasc}/${genero}`, {
+    fetch(`/usuarios/editar/${idUsuario}/${email}/${senha}/${nome}/${cpf}/${cargo}/${estado}/${dtNasc}/${genero}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -359,8 +363,38 @@ function adicionarEventosBotoes(json) {
         const btnEditar = document.querySelectorAll('.btn-editar')[i];
         const btnExcluir = document.querySelectorAll('.btn-excluir')[i];
 
-        const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}`);
+        const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}`);
         let editando = false;
+
+        // AQUI COMEÇA A VALIDAÇÃO DE SENHA AO DIGITAR
+        const campoSenha = document.querySelector(`#senha${i}`);
+        const card = document.querySelector(`#card-usuario-${json[i].idUsuario}`);
+
+        const iconeTamanho = card.querySelector('#icone-tamanho');
+        const iconeMaiuscula = card.querySelector('#icone-maiuscula');
+        const iconeMinuscula = card.querySelector('#icone-minuscula');
+        const iconeNumero = card.querySelector('#icone-numero');
+        const iconeCaractere = card.querySelector('#icone-caractere');
+
+        campoSenha.addEventListener('input', () => {
+            const senha = campoSenha.value;
+
+            iconeTamanho.classList.toggle('green', senha.length >= 8);
+            iconeTamanho.classList.toggle('red', senha.length < 8);
+
+            iconeMaiuscula.classList.toggle('green', /[A-Z]/.test(senha));
+            iconeMaiuscula.classList.toggle('red', !/[A-Z]/.test(senha));
+
+            iconeMinuscula.classList.toggle('green', /[a-z]/.test(senha));
+            iconeMinuscula.classList.toggle('red', !/[a-z]/.test(senha));
+
+            iconeNumero.classList.toggle('green', /\d/.test(senha));
+            iconeNumero.classList.toggle('red', !/\d/.test(senha));
+
+            iconeCaractere.classList.toggle('green', /[!@#$%^&*(),.?":{}|<>]/.test(senha));
+            iconeCaractere.classList.toggle('red', !/[!@#$%^&*(),.?":{}|<>]/.test(senha));
+        });
+
 
 
         btnEditar.addEventListener('click', () => {
@@ -470,6 +504,7 @@ function criarCardVazio() {
                             <option value=""></option>
                             <option value="coordenador_estadual">Coordenador Estadual</option>
                             <option value="coordenador_municipal">Coordenador Municipal</option>
+                            <option value="administrador">Administrador</option>
                         </select>
                     </div>
 
@@ -532,7 +567,7 @@ function criarCardVazio() {
                     </div>
                 </div>
                 <div class="acoes-usuario">
-                    <button class="btn-editar"><i class="fa-solid fa-pencil"></i></button>
+                    <button class="btn-editar" onclick="novoUsuario()"><i class="fa-solid fa-pencil"></i></button>
                     <button class="btn-excluir"><i class="fas fa-trash-alt"></i></button>
                 </div>
     `;
@@ -548,42 +583,41 @@ function aplicarEventosCardEdicaoInicial(card) {
     const campos = card.querySelectorAll('.input-field');
     let editando = true;
 
-    // Já deixar campos habilitados
     campos.forEach(campo => campo.disabled = false);
+
+ 
+    btnEditar.innerHTML = '<i class="fa-solid fa-check"></i>';
+    btnExcluir.innerHTML = '<i class="fa-solid fa-times" style="color: red;"></i>';
 
     btnEditar.addEventListener('click', () => {
         editando = !editando;
         campos.forEach(campo => campo.disabled = !editando);
         btnEditar.innerHTML = editando
             ? '<i class="fa-solid fa-check"></i>'
-            : '<i class="fa-solid fa-pencil"></i>';
+            : '<i class="fa-solid fa-pencil"></i>'; 
         btnExcluir.innerHTML = editando
             ? '<i class="fa-solid fa-times" style="color: red;"></i>'
             : '<i class="fas fa-trash-alt"></i>';
 
         if (!editando) {
-            alert('Dados salvos com sucesso!');
         }
     });
 
     btnExcluir.addEventListener('click', () => {
         if (editando) {
-            campos.forEach(campo => campo.disabled = true);
-            btnEditar.innerHTML = '<i class="fa-solid fa-pencil"></i>';
-            btnExcluir.innerHTML = '<i class="fas fa-trash-alt"></i>';
-            editando = false;
-            alert('Edição descartada!');
+            card.remove(); 
+            alert('Novo usuário descartado!');
         } else {
             const modalExcluir = document.getElementById('modalExcluir');
             const btnCancelar = document.getElementById('btnCancelarExclusao');
             const btnConfirmar = document.getElementById('btnConfirmarExclusao');
-
+    
             modalExcluir.classList.remove('hidden');
-
+    
             btnCancelar.onclick = () => {
                 modalExcluir.classList.add('hidden');
             };
-
+    
             btnConfirmar.onclick = () => {
                 card.remove();
                 modalExcluir.classList.add('hidden');
@@ -591,137 +625,253 @@ function aplicarEventosCardEdicaoInicial(card) {
             };
         }
     });
+    
 }
 
 
+const validacaoItens = document.querySelectorAll('.validacao-item');
+const botaoCadastrar = document.getElementById('botao-cadastrar');
 
-document.querySelector('.btn-adicionar').addEventListener('click', criarCardVazio);
-
-        const validacaoItens = document.querySelectorAll('.validacao-item');
-        const botaoCadastrar = document.getElementById('botao-cadastrar');
-
-
-        document.getElementById('senha').addEventListener('input', function () {
-            var senha = document.getElementById('senha').value;
+document.getElementById('senha').addEventListener('input', function () {
+    var senha = document.getElementById('senha').value;
 
 
-            // Mostrar as validações apenas quando o usuário começar a digitar
-            if (senha.length > 0) {
-                validacaoItens.forEach(item => item.style.display = 'flex');
-            } else {
-                validacaoItens.forEach(item => item.style.display = 'none');
-            }
+
+    // Mostrar as validações apenas quando o usuário começar a digitar
+    if (senha.length > 0) {
+        validacaoItens.forEach(item => item.style.display = 'flex');
+    } else {
+        validacaoItens.forEach(item => item.style.display = 'none');
+    }
 
 
-            // Validação de tamanho mínimo
-            if (senha.length >= 8) {
-                document.getElementById('icone-tamanho').classList.add('green');
-                document.getElementById('icone-tamanho').classList.remove('red');
-            } else {
-                document.getElementById('icone-tamanho').classList.add('red');
-                document.getElementById('icone-tamanho').classList.remove('green');
-            }
+    // Validação de tamanho mínimo
+    if (senha.length >= 8) {
+        document.getElementById('icone-tamanho').classList.add('green');
+        document.getElementById('icone-tamanho').classList.remove('red');
+    } else {
+        document.getElementById('icone-tamanho').classList.add('red');
+        document.getElementById('icone-tamanho').classList.remove('green');
+    }
 
 
-            // Validação de maiúsculas
-            if (/[A-Z]/.test(senha)) {
-                document.getElementById('icone-maiuscula').classList.add('green');
-                document.getElementById('icone-maiuscula').classList.remove('red');
-            } else {
-                document.getElementById('icone-maiuscula').classList.add('red');
-                document.getElementById('icone-maiuscula').classList.remove('green');
-            }
+    // Validação de maiúsculas
+    if (/[A-Z]/.test(senha)) {
+        document.getElementById('icone-maiuscula').classList.add('green');
+        document.getElementById('icone-maiuscula').classList.remove('red');
+    } else {
+        document.getElementById('icone-maiuscula').classList.add('red');
+        document.getElementById('icone-maiuscula').classList.remove('green');
+    }
 
 
-            // Validação de minúsculas
-            if (/[a-z]/.test(senha)) {
-                document.getElementById('icone-minuscula').classList.add('green');
-                document.getElementById('icone-minuscula').classList.remove('red');
-            } else {
-                document.getElementById('icone-minuscula').classList.add('red');
-                document.getElementById('icone-minuscula').classList.remove('green');
-            }
+    // Validação de minúsculas
+    if (/[a-z]/.test(senha)) {
+        document.getElementById('icone-minuscula').classList.add('green');
+        document.getElementById('icone-minuscula').classList.remove('red');
+    } else {
+        document.getElementById('icone-minuscula').classList.add('red');
+        document.getElementById('icone-minuscula').classList.remove('green');
+    }
 
 
-            // Validação de números
-            if (/\d/.test(senha)) {
-                document.getElementById('icone-numero').classList.add('green');
-                document.getElementById('icone-numero').classList.remove('red');
-            } else {
-                document.getElementById('icone-numero').classList.add('red');
-                document.getElementById('icone-numero').classList.remove('green');
-            }
+    // Validação de números
+    if (/\d/.test(senha)) {
+        document.getElementById('icone-numero').classList.add('green');
+        document.getElementById('icone-numero').classList.remove('red');
+    } else {
+        document.getElementById('icone-numero').classList.add('red');
+        document.getElementById('icone-numero').classList.remove('green');
+    }
 
 
-            // Validação de caracteres especiais
-            if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
-                document.getElementById('icone-caractere').classList.add('green');
-                document.getElementById('icone-caractere').classList.remove('red');
-            } else {
-                document.getElementById('icone-caractere').classList.add('red');
-                document.getElementById('icone-caractere').classList.remove('green');
-            }
-        });
+    // Validação de caracteres especiais
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+        document.getElementById('icone-caractere').classList.add('green');
+        document.getElementById('icone-caractere').classList.remove('red');
+    } else {
+        document.getElementById('icone-caractere').classList.add('red');
+        document.getElementById('icone-caractere').classList.remove('green');
+    }
+});
+    // Mostrar as validações apenas quando o usuário começar a digitar
+    if (senha.length > 0) {
+        validacaoItens.forEach(item => item.style.display = 'flex');
+    } else {
+        validacaoItens.forEach(item => item.style.display = 'none');
+    }
 
 
-        function validarSenha() {
-            var senha = document.getElementById('senha').value;
-            let mensagensErro = [];
-
-            if (senha.length < 8) {
-                mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
-            }
-            if (!/[A-Z]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
-            }
-            if (!/[a-z]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
-            }
-            if (!/\d/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos um número.');
-            }
-            if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
-                mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
-            }
+    // Validação de tamanho mínimo
+    if (senha.length >= 8) {
+        document.getElementById('icone-tamanho').classList.add('green');
+        document.getElementById('icone-tamanho').classList.remove('red');
+    } else {
+        document.getElementById('icone-tamanho').classList.add('red');
+        document.getElementById('icone-tamanho').classList.remove('green');
+    }
 
 
-            return mensagensErro;
-        }
+    // Validação de maiúsculas
+    if (/[A-Z]/.test(senha)) {
+        document.getElementById('icone-maiuscula').classList.add('green');
+        document.getElementById('icone-maiuscula').classList.remove('red');
+    } else {
+        document.getElementById('icone-maiuscula').classList.add('red');
+        document.getElementById('icone-maiuscula').classList.remove('green');
+    }
 
 
-        function validarConfirmarSenha() {
-            var senha = document.getElementById('senha').value;
-            var email = document.getElementById('email').value;
-            var cargo = document.getElementById('cargo').value;
-            var estado = document.getElementById('estado').value;
-            var mensagensErro = [];
+    // Validação de minúsculas
+    if (/[a-z]/.test(senha)) {
+        document.getElementById('icone-minuscula').classList.add('green');
+        document.getElementById('icone-minuscula').classList.remove('red');
+    } else {
+        document.getElementById('icone-minuscula').classList.add('red');
+        document.getElementById('icone-minuscula').classList.remove('green');
+    }
 
 
-            // Validação: E-mail no formato correto
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
-            }
+    // Validação de números
+    if (/\d/.test(senha)) {
+        document.getElementById('icone-numero').classList.add('green');
+        document.getElementById('icone-numero').classList.remove('red');
+    } else {
+        document.getElementById('icone-numero').classList.add('red');
+        document.getElementById('icone-numero').classList.remove('green');
+    }
 
 
-            // Validação: Cargo selecionado
-            if (cargo === "outros" || cargo === "") {
-                mensagensErro.push('Você precisa selecionar um cargo.');
-            }
+    // Validação de caracteres especiais
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+        document.getElementById('icone-caractere').classList.add('green');
+        document.getElementById('icone-caractere').classList.remove('red');
+    } else {
+        document.getElementById('icone-caractere').classList.add('red');
+        document.getElementById('icone-caractere').classList.remove('green');
+    }
+});
 
 
-            // Validação: Estado selecionado
-            if (estado === "outros" || estado === "") {
-                mensagensErro.push('Você precisa selecionar um estado.');
-            }
+function validarSenha() {
+    var senha = document.getElementById('senha').value;
+    let mensagensErro = [];
+
+    if (senha.length < 8) {
+        mensagensErro.push('A senha precisa ter no mínimo 8 caracteres.');
+    }
+    if (!/[A-Z]/.test(senha)) {
+        mensagensErro.push('A senha precisa de pelo menos uma letra maiúscula.');
+    }
+    if (!/[a-z]/.test(senha)) {
+        mensagensErro.push('A senha precisa de pelo menos uma letra minúscula.');
+    }
+    if (!/\d/.test(senha)) {
+        mensagensErro.push('A senha precisa de pelo menos um número.');
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+        mensagensErro.push('A senha precisa de pelo menos um caractere especial.');
+    }
+
+    return mensagensErro;
+}
 
 
-            // Validação: Senha
-            var senhaErros = validarSenha();
-            if (senhaErros.length > 0) {
-                mensagensErro = mensagensErro.concat(senhaErros);
-            }
+function validarConfirmarSenha() {
+    var senha = document.getElementById('senha').value;
+    var email = document.getElementById('email').value;
+    var cargo = document.getElementById('cargo').value;
+    var estado = document.getElementById('estado').value;
+    var mensagensErro = [];
+
+    // Validação: E-mail no formato correto
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        mensagensErro.push('O e-mail precisa ser válido e conter "@" e ".com".');
+    }
+
+    // Validação: Cargo selecionado
+    if (cargo === "outros" || cargo === "") {
+        mensagensErro.push('Você precisa selecionar um cargo.');
+    }
+
+    // Validação: Estado selecionado
+    if (estado === "outros" || estado === "") {
+        mensagensErro.push('Você precisa selecionar um estado.');
+    }
+
+    // Validação: Senha
+    var senhaErros = validarSenha();
+    if (senhaErros.length > 0) {
+        mensagensErro = mensagensErro.concat(senhaErros);
+    }
+
+    return mensagensErro;
+}
+
+function novoUsuario() {
+    var mensagensErro = validarConfirmarSenha();
 
 
-            return mensagensErro;
-        }
+    // Se houver erros, exibe um alerta
+    if (mensagensErro.length > 0) {
+        alert('Erro ao cadastrar: \n' + mensagensErro.join('\n'));
+    } else {
+
+        // Enviando o valor da nova input
+        var emailVar = document.getElementById('email').value;
+        var nomeVar = document.getElementById('nome').value;
+        var cpfVar = document.getElementById('cpf').value;
+        var generoVar = document.getElementById('genero').value;
+        var cargoVar = document.getElementById('cargo').value;
+        var fkEstadoVar = document.getElementById('estado').value;
+        var senhaVar = document.getElementById('senha').value;
+        var dtNascVar = document.getElementById('nascimento').value;
+
+        fetch("/usuarios/novoUsuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                emailServer: emailVar,
+                nomeServer: nomeVar,
+                cpfServer: cpfVar,
+                generoServer: generoVar,
+                cargoServer: cargoVar,
+                fkEstadoServer: fkEstadoVar,
+                senhaServer: senhaVar,
+                dtNascServer: dtNascVar
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    //   cardErro.style.display = "block";
+
+                    //   mensagem_erro.innerHTML =
+                    //     "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                    setTimeout(() => {
+                        alert('Cadastrado com sucesso!');
+                        listar();
+                    }, "1000");
+
+                    //   limparFormulario();
+                    //   finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+
+        return false;
+    }
+}

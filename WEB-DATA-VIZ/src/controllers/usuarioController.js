@@ -58,6 +58,7 @@ function cadastrar(req, res) {
     var genero = req.body.generoServer;
     var cargo = req.body.cargoServer;
     var fkEstado = req.body.fkEstadoServer;
+    var fkMunicipio = req.body.fkMunicipioServer;
     var senha = req.body.senhaServer;
     var dtNasc = req.body.dtNascServer;
 
@@ -74,6 +75,8 @@ function cadastrar(req, res) {
         res.status(400).send("Sua senha está undefined!");
     } else if (fkEstado == undefined) {
         res.status(400).send("Sua senha está undefined!");
+    } else if (fkMunicipio == undefined) {
+        res.status(400).send("Sua senha está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
     } else if (dtNasc == undefined) {
@@ -81,7 +84,7 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado)
+        usuarioModel.cadastrar(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado, fkMunicipio)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -110,20 +113,6 @@ function listar(req, res) {
     }).catch(function (erro) {
         console.log(erro);
         console.log("Houve um erro ao listar usuários", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    });
-}
-
-function listar(req, res) {
-    usuarioModel.listar().then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum resultado encontrado!")
-        }
-    }).catch(function (erro) {
-        console.log(erro);
-        console.log("Houve um erro ao buscar os objetivos: ", erro.sqlMessage);
         res.status(500).json(erro.sqlMessage);
     });
 }
@@ -171,7 +160,7 @@ function editar(req, res) {
     var senha = req.params.senha; 
     var nome = req.params.nome;
     var cpf = req.params.cpf;
-    var cargo = req.params.cargo;    
+    var cargo = req.params.cargo;
     var estado = req.params.fkEstado;
     var dtNasc = req.params.dtNasc;
     var genero = req.params.genero;
@@ -191,11 +180,62 @@ function editar(req, res) {
         );
 }
 
+function novoUsuario(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var email = req.body.emailServer;
+    var nome = req.body.nomeServer;
+    var cpf = req.body.cpfServer;
+    var genero = req.body.generoServer;
+    var cargo = req.body.cargoServer;
+    var fkEstado = req.body.fkEstadoServer;
+    var senha = req.body.senhaServer;
+    var dtNasc = req.body.dtNascServer;
+
+    // Faça as validações dos valores
+    if (email == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (nome == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (cpf == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (genero == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (cargo == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (fkEstado == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (senha == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (dtNasc == undefined) {
+        res.status(400).send("Sua empresa a vincular está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.novoUsuario(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+
 module.exports = {
     autenticar,
     cadastrar,
     listar,
-    deletarUsuario,
     buscar,
-    editar
+    editar,
+    deletarUsuario,
+    novoUsuario
 }
