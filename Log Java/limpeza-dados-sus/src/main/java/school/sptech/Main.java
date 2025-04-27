@@ -29,7 +29,7 @@ public class Main {
         try {
             logDao.save(new Log("leitorDadosSUS", "Conectando ao bucket", LocalDateTime.now(), "Bucket S3"));
             ListObjectsRequest listObjects = ListObjectsRequest.builder()
-                    .bucket("inova-med-s3")
+                    .bucket(System.getenv("nomeBucket"))
                     .build();
 
 
@@ -38,7 +38,7 @@ public class Main {
 
             for (S3Object object : objects) {
                 GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                        .bucket("inova-med-s3")
+                        .bucket("nomeBucket")
                         .key(object.key())
                         .build();
 
