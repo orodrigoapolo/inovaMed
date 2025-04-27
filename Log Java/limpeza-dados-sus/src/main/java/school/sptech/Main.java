@@ -12,7 +12,6 @@ import software.amazon.awssdk.core.sync.ResponseTransformer;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
 import software.amazon.awssdk.services.s3.model.S3Object;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -30,7 +29,7 @@ public class Main {
         try {
             logDao.save(new Log("leitorDadosSUS", "Conectando ao bucket", LocalDateTime.now(), "Bucket S3"));
             ListObjectsRequest listObjects = ListObjectsRequest.builder()
-                    .bucket("s3-raw-lab03-2025")
+                    .bucket("inova-med-s3")
                     .build();
 
 
@@ -39,43 +38,47 @@ public class Main {
 
             for (S3Object object : objects) {
                 GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                        .bucket("s3-raw-lab03-2025")
+                        .bucket("inova-med-s3")
                         .key(object.key())
                         .build();
 
+//                if (object.key().startsWith("excel")) {
+//                    return;
+//                }
+
                 if (planilhaDao.pegarPlanilhas(object.key()) > 0) {
                     logDao.save(new Log("leitorDadosSUS", "Planilha já inserida", LocalDateTime.now(), "Salva dados"));
-                    return;
-                }
+                } else {
+                    logDao.save(new Log("leitorDadosSUS", "Lendo o arquivo: " + object.key(), LocalDateTime.now(), "Bucket S3"));
+                    InputStream objectContent = s3Client.getS3Client().getObject(getObjectRequest, ResponseTransformer.toInputStream());
 
-                logDao.save(new Log("leitorDadosSUS", "Lendo o arquivo: " + object.key(), LocalDateTime.now(), "Bucket S3"));
-                InputStream objectContent = s3Client.getS3Client().getObject(getObjectRequest, ResponseTransformer.toInputStream());
+                    logDao.save(new Log("leitorDadosSUS", "Iniciando a extração dos dados", LocalDateTime.now(), "Leitura de arquivo"));
+                    List<DadosSUS> dadosExtraidos = leitorExcel.extrairDados(object.key(), objectContent);
 
-                logDao.save(new Log("leitorDadosSUS", "Iniciando a extração dos dados", LocalDateTime.now(), "Leitura de arquivo"));
-                List<DadosSUS> dadosExtraidos = leitorExcel.extrairDados(object.key(), objectContent);
+                    objectContent.close();
 
-                objectContent.close();
+                    // Este for serve para percorrer a lista dos dados que foram extraidos do arquivo csv
+                    logDao.save(new Log("leitorDadosSUS", "Iniciando a gravação dos dados no banco de dados do Estoque", LocalDateTime.now(), "Salva dados"));
+                    for (DadosSUS estoque : dadosExtraidos) {
+                        List<Municipio> municipios = estoqueDao.pegarMunicipios();
 
-                // Este for serve para percorrer a lista dos dados que foram extraidos do arquivo csv
-                logDao.save(new Log("leitorDadosSUS", "Iniciando a gravação dos dados no banco de dados do Estoque", LocalDateTime.now(), "Salva dados"));
-                for (DadosSUS estoque : dadosExtraidos) {
-                    List<Municipio> municipios = estoqueDao.pegarMunicipios();
-
-                    // Este for serve para percorrer a lista de municipios que retornaram do banco de dados
-                    for (Integer i = 0; i < municipios.size(); i++) {
-                        if (estoque.getMunicipio().getNome().equalsIgnoreCase(municipios.get(i).getNome())) {
-                            estoque.getMunicipio().setIdMunicipio(municipios.get(i).getIdMunicipio());
-                            estoqueDao.save(estoque);
+                        // Este for serve para percorrer a lista de municipios que retornaram do banco de dados
+                        for (Integer i = 0; i < municipios.size(); i++) {
+                            if (estoque.getMunicipio().getNome().equalsIgnoreCase(municipios.get(i).getNome())) {
+                                estoque.getMunicipio().setIdMunicipio(municipios.get(i).getIdMunicipio());
+                                estoqueDao.save(estoque);
+                            }
                         }
                     }
-                }
 
-                // aqui vc pode inserir na tabela Planilha o nome do arquivo.
-                logDao.save(new Log("leitorDadosSUS", "Salvando dados na planilha", LocalDateTime.now(), "Salva dados"));
-                planilhaDao.save(object.key());
-                logDao.save(new Log("leitorDadosSUS", "Gravação dos dados no banco de dados do Estoque concluída", LocalDateTime.now(), "Salva dados"));
+                    // aqui vc pode inserir na tabela Planilha o nome do arquivo.
+                    logDao.save(new Log("leitorDadosSUS", "Salvando dados na planilha", LocalDateTime.now(), "Salva dados"));
+                    planilhaDao.save(object.key());
+                    logDao.save(new Log("leitorDadosSUS", "Gravação dos dados no banco de dados do Estoque concluída", LocalDateTime.now(), "Salva dados"));
+                }
             }
         } catch (Exception e) {
+            System.out.println(e);
             logDao.save(new Log("leitorDadosSUS", ExceptionUtils.getStackTrace(e), LocalDateTime.now(), "Leitura de arquivo Erro"));
         }
     }

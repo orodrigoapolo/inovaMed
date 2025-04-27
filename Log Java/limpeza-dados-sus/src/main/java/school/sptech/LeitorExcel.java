@@ -6,7 +6,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import school.sptech.model.Municipio;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -32,23 +31,22 @@ public class LeitorExcel {
             List<DadosSUS> dadosExtraidos = new ArrayList<>();
 
             for (Row row : sheet) {
-                if (row.getRowNum() == 0) {
-                    System.out.println("\nLendo cabeçalho");
-
-                    for (Integer i = 0; i < 13; i++) {
-                        String coluna = row.getCell(i).getStringCellValue();
-                        System.out.println("Coluna " + i + ": " + coluna);
-                    }
-
-                    System.out.println("--------------------------------------------------------------------");
-                    continue;
-                }
+//                if (row.getRowNum() == 0) {
+//                    System.out.println("\nLendo cabeçalho");
+//
+//                    for (Integer i = 0; i < 13; i++) {
+//                        String coluna = row.getCell(i).getStringCellValue();
+//                        System.out.println("Coluna " + i + ": " + coluna);
+//                    }
+//
+//                    System.out.println("--------------------------------------------------------------------");
+//                    continue;
+//                }
 
                 if (row.getCell(16).getStringCellValue().contains("SALBUTAMOL") ||
                         row.getCell(16).getStringCellValue().contains("FORMOTEROL") ||
                         row.getCell(16).getStringCellValue().contains("PREDNISONA") ||
-                        row.getCell(16).getStringCellValue().contains("BECLOMETASONA") ||
-                        row.getCell(16).getStringCellValue().contains("FUMARATO")) {
+                        row.getCell(16).getStringCellValue().contains("BECLOMETASONA")) {
                     DadosSUS dados = new DadosSUS();
                     Municipio municipio = new Municipio();
                     municipio.setNome(row.getCell(2).getStringCellValue());
@@ -66,7 +64,6 @@ public class LeitorExcel {
 
             workbook.close();
 
-            System.out.println("\nLeitura do arquivo finalizada\n");
 
             // aqui vc pode inserir na tabela Planilha o nome do arquivo.
 

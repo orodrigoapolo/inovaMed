@@ -1,11 +1,6 @@
 package school.sptech.dao;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import school.sptech.model.Municipio;
-import school.sptech.model.Planilha;
-
-import java.util.List;
 
 public class PlanilhaDao {
 
