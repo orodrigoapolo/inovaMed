@@ -18,8 +18,7 @@ function cadastrar(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado, fkM
     var instrucaoSql = `
         INSERT INTO usuario (idUsuario, email, nome, cpf, genero, cargo, senha, dtNasc, dtCriacao, fkEstado, fkMunicipio) VALUES (default, '${email}', '${nome}', '${cpf}', '${genero}', '${cargo}', '${senha}', '${dtNasc}', NOW(), ${fkEstado}, ${fkMunicipio});
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);7
-    
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 

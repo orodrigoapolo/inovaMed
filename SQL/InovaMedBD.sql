@@ -41,7 +41,7 @@ DROP TABLE IF EXISTS usuario ;
 CREATE TABLE IF NOT EXISTS usuario (
   idUsuario INT PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(255),
-  CPF CHAR(11),
+  cpf CHAR(11),
   email VARCHAR(255),
   senha VARCHAR(100),
   cargo VARCHAR(45),
