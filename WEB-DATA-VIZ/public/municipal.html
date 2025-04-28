@@ -259,7 +259,7 @@
                         <p class="email-contato">
                             Email
                         </p>
-                        <input type="text" id="input_email_contato">
+                        <input type="text" id="input_email_contato" disabled>
                     </div>
                     <div class="botoes-acoes-contato">
                         <button class="btn-editar" id="btn-editar-contato" onclick="editarInformacoesContato()">
@@ -689,6 +689,8 @@
     genero.value = sessionStorage.GENERO_USUARIO;
     senha.value = sessionStorage.SENHA_USUARIO;
     estado.value = sessionStorage.FK_ESTADO;
+    input_email_contato.value = sessionStorage.EMAIL_USUARIO;
+    
     function listar2(fkEstado) {
             var fkEstado = document.getElementById('estado').value;
             fetch(`/municipios/listar/${fkEstado}`, {

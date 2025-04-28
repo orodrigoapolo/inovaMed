@@ -32,7 +32,7 @@ function listar() {
                                 <div class="input-item">
                                     <label for="municipio">Município</label>
                                      <i class="fa fa-map-marker-alt"></i>
-                                    <input type="text" id="municipio${i}" value="${json[i].municipio || ''}" class="input-field" disabled>
+                                    <input type="text" id="municipio${i}" value="${json[i].nomeMunicipio}" class="input-field" disabled>
                                 </div>
                             `;
                         }
@@ -199,6 +199,18 @@ function buscar(nome, email, cpf, cargo, genero) {
 
                             var nascimento = dataFormatada;
 
+                            // Se o cargo for "coordenador_municipal", cria o campo Município
+                        var campoMunicipio = "";
+                        if (json[i].cargo === "coordenador_municipal") {
+                            campoMunicipio = `
+                                <div class="input-item">
+                                    <label for="municipio">Município</label>
+                                     <i class="fa fa-map-marker-alt"></i>
+                                    <input type="text" id="municipio${i}" value="${json[i].nomeMunicipio}" class="input-field" disabled>
+                                </div>
+                            `;
+                        }
+
                             containerCards.innerHTML += `
                         <div id="card-usuario-${json[i].idUsuario}" class="Perfil-edicao">
                             <div class="input-group">
@@ -230,6 +242,8 @@ function buscar(nome, email, cpf, cargo, genero) {
                                         <option value="administrador" ${json[i].cargo === "administrador" ? "selected" : ""}>Administrador</option>
                                     </select>
                                 </div>
+
+                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
 
                                 <div class="input-item">
                                     <label for="estado">Estado em que atua</label>
