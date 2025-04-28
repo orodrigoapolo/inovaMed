@@ -14,7 +14,6 @@ function listar() {
                 if (json.length > 0) {
                     console.log("Número de usuários:", json.length);
 
-                    // Limpar os cards de usuários antes de adicionar novamente
                     const containerCards = document.getElementById('cards_usuarios');
                     containerCards.innerHTML = '';
 
@@ -24,8 +23,19 @@ function listar() {
                         var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
                         var ano = dataCompleta.getFullYear();
                         var dataFormatada = `${ano}-${mes}-${dia}`;
-
                         var nascimento = dataFormatada;
+
+                        // Se o cargo for "coordenador_municipal", cria o campo Município
+                        var campoMunicipio = "";
+                        if (json[i].cargo === "coordenador_municipal") {
+                            campoMunicipio = `
+                                <div class="input-item">
+                                    <label for="municipio">Município</label>
+                                     <i class="fa fa-map-marker-alt"></i>
+                                    <input type="text" id="municipio${i}" value="${json[i].municipio || ''}" class="input-field" disabled>
+                                </div>
+                            `;
+                        }
 
                         containerCards.innerHTML += `
                         <div id="card-usuario-${json[i].idUsuario}" class="Perfil-edicao">
@@ -59,6 +69,8 @@ function listar() {
                                     </select>
                                 </div>
 
+                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
+
                                 <div class="input-item">
                                     <label for="estado">Estado em que atua</label>
                                     <i class="fa fa-map-marker-alt"></i>
@@ -91,12 +103,14 @@ function listar() {
                                         <option value="nao_informar" ${json[i].genero === "Prefiro não informar" ? "selected" : ""}>Prefiro não informar</option>
                                     </select>
                                 </div>
+
                                 <div class="input-item">
                                     <label for="senha">Senha</label>
                                     <i class="fa fa-lock"></i>
                                     <input type="password" id="senha${i}" value="${json[i].senha}" class="input-field" placeholder="Digite sua senha" disabled>
                                 </div>
                             </div>
+
                             <div id="validacao-senha">
                                 <div class="validacao-item">
                                     <i id="icone-tamanho" class="fa fa-lock"></i>
@@ -127,9 +141,7 @@ function listar() {
                         </div>`;
                     }
 
-                    // Adiciona os eventos de edição e exclusão aos botões
                     adicionarEventosBotoes(json);
-
 
                 } else {
                     console.log("Nenhum usuário encontrado.");
@@ -147,6 +159,7 @@ function listar() {
         console.log(erro);
     });
 }
+
 
 function buscar(nome, email, cpf, cargo, genero) {
     const pesquisa = document.getElementById('barra-pesquisa').value;
@@ -365,6 +378,7 @@ function adicionarEventosBotoes(json) {
 
         const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}`);
         let editando = false;
+        
 
         // AQUI COMEÇA A VALIDAÇÃO DE SENHA AO DIGITAR
         const campoSenha = document.querySelector(`#senha${i}`);

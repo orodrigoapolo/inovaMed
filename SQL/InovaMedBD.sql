@@ -143,3 +143,11 @@ CREATE TABLE IF NOT EXISTS FaleConosco (
     status VARCHAR(45)
 );
 
+-- -----------------------------------------------------
+-- Tabela Planilha
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS Planilha (
+    idPlanilha INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(200)
+);
+
