@@ -30,6 +30,7 @@ function abrirParametros() {
     opcao_config_container.style.display = "none"
     dash_contato_container.style.display = "none"
     dash_parametro_container.style.display = "flex"
+    exibir();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -151,50 +152,49 @@ document.addEventListener('DOMContentLoaded', function () {
         btnDescartarParametro.style.display = 'none';
         btnEditarParametro.style.display = 'inline-block';
 
-        alert("Parâmetros salvos com sucesso!");
+        configurar();
     };
 
-     // Funções para contato
+    // Funções para contato
 
-     const inputEmailContato = document.getElementById('input_email_contato');
-     const btnEditarContato = document.getElementById('btn-editar-contato');
-     const btnSalvarContato = document.getElementById('btn-salvar-contato');
-     const btnDescartarContato = document.getElementById('btn-descartar-contato');
- 
- 
-     window.editarInformacoesContato = function () {
-         inputEmailContato.disabled = false;
- 
-         btnSalvarContato.style.display = 'inline-block';
-         btnDescartarContato.style.display = 'inline-block';
-         btnEditarContato.style.display = 'none';
-     };
- 
- 
-     window.descartarEdicaoContato = function () {
-         inputEmailContato.disabled = true;
- 
-         btnSalvarContato.style.display = 'none';
-         btnDescartarContato.style.display = 'none';
-         btnEditarContato.style.display = 'inline-block';
- 
- 
-         inputEmailContato.value = inputEmailContato.dataset.originalValue || '';
-         alert("Contato descartado com sucesso!");
-     };
- 
- 
-     window.salvarInformacoesContato = function () {
-         inputEmailContato.disabled = true;
- 
-         inputEmailContato.dataset.originalValue = inputEmailContato.value;
- 
-         btnSalvarContato.style.display = 'none';
-         btnDescartarContato.style.display = 'none';
-         btnEditarContato.style.display = 'inline-block';
- 
-         // configurar();
-     };
+    const inputEmailContato = document.getElementById('input_email_contato');
+    const btnEditarContato = document.getElementById('btn-editar-contato');
+    const btnSalvarContato = document.getElementById('btn-salvar-contato');
+    const btnDescartarContato = document.getElementById('btn-descartar-contato');
+
+
+    window.editarInformacoesContato = function () {
+        inputEmailContato.disabled = false;
+
+        btnSalvarContato.style.display = 'inline-block';
+        btnDescartarContato.style.display = 'inline-block';
+        btnEditarContato.style.display = 'none';
+    };
+
+
+    window.descartarEdicaoContato = function () {
+        inputEmailContato.disabled = true;
+
+        btnSalvarContato.style.display = 'none';
+        btnDescartarContato.style.display = 'none';
+        btnEditarContato.style.display = 'inline-block';
+
+
+        inputEmailContato.value = inputEmailContato.dataset.originalValue || '';
+        alert("Contato descartado com sucesso!");
+    };
+
+
+    window.salvarInformacoesContato = function () {
+        inputEmailContato.disabled = true;
+
+        inputEmailContato.dataset.originalValue = inputEmailContato.value;
+
+        btnSalvarContato.style.display = 'none';
+        btnDescartarContato.style.display = 'none';
+        btnEditarContato.style.display = 'inline-block';
+
+    };
 
 });
 
@@ -284,7 +284,7 @@ function editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero) {
             sessionStorage.SENHA_USUARIO = senha;
             sessionStorage.FK_ESTADO = estado;
             sessionStorage.DT_NASC = dtNasc;
-            
+
             window.alert(`Usuário editado com sucesso!`);
         } else if (resposta.status == 404) {
             window.alert("Deu 404!");
@@ -293,6 +293,74 @@ function editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero) {
         }
     }).catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
+    });
+}
+
+
+function configurar() {
+    // Se houver erros, exibe um alerta
+    var maxVar = document.getElementById('input_parametro_maior_valor').value;
+    var minVar = document.getElementById('input_parametro_menor_valor').value;
+    var idUsuario = sessionStorage.ID_USUARIO;
+    if (!maxVar || !minVar) {
+        alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
+    } else {
+        fetch(`/parametros/configurar/${idUsuario}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                maxServer: maxVar,
+                minServer: minVar
+            }),
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    setTimeout(() => {
+                        alert('Configuração realizada com sucesso!');
+                    }, 2000);
+                } else {
+                    throw "Houve um erro ao tentar realizar a configuração!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+}
+
+function exibir(idUsuario) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    fetch(`/parametros/exibir/${idUsuario}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO listar()!");
+
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json); // Verifique o conteúdo retornado
+
+                   sessionStorage.PARAMETRO_MINIMO = resposta.min;
+                   sessionStorage.PARAMETRO_MAXIMO = resposta.max;
+
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar a listagem!");
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
     });
 }
 

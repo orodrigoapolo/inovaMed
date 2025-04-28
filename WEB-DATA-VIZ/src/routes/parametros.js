@@ -8,4 +8,8 @@ router.post("/configurar/:idUsuario", function (req, res) {
     parametrosController.configurar(req, res);
 })
 
+router.get("/exibir/:idUsuario", function (req, res) {
+    parametrosController.exibir(req, res);
+});
+
 module.exports = router;

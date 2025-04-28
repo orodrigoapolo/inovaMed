@@ -27,7 +27,7 @@ function entrar() {
 
             resposta.json().then(json => {
                 console.log(json);
-                console.log(JSON.stringify(json));
+                console.log(JSON.stringify(json)); 
 
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.ID_USUARIO = json.idUsuario;
