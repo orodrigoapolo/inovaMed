@@ -977,3 +977,92 @@ function exibir() {
         console.log(erro);
     });
 }
+
+function buscarLog(tipo, titulo, descricao, data) {
+    const pesquisa = document.getElementById('barra_log').value;
+    var tipo = pesquisa;
+    var titulo = pesquisa;
+    var descricao = pesquisa;
+    var data = pesquisa;
+    if (pesquisa == "") {
+        exibir()
+    } else {
+        fetch(`/log/buscar/${tipo}/${titulo}/${descricao}/${data}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO buscar()!");
+
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                    console.log(json); // Verifique o conteúdo retornado
+                    if (json.length > 0) {
+                        console.log("Número de usuários:", json.length);
+
+                        logs.innerHTML = "";
+                        for (let i = 0; i < json.length; i++) {
+                            var dataCompleta = new Date(json[i].dtLog);
+
+                            var dia = String(dataCompleta.getDate()).padStart(2, '0');
+                            var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
+                            var ano = dataCompleta.getFullYear();
+
+                            var horas = String(dataCompleta.getHours()).padStart(2, '0');
+                            var minutos = String(dataCompleta.getMinutes()).padStart(2, '0');
+                            var segundos = String(dataCompleta.getSeconds()).padStart(2, '0');
+
+                            var dataFormatada = `${ano}-${mes}-${dia} | ${horas}:${minutos}:${segundos}`;
+
+                            logs.innerHTML += `
+                            <div class="log-container">
+                                <div class="tipo-data-log">
+                                    <div class="tipo-log">
+                                        <p>
+                                            Tipo
+                                        </p>
+                                        <input type="text" value="${json[i].tipo}" class="input_tipo_log" id="input_tipo_log${i}" disabled>
+                                    </div>
+                                    <div class="data-log">
+                                        <p>
+                                            Data e horário da execução
+                                        </p>
+                                        <input type="text" value="${dataFormatada}" class="input_data_log" id="input_data_log${i}" disabled>
+                                    </div>
+                                </div>
+                                <div class="titulo-log">
+                                    <p>
+                                        Título
+                                    </p>
+                                    <input type="text" value="${json[i].titulo}" class="input_titulo_log" id="input_titulo_log${i}" disabled>
+                                </div>
+                                <div class="descricao-log">
+                                    <p>
+                                        Descrição
+                                    </p>
+                                    <input type="text" value="${json[i].descricao}" class="input_descricao_log" id="input_descricao_log${i}" disabled>
+                                </div>
+                            </div>`
+                                ;
+                        }
+
+
+                    } else {
+                        console.log("Nenhum usuário encontrado.");
+                    }
+                });
+
+            } else {
+                console.log("Houve um erro ao tentar realizar a busca!");
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        });
+    }
+}

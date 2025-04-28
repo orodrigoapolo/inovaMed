@@ -7,7 +7,7 @@ router.get("/exibir", function (req, res) {
     logController.exibir(req, res);
 });
 
-router.get("/buscar/:nome/:email/:cpf/:cargo/:genero", function (req, res) {
+router.get("/buscar/:tipo/:titulo/:descricao/:data", function (req, res) {
     logController.buscar(req, res);
 });
 
