@@ -911,7 +911,7 @@ function exibir() {
                 if (json.length > 0) {
                     console.log("Número de usuários:", json.length);
 
-
+                    logs.innerHTML = "";
                     for (let i = 0; i < json.length; i++) {
                         var dataCompleta = new Date(json[i].dtLog);
 
