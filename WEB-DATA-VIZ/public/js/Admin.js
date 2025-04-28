@@ -200,16 +200,16 @@ function buscar(nome, email, cpf, cargo, genero) {
                             var nascimento = dataFormatada;
 
                             // Se o cargo for "coordenador_municipal", cria o campo Município
-                        var campoMunicipio = "";
-                        if (json[i].cargo === "coordenador_municipal") {
-                            campoMunicipio = `
+                            var campoMunicipio = "";
+                            if (json[i].cargo === "coordenador_municipal") {
+                                campoMunicipio = `
                                 <div class="input-item">
                                     <label for="municipio">Município</label>
                                      <i class="fa fa-map-marker-alt"></i>
                                     <input type="text" id="municipio${i}" value="${json[i].nomeMunicipio}" class="input-field" disabled>
                                 </div>
                             `;
-                        }
+                            }
 
                             containerCards.innerHTML += `
                         <div id="card-usuario-${json[i].idUsuario}" class="Perfil-edicao">
@@ -392,7 +392,7 @@ function adicionarEventosBotoes(json) {
 
         const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}`);
         let editando = false;
-        
+
 
         // AQUI COMEÇA A VALIDAÇÃO DE SENHA AO DIGITAR
         const campoSenha = document.querySelector(`#senha${i}`);
@@ -537,9 +537,15 @@ function criarCardVazio() {
                     </div>
 
                     <div class="input-item">
+                        <label for="municipio">Município</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="municipio" class="input-field"></select>
+                    </div>
+
+                    <div class="input-item">
                         <label for="estado">Estado em que atua</label>
                         <i class="fa fa-map-marker-alt"></i>
-                        <select id="estado" class="input-field" disabled>
+                        <select id="estado" oninput="listarMunicipios()" class="input-field" disabled>
                             <option value="outros"></option>
                             <option value="1">Acre</option>
                             <option value="2">Amapá</option>
@@ -603,6 +609,49 @@ function criarCardVazio() {
     containerCards.appendChild(novoCard);
 
     aplicarEventosCardEdicaoInicial(novoCard);
+
+}
+
+function listarMunicipios(fkEstado) {
+    var fkEstado = document.getElementById('estado').value;
+    fetch(`/municipios/listar/${fkEstado}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO listar()!");
+
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json); // Verifique o conteúdo retornado
+                if (json.length > 0) {
+                    console.log("Número de usuários:", json.length);
+                    
+                    municipio.innerHTML = "";
+
+                    for (let i = 0; i < json.length; i++) {
+                        municipio.innerHTML += `
+                    <option value="${json[i].idMunicipio}">${json[i].nome}</option>
+                `
+                    }
+
+                } else {
+                    console.log("Nenhum município encontrado.");
+                }
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar a listagem!");
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    });
 }
 
 function aplicarEventosCardEdicaoInicial(card) {
@@ -613,7 +662,7 @@ function aplicarEventosCardEdicaoInicial(card) {
 
     campos.forEach(campo => campo.disabled = false);
 
- 
+
     btnEditar.innerHTML = '<i class="fa-solid fa-check"></i>';
     btnExcluir.innerHTML = '<i class="fa-solid fa-times" style="color: red;"></i>';
 
@@ -622,7 +671,7 @@ function aplicarEventosCardEdicaoInicial(card) {
         campos.forEach(campo => campo.disabled = !editando);
         btnEditar.innerHTML = editando
             ? '<i class="fa-solid fa-check"></i>'
-            : '<i class="fa-solid fa-pencil"></i>'; 
+            : '<i class="fa-solid fa-pencil"></i>';
         btnExcluir.innerHTML = editando
             ? '<i class="fa-solid fa-times" style="color: red;"></i>'
             : '<i class="fas fa-trash-alt"></i>';
@@ -633,19 +682,19 @@ function aplicarEventosCardEdicaoInicial(card) {
 
     btnExcluir.addEventListener('click', () => {
         if (editando) {
-            card.remove(); 
+            card.remove();
             alert('Novo usuário descartado!');
         } else {
             const modalExcluir = document.getElementById('modalExcluir');
             const btnCancelar = document.getElementById('btnCancelarExclusao');
             const btnConfirmar = document.getElementById('btnConfirmarExclusao');
-    
+
             modalExcluir.classList.remove('hidden');
-    
+
             btnCancelar.onclick = () => {
                 modalExcluir.classList.add('hidden');
             };
-    
+
             btnConfirmar.onclick = () => {
                 card.remove();
                 modalExcluir.classList.add('hidden');
@@ -653,7 +702,7 @@ function aplicarEventosCardEdicaoInicial(card) {
             };
         }
     });
-    
+
 }
 const validacaoItens = document.querySelectorAll('.validacao-item');
 const botaoCadastrar = document.getElementById('botao-cadastrar');
