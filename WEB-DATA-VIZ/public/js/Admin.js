@@ -69,8 +69,6 @@ function listar() {
                                     </select>
                                 </div>
 
-                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
-
                                 <div class="input-item">
                                     <label for="estado">Estado em que atua</label>
                                     <i class="fa fa-map-marker-alt"></i>
@@ -85,6 +83,8 @@ function listar() {
                                         <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                     </select>
                                 </div>
+
+                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
 
                                 <div class="input-item">
                                     <label for="nascimento">Data de Nascimento</label>
@@ -243,8 +243,6 @@ function buscar(nome, email, cpf, cargo, genero) {
                                     </select>
                                 </div>
 
-                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
-
                                 <div class="input-item">
                                     <label for="estado">Estado em que atua</label>
                                     <i class="fa fa-map-marker-alt"></i>
@@ -259,6 +257,8 @@ function buscar(nome, email, cpf, cargo, genero) {
                                         <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                     </select>
                                 </div>
+
+                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
 
                                 <div class="input-item">
                                     <label for="nascimento">Data de Nascimento</label>
@@ -537,12 +537,6 @@ function criarCardVazio() {
                     </div>
 
                     <div class="input-item">
-                        <label for="municipio">Município</label>
-                        <i class="fa fa-map-marker-alt"></i>
-                        <select id="municipio" class="input-field"></select>
-                    </div>
-
-                    <div class="input-item">
                         <label for="estado">Estado em que atua</label>
                         <i class="fa fa-map-marker-alt"></i>
                         <select id="estado" oninput="listarMunicipios()" class="input-field" disabled>
@@ -556,6 +550,13 @@ function criarCardVazio() {
                             <option value="7">Tocantins</option>
                         </select>
                     </div>
+
+                    <div class="input-item">
+                        <label for="municipio">Município</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="municipio" class="input-field"></select>
+                    </div>
+                    
                     <div class="input-item">
                         <label for="nascimento">Data de Nascimento</label>
                         <i class="fa fa-map-marker-alt"></i>
@@ -840,6 +841,7 @@ function novoUsuario() {
         var generoVar = document.getElementById('genero').value;
         var cargoVar = document.getElementById('cargo').value;
         var fkEstadoVar = document.getElementById('estado').value;
+        var fkMunicipioVar = document.getElementById('municipio').value;
         var senhaVar = document.getElementById('senha').value;
         var dtNascVar = document.getElementById('nascimento').value;
 
@@ -857,6 +859,7 @@ function novoUsuario() {
                 generoServer: generoVar,
                 cargoServer: cargoVar,
                 fkEstadoServer: fkEstadoVar,
+                fkMunicipioServer: fkMunicipioVar,
                 senhaServer: senhaVar,
                 dtNascServer: dtNascVar
             }),
