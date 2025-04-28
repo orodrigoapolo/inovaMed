@@ -65,19 +65,21 @@
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">Quantidade de população que sofre com asma
                         </h3>
-                        <p class="kpi-valor1">XPTO</p>
+                        <p class="kpi-valor1">1.600</p>
                         
                     </div>
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">% da população com asma atendida com base na quantidade de medicamento disponível
                         </h3>
-                        <p class="kpi-valor1">XPTO</p>
+                        <p class="kpi-valor1">80%</p>
                         
                     </div>
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">Meses com mais consumo de medicamentos
                         </h3>
-                        <p class="kpi-valor1">XPTO</p>
+                        <p class="kpi-valor1">1. Janeiro<br>
+                            2. Julho 
+                        </p>
                         
                     </div>
                     <!-- Final KPIs -->
@@ -91,7 +93,7 @@
                         <canvas id="graficoBarras"></canvas>   
                     </div>
                     <div class="grafico-container">
-                        <canvas id="graficoRemediosNorte"></canvas>
+                        <canvas id="graficoMunicipios"></canvas>
                     </div>
                     <div class="grafico-container">
                         <canvas id="graficoVencimento"></canvas>
@@ -580,31 +582,26 @@
                     }
                 }
             });
-            const ctxRemediosNorte = document.getElementById('graficoRemediosNorte').getContext('2d');
-const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
+ // GRÁFICO DE MUNICÍPIOS COM POPULAÇÃO QUE RECEBE MENOS DE 50% DOS MEDICAMENTOS
+const ctxMunicipios = document.getElementById('graficoMunicipios').getContext('2d');
+const graficoMunicipios = new Chart(ctxMunicipios, {
     type: 'bar',
     data: {
-        labels: ['Acre', 'Amazonas', 'Rondônia', 'Roraima', 'Pará', 'Amapá', 'Tocantins'], // Estados da Região Norte
+        labels: ['Parintins (AM):', 'Marabá (PA)', 'Ji-Paraná (RO):', 'Araguaína (TO)'], // Municípios da Região Norte
         datasets: [
             {
-                label: 'Remédio X',
-                data: [20, 40, 30, 15, 50, 25, 10], 
-                backgroundColor: 'rgba(34, 139, 34, 0.6)', 
-                borderColor: 'rgba(75, 192, 192, 1)', 
+                label: 'População',
+                data: [10000, 21000, 3000, 3000],
+                backgroundColor: 'rgba(255, 206, 86)', // Amarelo
+                borderColor: 'rgba(255, 206, 86)',
                 borderWidth: 1
             },
             {
-                label: 'Remédio Y',
-                data: [40, 20, 45, 25, 35, 30, 15], 
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)', 
+                label: 'Medicamentos Recebidos',
+                data: [15000, 17000, 7000, 2300],
+                backgroundColor: 'rgba(34, 139, 34, 0.7) ', // Verde claro
+                borderColor: 'rgba(144, 238, 144, 1)',
                 borderWidth: 1
-            },
-            {
-                label: 'Remédio Z',
-                data: [30, 30, 20, 30, 40, 35, 20], 
-                backgroundColor: 'rgba(255, 206, 86, 0.6)', 
-                borderColor: 'rgba(255, 206, 86, 1)', 
             }
         ]
     },
@@ -613,16 +610,20 @@ const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
         plugins: {
             title: {
                 display: true,
-                text: 'Quantidade de Remédios por Estado (Região Norte)',
+                text: 'Municípios com população que recebe menos de 50% de medicamentos suficientes',
                 font: {
                     size: 18,
                     weight: 'bold'
+                },
+                padding: {
+                    top: 10,
+                    bottom: 20
                 }
             },
             legend: {
                 position: 'top',
                 labels: {
-                    boxWidth: 20,
+                    boxWidth: 15,
                     padding: 10
                 }
             }
@@ -642,7 +643,7 @@ const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
             x: {
                 title: {
                     display: true,
-                    text: 'Estados',
+                    text: 'Municípios',
                     font: {
                         weight: 'bold',
                         size: 14
@@ -652,7 +653,6 @@ const graficoRemediosNorte = new Chart(ctxRemediosNorte, {
         }
     }
 });
-
 
 
         });

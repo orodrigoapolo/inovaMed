@@ -998,6 +998,18 @@ textarea {
     margin-left: 100px;
     font-family: 'Lato', sans-serif;
     font-weight: normal;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dash-log {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    margin: 0;
 }
 
 .titulo-dash-log {
@@ -1015,12 +1027,14 @@ textarea {
 
 .log-container {
     display: flex;
+    align-items: center;
     flex-direction: column;
     width: 86vw;
     border-radius: 10px;
     border: 1px solid rgb(0, 0, 0, 0.2);
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     padding: 2%;
+    margin: 0;
 }
 
 .barra-pesquisa-log {
@@ -1032,7 +1046,6 @@ textarea {
     width: 300px;
     background-color: transparent
 }
-
 
 .tipo-data-log {
     display: flex;
@@ -1055,8 +1068,8 @@ textarea {
     margin-top: 0;
 }
 
-#input_tipo_log,
-#input_data_log {
+.input_tipo_log,
+.input_data_log {
     width: 37vw;
     height: 3.5vh;
     background: transparent;
@@ -1065,8 +1078,8 @@ textarea {
     box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
 }
 
-#input_titulo_log,
-#input_descricao_log {
+.input_titulo_log,
+.input_descricao_log {
     width: 82.5vw;
     height: 3.5vh;
     background: transparent;
@@ -1153,8 +1166,8 @@ textarea {
         margin-top: 0;
     }
 
-    #input_tipo_log,
-    #input_data_log {
+    .input_tipo_log,
+    .input_data_log {
         width: 30vw;
         height: 3.5vh;
         background: transparent;
@@ -1163,8 +1176,8 @@ textarea {
         box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
     }
 
-    #input_titulo_log,
-    #input_descricao_log {
+    .input_titulo_log,
+    .input_descricao_log {
         width: 80vw;
         height: 3.5vh;
         background: transparent;
