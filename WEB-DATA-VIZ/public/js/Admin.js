@@ -369,6 +369,7 @@ function editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, gener
 function abrirDashboard() {
     dash_admin.style.display = "flex"
     dash_perfil.style.display = "none"
+    listaUsuarios.style.display = "none"
     dash_config.style.display = "none"
 }
 
@@ -383,6 +384,7 @@ function abrirPerfil() {
 function abrirConfiguracoes() {
     dash_admin.style.display = "none"
     dash_perfil.style.display = "none"
+    listaUsuarios.style.display = "none"
     dash_config.style.display = "flex"
     exibir();
 }
@@ -932,26 +934,26 @@ function exibir() {
                                         <p>
                                             Tipo
                                         </p>
-                                        <input type="text" value="${json[i].tipo}" id="input_tipo_log${i}" disabled>
+                                        <input type="text" value="${json[i].tipo}" class="input_tipo_log" id="input_tipo_log${i}" disabled>
                                     </div>
                                     <div class="data-log">
                                         <p>
                                             Data e horário da execução
                                         </p>
-                                        <input type="text" value="${dataFormatada}" id="input_data_log${i}" disabled>
+                                        <input type="text" value="${dataFormatada}" class="input_data_log" id="input_data_log${i}" disabled>
                                     </div>
                                 </div>
                                 <div class="titulo-log">
                                     <p>
                                         Título
                                     </p>
-                                    <input type="text" value="${json[i].titulo}" id="input_titulo_log${i}" disabled>
+                                    <input type="text" value="${json[i].titulo}" class="input_titulo_log" id="input_titulo_log${i}" disabled>
                                 </div>
                                 <div class="descricao-log">
                                     <p>
                                         Descrição
                                     </p>
-                                    <input type="text" value="${json[i].descricao}" id="input_descricao_log${i}" disabled>
+                                    <input type="text" value="${json[i].descricao}" class="input_descricao_log" id="input_descricao_log${i}" disabled>
                                 </div>
                             </div>`
                             ;
