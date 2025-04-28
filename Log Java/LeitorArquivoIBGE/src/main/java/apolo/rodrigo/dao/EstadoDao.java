@@ -16,14 +16,14 @@ public class EstadoDao {
 
     public List<Estado> findAll(){
         return jdbcTemplate.query("""
-                SELECT * FROM Estado;
+                SELECT * FROM estado;
                 """, new BeanPropertyRowMapper<>(Estado.class));
     }
 
     public List<Estado> findByNomeLike(String nome){
 
         return jdbcTemplate.query("""
-                SELECT * FROM Estado WHERE LOWER(nome) LIKE ?;
+                SELECT * FROM estado WHERE LOWER(nome) LIKE ?;
                 """, new BeanPropertyRowMapper<>(Estado.class), "%"+nome.toLowerCase()+"%");
     }
 
@@ -32,12 +32,12 @@ public class EstadoDao {
         List<Estado> estados = findByNomeLike(estado.getNome());
         if(estados.isEmpty()){
             jdbcTemplate.update("""
-                INSERT IGNORE INTO Estado (nome, UF, cod)
+                INSERT IGNORE INTO estado (nome, UF, cod)
                     VALUES (?, ?, ?);
                 """, estado.getNome(), estado.getUF(), estado.getCod());
 
             return jdbcTemplate.queryForObject("""
-                    SELECT idEstado FROM Estado WHERE LOWER(nome) = ?
+                    SELECT idEstado FROM estado WHERE LOWER(nome) = ?
                 """, Integer.class, estado.getNome().toLowerCase());
         }
 

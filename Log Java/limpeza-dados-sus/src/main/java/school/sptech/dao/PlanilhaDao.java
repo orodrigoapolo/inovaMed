@@ -12,14 +12,14 @@ public class PlanilhaDao {
 
     public Integer pegarPlanilhas(String nomePlanilha) {
         return jdbcTemplate.queryForObject(
-                "SELECT count(nome) FROM Planilha where nome = ?",
+                "SELECT count(nome) FROM planilha where nome = ?",
                 Integer.class, nomePlanilha
         );
     }
 
     public void save(String nomePlanilha){
         jdbcTemplate.update("""
-            INSERT INTO Planilha (nome)
+            INSERT INTO planilha (nome)
                 VALUES (?)
         """, nomePlanilha);
     }

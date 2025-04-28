@@ -38,7 +38,7 @@ public class Main {
 
             for (S3Object object : objects) {
                 GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                        .bucket("nomeBucket")
+                        .bucket(System.getenv("nomeBucket"))
                         .key(object.key())
                         .build();
 
