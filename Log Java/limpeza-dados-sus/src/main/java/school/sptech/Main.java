@@ -43,15 +43,18 @@ public class Main {
                         .key(object.key())
                         .build();
 
-                if (object.key().startsWith("excel")) {
+//                if (object.key().startsWith("excel")) {
+//                    return;
+//                }
+
+                if (planilhaDao.pegarPlanilhas(object.key()) > 0) {
+                    logDao.save(new Log("leitorDadosSUS", "Planilha já inserida", LocalDateTime.now(), "Salva dados"));
                 } else {
+                    logDao.save(new Log("leitorDadosSUS", "Lendo o arquivo: " + object.key(), LocalDateTime.now(), "Bucket S3"));
+                    InputStream objectContent = s3Client.getS3Client().getObject(getObjectRequest, ResponseTransformer.toInputStream());
 
-                    if (planilhaDao.pegarPlanilhas(object.key()) > 0) {
-                        logDao.save(new Log("leitorDadosSUS", "Planilha já inserida", LocalDateTime.now(), "Salva dados"));
+                    if (object.key().startsWith("excel")) {
                     } else {
-                        logDao.save(new Log("leitorDadosSUS", "Lendo o arquivo: " + object.key(), LocalDateTime.now(), "Bucket S3"));
-                        InputStream objectContent = s3Client.getS3Client().getObject(getObjectRequest, ResponseTransformer.toInputStream());
-
                         logDao.save(new Log("leitorDadosSUS", "Iniciando a extração dos dados", LocalDateTime.now(), "Leitura de arquivo"));
                         List<DadosSUS> dadosExtraidos = leitorExcel.extrairDados(object.key(), objectContent);
 
