@@ -384,6 +384,7 @@ function abrirConfiguracoes() {
     dash_admin.style.display = "none"
     dash_perfil.style.display = "none"
     dash_config.style.display = "flex"
+    exibir();
 }
 function adicionarEventosBotoes(json) {
     for (let i = 0; i < json.length; i++) {
@@ -629,7 +630,7 @@ function listarMunicipios(fkEstado) {
                 console.log(json); // Verifique o conteúdo retornado
                 if (json.length > 0) {
                     console.log("Número de usuários:", json.length);
-                    
+
                     municipio.innerHTML = "";
 
                     for (let i = 0; i < json.length; i++) {
@@ -892,4 +893,85 @@ function novoUsuario() {
 
         return false;
     }
+}
+
+function exibir() {
+    fetch(`/log/exibir`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO listar()!");
+
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json); // Verifique o conteúdo retornado
+                if (json.length > 0) {
+                    console.log("Número de usuários:", json.length);
+
+
+                    for (let i = 0; i < json.length; i++) {
+                        var dataCompleta = new Date(json[i].dtLog);
+
+                        var dia = String(dataCompleta.getDate()).padStart(2, '0');
+                        var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
+                        var ano = dataCompleta.getFullYear();
+
+                        var horas = String(dataCompleta.getHours()).padStart(2, '0');
+                        var minutos = String(dataCompleta.getMinutes()).padStart(2, '0');
+                        var segundos = String(dataCompleta.getSeconds()).padStart(2, '0');
+
+                        var dataFormatada = `${ano}-${mes}-${dia} | ${horas}:${minutos}:${segundos}`;
+
+                        logs.innerHTML += `
+                            <div class="log-container">
+                                <div class="tipo-data-log">
+                                    <div class="tipo-log">
+                                        <p>
+                                            Tipo
+                                        </p>
+                                        <input type="text" value="${json[i].tipo}" id="input_tipo_log${i}" disabled>
+                                    </div>
+                                    <div class="data-log">
+                                        <p>
+                                            Data e horário da execução
+                                        </p>
+                                        <input type="text" value="${dataFormatada}" id="input_data_log${i}" disabled>
+                                    </div>
+                                </div>
+                                <div class="titulo-log">
+                                    <p>
+                                        Título
+                                    </p>
+                                    <input type="text" value="${json[i].titulo}" id="input_titulo_log${i}" disabled>
+                                </div>
+                                <div class="descricao-log">
+                                    <p>
+                                        Descrição
+                                    </p>
+                                    <input type="text" value="${json[i].descricao}" id="input_descricao_log${i}" disabled>
+                                </div>
+                            </div>`
+                            ;
+                    }
+
+                    adicionarEventosBotoes(json);
+
+                } else {
+                    console.log("Nenhum usuário encontrado.");
+                }
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar a listagem!");
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    });
 }
