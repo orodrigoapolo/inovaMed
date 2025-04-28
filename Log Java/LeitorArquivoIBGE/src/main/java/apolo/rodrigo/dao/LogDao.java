@@ -16,7 +16,7 @@ public class LogDao {
 
     public void save(Log log){
         jdbcTemplate.update("""
-            INSERT INTO Log (titulo, descricao, dtLog, tipo)
+            INSERT INTO log (titulo, descricao, dtLog, tipo)
                 VALUES (?, ?, ?, ?)
         """, log.getTitulo(), log.getDescricao(), log.getDtLog(), log.getTipo());
     }

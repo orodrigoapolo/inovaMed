@@ -17,14 +17,14 @@ public class MunicipioDao {
     public List<Municipio> findAll(){
 
         return jdbcTemplate.query("""
-                SELECT * FROM Municipio;
+                SELECT * FROM municipio;
                 """, new BeanPropertyRowMapper<>(Municipio.class));
     }
 
     public List<Municipio> findByNomeLike(String nome){
 
         return jdbcTemplate.query("""
-                SELECT * FROM Municipio WHERE LOWER(nome) LIKE ?;
+                SELECT * FROM municipio WHERE LOWER(nome) LIKE ?;
                 """, new BeanPropertyRowMapper<>(Municipio.class), "%"+nome.toLowerCase()+"%");
     }
 
@@ -33,11 +33,11 @@ public class MunicipioDao {
         List<Municipio> Municipios = findByNomeLike(municipio.getNome());
         if(Municipios.isEmpty()){
             jdbcTemplate.update("""
-                INSERT INTO Municipio (nome, cod, qtdPopulacao, fkEstado)
+                INSERT INTO municipio (nome, cod, qtdPopulacao, fkEstado)
                     VALUES (?, ?, ?, ?)
             """, municipio.getNome(), municipio.getCod(), municipio.getQtdPopulacao(), municipio.getEstado().getIdEstado());
             return jdbcTemplate.queryForObject("""
-                    SELECT idMunicipio FROM Municipio WHERE LOWER(nome) = ?
+                    SELECT idMunicipio FROM municipio WHERE LOWER(nome) = ?
                 """, Integer.class, municipio.getNome().toLowerCase());
         }
 
