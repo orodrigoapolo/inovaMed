@@ -347,8 +347,8 @@ function exibir(idUsuario) {
             resposta.json().then(json => {
                 console.log(json); // Verifique o conteúdo retornado
 
-                   sessionStorage.PARAMETRO_MINIMO = resposta.min;
-                   sessionStorage.PARAMETRO_MAXIMO = resposta.max;
+                   sessionStorage.PARAMETRO_MIN = resposta.min;
+                   sessionStorage.PARAMETRO_MAX = resposta.max;
 
             });
 
