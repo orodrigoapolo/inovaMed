@@ -10,6 +10,8 @@ function abrirPerfil() {
     dash_config.style.display = "none"
 }
 
+
+
 function abrirConfiguracoes() {
     dash_estadual.style.display = "none"
     dash_perfil.style.display = "none"
