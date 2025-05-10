@@ -188,6 +188,7 @@ function novoUsuario(req, res) {
     var genero = req.body.generoServer;
     var cargo = req.body.cargoServer;
     var fkEstado = req.body.fkEstadoServer;
+    var fkMunicipio = req.body.fkMunicipioServer;
     var senha = req.body.senhaServer;
     var dtNasc = req.body.dtNascServer;
 
@@ -211,7 +212,7 @@ function novoUsuario(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.novoUsuario(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado)
+        usuarioModel.novoUsuario(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado, fkMunicipio)
             .then(
                 function (resultado) {
                     res.json(resultado);

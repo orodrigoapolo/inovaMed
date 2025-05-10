@@ -32,7 +32,7 @@ function listar() {
                                 <div class="input-item">
                                     <label for="municipio">Município</label>
                                      <i class="fa fa-map-marker-alt"></i>
-                                    <input type="text" id="municipio${i}" value="${json[i].municipio || ''}" class="input-field" disabled>
+                                    <input type="text" id="municipio${i}" value="${json[i].nomeMunicipio}" class="input-field" disabled>
                                 </div>
                             `;
                         }
@@ -69,8 +69,6 @@ function listar() {
                                     </select>
                                 </div>
 
-                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
-
                                 <div class="input-item">
                                     <label for="estado">Estado em que atua</label>
                                     <i class="fa fa-map-marker-alt"></i>
@@ -85,6 +83,8 @@ function listar() {
                                         <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                     </select>
                                 </div>
+
+                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
 
                                 <div class="input-item">
                                     <label for="nascimento">Data de Nascimento</label>
@@ -162,7 +162,7 @@ function listar() {
 
 
 function buscar(nome, email, cpf, cargo, genero) {
-    const pesquisa = document.getElementById('barra-pesquisa').value;
+    const pesquisa = document.getElementById('barra_pesquisa').value;
     var nome = pesquisa;
     var email = pesquisa;
     var cpf = pesquisa;
@@ -198,6 +198,18 @@ function buscar(nome, email, cpf, cargo, genero) {
                             var dataFormatada = `${ano}-${mes}-${dia}`;
 
                             var nascimento = dataFormatada;
+
+                            // Se o cargo for "coordenador_municipal", cria o campo Município
+                            var campoMunicipio = "";
+                            if (json[i].cargo === "coordenador_municipal") {
+                                campoMunicipio = `
+                                <div class="input-item">
+                                    <label for="municipio">Município</label>
+                                     <i class="fa fa-map-marker-alt"></i>
+                                    <input type="text" id="municipio${i}" value="${json[i].nomeMunicipio}" class="input-field" disabled>
+                                </div>
+                            `;
+                            }
 
                             containerCards.innerHTML += `
                         <div id="card-usuario-${json[i].idUsuario}" class="Perfil-edicao">
@@ -245,6 +257,8 @@ function buscar(nome, email, cpf, cargo, genero) {
                                         <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                     </select>
                                 </div>
+
+                                ${campoMunicipio} <!-- aqui que insere o municipio, se tiver -->
 
                                 <div class="input-item">
                                     <label for="nascimento">Data de Nascimento</label>
@@ -355,6 +369,7 @@ function editar(idUsuario, email, senha, nome, cpf, cargo, estado, dtNasc, gener
 function abrirDashboard() {
     dash_admin.style.display = "flex"
     dash_perfil.style.display = "none"
+    listaUsuarios.style.display = "none"
     dash_config.style.display = "none"
 }
 
@@ -369,7 +384,9 @@ function abrirPerfil() {
 function abrirConfiguracoes() {
     dash_admin.style.display = "none"
     dash_perfil.style.display = "none"
+    listaUsuarios.style.display = "none"
     dash_config.style.display = "flex"
+    exibir();
 }
 function adicionarEventosBotoes(json) {
     for (let i = 0; i < json.length; i++) {
@@ -378,7 +395,7 @@ function adicionarEventosBotoes(json) {
 
         const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}`);
         let editando = false;
-        
+
 
         // AQUI COMEÇA A VALIDAÇÃO DE SENHA AO DIGITAR
         const campoSenha = document.querySelector(`#senha${i}`);
@@ -525,7 +542,7 @@ function criarCardVazio() {
                     <div class="input-item">
                         <label for="estado">Estado em que atua</label>
                         <i class="fa fa-map-marker-alt"></i>
-                        <select id="estado" class="input-field" disabled>
+                        <select id="estado" oninput="listarMunicipios()" class="input-field" disabled>
                             <option value="outros"></option>
                             <option value="1">Acre</option>
                             <option value="2">Amapá</option>
@@ -536,6 +553,13 @@ function criarCardVazio() {
                             <option value="7">Tocantins</option>
                         </select>
                     </div>
+
+                    <div class="input-item">
+                        <label for="municipio">Município</label>
+                        <i class="fa fa-map-marker-alt"></i>
+                        <select id="municipio" class="input-field"></select>
+                    </div>
+                    
                     <div class="input-item">
                         <label for="nascimento">Data de Nascimento</label>
                         <i class="fa fa-map-marker-alt"></i>
@@ -589,6 +613,49 @@ function criarCardVazio() {
     containerCards.appendChild(novoCard);
 
     aplicarEventosCardEdicaoInicial(novoCard);
+
+}
+
+function listarMunicipios(fkEstado) {
+    var fkEstado = document.getElementById('estado').value;
+    fetch(`/municipios/listar/${fkEstado}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO listar()!");
+
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json); // Verifique o conteúdo retornado
+                if (json.length > 0) {
+                    console.log("Número de usuários:", json.length);
+
+                    municipio.innerHTML = "";
+
+                    for (let i = 0; i < json.length; i++) {
+                        municipio.innerHTML += `
+                    <option value="${json[i].idMunicipio}">${json[i].nome}</option>
+                `
+                    }
+
+                } else {
+                    console.log("Nenhum município encontrado.");
+                }
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar a listagem!");
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    });
 }
 
 function aplicarEventosCardEdicaoInicial(card) {
@@ -599,7 +666,7 @@ function aplicarEventosCardEdicaoInicial(card) {
 
     campos.forEach(campo => campo.disabled = false);
 
- 
+
     btnEditar.innerHTML = '<i class="fa-solid fa-check"></i>';
     btnExcluir.innerHTML = '<i class="fa-solid fa-times" style="color: red;"></i>';
 
@@ -608,7 +675,7 @@ function aplicarEventosCardEdicaoInicial(card) {
         campos.forEach(campo => campo.disabled = !editando);
         btnEditar.innerHTML = editando
             ? '<i class="fa-solid fa-check"></i>'
-            : '<i class="fa-solid fa-pencil"></i>'; 
+            : '<i class="fa-solid fa-pencil"></i>';
         btnExcluir.innerHTML = editando
             ? '<i class="fa-solid fa-times" style="color: red;"></i>'
             : '<i class="fas fa-trash-alt"></i>';
@@ -619,19 +686,19 @@ function aplicarEventosCardEdicaoInicial(card) {
 
     btnExcluir.addEventListener('click', () => {
         if (editando) {
-            card.remove(); 
+            card.remove();
             alert('Novo usuário descartado!');
         } else {
             const modalExcluir = document.getElementById('modalExcluir');
             const btnCancelar = document.getElementById('btnCancelarExclusao');
             const btnConfirmar = document.getElementById('btnConfirmarExclusao');
-    
+
             modalExcluir.classList.remove('hidden');
-    
+
             btnCancelar.onclick = () => {
                 modalExcluir.classList.add('hidden');
             };
-    
+
             btnConfirmar.onclick = () => {
                 card.remove();
                 modalExcluir.classList.add('hidden');
@@ -639,7 +706,7 @@ function aplicarEventosCardEdicaoInicial(card) {
             };
         }
     });
-    
+
 }
 const validacaoItens = document.querySelectorAll('.validacao-item');
 const botaoCadastrar = document.getElementById('botao-cadastrar');
@@ -777,6 +844,7 @@ function novoUsuario() {
         var generoVar = document.getElementById('genero').value;
         var cargoVar = document.getElementById('cargo').value;
         var fkEstadoVar = document.getElementById('estado').value;
+        var fkMunicipioVar = document.getElementById('municipio').value;
         var senhaVar = document.getElementById('senha').value;
         var dtNascVar = document.getElementById('nascimento').value;
 
@@ -794,6 +862,7 @@ function novoUsuario() {
                 generoServer: generoVar,
                 cargoServer: cargoVar,
                 fkEstadoServer: fkEstadoVar,
+                fkMunicipioServer: fkMunicipioVar,
                 senhaServer: senhaVar,
                 dtNascServer: dtNascVar
             }),
@@ -825,5 +894,175 @@ function novoUsuario() {
 
 
         return false;
+    }
+}
+
+function exibir() {
+    fetch(`/log/exibir`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO listar()!");
+
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json); // Verifique o conteúdo retornado
+                if (json.length > 0) {
+                    console.log("Número de usuários:", json.length);
+
+                    logs.innerHTML = "";
+                    for (let i = 0; i < json.length; i++) {
+                        var dataCompleta = new Date(json[i].dtLog);
+
+                        var dia = String(dataCompleta.getDate()).padStart(2, '0');
+                        var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
+                        var ano = dataCompleta.getFullYear();
+
+                        var horas = String(dataCompleta.getHours()).padStart(2, '0');
+                        var minutos = String(dataCompleta.getMinutes()).padStart(2, '0');
+                        var segundos = String(dataCompleta.getSeconds()).padStart(2, '0');
+
+                        var dataFormatada = `${ano}-${mes}-${dia} | ${horas}:${minutos}:${segundos}`;
+
+                        logs.innerHTML += `
+                            <div class="log-container">
+                                <div class="tipo-data-log">
+                                    <div class="tipo-log">
+                                        <p>
+                                            Tipo
+                                        </p>
+                                        <input type="text" value="${json[i].tipo}" class="input_tipo_log" id="input_tipo_log${i}" disabled>
+                                    </div>
+                                    <div class="data-log">
+                                        <p>
+                                            Data e horário da execução
+                                        </p>
+                                        <input type="text" value="${dataFormatada}" class="input_data_log" id="input_data_log${i}" disabled>
+                                    </div>
+                                </div>
+                                <div class="titulo-log">
+                                    <p>
+                                        Título
+                                    </p>
+                                    <input type="text" value="${json[i].titulo}" class="input_titulo_log" id="input_titulo_log${i}" disabled>
+                                </div>
+                                <div class="descricao-log">
+                                    <p>
+                                        Descrição
+                                    </p>
+                                    <input type="text" value="${json[i].descricao}" class="input_descricao_log" id="input_descricao_log${i}" disabled>
+                                </div>
+                            </div>`
+                            ;
+                    }
+
+                    adicionarEventosBotoes(json);
+
+                } else {
+                    console.log("Nenhum usuário encontrado.");
+                }
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar a listagem!");
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    });
+}
+
+function buscarLog(tipo, titulo, descricao, data) {
+    const pesquisa = document.getElementById('barra_log').value;
+    var tipo = pesquisa;
+    var titulo = pesquisa;
+    var descricao = pesquisa;
+    var data = pesquisa;
+    if (pesquisa == "") {
+        exibir()
+    } else {
+        fetch(`/log/buscar/${tipo}/${titulo}/${descricao}/${data}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO buscar()!");
+
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                    console.log(json); // Verifique o conteúdo retornado
+                    if (json.length > 0) {
+                        console.log("Número de usuários:", json.length);
+
+                        logs.innerHTML = "";
+                        for (let i = 0; i < json.length; i++) {
+                            var dataCompleta = new Date(json[i].dtLog);
+
+                            var dia = String(dataCompleta.getDate()).padStart(2, '0');
+                            var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
+                            var ano = dataCompleta.getFullYear();
+
+                            var horas = String(dataCompleta.getHours()).padStart(2, '0');
+                            var minutos = String(dataCompleta.getMinutes()).padStart(2, '0');
+                            var segundos = String(dataCompleta.getSeconds()).padStart(2, '0');
+
+                            var dataFormatada = `${ano}-${mes}-${dia} | ${horas}:${minutos}:${segundos}`;
+
+                            logs.innerHTML += `
+                            <div class="log-container">
+                                <div class="tipo-data-log">
+                                    <div class="tipo-log">
+                                        <p>
+                                            Tipo
+                                        </p>
+                                        <input type="text" value="${json[i].tipo}" class="input_tipo_log" id="input_tipo_log${i}" disabled>
+                                    </div>
+                                    <div class="data-log">
+                                        <p>
+                                            Data e horário da execução
+                                        </p>
+                                        <input type="text" value="${dataFormatada}" class="input_data_log" id="input_data_log${i}" disabled>
+                                    </div>
+                                </div>
+                                <div class="titulo-log">
+                                    <p>
+                                        Título
+                                    </p>
+                                    <input type="text" value="${json[i].titulo}" class="input_titulo_log" id="input_titulo_log${i}" disabled>
+                                </div>
+                                <div class="descricao-log">
+                                    <p>
+                                        Descrição
+                                    </p>
+                                    <input type="text" value="${json[i].descricao}" class="input_descricao_log" id="input_descricao_log${i}" disabled>
+                                </div>
+                            </div>`
+                                ;
+                        }
+
+
+                    } else {
+                        console.log("Nenhum usuário encontrado.");
+                    }
+                });
+
+            } else {
+                console.log("Houve um erro ao tentar realizar a busca!");
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        });
     }
 }

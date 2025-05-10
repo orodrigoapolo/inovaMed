@@ -16,14 +16,14 @@ public class EstoqueDao {
 
     public List<Municipio> pegarMunicipios() {
         return jdbcTemplate.query(
-                "SELECT idMunicipio, nome FROM Municipio",
+                "SELECT idMunicipio, nome FROM municipio",
                 new BeanPropertyRowMapper<>(Municipio.class)
         );
     }
 
     public void save(DadosSUS estoque) {
         jdbcTemplate.update("""
-                            INSERT INTO Estoque (nomeFarmaco, qtdFarmaco, dtValidade, dtEntrada, lote, CATMAT, fkMunicipio)
+                            INSERT INTO estoque (nomeFarmaco, qtdFarmaco, dtValidade, dtEntrada, lote, CATMAT, fkMunicipio)
                                 VALUES (?, ?, ?, ?, ?, ?, ?)
                         """,
                 estoque.getNomeFarmaco(),

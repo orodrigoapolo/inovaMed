@@ -30,6 +30,7 @@ function abrirParametros() {
     opcao_config_container.style.display = "none"
     dash_contato_container.style.display = "none"
     dash_parametro_container.style.display = "flex"
+    exibir();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -149,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
         btnSalvarParametro.style.display = 'none';
         btnDescartarParametro.style.display = 'none';
         btnEditarParametro.style.display = 'inline-block';
-
         configurar();
     };
 
@@ -192,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function () {
         btnDescartarContato.style.display = 'none';
         btnEditarContato.style.display = 'inline-block';
 
-        // configurar();
     };
 
 });
@@ -326,3 +325,34 @@ function editar(idUsuario, email, senha, nome, cpf, dtNasc, genero) {
     });
 }
 
+function exibir(idUsuario) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    fetch(`/parametros/exibir/${idUsuario}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO listar()!");
+
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json); // Verifique o conteúdo retornado
+
+                   sessionStorage.PARAMETRO_MIN = json.min;
+                   sessionStorage.PARAMETRO_MAX = json.max;
+
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar a listagem!");
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    });
+}
