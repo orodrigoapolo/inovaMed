@@ -3,6 +3,8 @@ package school.sptech.infra;
 import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import java.nio.file.Path;
 
 public class S3Provider {
     private final AwsSessionCredentials credentials;
@@ -20,5 +22,16 @@ public class S3Provider {
                 .region(Region.US_EAST_1)
                 .credentialsProvider(() -> credentials)
                 .build();
+    }
+
+    public S3Client putS3Client() {
+        return S3Client.builder()
+                .region(Region.US_EAST_1)
+                .credentialsProvider(() -> credentials)
+                .build();
+    }
+
+    public void putS3Client(PutObjectRequest putObjectRequest, Path path) {
+        getS3Client().putObject(putObjectRequest, path);
     }
 }
