@@ -38,8 +38,60 @@ function editar(req, res) {
             }
         );
 }
+function historico(req, res) {
+    var idMunicipio = req.params.idMunicipio;
+
+    municipiosModel.historico(idMunicipio)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum histórico encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar o histórico: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function vencimentos(req, res) {
+    var idMunicipio = req.params.idMunicipio;
+
+    municipiosModel.vencimentos(idMunicipio)
+        .then(function (resultado) {
+            res.status(200).json(resultado);
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            res.status(500).json({ erro: "Erro ao buscar vencimentos" });
+        });
+}
+function periodos(req, res) {
+    var idMunicipio = req.params.idMunicipio;
+    console.log("Chamando periodos com idMunicipio =", idMunicipio);
+
+    municipiosModel.periodos(idMunicipio)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum dado encontrado para os períodos!");
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao buscar os dados dos períodos: ", erro.sqlMessage);
+            res.status(500).json({ erro: "Erro ao buscar dados dos períodos" });
+        });
+}
+
 
 module.exports = {
     listar,
-    editar
+    editar,
+    historico,
+    vencimentos,
+    periodos
 }
