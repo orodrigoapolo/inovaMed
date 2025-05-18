@@ -10,7 +10,7 @@ SQL_IMAGE="rodrigoapolo/imagem-sql:1.0"
 IBGE_IMAGE="rodrigoapolo/imagem-javaibge:1.0"
 SUS_IMAGE="rodrigoapolo/imagem-javasus:1.0"
 DB_PASSWORD="urubu100"
-BUCKET_NAME="inovamed-sprint3"
+BUCKET_NAME="inovamed-s3"
 REPO_URL="https://github.com/orodrigoapolo/inovaMed.git"
 WORKSPACE_DIR="$HOME/docker-compose"
 REPO_DIR="$HOME/inovaMed"
@@ -171,8 +171,6 @@ services:
     ports:
       - "8080:8080"
     working_dir: /app
-    volumes:
-      - ./WEB-DATA-VIZ:/app
     command: bash -c "npm install && npm start"
     networks:
       - app-network
@@ -258,6 +256,13 @@ setup_node_image() {
     exit 1
   fi
 
+  if [ -f "./WEB-DATA-VIZ/package.json" ]; then
+    echo "package.json copiado com sucesso!"
+  else
+    echo "ERRO: package.json não foi encontrado após o cp!"
+    exit 1
+  fi
+
   log_message "Configurando arquivo .env para Node"
   cat > ./WEB-DATA-VIZ/.env << EOF
 AMBIENTE_PROCESSO=producao
@@ -273,8 +278,8 @@ EOF
 
   log_message "Atualizando app.js"
   if [ -f "./WEB-DATA-VIZ/app.js" ]; then
-    sed -i '1s/\/\/var ambiente_processo = '\''producao'\'';/var ambiente_processo = '\''producao'\'';/' ./WEB-DATA-VIZ/app.js
-    sed -i '2s/var ambiente_processo = '\''desenvolvimento'\'';/\/\/var ambiente_processo = '\''desenvolvimento'\'';/' ./WEB-DATA-VIZ/app.js
+      sed -i "s|^[[:space:]]*//[[:space:]]*\(var ambiente_processo = 'producao';\)|\1|" ./WEB-DATA-VIZ/app.js
+      sed -i "s|^[[:space:]]*\(var ambiente_processo = 'desenvolvimento';\)|//\1|" ./WEB-DATA-VIZ/app.js
     check_success "Configuração do ambiente no app.js"
   else
     echo "ERRO: Arquivo app.js não encontrado"
@@ -285,6 +290,8 @@ EOF
   cat > Dockerfile << 'EOL'
 FROM node:latest
 WORKDIR /app
+# Copia apenas os arquivos de dependência primeiro
+COPY ./WEB-DATA-VIZ/package*.json ./
 COPY ./WEB-DATA-VIZ ./
 RUN npm install
 EXPOSE 8080
