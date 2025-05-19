@@ -53,25 +53,34 @@ function vencimentos(idMunicipio) {
     return database.executar(instrucaoSql);
 }
 function periodos(idMunicipio) {
-    var instrucaoSql =  `
+    const instrucaoSql = `
         SELECT
-            nomeFarmaco AS remedio,
-            SUM(CASE WHEN dtEntrada >= CURDATE() - INTERVAL 10 DAY THEN qtdFarmaco ELSE 0 END) AS periodo_atual,
-            SUM(CASE WHEN dtEntrada >= CURDATE() - INTERVAL 30 DAY AND dtEntrada < CURDATE() - INTERVAL 10 DAY THEN qtdFarmaco ELSE 0 END) AS periodo_anterior
+            SUM(CASE 
+                WHEN YEAR(dtEntrada) = 2024 AND MONTH(dtEntrada) = 12 THEN qtdFarmaco
+                ELSE 0
+            END) AS total_dezembro_2024,
+            
+            SUM(CASE 
+                WHEN YEAR(dtEntrada) = 2025 AND MONTH(dtEntrada) = 1 THEN qtdFarmaco
+                ELSE 0
+            END) AS total_janeiro_2025
         FROM Estoque
-        WHERE dtEntrada >= CURDATE() - INTERVAL 30 DAY
-          AND fkmunicipio = ${idMunicipio}
-        GROUP BY nomeFarmaco
-        ORDER BY nomeFarmaco;
+        WHERE fkMunicipio = ${idMunicipio}
+          AND (
+              (YEAR(dtEntrada) = 2024 AND MONTH(dtEntrada) = 12)
+              OR
+              (YEAR(dtEntrada) = 2025 AND MONTH(dtEntrada) = 1)
+          );
     `;
 
     console.log("SQL periodos:", instrucaoSql);
 
     return database.executar(instrucaoSql).catch(erro => {
         console.error("Erro na query periodos:", erro);
-        throw erro; // para propagar o erro para o controller
+        throw erro;
     });
 }
+
 module.exports = {
     listar,
     editar,
