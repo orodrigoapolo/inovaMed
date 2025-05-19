@@ -54,23 +54,29 @@ function vencimentos(idMunicipio) {
 }
 function periodos(idMunicipio) {
     const instrucaoSql = `
-        SELECT
-            SUM(CASE 
-                WHEN YEAR(dtEntrada) = 2024 AND MONTH(dtEntrada) = 12 THEN qtdFarmaco
-                ELSE 0
-            END) AS total_dezembro_2024,
+     
+        SELECT 
+            nomeFarmaco AS remedio,
             
             SUM(CASE 
-                WHEN YEAR(dtEntrada) = 2025 AND MONTH(dtEntrada) = 1 THEN qtdFarmaco
+                WHEN YEAR(e.dtEntrada) = 2024 AND MONTH(e.dtEntrada) = 12 THEN e.qtdFarmaco
                 ELSE 0
-            END) AS total_janeiro_2025
-        FROM Estoque
-        WHERE fkMunicipio = ${idMunicipio}
+            END) AS periodo_atual,
+
+            SUM(CASE 
+                WHEN YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 1 THEN e.qtdFarmaco
+                ELSE 0
+            END) AS periodo_anterior
+
+        FROM estoque e
+        WHERE e.fkMunicipio = ${idMunicipio}
           AND (
-              (YEAR(dtEntrada) = 2024 AND MONTH(dtEntrada) = 12)
+              (YEAR(e.dtEntrada) = 2024 AND MONTH(e.dtEntrada) = 12)
               OR
-              (YEAR(dtEntrada) = 2025 AND MONTH(dtEntrada) = 1)
-          );
+              (YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 1)
+          )
+        GROUP BY nomeFarmaco
+        ORDER BY nomeFarmaco;
     `;
 
     console.log("SQL periodos:", instrucaoSql);

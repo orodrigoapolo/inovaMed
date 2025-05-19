@@ -297,7 +297,7 @@ body {
   height: 35vh;
 }
 
-#graficoBarras {
+#graficoBas {
   width: 100% !important;
   height: 350px !important; /* você pode ajustar esse valor */
 }

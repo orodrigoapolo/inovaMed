@@ -93,7 +93,7 @@
                         <canvas id="graficoTendencia"></canvas>
                     </div>
                     <div class="grafico-container">
-                        <canvas id="graficoBarras"></canvas>
+                        <canvas id="graficoBarras" width="900" height="400"></canvas>
                     </div>
                     <div class="grafico-container">
                         <canvas id="graficoTendenciaResumo"></canvas>
@@ -326,75 +326,96 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const idMunicipio = sessionStorage.FK_MUNICIPIO; 
+       document.addEventListener('DOMContentLoaded', function () {
+    const idMunicipio = sessionStorage.FK_MUNICIPIO;
 
-            carregarGraficoPeriodos(idMunicipio);
-            // === GRÁFICO DE BARRAS COMPARATIVO ===
-            function carregarGraficoPeriodos(idMunicipio) {
-    fetch(`http://localhost:3333/municipios/periodos/${idMunicipio}`)
-        .then(res => {
-            if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
-            return res.json();
-        })
-        .then(dados => {
-            // dados é um array com objetos { remedio, periodo_atual, periodo_anterior }
-            const labels = dados.map(item => item.remedio);
-            const periodoAnterior = dados.map(item => item.periodo_anterior);
-            const periodoAtual = dados.map(item => item.periodo_atual);
+    console.log("ID do Município:", idMunicipio);
 
-            const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
+    if (!idMunicipio) {
+        alert("ID do município não encontrado.");
+        return;
+    }
 
-            if (window.graficoBarras && typeof window.graficoBarras.destroy === 'function') {
-                window.graficoBarras.destroy();
-            }
+    carregarGraficoPeriodos(idMunicipio);
 
-            window.graficoBarras = new Chart(ctxBarras, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Período Anterior',
-                            data: periodoAnterior,
-                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Período Atual',
-                            data: periodoAtual,
-                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Comparação de quantidade de remédios por período',
-                            font: { size: 18, weight: 'bold' },
-                            padding: { top: 10, bottom: 20 }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            min: 0,
-                            ticks: { stepSize: 20 }
-                        }
-                    }
+    function carregarGraficoPeriodos(idMunicipio) {
+        fetch(`http://localhost:3333/municipios/periodos/${idMunicipio}`)
+                    .then(res => {
+                if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
+                return res.json();
+            })
+            .then(dados => {
+                const labels = dados.map(item => item.remedio);
+                const periodoAnterior = dados.map(item => Number(item.periodo_anterior));
+const periodoAtual = dados.map(item => Number(item.periodo_atual));
+
+
+                const ctxBarras = document.getElementById('graficoBarras');
+                if (!ctxBarras) {
+                    console.error("Elemento 'graficoBarras' não encontrado no HTML.");
+                    return;
                 }
+
+                const ctx = ctxBarras.getContext('2d');
+
+                if (window.graficoBarras && typeof window.graficoBarras.destroy === 'function') {
+                    window.graficoBarras.destroy();
+                }
+                window.graficoBarras = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: dados.map(item => item.remedio),
+    datasets: [
+      {
+        label: 'Período Anterior',
+        data: periodoAnterior,
+        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      },
+      {
+        label: 'Período Atual',
+        data: periodoAtual,
+        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          maxRotation: 90,
+          minRotation: 45,
+          font: { size: 10 }
+        }
+      },
+      y: {
+        beginAtZero: true,
+        min: 0,
+        ticks: { stepSize: 20 }
+      }
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Comparação de quantidade de remédios por período',
+        font: { size: 18, weight: 'bold' },
+        padding: { top: 10, bottom: 20 }
+      }
+    }
+  }
+});
+
+            })
+            .catch(err => {
+                console.error("Erro ao carregar gráfico:", err);
+                alert("Erro ao carregar gráfico de períodos.");
             });
-        })
-        .catch(err => {
-            console.error("Erro ao carregar gráfico:", err);
-            alert("Erro ao carregar gráfico de períodos.");
-        });
-}
+    }
+
 
             // === GRÁFICO DE HISTÓRICO POR MUNICÍPIO ===
 
