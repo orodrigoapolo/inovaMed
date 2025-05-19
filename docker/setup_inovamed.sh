@@ -266,7 +266,7 @@ setup_node_image() {
   log_message "Configurando arquivo .env para Node"
   cat > ./WEB-DATA-VIZ/.env << EOF
 AMBIENTE_PROCESSO=producao
-DB_HOST='localhost'
+DB_HOST=db
 DB_DATABASE='inovamed'
 DB_USER='root'
 DB_PASSWORD='${DB_PASSWORD}'
