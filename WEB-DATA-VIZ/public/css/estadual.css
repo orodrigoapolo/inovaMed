@@ -231,18 +231,16 @@ body {
 .conteudo-dashboard-estadual {
   width: 90vw;
   height: fit-content;
-  display: flex;
-  justify-content: space-between;
   margin-top: 1%;
 }
 
 .grupo-kpi {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 20vw;
+  flex-direction: row;
+  justify-content: center;
+  width: 90vw;
   gap: 20px;
-  height: 88vh;
+  height: 31vh;
 }
 
 .kpi-container {
@@ -251,12 +249,13 @@ body {
   align-items: center;
   padding: 2%;
   flex-direction: column; 
-  width: 19vw;
+  width: 24vw;
   height: 176px;
   border: 3px solid rgb(0, 0, 0, 0.2);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
 }
+
 .kpi-titulo {
   font-size: 20px;
   text-align: center;
@@ -275,8 +274,8 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  width: 70vw;
-  height: 88vh;
+  width: 90vw;
+  height: 56vh;
 }
 
 .grafico-container {
@@ -286,8 +285,8 @@ body {
   align-items: center;
   padding: 2%;
   margin-left: 1%;
-  width: 31vw;
-  height: 35vh;
+  width: 40vw;
+  height: 47vh;
   border: 3px solid rgb(0, 0, 0, 0.2);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
@@ -300,12 +299,12 @@ body {
 
 #graficoMunicipios {
   width: 100% !important;
-  height: 350px !important; /* você pode ajustar esse valor */
+  height: 390px !important; /* você pode ajustar esse valor */
 }
 
 #graficoHistorico {
   width: 100% !important;
-  height: 350px !important; /* você pode ajustar esse valor */
+  height: 390px !important; /* você pode ajustar esse valor */
 }
 
 #graficoVencimento{
@@ -317,8 +316,6 @@ body {
   width: 100% !important;
   height: 350px !important; /* você pode ajustar esse valor */
 }
-
-
 
 @media (max-width: 1097px) {
   body {

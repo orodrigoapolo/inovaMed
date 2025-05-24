@@ -1,5 +1,25 @@
-
 var database = require("../database/config")
+
+
+function periodoAtual(idEstado) {
+    var instrucaoSql =  `
+        SELECT 
+            DATE_FORMAT(dtEntrada, '%d/%m/%Y') AS periodo_atual
+        FROM estoque
+        JOIN municipio ON estoque.fkMunicipio = municipio.idMunicipio
+        JOIN estado ON municipio.fkEstado = estado.idEstado
+        WHERE idEstado = ${idEstado}
+        AND dtEntrada = (SELECT MAX(dtEntrada) FROM estoque)
+        LIMIT 1;
+    `;
+
+    console.log("SQL periodoAtual:", instrucaoSql);
+
+    return database.executar(instrucaoSql).catch(erro => {
+        console.error("Erro na query periodoAtual:", erro);
+        throw erro; // para propagar o erro para o controller
+    });
+}
 
 function historico(idEstado) {
     var instrucaoSql = `
@@ -47,30 +67,46 @@ function municipios(idEstado) {
     return database.executar(instrucaoSql);
 }
 
-function periodos(idEstado) {
+function populacaoAsma(idEstado) {
     var instrucaoSql =  `
-        SELECT
-            nomeFarmaco AS remedio,
-            SUM(CASE WHEN dtEntrada >= CURDATE() - INTERVAL 10 DAY THEN qtdFarmaco ELSE 0 END) AS periodo_atual,
-            SUM(CASE WHEN dtEntrada >= CURDATE() - INTERVAL 30 DAY AND dtEntrada < CURDATE() - INTERVAL 10 DAY THEN qtdFarmaco ELSE 0 END) AS periodo_anterior
-        FROM estoque E
-        JOIN municipio ON E.fkMunicipio = municipio.idMunicipio
+        SELECT 
+            SUM(ROUND(municipio.qtdPopulacao * 0.2)) AS estimativa_asmaticos
+        FROM municipio
         JOIN estado ON municipio.fkEstado = estado.idEstado
-        WHERE dtEntrada >= CURDATE() - INTERVAL 30 DAY
-        AND fkEstado = ${idEstado}
-        GROUP BY nomeFarmaco
-        ORDER BY nomeFarmaco;
+        WHERE idEstado = ${idEstado};
     `;
 
-    console.log("SQL periodos:", instrucaoSql);
+    console.log("SQL populacaoAsma:", instrucaoSql);
 
     return database.executar(instrucaoSql).catch(erro => {
-        console.error("Erro na query periodos:", erro);
+        console.error("Erro na query populacaoAsma:", erro);
         throw erro; // para propagar o erro para o controller
     });
 }
+
+function populacaoAtendida(idEstado) {
+    var instrucaoSql =  `
+        SELECT 
+            SUM(ROUND(municipio.qtdPopulacao * 0.2)) AS estimativa_asmaticos,
+            SUM(CASE WHEN dtEntrada >= (SELECT MAX(dtEntrada) FROM estoque) THEN qtdFarmaco ELSE 0 END) AS periodo_atual
+        FROM estoque
+        JOIN municipio ON estoque.fkMunicipio = municipio.idMunicipio
+        JOIN estado ON municipio.fkEstado = estado.idEstado
+        WHERE idEstado = ${idEstado};
+    `;
+
+    console.log("SQL populacaoAtendida:", instrucaoSql);
+
+    return database.executar(instrucaoSql).catch(erro => {
+        console.error("Erro na query populacaoAtendida:", erro);
+        throw erro; // para propagar o erro para o controller
+    });
+}
+
 module.exports = {
+    periodoAtual,
     historico,
     municipios,
-    periodos
+    populacaoAsma,
+    populacaoAtendida
 };
