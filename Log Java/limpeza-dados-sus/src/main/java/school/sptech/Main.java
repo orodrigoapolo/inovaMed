@@ -1,6 +1,8 @@
 package school.sptech;
 
+import alertas.Slack;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.json.JSONObject;
 import school.sptech.dao.EstoqueDao;
 import school.sptech.dao.LogDao;
 import school.sptech.dao.PlanilhaDao;
@@ -81,6 +83,9 @@ public class Main {
                     }
                 }
             }
+            JSONObject json = new JSONObject();
+            json.put("text", "Olá! Informamos que nossa base de dados foi atualizada com sucesso. Isso garante que suas informações estejam sempre corretas e que nossos serviços continuem funcionando da melhor forma para você. 😊 Qualquer dúvida, estamos à disposição!");
+            Slack.enviarMensagem(json);
         } catch (Exception e) {
             System.out.println(e);
             logDao.save(new Log("leitorDadosSUS", ExceptionUtils.getStackTrace(e), LocalDateTime.now(), "Leitura de arquivo Erro"));

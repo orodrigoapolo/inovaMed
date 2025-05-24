@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import school.sptech.DadosSUS;
 import school.sptech.model.Municipio;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class EstoqueDao {
@@ -35,4 +36,5 @@ public class EstoqueDao {
                 estoque.getMunicipio().getIdMunicipio()
         );
     }
+
 }

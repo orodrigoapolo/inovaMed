@@ -1,9 +1,9 @@
 
-scp -i chave-aws.pem ./LeitorArquivoIBGE-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@18.206.218.22:~
+scp -i ec2-lab-izael.pem ./LeitorArquivoIBGE-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@54.83.94.121:~
 
-scp -i chave-aws.pem ./limpeza-dados-sus-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@18.206.218.22:~
+scp -i ec2-lab-izael.pem ./limpeza-dados-sus-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@54.83.94.121:~
 
-scp -i chave-aws.pem ./extracao-dados-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@54.84.150.39:~
+scp -i ec2-lab-izael.pem ./extracao-dados-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@54.83.94.121:~
 
 nano setup_inovamed.sh
 nano cleanup_inovamed.sh

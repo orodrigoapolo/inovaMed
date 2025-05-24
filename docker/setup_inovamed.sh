@@ -10,7 +10,7 @@ SQL_IMAGE="rodrigoapolo/imagem-sql:1.0"
 IBGE_IMAGE="rodrigoapolo/imagem-javaibge:1.0"
 SUS_IMAGE="rodrigoapolo/imagem-javasus:1.0"
 DB_PASSWORD="urubu100"
-BUCKET_NAME="inovamed-s3"
+BUCKET_NAME="s3-izael-lab"
 REPO_URL="https://github.com/orodrigoapolo/inovaMed.git"
 WORKSPACE_DIR="$HOME/docker-compose"
 REPO_DIR="$HOME/inovaMed"
@@ -138,6 +138,12 @@ create_docker_compose() {
   log_message "Criando estrutura de diretórios"
   mkdir -p "$WORKSPACE_DIR"
   check_success "Criação do diretório workspace"
+  
+  # CORREÇÃO: Criar o diretório WEB-DATA-VIZ no diretório do docker-compose com permissões corretas
+  sudo mkdir -p "$WORKSPACE_DIR/WEB-DATA-VIZ"
+  sudo chown -R $USER:$USER "$WORKSPACE_DIR"
+  sudo chmod -R 755 "$WORKSPACE_DIR"
+  check_success "Criação do diretório WEB-DATA-VIZ no workspace"
 
   # Criando docker-compose.yml
   cd "$WORKSPACE_DIR"
@@ -171,6 +177,8 @@ services:
     ports:
       - "8080:8080"
     working_dir: /app
+    volumes:
+      - ./WEB-DATA-VIZ:/app
     command: bash -c "npm install && npm start"
     networks:
       - app-network
@@ -244,29 +252,44 @@ EOL
 # Função para configurar a imagem Node
 setup_node_image() {
   log_message "Configurando imagem Node"
-  mkdir -p "$WORKSPACE_DIR/DockerSite/WEB-DATA-VIZ"
+  mkdir -p "$WORKSPACE_DIR/DockerSite"
   check_success "Criação do diretório para o site"
 
   cd "$WORKSPACE_DIR/DockerSite"
+  
+  log_message "Criando Dockerfile para Node"
+  cat > Dockerfile << 'EOL'
+FROM node:latest
+WORKDIR /app
+# Removemos a cópia, pois vamos montar um volume diretamente
+EXPOSE 8080
+CMD ["npm", "start"]
+EOL
+  check_success "Criação do Dockerfile para Node"
+
+  log_message "Construindo imagem Node"
+  sudo docker build -t "$NODE_IMAGE" .
+  check_success "Build da imagem Node"
+  
+  # CORREÇÃO: Copiar os arquivos WEB-DATA-VIZ diretamente para o diretório de trabalho
+  log_message "Copiando arquivos web para o diretório de trabalho"
   if [ -d "$REPO_DIR/WEB-DATA-VIZ" ]; then
-    cp -r "$REPO_DIR/WEB-DATA-VIZ/"* "./WEB-DATA-VIZ/"
+    # Garantir permissões corretas
+    sudo chown -R $USER:$USER "$WORKSPACE_DIR/WEB-DATA-VIZ"
+    sudo chmod -R 755 "$WORKSPACE_DIR/WEB-DATA-VIZ"
+    
+    # Usar sudo para copiar os arquivos
+    sudo cp -r "$REPO_DIR/WEB-DATA-VIZ/"* "$WORKSPACE_DIR/WEB-DATA-VIZ/"
     check_success "Cópia dos arquivos web"
   else
     echo "ERRO: Diretório WEB-DATA-VIZ não encontrado em $REPO_DIR"
     exit 1
   fi
 
-  if [ -f "./WEB-DATA-VIZ/package.json" ]; then
-    echo "package.json copiado com sucesso!"
-  else
-    echo "ERRO: package.json não foi encontrado após o cp!"
-    exit 1
-  fi
-
   log_message "Configurando arquivo .env para Node"
-  cat > ./WEB-DATA-VIZ/.env << EOF
+  sudo cat > "$WORKSPACE_DIR/WEB-DATA-VIZ/.env" << EOF
 AMBIENTE_PROCESSO=producao
-DB_HOST=db
+DB_HOST='bd'
 DB_DATABASE='inovamed'
 DB_USER='root'
 DB_PASSWORD='${DB_PASSWORD}'
@@ -277,31 +300,14 @@ EOF
   check_success "Criação do arquivo .env para Node"
 
   log_message "Atualizando app.js"
-  if [ -f "./WEB-DATA-VIZ/app.js" ]; then
-      sed -i "s|^[[:space:]]*//[[:space:]]*\(var ambiente_processo = 'producao';\)|\1|" ./WEB-DATA-VIZ/app.js
-      sed -i "s|^[[:space:]]*\(var ambiente_processo = 'desenvolvimento';\)|//\1|" ./WEB-DATA-VIZ/app.js
+  if [ -f "$WORKSPACE_DIR/WEB-DATA-VIZ/app.js" ]; then
+    sudo sed -i '1s/\/\/var ambiente_processo = '\''producao'\'';/var ambiente_processo = '\''producao'\'';/' "$WORKSPACE_DIR/WEB-DATA-VIZ/app.js"
+    sudo sed -i '2s/var ambiente_processo = '\''desenvolvimento'\'';/\/\/var ambiente_processo = '\''desenvolvimento'\'';/' "$WORKSPACE_DIR/WEB-DATA-VIZ/app.js"
     check_success "Configuração do ambiente no app.js"
   else
     echo "ERRO: Arquivo app.js não encontrado"
     exit 1
   fi
-
-  log_message "Criando Dockerfile para Node"
-  cat > Dockerfile << 'EOL'
-FROM node:latest
-WORKDIR /app
-# Copia apenas os arquivos de dependência primeiro
-COPY ./WEB-DATA-VIZ/package*.json ./
-COPY ./WEB-DATA-VIZ ./
-RUN npm install
-EXPOSE 8080
-CMD ["npm", "start"]
-EOL
-  check_success "Criação do Dockerfile para Node"
-
-  log_message "Construindo imagem Node"
-  sudo docker build -t "$NODE_IMAGE" .
-  check_success "Build da imagem Node"
 }
 
 # ============== FUNÇÕES DE CONFIGURAÇÃO ENV ==============
@@ -491,6 +497,36 @@ show_completion_info() {
   echo "Todas as imagens foram construídas e enviadas para o Docker Hub"
 }
 
+# Verifica o conteúdo do arquivo package.json
+check_package_json() {
+  log_message "Verificando o arquivo package.json"
+  if [ -f "$WORKSPACE_DIR/WEB-DATA-VIZ/package.json" ]; then
+    echo "package.json encontrado e parece correto."
+    cat "$WORKSPACE_DIR/WEB-DATA-VIZ/package.json"
+  else
+    echo "ERRO: package.json não encontrado em $WORKSPACE_DIR/WEB-DATA-VIZ"
+    echo "Criando um package.json básico..."
+    sudo cat > "$WORKSPACE_DIR/WEB-DATA-VIZ/package.json" << EOF
+{
+  "name": "web-data-viz",
+  "version": "1.0.0",
+  "description": "Aplicação web InovaMed",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "dotenv": "^10.0.0"
+  }
+}
+EOF
+    sudo chown $USER:$USER "$WORKSPACE_DIR/WEB-DATA-VIZ/package.json"
+    echo "package.json básico criado."
+  fi
+}
+
 # ============== FUNÇÃO PRINCIPAL ==============
 
 # Função principal que orquestra todas as operações
@@ -507,6 +543,9 @@ main() {
   # Configuração das imagens
   setup_sql_image
   setup_node_image
+  
+  # Verifica package.json
+  check_package_json
   
   # Configuração do arquivo .env
   setup_env_file
