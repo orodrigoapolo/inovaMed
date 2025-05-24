@@ -297,12 +297,13 @@ body {
   width: 31vw;
   height: 35vh;
 }
-#graficoBarras {
+
+#graficoMunicipios {
   width: 100% !important;
   height: 350px !important; /* você pode ajustar esse valor */
 }
 
-#graficoTendencia{
+#graficoHistorico {
   width: 100% !important;
   height: 350px !important; /* você pode ajustar esse valor */
 }
