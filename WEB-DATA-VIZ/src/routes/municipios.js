@@ -21,5 +21,15 @@ router.get("/periodos/:idMunicipio", function (req, res) {
     municipiosController.periodos(req, res);
 });
 
+router.get("/kpiAtendimento/:idMunicipio", function (req, res){
+    municipiosController.kpiAtendimento(req, res);
+});   
+
+router.get('/qtdPopulacaoAsma/:idMunicipio',  function (req, res){
+    municipiosController.qtdPopulacaoAsma(req, res);
+    });   
+router.get('/topMesesEstoque/:idMunicipio', function (req, res){
+     municipiosController.topMesesEstoque(req, res);
+});   
 
 module.exports = router;

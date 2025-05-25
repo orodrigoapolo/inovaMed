@@ -58,6 +58,7 @@ function historico(req, res) {
 
 function vencimentos(req, res) {
     var idMunicipio = req.params.idMunicipio;
+    console.log("ID município recebido para consulta:", idMunicipio);
 
     municipiosModel.vencimentos(idMunicipio)
         .then(function (resultado) {
@@ -87,11 +88,66 @@ function periodos(req, res) {
         });
 }
 
+function kpiAtendimento(req, res) {
+    const idMunicipio = req.params.idMunicipio;
+
+    municipiosModel.kpiAtendimento(idMunicipio)
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado[0]); // retorna o primeiro e único resultado da KPI
+            } else {
+                res.status(204).send("Nenhum dado encontrado para a KPI de atendimento.");
+            }
+        })
+        .catch(erro => {
+            console.log("Erro ao buscar KPI de atendimento:", erro.sqlMessage);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
+
+function qtdPopulacaoAsma(req, res) {
+    const idMunicipio = req.params.idMunicipio;
+
+    municipiosModel.qtdPopulacaoAsma(idMunicipio)
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado[0]);
+            } else {
+                res.status(204).send("Nenhum município encontrado.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar município:", erro.sqlMessage);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
+
+function topMesesEstoque(req, res) {
+    const idMunicipio = req.params.idMunicipio;
+    municipiosModel.topMesesEstoque(idMunicipio)
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum dado encontrado para meses de estoque.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar meses estoque:", erro.sqlMessage);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
+
+
+
 
 module.exports = {
     listar,
     editar,
     historico,
     vencimentos,
-    periodos
+    periodos,
+    kpiAtendimento,
+      topMesesEstoque,
+    qtdPopulacaoAsma
 }

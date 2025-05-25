@@ -67,21 +67,18 @@
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">Quantidade de população que sofre com asma
                         </h3>
-                        <p class="kpi-valor1"> 3.670</p>
-
+                        <p id="valorKpi2" class="kpi-valor1"></p>
                     </div>
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">% da população com asma atendida com base na quantidade de medicamento
-                            disponível
-                        </h3>
-                        <p class="kpi-valor1">80%</p>
-
+                            disponível</h3>
+                        <p id="valorKpi" class="kpi-valor1"></p>
                     </div>
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">Meses com mais consumo de medicamentos
                         </h3>
-                        <p class="kpi-valor1">1. Janeiro<br>
-                            2. Julho </p>
+                   <p id="valorKpi3" class="kpi-valor1"></p>
+                            </p>
 
                     </div>
                     <!-- Final KPIs -->
@@ -93,7 +90,7 @@
                         <canvas id="graficoTendencia"></canvas>
                     </div>
                     <div class="grafico-container">
-                        <canvas id="graficoBarras" width="900" height="400"></canvas>
+                        <canvas id="graficoBarras"></canvas>
                     </div>
                     <div class="grafico-container">
                         <canvas id="graficoTendenciaResumo"></canvas>
@@ -326,95 +323,102 @@
         </div>
     </div>
     <script>
-       document.addEventListener('DOMContentLoaded', function () {
-    const idMunicipio = sessionStorage.FK_MUNICIPIO;
+        document.addEventListener('DOMContentLoaded', function () {
+            const idMunicipio = sessionStorage.FK_MUNICIPIO;
 
-    console.log("ID do Município:", idMunicipio);
+            console.log("ID do Município:", idMunicipio);
 
-    if (!idMunicipio) {
-        alert("ID do município não encontrado.");
-        return;
-    }
+            if (!idMunicipio) {
+                alert("ID do município não encontrado.");
+                return;
+            }
 
-    carregarGraficoPeriodos(idMunicipio);
+            carregarGraficoPeriodos(idMunicipio);
 
-    function carregarGraficoPeriodos(idMunicipio) {
-        fetch(`http://localhost:3333/municipios/periodos/${idMunicipio}`)
-                    .then(res => {
-                if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
-                return res.json();
-            })
-            .then(dados => {
-                const labels = dados.map(item => item.remedio);
-                const periodoAnterior = dados.map(item => Number(item.periodo_anterior));
-const periodoAtual = dados.map(item => Number(item.periodo_atual));
+            function carregarGraficoPeriodos(idMunicipio) {
+                fetch(`http://localhost:3333/municipios/periodos/${idMunicipio}`)
+                    .then(res => res.json())
+                    .then(dados => {
+                        // Filtra apenas os que têm soma dos períodos maior que 10
+                        const dadosFiltrados = dados.filter(item => {
+                            const soma = Number(item.periodo_anterior) + Number(item.periodo_atual);
+                            return soma > 10;
+                        });
 
+                        const labels = dadosFiltrados.map(item =>
+                            item.remedio.split(' ').slice(0, 4).join('\n') // quebra em até 3 linhas
+                        );
 
-                const ctxBarras = document.getElementById('graficoBarras');
-                if (!ctxBarras) {
-                    console.error("Elemento 'graficoBarras' não encontrado no HTML.");
-                    return;
-                }
+                        const periodoAnterior = dadosFiltrados.map(item =>
+                            Number(item.periodo_anterior) === 0 ? 1 : Number(item.periodo_anterior)
+                        );
+                        const periodoAtual = dadosFiltrados.map(item =>
+                            Number(item.periodo_atual) === 0 ? 1 : Number(item.periodo_atual)
+                        );
 
-                const ctx = ctxBarras.getContext('2d');
+                        const ctxBarras = document.getElementById('graficoBarras');
+                        if (!ctxBarras) return;
 
-                if (window.graficoBarras && typeof window.graficoBarras.destroy === 'function') {
-                    window.graficoBarras.destroy();
-                }
-                window.graficoBarras = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: dados.map(item => item.remedio),
-    datasets: [
-      {
-        label: 'Período Anterior',
-        data: periodoAnterior,
-        backgroundColor: 'rgba(255, 99, 132, 0.7)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-      },
-      {
-        label: 'Período Atual',
-        data: periodoAtual,
-        backgroundColor: 'rgba(54, 162, 235, 0.7)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    scales: {
-      x: {
-        ticks: {
-          maxRotation: 90,
-          minRotation: 45,
-          font: { size: 10 }
-        }
-      },
-      y: {
-        beginAtZero: true,
-        min: 0,
-        ticks: { stepSize: 20 }
-      }
-    },
-    plugins: {
-      title: {
-        display: true,
-        text: 'Comparação de quantidade de remédios por período',
-        font: { size: 18, weight: 'bold' },
-        padding: { top: 10, bottom: 20 }
-      }
-    }
-  }
-});
+                        const ctx = ctxBarras.getContext('2d');
+                        if (window.graficoBarras?.destroy) window.graficoBarras.destroy();
 
-            })
-            .catch(err => {
-                console.error("Erro ao carregar gráfico:", err);
-                alert("Erro ao carregar gráfico de períodos.");
-            });
-    }
+                        window.graficoBarras = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        label: 'Período Anterior',
+                                        data: periodoAnterior,
+                                        backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                                    },
+                                    {
+                                        label: 'Período Atual',
+                                        data: periodoAtual,
+                                        backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: 'Comparação de quantidade de remédios por período',
+                                        font: { size: 18 }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: ctx => `${ctx.dataset.label}: ${ctx.raw === 1 ? 0 : ctx.raw}`
+                                        }
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        type: 'logarithmic',
+                                        beginAtZero: false
+                                    },
+                                    x: {
+
+                                        ticks: {
+                                            maxRotation: 0,
+                                            minRotation: 0,
+                                            autoSkip: false,
+                                            callback: function (value) {
+                                                const label = this.getLabelForValue(value);
+                                                return label.split('\n'); // força quebra de linha real
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.error("Erro ao carregar gráfico:", err);
+                        alert("Erro ao carregar gráfico de períodos.");
+                    });
+            }
 
 
             // === GRÁFICO DE HISTÓRICO POR MUNICÍPIO ===
@@ -438,46 +442,46 @@ const periodoAtual = dados.map(item => Number(item.periodo_atual));
                         return res.json();
                     })
                     .then(dados => {
-                        // Defina o intervalo fixo de meses que quer mostrar no gráfico:
-                        const ano = 2025;
+                        const ano = 2024;
                         const mesInicio = 1;
-                        const mesFim = 5; // até maio
+                        const mesFim = 12;
                         const meses = gerarMesesIntervalo(ano, mesInicio, mesFim);
 
                         const remedios = [...new Set(dados.map(item => item.remedio))];
 
-
-                        const datasets = remedios.map(remedio => ({
-                            label: remedio,
-                            data: meses.map(mes => {
+                        const datasets = remedios.map(remedio => {
+                            const nomeCurto = remedio.split(' ').slice(0, 4).join(' ');
+                            const valores = meses.map(mes => {
                                 const registro = dados.find(d => d.mes === mes && d.remedio === remedio);
                                 return registro ? Number(registro.total_comprado) : 0;
-                            }),
-                            borderColor: gerarCorAleatoria(),
-                            backgroundColor: 'transparent',
-                            tension: 0.3,
-                            borderWidth: 2,
-                            pointRadius: 0,
-                        }));
+                            });
+
+                            return {
+                                label: nomeCurto,
+                                data: valores,
+                                borderColor: gerarCorAleatoria(),
+                                backgroundColor: 'transparent',
+                                tension: 0.3,
+                                borderWidth: 2,
+                                pointRadius: 4
+                            };
+                        });
 
                         const mediaFixa = dados.length > 0 ? Number(dados[0].estimativa_asmaticos) : 0;
-
-                        // Preenche a média com o valor fixo para todos os meses
                         const mediaAsmaticos = meses.map(() => mediaFixa);
 
                         datasets.push({
-                            label: 'Média pessoas com asma',
+                            label: 'Média asma',
                             data: mediaAsmaticos,
                             borderColor: 'rgba(75, 192, 192, 1)',
                             borderDash: [10, 5],
                             backgroundColor: 'transparent',
                             borderWidth: 2,
-                            pointRadius: 0,
+                            pointRadius: 0
                         });
 
                         const ctx = document.getElementById('graficoTendencia').getContext('2d');
 
-                        // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
                         if (window.graficoTendencia && typeof window.graficoTendencia.destroy === 'function') {
                             window.graficoTendencia.destroy();
                         }
@@ -491,34 +495,40 @@ const periodoAtual = dados.map(item => Number(item.periodo_atual));
                             options: {
                                 responsive: true,
                                 plugins: {
-                                    title: {
-                                        display: true,
-                                        text: 'Histórico mensal de medicamentos comprados por município',
-                                        font: { size: 18, weight: 'bold' },
-                                        padding: { top: 10, bottom: 20 }
-                                    },
                                     legend: {
                                         position: 'top',
                                         labels: {
-                                            boxWidth: 15,
-                                            padding: 10
+                                            font: { size: 12 }
+                                        }
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Histórico mensal de medicamentos comprados por município',
+                                        font: {
+                                            size: 18,
+                                            weight: 'bold'
                                         }
                                     }
                                 },
                                 scales: {
                                     y: {
                                         beginAtZero: true,
+                                        suggestedMax: 100000,
+                                        ticks: {
+                                            stepSize: 10000,
+                                            callback: value => value.toLocaleString('pt-BR')
+                                        },
                                         title: {
                                             display: true,
                                             text: 'Quantidade',
-                                            font: { weight: 'bold', size: 14 }
+                                            font: { size: 14, weight: 'bold' }
                                         }
                                     },
                                     x: {
                                         title: {
                                             display: true,
                                             text: 'Meses',
-                                            font: { weight: 'bold', size: 14 }
+                                            font: { size: 14, weight: 'bold' }
                                         }
                                     }
                                 }
@@ -532,105 +542,125 @@ const periodoAtual = dados.map(item => Number(item.periodo_atual));
             }
 
 
-            function gerarCorAleatoria() {
-                const r = Math.floor(Math.random() * 200);
-                const g = Math.floor(Math.random() * 200);
-                const b = Math.floor(Math.random() * 200);
-                return `rgba(${r}, ${g}, ${b}, 1)`;
-            }
-
-            // === GRÁFICO DE VENCIMENTO DE LOTES ===
 
             carregarGraficoVencimento();
+
             function carregarGraficoVencimento() {
-    const idMunicipio = sessionStorage.FK_MUNICIPIO;
+                const idMunicipio = sessionStorage.FK_MUNICIPIO;
 
-    fetch(`http://localhost:3333/municipios/vencimentos/${idMunicipio}`)
-        .then(res => {
-            if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
-            return res.json();
-        })
-        .then(dados => {
-            console.log("Dados recebidos:", dados);
+                fetch(`http://localhost:3333/municipios/vencimentos/${idMunicipio}`)
+                    .then(res => {
+                        if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
+                        return res.json();
+                    })
+                    .then(dados => {
+                        console.log("Dados recebidos:", dados);
 
-            const labels = dados.map(item => `Lote ${item.nome} - ${item.remedio}`);
-            const data = dados.map(item => item.quantidade);
-            const backgroundColors = dados.map(() => gerarCorAleatoria());
-            const datasVencimento = dados.map(item => item.vencimento);
+                        // === Montagem dos dados para o gráfico ===
+                        const vistos = new Set();
+                        const dadosUnicos = [];
 
-            const ctx = document.getElementById('graficoVencimento').getContext('2d');
+                        dados.forEach(item => {
+                            const nomeRemedio = item.remedio.trim().toLowerCase();
+                            if (!vistos.has(nomeRemedio)) {
+                                dadosUnicos.push(item);
+                                vistos.add(nomeRemedio);
+                            }
+                        });
 
-            if (window.graficoVencimento && typeof window.graficoVencimento.destroy === 'function') {
-                window.graficoVencimento.destroy();
+                        const labels = dadosUnicos.map(item => {
+                            const textoCompleto = `Lote ${item.nome} - ${item.remedio}`;
+                            const palavras = textoCompleto.split(' ');
+                            return palavras.slice(0, 4).join(' ');
+                        });
+                        const data = dadosUnicos.map(item => item.quantidade);
+                        const backgroundColors = dadosUnicos.map(() => gerarCorAleatoria());
+                        const datasVencimento = dadosUnicos.map(item => item.vencimento);
+
+                        const ctx = document.getElementById('graficoVencimento').getContext('2d');
+
+                        // Destroi o gráfico anterior se ele já existir
+                        if (window.graficoVencimento && typeof window.graficoVencimento.destroy === 'function') {
+                            window.graficoVencimento.destroy();
+                        }
+
+                        // Cria novo gráfico
+                        window.graficoVencimento = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels, // ex: "Lote 123 - Dipirona"
+                                datasets: [{
+                                    label: 'Quantidade',
+                                    data: data,
+                                    backgroundColor: backgroundColors,
+                                    borderColor: backgroundColors,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'y', // barras horizontais
+                                responsive: true,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: 'Remédios Próximos ao Vencimento',
+                                        font: {
+                                            size: 18,
+                                            weight: 'bold'
+                                        }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                const index = context.dataIndex;
+                                                return `${context.label}: ${context.raw} unidades (vencimento: ${datasVencimento[index]})`;
+                                            }
+                                        }
+                                    },
+                                    legend: {
+                                        display: false
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        beginAtZero: true,
+                                        title: {
+                                            display: true,
+                                            text: 'Quantidade',
+                                            font: {
+                                                size: 14,
+                                                weight: 'bold'
+                                            }
+                                        }
+                                    },
+                                    y: {
+                                        title: {
+                                            display: true,
+                                            text: 'Lotes',
+                                            font: {
+                                                size: 14,
+                                                weight: 'bold'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => {
+                        console.error("Erro ao carregar vencimentos:", err);
+                        alert("Erro ao carregar gráfico de vencimentos.");
+                    });
             }
 
-            window.graficoVencimento = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Quantidade',
-                        data: data,
-                        backgroundColor: backgroundColors,
-                        borderColor: backgroundColors,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    indexAxis: 'y', // barras horizontais
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Remédios Próximos ao Vencimento',
-                            font: {
-                                size: 18,
-                                weight: 'bold'
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function (context) {
-                                    const index = context.dataIndex;
-                                    return `${context.label}: ${context.raw} unidades (vencimento: ${datasVencimento[index]})`;
-                                }
-                            }
-                        },
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Quantidade',
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                
-                                font: {
-                                    size: 14,
-                                    weight: 'bold'
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        })
-        .catch(err => {
-            console.error("Erro ao carregar vencimentos:", err);
-            alert("Erro ao carregar gráfico de vencimentos.");
-        });
-}
+            // Função auxiliar para gerar cores aleatórias
+            function gerarCorAleatoria() {
+                const r = Math.floor(Math.random() * 156) + 100;
+                const g = Math.floor(Math.random() * 156) + 100;
+                const b = Math.floor(Math.random() * 156) + 100;
+                return `rgba(${r}, ${g}, ${b}, 0.7)`;
+            }
+
 
 
 
@@ -712,6 +742,92 @@ const periodoAtual = dados.map(item => Number(item.periodo_atual));
             });
 
         });
+
+        // ==========================================================================================================//
+        // Kpis 
+       document.addEventListener('DOMContentLoaded', function () {
+    const idMunicipio = sessionStorage.FK_MUNICIPIO;
+
+    console.log("ID do Município:", idMunicipio);
+
+    if (!idMunicipio) {
+        alert("ID do município não encontrado.");
+        return;
+    }
+
+    carregarKpiAtendimento(idMunicipio);
+    carregarQtdPopulacaoAsma(idMunicipio);
+    carregarTopMesesEstoque(idMunicipio);
+
+    function carregarKpiAtendimento(idMunicipio) {
+        fetch(`http://localhost:3333/municipios/kpiAtendimento/${idMunicipio}`)
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json();
+                } else if (res.status === 204) {
+                    throw new Error("Nenhum dado encontrado.");
+                } else {
+                    throw new Error(`Erro inesperado: ${res.status}`);
+                }
+            })
+            .then(dado => {
+                document.getElementById("valorKpi").textContent = `${dado.percentual_atendimento}%`;
+            })
+            .catch(err => {
+                console.error("Erro ao carregar KPI de atendimento:", err.message);
+                document.getElementById("valorKpi").textContent = "Sem dados";
+            });
+    }
+
+    function carregarQtdPopulacaoAsma(idMunicipio) {
+        fetch(`http://localhost:3333/municipios/qtdPopulacaoAsma/${idMunicipio}`)
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json();
+                } else if (res.status === 204) {
+                    throw new Error("Nenhum dado encontrado.");
+                } else {
+                    throw new Error(`Erro inesperado: ${res.status}`);
+                }
+            })
+ .then(dado => {
+    // Converte para número e formata com ponto para milhares
+    const numero = Number(dado.estimativa_asmaticos);
+    const texto = numero.toLocaleString('pt-BR');
+    document.getElementById("valorKpi2").textContent = texto;
+})
+            .catch(err => {
+                console.error("Erro ao carregar população com asma:", err.message);
+                document.getElementById("valorKpi2").textContent = "Sem dados";
+            });
+    }
+
+    function carregarTopMesesEstoque(idMunicipio) {
+        fetch(`http://localhost:3333/municipios/topMesesEstoque/${idMunicipio}`)
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json();
+                } else if (res.status === 204) {
+                    throw new Error("Nenhum dado encontrado.");
+                } else {
+                    throw new Error(`Erro inesperado: ${res.status}`);
+                }
+            })
+.then(dados => {
+    if (dados.length === 0) throw new Error("Nenhum dado para exibir");
+
+    const listaMeses = dados.map(item => item.mes).join("<br>");
+    document.getElementById("valorKpi3").innerHTML = listaMeses;
+})
+
+            .catch(err => {
+                console.error("Erro ao carregar meses com mais consumo:", err.message);
+                document.getElementById("valorKpi3").textContent = "Sem dados";
+            });
+    }
+});
+
+
     </script>
 
 
@@ -775,6 +891,8 @@ const periodoAtual = dados.map(item => Number(item.periodo_atual));
             console.log(erro);
         });
     }
+
+
 
 
     var dataCompleta = new Date(sessionStorage.DT_NASC);
