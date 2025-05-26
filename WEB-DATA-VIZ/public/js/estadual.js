@@ -23,14 +23,14 @@ function abrirContatos() {
     opcao_config_container.style.display = "none"
     dash_contato_container.style.display = "flex"
     dash_parametro_container.style.display = "none"
-    listar();
+    exibirContato();
 }
 
 function abrirParametros() {
     opcao_config_container.style.display = "none"
     dash_contato_container.style.display = "none"
     dash_parametro_container.style.display = "flex"
-    exibir();
+    exibirParametros();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -135,8 +135,9 @@ document.addEventListener('DOMContentLoaded', function () {
         btnEditarParametro.style.display = 'inline-block';
 
 
-        inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
-        inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
+        inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue;
+        inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue;
+
         alert("Parâmetros descartados com sucesso!");
     };
 
@@ -152,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnDescartarParametro.style.display = 'none';
         btnEditarParametro.style.display = 'inline-block';
 
-        configurar();
+        configurarParametros();
     };
 
     // Funções para contato
@@ -194,44 +195,10 @@ document.addEventListener('DOMContentLoaded', function () {
         btnDescartarContato.style.display = 'none';
         btnEditarContato.style.display = 'inline-block';
 
+        configurarContato();
     };
 
 });
-
-function listar() {
-    var idUsuario = sessionStorage.ID_USUARIO;
-    fetch(`/contatoAvisos/listar/${idUsuario}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-    }).then(function (resposta) {
-        console.log("ESTOU NO THEN DO listar()!");
-
-        if (resposta.ok) {
-            console.log(resposta);
-            resposta.json().then(json => {
-                console.log(json); // Verifique o conteúdo retornado
-                if (json.length > 0) {
-                    console.log("Número de usuários:", json.length);
-
-                    input_email_contato.value = json[0].email;
-                } else {
-                    console.log("Nenhum usuário encontrado.");
-                }
-            });
-
-        } else {
-            console.log("Houve um erro ao tentar realizar a listagem!");
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
-
-    }).catch(function (erro) {
-        console.log(erro);
-    });
-}
 
 function deletarUsuario(idUsuario) {
     var idUsuario = sessionStorage.ID_USUARIO;
@@ -296,8 +263,9 @@ function editar(idUsuario, email, nome, cpf, cargo, estado, dtNasc, genero) {
     });
 }
 
+// parametro functions
 
-function configurar() {
+function configurarParametros() {
     // Se houver erros, exibe um alerta
     var maxVar = document.getElementById('input_parametro_maior_valor').value;
     var minVar = document.getElementById('input_parametro_menor_valor').value;
@@ -305,7 +273,7 @@ function configurar() {
     if (!maxVar || !minVar) {
         alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
     } else {
-        fetch(`/parametros/configurar/${idUsuario}`, {
+        fetch(`/parametros/configurarParametro/${idUsuario}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -332,35 +300,134 @@ function configurar() {
     }
 }
 
-function exibir(idUsuario) {
+function exibirParametros(idUsuario) {
     var idUsuario = sessionStorage.ID_USUARIO;
-    fetch(`/parametros/exibir/${idUsuario}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-    }).then(function (resposta) {
-        console.log("ESTOU NO THEN DO listar()!");
 
-        if (resposta.ok) {
-            console.log(resposta);
-            resposta.json().then(json => {
-                console.log(json); // Verifique o conteúdo retornado
+    fetch(`/parametros/exibirParametro/${idUsuario}`)
+        .then(res => {
+            if (res.status === 204) {
+                // Nenhum conteúdo (No Content)
+                return null;
+            }
+            if (!res.ok) {
+                throw new Error("Erro na resposta do servidor");
+            }
+            return res.text(); // pega o corpo como texto
+        })
+        .then(text => {
+            if (!text) {
+                console.log("Nenhum parâmetro encontrado");
+                return;
+            }
 
-                   sessionStorage.PARAMETRO_MIN = resposta.min;
-                   sessionStorage.PARAMETRO_MAX = resposta.max;
+            const param = JSON.parse(text);
+            console.log("Parâmetros existentes:", param);
 
-            });
+            input_parametro_menor_valor.value = `${param[0].min}`
+            input_parametro_maior_valor.value = `${param[0].max}`
 
-        } else {
-            console.log("Houve um erro ao tentar realizar a listagem!");
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
-
-    }).catch(function (erro) {
-        console.log(erro);
-    });
+            input_parametro_menor_valor.dataset.originalValue = param[0].min;
+            input_parametro_maior_valor.dataset.originalValue = param[0].max;
+        })
+        .catch(erro => {
+            console.error("Erro ao verificar parâmetros:", erro);
+        });
 }
 
+// contatos functions
+
+// function listarContato() {
+//     var idUsuario = sessionStorage.ID_USUARIO;
+//     fetch(`/contatoAvisos/listar/${idUsuario}`, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//     }).then(function (resposta) {
+//         console.log("ESTOU NO THEN DO listar()!");
+
+//         if (resposta.ok) {
+//             console.log(resposta);
+//             resposta.json().then(json => {
+//                 console.log(json); // Verifique o conteúdo retornado
+//                 if (json.length > 0) {
+//                     console.log("Número de usuários:", json.length);
+
+//                     input_email_contato.value = json[0].email;
+//                 } else {
+//                     console.log("Nenhum usuário encontrado.");
+//                 }
+//             });
+
+//         } else {
+//             console.log("Houve um erro ao tentar realizar a listagem do ContatoAvisos!");
+//             resposta.text().then(texto => {
+//                 console.error(texto);
+//             });
+//         }
+
+//     }).catch(function (erro) {
+//         console.log(erro);
+//     });
+// }
+
+function configurarContato() {
+    // Se houver erros, exibe um alerta
+    var emailVar = document.getElementById('input_email_contato').value;
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/contatoAvisos/configurarContato/${idUsuario}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            emailServer: emailVar
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                setTimeout(() => {
+                    alert('Configuração realizada com sucesso!');
+                }, 2000);
+            } else {
+                throw "Houve um erro ao tentar realizar a configuração!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+}
+
+function exibirContato(idUsuario) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/contatoAvisos/exibirContato/${idUsuario}`)
+        .then(res => {
+            if (res.status === 204) {
+                // Nenhum conteúdo (No Content)
+                return null;
+            }
+            if (!res.ok) {
+                throw new Error("Erro na resposta do servidor");
+            }
+            return res.text(); // pega o corpo como texto
+        })
+        .then(text => {
+            if (!text) {
+                console.log("Nenhum contato encontrado");
+                return;
+            }
+
+            const param = JSON.parse(text);
+            console.log("Contatos existentes:", param);
+
+            input_email_contato.value = `${param[0].email}`
+
+            input_email_contato.dataset.originalValue = param[0].email;
+        })
+        .catch(erro => {
+            console.error("Erro ao verificar contato:", erro);
+        });
+}

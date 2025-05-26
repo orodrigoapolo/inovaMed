@@ -1447,6 +1447,14 @@ textarea {
   flex-direction: column;
 }
 
+.parametro-container-cima {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 85vw;
+}
+
 .titulo-parametro {
   margin-top: 0;
 }

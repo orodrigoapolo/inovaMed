@@ -4,12 +4,16 @@ var router = express.Router();
 var parametrosController = require("../controllers/parametrosController");
 
 //Recebendo os dados do html e direcionando para a função cadastrar de parametrosController.js
-router.post("/configurar/:idUsuario", function (req, res) {
-    parametrosController.configurar(req, res);
+router.post("/configurarParametro/:idUsuario", function (req, res) {
+    parametrosController.configurarParametro(req, res);
 })
 
-router.get("/exibir/:idUsuario", function (req, res) {
-    parametrosController.exibir(req, res);
+router.post("/configurarPrimeiroParametro/:idUsuario", function (req, res) {
+    parametrosController.configurarPrimeiroParametro(req, res);
+})
+
+router.get("/exibirParametro/:idUsuario", function (req, res) {
+    parametrosController.exibirParametro(req, res);
 });
 
 module.exports = router;

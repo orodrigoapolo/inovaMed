@@ -8,6 +8,7 @@
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="./js/estadual.js" defer></script>
+    <script src="./js/sessao.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="./css/estadual.css" />
@@ -252,14 +253,14 @@
                     Contatos
                 </h1>
                 <div class="contato-container">
-                    <!-- <div class="contato-container-cima">
+                    <div class="contato-container-cima">
                         <h1 class="nome-contato" id="nome_contato">
                             Contato 1
                         </h1>
                         <div class="excluir-contato">
                             <img src="assets/icon/trash.png">
                         </div>
-                    </div> -->
+                    </div>
                     <div class="contato-container-input">
                         <p class="email-contato">
                             Email
@@ -280,11 +281,11 @@
                         </button>
                     </div>
                 </div>
-                <!-- <div class="adicionar-contato">
+                <div class="adicionar-contato">
                     <div id="adicionar_contato">
                         <img src="assets/icon/plus-circle-thin.png">
                     </div>
-                </div> -->
+                </div>
             </div>
 
             <div class="dash-parametro-container" id="dash_parametro_container">
@@ -292,9 +293,14 @@
                     Parâmetros
                 </h1>
                 <div class="parametro-container">
-                    <h1 class="nome-parametro">
+                    <div class="parametro-container-cima">
+                        <h1 class="nome-parametro">
                         Medicamentos
-                    </h1>
+                        </h1>
+                        <div class="excluir-contato">
+                            <img src="assets/icon/trash.png">
+                        </div>
+                    </div>
                     <div class="parametro-container-input">
                         <p class="menor-valor-parametro">
                             Menor quantidade (unidades)
@@ -324,6 +330,11 @@
                             <i class="fas fa-save"></i> Salvar Informações
                     </div>
                 </div>
+                <div class="adicionar-contato">
+                    <div id="adicionar_contato">
+                        <img src="assets/icon/plus-circle-thin.png">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -332,7 +343,7 @@
 
 </html>
 
-<script src="./js/sessao.js"></script>
+<!-- <script src="./js/sessao.js"></script> -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -361,9 +372,9 @@
                     resposta.json().then(json => {
                         console.log(json); // Verifique o conteúdo retornado
                         if (json.length > 0) {
-                            
+
                             periodoAtual.innerHTML = `${json[0].periodo_atual}`
-                            
+
                         } else {
                             console.log("período atual não encontrada.");
                         }
@@ -618,9 +629,9 @@
                     resposta.json().then(json => {
                         console.log(json); // Verifique o conteúdo retornado
                         if (json.length > 0) {
-                            
+
                             qtdPopulacaoAsma.innerHTML += `${Number(json[0].estimativa_asmaticos).toLocaleString('pt-BR')}`
-                            
+
                         } else {
                             console.log("População com asma não encontrada.");
                         }
@@ -656,11 +667,11 @@
                     resposta.json().then(json => {
                         console.log(json); // Verifique o conteúdo retornado
                         if (json.length > 0) {
-                            
-                            var porcentagem = (json[0].periodo_atual / (30 * json[0].estimativa_asmaticos)) * 100
+
+                            var porcentagem = (json[0].periodo_atual / (json[0].estimativa_asmaticos)) * 100
 
                             PorcPopulacaoAtendida.innerHTML = `${porcentagem.toFixed(2)}%`
-                            
+
                         } else {
                             console.log("População atendida não encontrada.");
                         }
@@ -676,9 +687,9 @@
                 console.log(erro);
             });
         }
-    
-    
-    
+
+
+
     });
 </script>
 
@@ -692,9 +703,7 @@
     genero.value = sessionStorage.GENERO_USUARIO;
     senha.value = sessionStorage.SENHA_USUARIO;
     estado.value = sessionStorage.FK_ESTADO;
-    input_email_contato.value = sessionStorage.EMAIL_USUARIO;
-    input_parametro_menor_valor.value = 5;
-    input_parametro_maior_valor.value = 10;
+    // input_email_contato.value = sessionStorage.EMAIL_USUARIO;
 
     function listar2(fkEstado) {
         var fkEstado = document.getElementById('estado').value;

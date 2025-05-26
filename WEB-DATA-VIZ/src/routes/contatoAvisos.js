@@ -5,8 +5,20 @@ var contatoAvisosController = require("../controllers/contatoAvisosController");
 
 //Recebendo os dados do html e direcionando para a função cadastrar de contatoAvisos.js
 
-router.get("/listar/:idUsuario", function (req, res) {
-    contatoAvisosController.listar(req, res);
+router.get("/listarContato/:idUsuario", function (req, res) {
+    contatoAvisosController.listarContato(req, res);
+});
+
+router.post("/configurarContato/:idUsuario", function (req, res) {
+    contatoAvisosController.configurarContato(req, res);
+});
+
+router.post("/configurarPrimeiroContato/:idUsuario", function (req, res) {
+    contatoAvisosController.configurarPrimeiroContato(req, res);
+});
+
+router.get("/exibirContato/:idUsuario", function (req, res) {
+    contatoAvisosController.exibirContato(req, res);
 });
 
 module.exports = router;
