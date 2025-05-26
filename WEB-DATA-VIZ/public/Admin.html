@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="listar(), validarSessao()">
+<body onload=" validarSessao()  ">
     <div class="janela">
 
         <div class="header-left">
@@ -52,17 +52,17 @@
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">Total de usuários cadastrados
                         </h3>
-                        <p class="kpi-valor1">250</p>
+                        <p id="kpi_usuarios" class="kpi-valor1"> </p>
                         
                     </div><div class="kpi-container">
-                        <h3 class="kpi-titulo">Quantidades de cordenadores inativos no sistema
+                        <h3 class="kpi-titulo">Quantidades de coordenadores inativos no sistema
                         </h3>
-                        <p class="kpi-valor1">25</p>
+                        <p id="kpi_coord_inativo" class="kpi-valor1"></p>
                         
                     </div><div class="kpi-container">
-                        <h3 class="kpi-titulo">Estado com maior presença de cordenadores
+                        <h3 class="kpi-titulo">Estado com maior presença de coordenadores
                         </h3>
-                        <p class="kpi-valor1">Pará</p>
+                        <p id="kpi_estado_maior_coord" class="kpi-valor1"></p>
                         
                     </div>
                         </div>
@@ -259,162 +259,461 @@
 </html>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    carregarEstatisticasTotalUsuarios(); 
+carregarEstatisticasQuantidadeCoordenadores();
+carregarEstatisticasEstadosComMaisCoordenadores();
+window.onload = function () {
+    setTimeout(() => {
+        carregarGraficoUsuarioEstado();
+        carregarGraficoFaixaEtaria();
+carregarGraficoGenero();
+    }, 500); // Aguarda meio segundo antes de chamar a função
+};
 
-const ctx = document.getElementById('graficoUsuariosEstado').getContext('2d');
+})
 
-const graficoUsuariosEstado = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO'], // Região Norte
-        datasets: [
-            {
-                label: 'Coordenadores Municipais',
-                data: [12, 8, 25, 30, 15, 10, 18],
-                backgroundColor: '#28a745', // Verde
-                barThickness: 30
-            },
-            {
-                label: 'Coordenadores Estaduais',
-                data: [5, 3, 10, 12, 6, 4, 7],
-                backgroundColor: '#007bff', // Azul
-                barThickness: 30
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Usuários por Estado (Região Norte)',
-                font: {
-                                size: 18,
-                                weight: 'bold'
+
+ function carregarGraficoUsuarioEstado() {
+
+            fetch(`/dashAdmin/graficoUsuarioEstado`)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
+                    return res.json();
+                })
+                .then(dados => {
+
+                    const municipal = dados.map(item => item.totalMunicipal);
+                    const estadual = dados.map(item => item.totalEstadual);
+                    const estados = (dados.map(item => item.estados));
+
+                    const data = {
+                        labels: estados,
+                        datasets: [
+                            {
+                                label: 'Coordenadores Estaduais',
+                                data: estadual,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)'
                             },
-            },
-            legend: {
-                position: 'bottom'
-            }
-        },
-        scales: {
-            x: {
-                stacked: true,
-                title: {
-                    display: true,
-                    text: 'Estados',
-                    font: {
-                                size: 14,
-                                weight: 'bold'
+                            {
+                                label: 'Coordenadores Municipais',
+                                data: municipal,
+                                backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                            }
+                        ]
+                    };
+
+                    const ctxTotalCoordenadores = document.getElementById('graficoUsuariosEstado').getContext('2d');
+
+                    // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
+                    if (window.graficoUsuariosEstado && typeof window.graficoUsuariosEstado.destroy === 'function') {
+                        window.graficoUsuariosEstado.destroy();
+                    }
+
+                    window.graficoUsuariosEstado = new Chart(ctxTotalCoordenadores, {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Usuários por Estado (Região Norte)',
+                                    font: {
+                                        size: 16,
+                                        weight: 'bold'
+                                    },
+                                    padding: {
+                                        top: 0,
+                                        bottom: 5
+                                    }
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        boxWidth: 15,
+                                        padding: 5
+                                    }
+                                }
                             },
-                }
-            },
-            y: {
-                stacked: true,
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Quantidade de Usuários',
-                    font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                }
-            }
+                            scales: {
+                                y: {
+                                    stacked: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Estados',
+                                        font: { weight: 'bold', size: 18 }
+                                    },
+                                    beginAtZero: true
+                                    
+                                },
+                                x: {
+                                    stacked: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Quantidade de usuários',
+                                        font: { weight: 'bold', size: 18 }
+                                    },
+                                   
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Erro no fetch:", err);
+                    alert("Erro ao carregar dados do gráfico");
+                });
         }
-    }
-});
 
-const ctxGenero = document.getElementById('graficoGeneroUsuarios').getContext('2d');
+        function carregarGraficoUsuarioEstado() {
 
-const graficoGeneroUsuarios = new Chart(ctxGenero, {
-    type: 'pie',
-    data: {
-        labels: ['Feminino', 'Masculino', 'Outro', 'Não informado'],
-        datasets: [{
-            label: 'Distribuição por Gênero',
-            data: [320, 280, 30, 50],
-            backgroundColor: ['#007bff', '#28a745', '#ffc107', '#6c757d'],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Distribuição de Usuários por Gênero',
-                font: {
-                                size: 18,
-                                weight: 'bold'
+            fetch(`/dashAdmin/graficoUsuarioEstado`)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
+                    return res.json();
+                })
+                .then(dados => {
+
+                    const municipal = dados.map(item => item.totalMunicipal);
+                    const estadual = dados.map(item => item.totalEstadual);
+                    const estados = (dados.map(item => item.estados));
+
+                    const data = {
+                        labels: estados,
+                        datasets: [
+                            {
+                                label: 'Coordenadores Estaduais',
+                                data: estadual,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)'
                             },
-            },
-            legend: {
-                position: 'bottom'
-            }
+                            {
+                                label: 'Coordenadores Municipais',
+                                data: municipal,
+                                backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                            }
+                        ]
+                    };
+
+                    const ctxTotalCoordenadores = document.getElementById('graficoUsuariosEstado').getContext('2d');
+
+                    // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
+                    if (window.graficoUsuariosEstado && typeof window.graficoUsuariosEstado.destroy === 'function') {
+                        window.graficoUsuariosEstado.destroy();
+                    }
+
+                    window.graficoUsuariosEstado = new Chart(ctxTotalCoordenadores, {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Usuários por Estado (Região Norte)',
+                                    font: {
+                                        size: 18,
+                                        weight: 'bold'
+                                    },
+                                    padding: {
+                                        top: 0,
+                                        bottom: 5
+                                    }
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        boxWidth: 15,
+                                        padding: 5
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    stacked: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Quantidade de Usuários',
+                                        font: { weight: 'bold', size: 18 }
+                                    },
+                                    beginAtZero: true
+                                    
+                                },
+                                x: {
+                                    stacked: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Estados',
+                                        font: { weight: 'bold', size: 18 }
+                                    },
+                                   
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Erro no fetch:", err);
+                    alert("Erro ao carregar dados do gráfico");
+                });
         }
-    }
-});
-const ctxIdade = document.getElementById('graficoIdadeCoordenadores').getContext('2d');
 
-const graficoIdadeCoordenadores = new Chart(ctxIdade, {
-    type: 'bar',
-    data: {
-        labels: ['18-25', '26-35', '36-49', '50+'],
-        datasets: [
-            {
-                label: 'Coordenadores Municipais',
-                data: [12, 30, 25, 8],
-                
-                backgroundColor: '#28a745'
-            },
-            {
-                label: 'Coordenadores Estaduais',
-                data: [5, 15, 20, 10],
-                backgroundColor: '#007bff'            }
-        ]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Faixa Etária dos Coordenadores',
-                font: {
-                                size: 18,
-                                weight: 'bold'
+ function carregarGraficoFaixaEtaria() {
+
+            fetch(`/dashAdmin/graficoFaixaEtaria`)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
+                    return res.json();
+                })
+                .then(dados => {
+
+                    const municipal = dados.map(item => item.totalMunicipais);
+                    const estadual = dados.map(item => item.totalEstaduais);
+                    const faixa_etaria = (dados.map(item => item.faixa_etaria));
+
+                    const data = {
+                        labels: faixa_etaria,
+                        datasets: [
+                            {
+                                label: 'Coordenadores Estaduais',
+                                data: estadual,
+                                backgroundColor: 'rgba(75, 192, 192, 0.7)'
                             },
-            },
-            legend: {
-                position: 'bottom'
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Faixa Etária',
-                    font: {
-                                size: 14,
-                                weight: 'bold'
+                            {
+                                label: 'Coordenadores Municipais',
+                                data: municipal,
+                                backgroundColor: 'rgba(153, 102, 255, 0.7)'
+                            }
+                        ]
+                    };
+
+                    const ctxFaixaEtaria = document.getElementById('graficoIdadeCoordenadores').getContext('2d');
+
+                    // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
+                    if (window.graficoIdadeCoordenadores && typeof window.graficoIdadeCoordenadores.destroy === 'function') {
+                        window.graficoIdadeCoordenadores.destroy();
+                    }
+
+                    window.graficoUsuariosEstado = new Chart(ctxFaixaEtaria, {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Faixa Etária dos Coordenadores',
+                                    font: {
+                                        size: 18,
+                                        weight: 'bold'
+                                    },
+                                    padding: {
+                                        top: 0,
+                                        bottom: 5
+                                    }
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        boxWidth: 20,
+                                        padding: 5
+                                    },
+                                    font: {
+                                        size: 50,
+                                        weight: 'bold'
+                                    },
+                                }
                             },
-                }
-            },
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Quantidade de Coordenadores',
-                    font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                }
-            }
+                            scales: {
+                                y: {
+                                    stacked: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Quantidade de Coordenadores',
+                                        font: { weight: 'bold', size: 18 }
+                                    },
+                                    beginAtZero: true
+                                    
+                                },
+                                x: {
+                                    stacked: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Faixa Etária',
+                                        font: { weight: 'bold', size: 18 }
+                                    },
+                                   
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Erro no fetch:", err);
+                    alert("Erro ao carregar dados do gráfico");
+                });
         }
+
+        function carregarGraficoGenero() {
+
+            fetch(`/dashAdmin/graficoGenero`)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
+                    return res.json();
+                })
+                .then(dados => {
+
+                    const genero = dados.map(item => item.genero);
+                    const total = dados.map(item => item.total);
+                   
+
+                    const data = {
+                        labels: genero,
+                        datasets: [
+                            {
+                                label: 'Distribuição de Gêneros',
+                                data: total,
+                                backgroundColor: ['rgba(255, 99, 132, 0.7)',  // Vermelho
+                'rgba(54, 162, 235, 0.7)',  // Azul
+                'rgba(255, 206, 86, 0.7)',  // Amarelo
+                'rgba(75, 192, 192, 0.7)',  // Verde
+                'rgba(153, 102, 255, 0.7)', // Roxo
+                'rgba(255, 159, 64, 0.7)'   // Laranja
+                            ]
+                            },
+                           
+                        ]
+                    };
+
+                    const ctxGraficoGenero = document.getElementById('graficoGeneroUsuarios').getContext('2d');
+
+                    // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
+                    if (window.graficoGeneroUsuarios && typeof window.graficoGeneroUsuarios.destroy === 'function') {
+                        window.graficoGeneroUsuarios.destroy();
+                    }
+
+                    window.graficoUsuariosEstado = new Chart(ctxGraficoGenero, {
+                        type: 'pie',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Distribuição dos Gêneros dos Usuários',
+                                    font: {
+                                        size: 18,
+                                        weight: 'bold'
+                                    },
+                                    padding: {
+                                        top: 0,
+                                        bottom: 5
+                                    }
+                                },
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        boxWidth: 15,
+                                        padding: 5
+                                    }
+                                }
+                            },
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Erro no fetch:", err);
+                    alert("Erro ao carregar dados do gráfico");
+                });
+        }
+
+function carregarEstatisticasTotalUsuarios() {
+        fetch(`/dashAdmin/listarKPITotalUsuarios`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+            .then(resposta => {
+                if (resposta.ok) {
+                   console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+
+                            kpi_usuarios.innerHTML = `${json[0].total_usuarios}`
+
+                        } else {
+                            console.log("período atual não encontrada.");
+                        }
+       });
+                } else {
+                    throw new Error(`Erro ao buscar estatísticas: ${resposta.status}`);
+                }
+            })
+            .catch(erro => {
+                console.error("Erro ao carregar estatísticas:", erro);
+            });
     }
-});
+    
 
+function carregarEstatisticasQuantidadeCoordenadores() {
+        fetch(`/dashAdmin/listarKPIQuantidadeCoordenadores`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+            .then(resposta => {
+                if (resposta.ok) {
+                   console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
 
+                            kpi_coord_inativo.innerHTML = `${json[0].qtd_coordenadores}`
+
+                        } else {
+                            console.log("período atual não encontrada.");
+                        }
+       });
+                } else {
+                    throw new Error(`Erro ao buscar estatísticas: ${resposta.status}`);
+                }
+            })
+            .catch(erro => {
+                console.error("Erro ao carregar estatísticas:", erro);
+            });
+    }
+
+function carregarEstatisticasEstadosComMaisCoordenadores() {
+        fetch(`/dashAdmin/listarKPIEstadoComMaisCoordenadores`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+            .then(resposta => {
+                if (resposta.ok) {
+                   console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+
+                            kpi_estado_maior_coord.innerHTML = `${json[0].nome_estado}`
+
+                        } else {
+                            console.log("período atual não encontrada.");
+                        }
+       });
+                } else {
+                    throw new Error(`Erro ao buscar estatísticas: ${resposta.status}`);
+                }
+            })
+            .catch(erro => {
+                console.error("Erro ao carregar estatísticas:", erro);
+            });
+    }
 
 </script>
 

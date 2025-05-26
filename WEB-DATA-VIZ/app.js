@@ -25,6 +25,7 @@ var contatoAvisosRouter = require("./src/routes/contatoAvisos");
 var parametrosRouter = require("./src/routes/parametros");
 var municipiosRouter = require("./src/routes/municipios");
 var logRouter = require("./src/routes/log");
+var dashAdminRouter = require("./src/routes/dashAdmin")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,6 +43,8 @@ app.use("/contatoAvisos", contatoAvisosRouter);
 app.use("/parametros", parametrosRouter);
 app.use("/municipios", municipiosRouter);
 app.use("/log", logRouter);
+app.use("/dashAdmin", dashAdminRouter);
+
 
 app.listen(PORTA_APP, function () {
     console.log(`
