@@ -19,6 +19,36 @@ function editar(idUsuario, email, senha, nome, cpf, dtNasc, genero) {
     return database.executar(instrucaoSql);
 }
 
+    function tendencia (idMunicipio){
+
+        var instrucaoSql = `
+        SELECT 
+        SUM(CASE 
+            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m') 
+            THEN e.qtdFarmaco 
+            ELSE 0 
+        END) AS mes_anterior,
+
+        SUM(CASE 
+            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH), '%Y-%m') 
+            THEN e.qtdFarmaco 
+            ELSE 0 
+        END) AS mes_atual,
+
+        ROUND(SUM(CASE 
+            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH), '%Y-%m') 
+            THEN e.qtdFarmaco 
+            ELSE 0 
+        END) * 1.15) AS previsao_proximo_mes
+
+    FROM estoque e
+    WHERE e.fkMunicipio = ${idMunicipio}
+    ;
+    `;
+        console.log("Executando SQL do histórico:\n" + instrucaoSql);
+        return database.executar(instrucaoSql);
+    }
+
 function historico(idMunicipio) {
     var instrucaoSql = `
         SELECT 
@@ -34,6 +64,7 @@ function historico(idMunicipio) {
       AND qtdFarmaco > 0
         GROUP BY mes, remedio
         ORDER BY mes
+        
         ;
     `;
     console.log("Executando SQL do histórico:\n" + instrucaoSql);
@@ -62,7 +93,7 @@ function vencimentos(idMunicipio) {
         WHERE e.fkMunicipio = ${idMunicipio}
           AND e.qtdFarmaco > 10
         ORDER BY e.dtValidade ASC, e.nomeFarmaco ASC
-        LIMIT 20;
+        LIMIT 3;
     `;
     console.log("Executando SQL:", instrucaoSql);
     return database.executar(instrucaoSql);
@@ -101,7 +132,7 @@ WHERE e.fkMunicipio = ${idMunicipio}
   )
 GROUP BY nomeFarmaco
 ORDER BY total_periodos DESC
-LIMIT 4;
+LIMIT 2;
 
     `;
 
@@ -165,6 +196,7 @@ module.exports = {
     historico,
     vencimentos,
     periodos,
+    tendencia,
     kpiAtendimento,
     topMesesEstoque,
     qtdPopulacaoAsma

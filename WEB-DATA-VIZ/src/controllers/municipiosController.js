@@ -138,6 +138,22 @@ function topMesesEstoque(req, res) {
         });
 }
 
+function tendencia(req,res)
+{
+    const idMunicipio = req.params.idMunicipio;
+    municipiosModel.tendencia(idMunicipio)
+    .then (resultado => {
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum dado encontrado para a próxima tendência de remédios.")
+        }
+    })
+    .catch(erro =>{
+        console.error("Erro ao buscar remédios para tendÊncia:", erro.sqlMessage);
+        res.status(500).json({erro : erro.sqlMessage});
+    });
+}
 
 
 
@@ -149,5 +165,6 @@ module.exports = {
     periodos,
     kpiAtendimento,
       topMesesEstoque,
-    qtdPopulacaoAsma
+    qtdPopulacaoAsma,
+    tendencia
 }

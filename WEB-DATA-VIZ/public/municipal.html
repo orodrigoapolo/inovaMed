@@ -87,6 +87,10 @@
 
                 <div class="grupo-grafico">
                     <div class="grafico-container">
+                        <select id="anoSelect">
+    <option value="2024" selected>2024</option>
+    <option value="2025">2025</option>
+</select>
                         <canvas id="graficoTendencia"></canvas>
                     </div>
                     <div class="grafico-container">
@@ -433,114 +437,82 @@
             carregarGraficoHistorico();
 
             function carregarGraficoHistorico() {
-                const idMunicipio = sessionStorage.FK_MUNICIPIO;
-                console.log("Buscando histórico para o município:", idMunicipio);
+    const idMunicipio = sessionStorage.FK_MUNICIPIO;
+    const anoSelecionado = document.getElementById("anoSelect").value;
 
-                fetch(`http://localhost:3333/municipios/historico/${idMunicipio}`)
-                    .then(res => {
-                        if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
-                        return res.json();
-                    })
-                    .then(dados => {
-                        const ano = 2024;
-                        const mesInicio = 1;
-                        const mesFim = 12;
-                        const meses = gerarMesesIntervalo(ano, mesInicio, mesFim);
+    console.log(`Buscando histórico para o município ${idMunicipio} no ano ${anoSelecionado}`);
 
-                        const remedios = [...new Set(dados.map(item => item.remedio))];
+    fetch(`http://localhost:3333/municipios/historico/${idMunicipio}`)
+        .then(res => {
+            if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
+            return res.json();
+        })
+        .then(dados => {
+            const mesInicio = 1;
+            const mesFim = 12;
+            const meses = gerarMesesIntervalo(anoSelecionado, mesInicio, mesFim);
 
-                        const datasets = remedios.map(remedio => {
-                            const nomeCurto = remedio.split(' ').slice(0, 4).join(' ');
-                            const valores = meses.map(mes => {
-                                const registro = dados.find(d => d.mes === mes && d.remedio === remedio);
-                                return registro ? Number(registro.total_comprado) : 0;
-                            });
+            const remedios = [...new Set(dados.map(item => item.remedio))];
 
-                            return {
-                                label: nomeCurto,
-                                data: valores,
-                                borderColor: gerarCorAleatoria(),
-                                backgroundColor: 'transparent',
-                                tension: 0.3,
-                                borderWidth: 2,
-                                pointRadius: 4
-                            };
-                        });
+            const datasets = remedios.map(remedio => {
+                const nomeCurto = remedio.split(' ').slice(0, 4).join(' ');
+                const valores = meses.map(mes => {
+                    const registro = dados.find(d => d.mes === mes && d.remedio === remedio);
+                    return registro ? Number(registro.total_comprado) : 0;
+                });
 
-                        const mediaFixa = dados.length > 0 ? Number(dados[0].estimativa_asmaticos) : 0;
-                        const mediaAsmaticos = meses.map(() => mediaFixa);
+                return {
+                    label: nomeCurto,
+                    data: valores,
+                    borderColor: gerarCorAleatoria(),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.3,
+                    borderWidth: 3,
+                    pointRadius: 4
+                };
+            });
 
-                        datasets.push({
-                            label: 'Média asma',
-                            data: mediaAsmaticos,
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderDash: [10, 5],
-                            backgroundColor: 'transparent',
-                            borderWidth: 2,
-                            pointRadius: 0
-                        });
+            const ctx = document.getElementById('graficoTendencia').getContext('2d');
 
-                        const ctx = document.getElementById('graficoTendencia').getContext('2d');
-
-                        if (window.graficoTendencia && typeof window.graficoTendencia.destroy === 'function') {
-                            window.graficoTendencia.destroy();
-                        }
-
-                        window.graficoTendencia = new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: meses,
-                                datasets: datasets
-                            },
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
-                                        labels: {
-                                            font: { size: 12 }
-                                        }
-                                    },
-                                    title: {
-                                        display: true,
-                                        text: 'Histórico mensal de medicamentos comprados por município',
-                                        font: {
-                                            size: 18,
-                                            weight: 'bold'
-                                        }
-                                    }
-                                },
-                                scales: {
-                                    y: {
-                                        beginAtZero: true,
-                                        suggestedMax: 100000,
-                                        ticks: {
-                                            stepSize: 10000,
-                                            callback: value => value.toLocaleString('pt-BR')
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'Quantidade',
-                                            font: { size: 14, weight: 'bold' }
-                                        }
-                                    },
-                                    x: {
-                                        title: {
-                                            display: true,
-                                            text: 'Meses',
-                                            font: { size: 14, weight: 'bold' }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    })
-                    .catch(err => {
-                        console.error("Erro no fetch:", err.message);
-                        alert("Erro ao carregar dados do gráfico");
-                    });
+            if (window.graficoTendencia && typeof window.graficoTendencia.destroy === 'function') {
+                window.graficoTendencia.destroy();
             }
 
+            window.graficoTendencia = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: meses,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { size: 12 }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: `Histórico mensal de medicamentos - ${anoSelecionado}`,
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(err => {
+            console.error("Erro no fetch:", err.message);
+            alert("Erro ao carregar dados do gráfico");
+        });
+}
+
+// 🔹 **Passo 3: Atualizar o gráfico quando o usuário muda o ano**
+document.getElementById("anoSelect").addEventListener("change", carregarGraficoHistorico);
 
 
             carregarGraficoVencimento();
@@ -571,7 +543,7 @@
                         const labels = dadosUnicos.map(item => {
                             const textoCompleto = `Lote ${item.nome} - ${item.remedio}`;
                             const palavras = textoCompleto.split(' ');
-                            return palavras.slice(0, 4).join(' ');
+                            return palavras.slice   (0, 7).join(' ');
                         });
                         const data = dadosUnicos.map(item => item.quantidade);
                         const backgroundColors = dadosUnicos.map(() => gerarCorAleatoria());
@@ -653,6 +625,78 @@
                     });
             }
 
+
+            function carregarGraficoTendencia(idMunicipio) {
+    fetch(`http://localhost:3333/municipios/tendencia/${idMunicipio}`)
+        .then(res => res.json())
+        .then(dados => {
+            if (!dados || dados.length === 0) {
+                alert("Nenhum dado de tendência encontrado.");
+                return;
+            }
+
+            const tendencia = dados[0];
+
+            const ctx = document.getElementById('graficoTendenciaResumo').getContext('2d');
+            if (window.graficoTendencia?.destroy) window.graficoTendencia.destroy();
+
+            window.graficoTendencia = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mês Anterior', 'Mês Atual', 'Próximo Mês'],
+                    datasets: [{
+                        label: 'Tendência de Compra',
+                        data: [
+                            tendencia.mes_anterior,
+                            tendencia.mes_atual,
+                            tendencia.previsao_proximo_mes
+                        ],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.3,
+                        fill: true,
+                        pointBackgroundColor: 'white',
+                        pointBorderColor: 'rgba(75, 192, 192, 1)',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Tendência de Compra por Remédio',
+                            font: { size: 18 }
+                        },
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Quantidade Comprada'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Período'
+                            }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(err => {
+            console.error("Erro ao carregar gráfico de tendência:", err);
+            alert("Erro ao carregar gráfico de tendência.");
+        });
+}
+
+
             // Função auxiliar para gerar cores aleatórias
             function gerarCorAleatoria() {
                 const r = Math.floor(Math.random() * 156) + 100;
@@ -664,82 +708,6 @@
 
 
 
-
-            // === GRÁFICO DE TENDÊNCIA RESUMO ===
-            const ctxTendencia2 = document.getElementById('graficoTendenciaResumo').getContext('2d');
-            const graficoTendencia2 = new Chart(ctxTendencia2, {
-                type: 'line',
-                data: {
-                    labels: ['Mês Anterior', 'Mês Atual', 'Próximo Mês'],
-                    datasets: [
-                        {
-                            label: 'Remédio X',
-                            data: [80, 90, 120],
-                            borderColor: 'rgba(30, 144, 255, 1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            pointRadius: 5,
-                            pointBackgroundColor: 'rgba(173, 216, 230, 1)'
-                        },
-                        {
-                            label: 'Remédio Y',
-                            data: [90, 60, 70],
-                            borderColor: 'rgba(34, 139, 34, 1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            pointRadius: 5,
-                            pointBackgroundColor: 'rgba(144, 238, 144, 1)'
-                        },
-                        {
-                            label: 'Remédio Z',
-                            data: [20, 40, 65],
-                            borderColor: 'rgba(255, 204, 0, 1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            pointRadius: 5,
-                            pointBackgroundColor: 'rgba(255, 255, 102, 1)'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Tendência de Compra por Remédio',
-                            font: { size: 18, weight: 'bold' },
-                            padding: { top: 10, bottom: 20 }
-                        },
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                boxWidth: 20,
-                                padding: 10
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Quantidade Comprada',
-                                font: { weight: 'bold', size: 14 }
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Período',
-                                font: { weight: 'bold', size: 14 }
-                            },
-                            ticks: {
-                                autoSkip: false
-                            }
-                        }
-                    }
-                }
-            });
 
         });
 
