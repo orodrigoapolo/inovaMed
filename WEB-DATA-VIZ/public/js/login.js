@@ -121,8 +121,8 @@ function entrar() {
                                 const param = JSON.parse(text);
                                 console.log("Parâmetros existentes:", param);
 
-                                sessionStorage.setItem('PARAMETRO_MIN', param.min);
-                                sessionStorage.setItem('PARAMETRO_MAX', param.max);
+                                sessionStorage.setItem('PARAMETRO_MIN', param[0].min);
+                                sessionStorage.setItem('PARAMETRO_MAX', param[0].max);
                             })
                             .catch(erro => {
                                 console.error("Erro ao verificar parâmetros:", erro);
@@ -145,7 +145,7 @@ function entrar() {
                                 const contato = JSON.parse(text);
                                 console.log("Contatos existentes:", contato);
 
-                                sessionStorage.setItem('CONTATO_EMAIL', contato.email);
+                                sessionStorage.setItem('CONTATO_EMAIL', contato[0].email);
                             })
                             .catch(erro => {
                                 console.error("Erro ao verificar contatos:", erro);

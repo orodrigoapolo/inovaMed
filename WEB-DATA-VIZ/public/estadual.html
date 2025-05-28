@@ -252,7 +252,10 @@
                 <h1 class="titulo-contato">
                     Contatos
                 </h1>
-                <div class="contato-container">
+
+                <div id="card_contatos"></div>
+
+                <!-- <div class="contato-container">
                     <div class="contato-container-cima">
                         <h1 class="nome-contato" id="nome_contato">
                             Contato 1
@@ -280,9 +283,9 @@
                             <i class="fas fa-save"></i> Salvar Informações
                         </button>
                     </div>
-                </div>
+                </div> -->
                 <div class="adicionar-contato">
-                    <div id="adicionar_contato">
+                    <div id="adicionar_contato" onclick="adicionarCardVazio()">
                         <img src="assets/icon/plus-circle-thin.png">
                     </div>
                 </div>
@@ -305,14 +308,14 @@
                         <p class="menor-valor-parametro">
                             Menor quantidade (unidades)
                         </p>
-                        <input type="text" id="input_parametro_menor_valor">
+                        <input type="text" id="input_parametro_menor_valor" disabled>
                         <p class="descricao-input-parametro">
                             Caso a quantidade de medicamentos esteja menor que esse valor, te notificaremos
                         </p>
                         <p class="maior-valor-parametro">
                             Maior quantidade (unidades)
                         </p>
-                        <input type="text" id="input_parametro_maior_valor">
+                        <input type="text" id="input_parametro_maior_valor" disabled>
                         <p class="descricao-input-parametro">
                             Caso a quantidade de medicamentos esteja maior que esse valor, te notificaremos
                         </p>

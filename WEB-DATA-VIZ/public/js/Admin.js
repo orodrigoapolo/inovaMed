@@ -388,6 +388,7 @@ function abrirConfiguracoes() {
     dash_config.style.display = "flex"
     exibir();
 }
+
 function adicionarEventosBotoes(json) {
     for (let i = 0; i < json.length; i++) {
         const btnEditar = document.querySelectorAll('.btn-editar')[i];

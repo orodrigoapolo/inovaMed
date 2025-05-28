@@ -4,17 +4,17 @@ function listarContato(idUsuario) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
     
     var instrucaoSql = `
-        SELECT * FROM contato WHERE fkUsuario = ${idUsuario};
+        SELECT * FROM contato WHERE fkUsuario = ${idUsuario} ORDER BY idContato;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function configurarContato(email, idUsuario) {
+function configurarContato(email, original, idUsuario) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
     
     var instrucaoSql = `
-        UPDATE contato SET email = '${email}' WHERE fkUsuario = ${idUsuario};
+        UPDATE contato SET email = '${email}' WHERE fkUsuario = ${idUsuario} AND email = "${original}";
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     
@@ -40,7 +40,18 @@ function exibirContato(idUsuario) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        SELECT * FROM contato WHERE fkUsuario = ${idUsuario} ORDER BY idContato DESC LIMIT 1;
+        SELECT * FROM contato WHERE fkUsuario = ${idUsuario} ORDER BY idContato;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function deletarContato(email, idUsuario) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
+    
+    var instrucaoSql = `
+        DELETE FROM contato WHERE fkUsuario = ${idUsuario} AND email = "${email}";
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     
@@ -51,5 +62,6 @@ module.exports = {
     listarContato,
     configurarContato,
     configurarPrimeiroContato,
-    exibirContato
+    exibirContato,
+    deletarContato
 };

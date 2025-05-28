@@ -21,4 +21,8 @@ router.get("/exibirContato/:idUsuario", function (req, res) {
     contatoAvisosController.exibirContato(req, res);
 });
 
+router.post("/deletarContato/:idUsuario", function (req, res) {
+    contatoAvisosController.deletarContato(req, res);
+});
+
 module.exports = router;
