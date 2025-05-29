@@ -569,7 +569,7 @@ function exibirContato(idUsuario) {
 
                 const containerCards = document.getElementById('card_contatos');
                 containerCards.innerHTML = `
-                            <div class="contato-container-inexistente">
+                            <div class="contato-container-inexistente" id="contato_inexistente">
                                 <h1 class="nome-contato" id="nome_contato">
                                     Nenhum contato cadastrado
                                 </h1>
@@ -662,6 +662,9 @@ function adicionarCardVazio() {
 
     const containerCards = document.getElementById('card_contatos');
     const novoCard = document.createElement('div');
+
+    const cardInexistente = document.getElementById("contato_inexistente")
+    cardInexistente.style.display = "none";
 
     novoCard.innerHTML += `
                                  <div class="contato-container" id="contato-container">
