@@ -23,14 +23,15 @@ function abrirContatos() {
     opcao_config_container.style.display = "none"
     dash_contato_container.style.display = "flex"
     dash_parametro_container.style.display = "none"
-    listar();
+    // listar();
+    exibirContato();
 }
 
 function abrirParametros() {
     opcao_config_container.style.display = "none"
     dash_contato_container.style.display = "none"
     dash_parametro_container.style.display = "flex"
-    exibir();
+    exibirParametros();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -106,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
             input.dataset.originalValue = input.value;
         }
     });
+
     // Funções para os parâmetros
 
     const inputParametroMenorValor = document.getElementById('input_parametro_menor_valor');
@@ -134,8 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
         btnEditarParametro.style.display = 'inline-block';
 
 
-        inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue || '';
-        inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue || '';
+        inputParametroMenorValor.value = inputParametroMenorValor.dataset.originalValue;
+        inputParametroMaiorValor.value = inputParametroMaiorValor.dataset.originalValue;
+
         alert("Parâmetros descartados com sucesso!");
     };
 
@@ -150,121 +153,128 @@ document.addEventListener('DOMContentLoaded', function () {
         btnSalvarParametro.style.display = 'none';
         btnDescartarParametro.style.display = 'none';
         btnEditarParametro.style.display = 'inline-block';
-        configurar();
+
+        configurarParametros();
     };
 
     // Funções para contato
 
-    const inputEmailContato = document.getElementById('input_email_contato');
-    const btnEditarContato = document.getElementById('btn-editar-contato');
-    const btnSalvarContato = document.getElementById('btn-salvar-contato');
-    const btnDescartarContato = document.getElementById('btn-descartar-contato');
 
+    window.editarInformacoesContato = function (botao) {
+        const container = botao.closest('.contato-container');
+        const inputEmailContato = container.querySelector('.input_email_contato');
+        const btnSalvarContato = container.querySelector('.btn-salvar');
+        const btnDescartarContato = container.querySelector('.btn-descartar');
+        const btnEditarContato = container.querySelector('.btn-editar');
 
-    window.editarInformacoesContato = function () {
-        inputEmailContato.disabled = false;
+        if (inputEmailContato && btnSalvarContato && btnDescartarContato && btnEditarContato) {
+            inputEmailContato.dataset.originalValue = inputEmailContato.value;
 
-        btnSalvarContato.style.display = 'inline-block';
-        btnDescartarContato.style.display = 'inline-block';
-        btnEditarContato.style.display = 'none';
+            inputEmailContato.disabled = false;
+
+            btnSalvarContato.style.display = 'inline-block';
+            btnDescartarContato.style.display = 'inline-block';
+            btnEditarContato.style.display = 'none';
+        } else {
+            console.error("Algum elemento não foi encontrado no container de contato.");
+        }
     };
 
 
-    window.descartarEdicaoContato = function () {
-        inputEmailContato.disabled = true;
+    window.descartarEdicaoContato = function (botao) {
 
-        btnSalvarContato.style.display = 'none';
-        btnDescartarContato.style.display = 'none';
-        btnEditarContato.style.display = 'inline-block';
+        const container = botao.closest('.contato-container');
+        const inputEmailContato = container.querySelector('.input_email_contato');
+        const btnSalvarContato = container.querySelector('.btn-salvar');
+        const btnDescartarContato = container.querySelector('.btn-descartar');
+        const btnEditarContato = container.querySelector('.btn-editar');
+
+        if (inputEmailContato && btnSalvarContato && btnDescartarContato && btnEditarContato) {
+            inputEmailContato.disabled = true;
+
+            btnSalvarContato.style.display = 'none';
+            btnDescartarContato.style.display = 'none';
+            btnEditarContato.style.display = 'inline-block';
+
+            inputEmailContato.value = inputEmailContato.dataset.originalValue || '';
+            alert("Contato descartado com sucesso!");
+        } else {
+            console.error("Algum elemento não foi encontrado no container de contato.");
+        }
 
 
-        inputEmailContato.value = inputEmailContato.dataset.originalValue || '';
-        alert("Contato descartado com sucesso!");
+
     };
 
+    window.salvarInformacoesContato = function (botao) {
+        const container = botao.closest('.contato-container');
+        const inputEmailContato = container.querySelector('.input_email_contato');
+        const btnSalvarContato = container.querySelector('.btn-salvar');
+        const btnDescartarContato = container.querySelector('.btn-descartar');
+        const btnEditarContato = container.querySelector('.btn-editar');
 
-    window.salvarInformacoesContato = function () {
-        inputEmailContato.disabled = true;
+        if (inputEmailContato && btnSalvarContato && btnDescartarContato && btnEditarContato) {
+            inputEmailContato.disabled = true;
 
-        inputEmailContato.dataset.originalValue = inputEmailContato.value;
+            btnSalvarContato.style.display = 'none';
+            btnDescartarContato.style.display = 'none';
+            btnEditarContato.style.display = 'inline-block';
 
-        btnSalvarContato.style.display = 'none';
-        btnDescartarContato.style.display = 'none';
-        btnEditarContato.style.display = 'inline-block';
+            configurarContato(inputEmailContato);
+        } else {
+            console.error("Algum elemento não foi encontrado no container de contato.");
+        }
+
+    };
+
+    window.deletarContatoWindow = function (botao) {
+        const container = botao.closest('.contato-container');
+        const inputEmailContato = container.querySelector('.input_email_contato');
+        const btnSalvarContato = container.querySelector('.btn-salvar');
+        const btnDescartarContato = container.querySelector('.btn-descartar');
+        const btnEditarContato = container.querySelector('.btn-editar');
+
+        if (inputEmailContato && btnSalvarContato && btnDescartarContato && btnEditarContato) {
+
+            deletarContato(inputEmailContato);
+        } else {
+            console.error("Algum elemento não foi encontrado no container de contato.");
+        }
+
+    };
+
+    window.descartarEdicaoNovoContato = function (botao) {
+
+        const container = botao.closest('.contato-container');
+        const inputEmailContato = container.querySelector('.input_email_contato');
+        const btnSalvarContato = container.querySelector('.btn-salvar');
+        const btnDescartarContato = container.querySelector('.btn-descartar');
+
+        if (inputEmailContato && btnSalvarContato && btnDescartarContato) {
+            container.remove();
+            alert("Contato descartado com sucesso!");
+        } else {
+            console.error("Algum elemento não foi encontrado no container de contato.");
+        }
+
+    };
+
+    window.salvarInformacoesNovoContato = function (botao) {
+        const container = botao.closest('.contato-container');
+        const inputEmailContato = container.querySelector('.input_email_contato');
+        const btnSalvarContato = container.querySelector('.btn-salvar');
+        const btnDescartarContato = container.querySelector('.btn-descartar');
+
+        if (inputEmailContato && btnSalvarContato && btnDescartarContato) {
+
+            configurarNovoContato(inputEmailContato);
+        } else {
+            console.error("Algum elemento não foi encontrado no container de contato.");
+        }
 
     };
 
 });
-
-function listar() {
-    var idUsuario = sessionStorage.ID_USUARIO;
-    fetch(`/contatoAvisos/listar/${idUsuario}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        },
-    }).then(function (resposta) {
-        console.log("ESTOU NO THEN DO listar()!");
-
-        if (resposta.ok) {
-            console.log(resposta);
-            resposta.json().then(json => {
-                console.log(json); // Verifique o conteúdo retornado
-                if (json.length > 0) {
-                    console.log("Número de usuários:", json.length);
-
-                    input_email_contato.value = json[0].email;
-                } else {
-                    console.log("Nenhum usuário encontrado.");
-                }
-            });
-
-        } else {
-            console.log("Houve um erro ao tentar realizar a listagem!");
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
-
-    }).catch(function (erro) {
-        console.log(erro);
-    });
-}
-
-function configurar() {
-    // Se houver erros, exibe um alerta
-    var maxVar = document.getElementById('input_parametro_maior_valor').value;
-    var minVar = document.getElementById('input_parametro_menor_valor').value;
-    var idUsuario = sessionStorage.ID_USUARIO;
-    if (!maxVar || !minVar) {
-        alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
-    } else {
-        fetch(`/parametros/configurar/${idUsuario}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                maxServer: maxVar,
-                minServer: minVar
-            }),
-        })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    setTimeout(() => {
-                        alert('Configuração realizada com sucesso!');
-                    }, 2000);
-                } else {
-                    throw "Houve um erro ao tentar realizar a configuração!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-            });
-
-        return false;
-    }
-}
 
 function deletarUsuario(idUsuario) {
     var idUsuario = sessionStorage.ID_USUARIO;
@@ -325,9 +335,82 @@ function editar(idUsuario, email, senha, nome, cpf, dtNasc, genero) {
     });
 }
 
-function exibir(idUsuario) {
+// parametro functions
+
+function configurarParametros() {
+    // Se houver erros, exibe um alerta
+    var maxVar = document.getElementById('input_parametro_maior_valor').value;
+    var minVar = document.getElementById('input_parametro_menor_valor').value;
     var idUsuario = sessionStorage.ID_USUARIO;
-    fetch(`/parametros/exibir/${idUsuario}`, {
+    if (!maxVar || !minVar) {
+        alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
+    } else {
+        fetch(`/parametros/configurarParametro/${idUsuario}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                maxServer: maxVar,
+                minServer: minVar
+            }),
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    setTimeout(() => {
+                        alert('Configuração realizada com sucesso!');
+                    }, 2000);
+                } else {
+                    throw "Houve um erro ao tentar realizar a configuração!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+}
+
+function exibirParametros(idUsuario) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/parametros/exibirParametro/${idUsuario}`)
+        .then(res => {
+            if (res.status === 204) {
+                // Nenhum conteúdo (No Content)
+                return null;
+            }
+            if (!res.ok) {
+                throw new Error("Erro na resposta do servidor");
+            }
+            return res.text(); // pega o corpo como texto
+        })
+        .then(text => {
+            if (!text) {
+                console.log("Nenhum parâmetro encontrado");
+                return;
+            }
+
+            const param = JSON.parse(text);
+            console.log("Parâmetros existentes:", param);
+
+            input_parametro_menor_valor.value = `${param[0].min}`
+            input_parametro_maior_valor.value = `${param[0].max}`
+
+            input_parametro_menor_valor.dataset.originalValue = param[0].min;
+            input_parametro_maior_valor.dataset.originalValue = param[0].max;
+        })
+        .catch(erro => {
+            console.error("Erro ao verificar parâmetros:", erro);
+        });
+}
+
+// contatos functions
+
+function listarContato() {
+    var idUsuario = sessionStorage.ID_USUARIO;
+    fetch(`/contatoAvisos/listarContato/${idUsuario}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -339,14 +422,54 @@ function exibir(idUsuario) {
             console.log(resposta);
             resposta.json().then(json => {
                 console.log(json); // Verifique o conteúdo retornado
+                if (json.length > 0) {
+                    console.log("Número de contatos:", json.length);
 
-                   sessionStorage.PARAMETRO_MIN = json.min;
-                   sessionStorage.PARAMETRO_MAX = json.max;
+                    const containerCards = document.getElementById('card_contatos');
+                    containerCards.innerHTML = '';
 
+                    for (let i = 0; i < json.length; i++) {
+
+                        containerCards.innerHTML = `
+                             <div class="contato-container">
+                                <div class="contato-container-cima">
+                                    <h1 class="nome-contato" id="nome_contato">
+                                        Contato ${i + 1}
+                                    </h1>
+                                    <div class="excluir-contato">
+                                        <img src="assets/icon/trash.png">
+                                    </div>
+                                </div>
+                                <div class="contato-container-input">
+                                    <p class="email-contato">
+                                        Email
+                                    </p>
+                                    <input type="text" id="input_email_contato" disabled>
+                                </div>
+                                <div class="botoes-acoes-contato">
+                                    <button class="btn-editar" id="btn-editar-contato" onclick="editarInformacoesContato()">
+                                        <i class="fas fa-pen"></i> Editar Informações
+                                    </button>
+                                    <button class="btn-descartar" id="btn-descartar-contato" onclick="descartarEdicaoContato()"
+                                        style="display: none;">
+                                        <i class="fas fa-times"></i> Descartar
+                                    </button>
+                                    <button class="btn-salvar" id="btn-salvar-contato" onclick="salvarInformacoesContato()"
+                                        style="display: none;">
+                                        <i class="fas fa-save"></i> Salvar Informações
+                                    </button>
+                                </div>
+                            </div>
+                        `
+                    }
+
+                } else {
+                    console.log("Nenhum usuário encontrado.");
+                }
             });
 
         } else {
-            console.log("Houve um erro ao tentar realizar a listagem!");
+            console.log("Houve um erro ao tentar realizar a listagem do ContatoAvisos!");
             resposta.text().then(texto => {
                 console.error(texto);
             });
@@ -355,4 +478,221 @@ function exibir(idUsuario) {
     }).catch(function (erro) {
         console.log(erro);
     });
+}
+
+function configurarContato(input) {
+    // Se houver erros, exibe um alerta
+    var emailVar = input.value;
+    var idUsuario = sessionStorage.ID_USUARIO;
+    var valorOriginalVar = input.dataset.originalValue;
+
+    // const input = document.querySelector('.input_email_contato');
+    console.log(emailVar);
+    console.log(valorOriginalVar);
+
+    fetch(`/contatoAvisos/configurarContato/${idUsuario}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            emailServer: emailVar,
+            originalServer: valorOriginalVar
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                setTimeout(() => {
+                    alert('Configuração realizada com sucesso!');
+                }, 2000);
+            } else {
+                throw "Houve um erro ao tentar realizar a configuração!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+}
+
+function configurarNovoContato(input) {
+    var emailVar = input.value;
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    // const input = document.querySelector('.input_email_contato');
+    console.log(emailVar);
+
+    fetch(`/contatoAvisos/configurarPrimeiroContato/${idUsuario}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            emailServer: emailVar,
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                window.alert(`Configuração realizada com sucesso!`);
+                window.location.reload()
+            } else {
+                throw "Houve um erro ao tentar realizar a configuração!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+}
+
+function exibirContato(idUsuario) {
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/contatoAvisos/exibirContato/${idUsuario}`)
+        .then(res => {
+            if (res.status === 204) {
+                // Nenhum conteúdo (No Content)
+                return null;
+            }
+            if (!res.ok) {
+                throw new Error("Erro na resposta do servidor");
+            }
+            return res.text(); // pega o corpo como texto
+        })
+        .then(text => {
+            if (!text) {
+                console.log("Nenhum contato encontrado");
+
+                const containerCards = document.getElementById('card_contatos');
+                containerCards.innerHTML = `
+                            <div class="contato-container-inexistente" id="contato_inexistente">
+                                <h1 class="nome-contato" id="nome_contato">
+                                    Nenhum contato cadastrado
+                                </h1>
+                            </div>
+                    `
+                return;
+            }
+
+            const param = JSON.parse(text);
+            console.log("Contatos existentes:", param);
+
+            const containerCards = document.getElementById('card_contatos');
+            containerCards.innerHTML = '';
+
+            for (let i = 0; i < param.length; i++) {
+
+                containerCards.innerHTML += `
+                                 <div class="contato-container" id="contato-container-${param[i]}">
+                                    <div class="contato-container-cima">
+                                        <h1 class="nome-contato" id="nome_contato">
+                                            Contato ${i + 1}
+                                        </h1>
+                                        <div class="excluir-contato" onclick="deletarContatoWindow(this)">
+                                            <img src="assets/icon/trash.png">
+                                        </div>
+                                    </div>
+                                    <div class="contato-container-input">
+                                        <p class="email-contato">
+                                            Email
+                                        </p>
+                                        <input type="text" id="input_email_contato"
+                                            class="input_email_contato" 
+                                            value="${param[i].email}" 
+                                            disabled 
+                                            data-original-value="${param[i].email}"
+                                        >
+                                    </div>
+                                    <div class="botoes-acoes-contato">
+                                        <button class="btn-editar" id="btn-editar-contato" onclick="editarInformacoesContato(this)">
+                                            <i class="fas fa-pen"></i> Editar Informações
+                                        </button>
+                                        <button class="btn-descartar" id="btn-descartar-contato" onclick="descartarEdicaoContato(this)"
+                                            style="display: none;">
+                                            <i class="fas fa-times"></i> Descartar
+                                        </button>
+                                        <button class="btn-salvar" id="btn-salvar-contato" onclick="salvarInformacoesContato(this)"
+                                            style="display: none;">
+                                            <i class="fas fa-save"></i> Salvar Informações
+                                        </button>
+                                    </div>
+                                </div>
+                            `
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao verificar contato:", erro);
+        });
+}
+
+function deletarContato(input) {
+    var emailVar = input.value;
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    console.log(emailVar);
+
+    fetch(`/contatoAvisos/deletarContato/${idUsuario}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            emailServer: emailVar,
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                window.alert(`Usuário deletado com sucesso!`);
+                window.location.reload()
+            } else {
+                throw "Houve um erro ao tentar realizar a configuração!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+}
+
+function adicionarCardVazio() {
+
+    const containerCards = document.getElementById('card_contatos');
+    const novoCard = document.createElement('div');
+
+    const cardInexistente = document.getElementById("contato_inexistente")
+    cardInexistente.style.display = "none";
+
+    novoCard.innerHTML += `
+                                 <div class="contato-container" id="contato-container">
+                                    <div class="contato-container-cima">
+                                        <h1 class="nome-contato" id="nome_contato">
+                                            Novo contato
+                                        </h1>
+                                    </div>
+                                    <div class="contato-container-input">
+                                        <p class="email-contato">
+                                            Email
+                                        </p>
+                                        <input type="text" id="input_email_contato"
+                                            class="input_email_contato" 
+                                            value=""  
+                                            data-original-value=""
+                                        >
+                                    </div>
+                                    <div class="botoes-acoes-contato">
+                                        <button class="btn-editar" id="btn-editar-contato" onclick="editarInformacoesContato(this)" style="display: none">
+                                            <i class="fas fa-pen"></i> Editar Informações
+                                        </button>
+                                        <button class="btn-descartar" id="btn-descartar-contato" onclick="descartarEdicaoNovoContato(this)"
+                                            style="display: inline-block;">
+                                            <i class="fas fa-times"></i> Descartar
+                                        </button>
+                                        <button class="btn-salvar" id="btn-salvar-contato" onclick="salvarInformacoesNovoContato(this)"
+                                            style="display: inline-block;">
+                                            <i class="fas fa-save"></i> Salvar Informações
+                                        </button>
+                                    </div>
+                                </div>
+                            `
+    containerCards.prepend(novoCard);
 }

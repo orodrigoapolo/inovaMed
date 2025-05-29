@@ -159,11 +159,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Funções para contato
 
-    // const inputEmailContato = document.getElementById('input_email_contato');
-    // const btnEditarContato = document.getElementById('btn-editar-contato');
-    // const btnSalvarContato = document.getElementById('btn-salvar-contato');
-    // const btnDescartarContato = document.getElementById('btn-descartar-contato');
-
 
     window.editarInformacoesContato = function (botao) {
         const container = botao.closest('.contato-container');
@@ -574,7 +569,7 @@ function exibirContato(idUsuario) {
 
                 const containerCards = document.getElementById('card_contatos');
                 containerCards.innerHTML = `
-                            <div class="contato-container-inexistente">
+                            <div class="contato-container-inexistente" id="contato_inexistente">
                                 <h1 class="nome-contato" id="nome_contato">
                                     Nenhum contato cadastrado
                                 </h1>
@@ -667,6 +662,9 @@ function adicionarCardVazio() {
 
     const containerCards = document.getElementById('card_contatos');
     const novoCard = document.createElement('div');
+
+    const cardInexistente = document.getElementById("contato_inexistente")
+    cardInexistente.style.display = "none";
 
     novoCard.innerHTML += `
                                  <div class="contato-container" id="contato-container">
