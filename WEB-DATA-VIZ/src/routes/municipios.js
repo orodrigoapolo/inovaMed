@@ -30,6 +30,10 @@ router.get('/qtdPopulacaoAsma/:idMunicipio',  function (req, res){
     });   
 router.get('/topMesesEstoque/:idMunicipio', function (req, res){
      municipiosController.topMesesEstoque(req, res);
-});   
+}); 
+
+router.get('/tendencia/:idMunicipio', function (req, res){
+    municipiosController.tendencia(req,res);
+})
 
 module.exports = router;

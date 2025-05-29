@@ -22,6 +22,36 @@ function editar(idUsuario, email, senha, nome, cpf, dtNasc, genero) {
     return database.executar(instrucaoSql);
 }
 
+    function tendencia (idMunicipio){
+
+        var instrucaoSql = `
+        SELECT 
+        SUM(CASE 
+            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m') 
+            THEN e.qtdFarmaco 
+            ELSE 0 
+        END) AS mes_anterior,
+
+        SUM(CASE 
+            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH), '%Y-%m') 
+            THEN e.qtdFarmaco 
+            ELSE 0 
+        END) AS mes_atual,
+
+        ROUND(SUM(CASE 
+            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH), '%Y-%m') 
+            THEN e.qtdFarmaco 
+            ELSE 0 
+        END) * 1.15) AS previsao_proximo_mes
+
+    FROM estoque e
+    WHERE e.fkMunicipio = ${idMunicipio}
+    ;
+    `;
+        console.log("Executando SQL do histórico:\n" + instrucaoSql);
+        return database.executar(instrucaoSql);
+    }
+
 function historico(idMunicipio) {
     var instrucaoSql = `
         SELECT 
@@ -37,6 +67,7 @@ function historico(idMunicipio) {
       AND qtdFarmaco > 0
         GROUP BY mes, remedio
         ORDER BY mes
+        
         ;
     `;
     console.log("Executando SQL do histórico:\n" + instrucaoSql);
@@ -45,27 +76,34 @@ function historico(idMunicipio) {
 
 function vencimentos(idMunicipio) {
     var instrucaoSql = `
-        SELECT DISTINCT
-            e.lote AS nome,
-            e.nomeFarmaco AS remedio,
-            DATE_FORMAT(e.dtValidade, '%Y-%m-%d') AS vencimento,
-            e.qtdFarmaco AS quantidade,
-            e.dtValidade
-        FROM estoque e
-        JOIN (
-            SELECT nomeFarmaco, MIN(dtValidade) AS menorVencimento
-            FROM estoque
-            WHERE fkMunicipio = ${idMunicipio}
-              AND dtValidade >= CURDATE()
-              AND qtdFarmaco > 10
-            GROUP BY nomeFarmaco
-        ) sub
-            ON e.nomeFarmaco = sub.nomeFarmaco
-            AND e.dtValidade = sub.menorVencimento
-        WHERE e.fkMunicipio = ${idMunicipio}
-          AND e.qtdFarmaco > 10
-        ORDER BY e.dtValidade ASC, e.nomeFarmaco ASC
-        LIMIT 20;
+      SELECT DISTINCT
+    e.lote AS nome,
+    e.nomeFarmaco AS remedio,
+    DATE_FORMAT(e.dtValidade, '%Y-%m-%d') AS vencimento,
+    e.qtdFarmaco AS quantidade,
+    m.qtdPopulacao,
+    ROUND(m.qtdPopulacao * 0.2) AS estimativa_asmaticos,
+    ROUND(m.qtdPopulacao * 0.2 * 2) AS consumo_diario_estimado, -- 2 remédios por pessoa asmática por dia
+    e.qtdFarmaco / (m.qtdPopulacao * 0.2 * 2) AS dias_estoque, -- tempo que o estoque dura (em dias)
+    e.dtValidade,
+    DATEDIFF(e.dtValidade, CURDATE()) AS dias_para_vencimento
+FROM estoque e
+JOIN municipio m ON e.fkMunicipio = m.idMunicipio
+JOIN (
+    SELECT nomeFarmaco, MIN(dtValidade) AS menorVencimento
+    FROM estoque
+    WHERE fkMunicipio = ${idMunicipio}
+      AND dtValidade >= CURDATE()
+      AND qtdFarmaco > 10
+    GROUP BY nomeFarmaco
+) sub
+    ON e.nomeFarmaco = sub.nomeFarmaco
+    AND e.dtValidade = sub.menorVencimento
+WHERE e.fkMunicipio = ${idMunicipio}
+  AND e.qtdFarmaco > 10
+ORDER BY e.dtValidade ASC, e.nomeFarmaco ASC
+LIMIT 3;
+
     `;
     console.log("Executando SQL:", instrucaoSql);
     return database.executar(instrucaoSql);
@@ -104,7 +142,7 @@ WHERE e.fkMunicipio = ${idMunicipio}
   )
 GROUP BY nomeFarmaco
 ORDER BY total_periodos DESC
-LIMIT 4;
+LIMIT 2;
 
     `;
 
@@ -168,6 +206,7 @@ module.exports = {
     historico,
     vencimentos,
     periodos,
+    tendencia,
     kpiAtendimento,
     topMesesEstoque,
     qtdPopulacaoAsma
