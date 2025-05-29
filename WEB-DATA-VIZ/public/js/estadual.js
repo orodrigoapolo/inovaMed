@@ -159,11 +159,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Funções para contato
 
-    // const inputEmailContato = document.getElementById('input_email_contato');
-    // const btnEditarContato = document.getElementById('btn-editar-contato');
-    // const btnSalvarContato = document.getElementById('btn-salvar-contato');
-    // const btnDescartarContato = document.getElementById('btn-descartar-contato');
-
 
     window.editarInformacoesContato = function (botao) {
         const container = botao.closest('.contato-container');
