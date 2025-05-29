@@ -73,27 +73,34 @@ function historico(idMunicipio) {
 
 function vencimentos(idMunicipio) {
     var instrucaoSql = `
-        SELECT DISTINCT
-            e.lote AS nome,
-            e.nomeFarmaco AS remedio,
-            DATE_FORMAT(e.dtValidade, '%Y-%m-%d') AS vencimento,
-            e.qtdFarmaco AS quantidade,
-            e.dtValidade
-        FROM estoque e
-        JOIN (
-            SELECT nomeFarmaco, MIN(dtValidade) AS menorVencimento
-            FROM estoque
-            WHERE fkMunicipio = ${idMunicipio}
-              AND dtValidade >= CURDATE()
-              AND qtdFarmaco > 10
-            GROUP BY nomeFarmaco
-        ) sub
-            ON e.nomeFarmaco = sub.nomeFarmaco
-            AND e.dtValidade = sub.menorVencimento
-        WHERE e.fkMunicipio = ${idMunicipio}
-          AND e.qtdFarmaco > 10
-        ORDER BY e.dtValidade ASC, e.nomeFarmaco ASC
-        LIMIT 3;
+      SELECT DISTINCT
+    e.lote AS nome,
+    e.nomeFarmaco AS remedio,
+    DATE_FORMAT(e.dtValidade, '%Y-%m-%d') AS vencimento,
+    e.qtdFarmaco AS quantidade,
+    m.qtdPopulacao,
+    ROUND(m.qtdPopulacao * 0.2) AS estimativa_asmaticos,
+    ROUND(m.qtdPopulacao * 0.2 * 2) AS consumo_diario_estimado, -- 2 remédios por pessoa asmática por dia
+    e.qtdFarmaco / (m.qtdPopulacao * 0.2 * 2) AS dias_estoque, -- tempo que o estoque dura (em dias)
+    e.dtValidade,
+    DATEDIFF(e.dtValidade, CURDATE()) AS dias_para_vencimento
+FROM estoque e
+JOIN municipio m ON e.fkMunicipio = m.idMunicipio
+JOIN (
+    SELECT nomeFarmaco, MIN(dtValidade) AS menorVencimento
+    FROM estoque
+    WHERE fkMunicipio = ${idMunicipio}
+      AND dtValidade >= CURDATE()
+      AND qtdFarmaco > 10
+    GROUP BY nomeFarmaco
+) sub
+    ON e.nomeFarmaco = sub.nomeFarmaco
+    AND e.dtValidade = sub.menorVencimento
+WHERE e.fkMunicipio = ${idMunicipio}
+  AND e.qtdFarmaco > 10
+ORDER BY e.dtValidade ASC, e.nomeFarmaco ASC
+LIMIT 3;
+
     `;
     console.log("Executando SQL:", instrucaoSql);
     return database.executar(instrucaoSql);
