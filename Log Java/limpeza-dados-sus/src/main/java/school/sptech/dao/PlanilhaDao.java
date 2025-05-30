@@ -23,4 +23,12 @@ public class PlanilhaDao {
                 VALUES (?)
         """, nomePlanilha);
     }
+
+    public void comecarInsert(){
+        jdbcTemplate.update("START TRANSACTION");
+    }
+
+    public void encerrarInsert(){
+        jdbcTemplate.update("COMMIT");
+    }
 }

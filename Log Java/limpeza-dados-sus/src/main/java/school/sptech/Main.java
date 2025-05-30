@@ -1,6 +1,8 @@
 package school.sptech;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.json.JSONObject;
+import school.sptech.alertas.Slack;
 import school.sptech.dao.EstoqueDao;
 import school.sptech.dao.LogDao;
 import school.sptech.dao.PlanilhaDao;
@@ -33,7 +35,6 @@ public class Main {
                     .bucket(System.getenv("nomeBucket"))
                     .build();
 
-
             logDao.save(new Log("leitorDadosSUS", "Resgatando todos os arquivos do bucket", LocalDateTime.now(), "Bucket S3"));
             List<S3Object> objects = s3Client.getS3Client().listObjects(listObjects).contents();
 
@@ -42,10 +43,6 @@ public class Main {
                         .bucket(System.getenv("nomeBucket"))
                         .key(object.key())
                         .build();
-
-//                if (object.key().startsWith("excel")) {
-//                    return;
-//                }
 
                 if (planilhaDao.pegarPlanilhas(object.key()) > 0) {
                     logDao.save(new Log("leitorDadosSUS", "Planilha já inserida", LocalDateTime.now(), "Salva dados"));
@@ -62,6 +59,7 @@ public class Main {
 
                         // Este for serve para percorrer a lista dos dados que foram extraidos do arquivo csv
                         logDao.save(new Log("leitorDadosSUS", "Iniciando a gravação dos dados no banco de dados do Estoque", LocalDateTime.now(), "Salva dados"));
+                        estoqueDao.comecarInsert();
                         for (DadosSUS estoque : dadosExtraidos) {
                             List<Municipio> municipios = estoqueDao.pegarMunicipios();
 
@@ -74,6 +72,22 @@ public class Main {
                             }
                         }
 
+//                        List<Municipio> municipios = estoqueDao.pegarMunicipios(); // só uma vez
+//                        List<DadosSUS> dadosValidados = new ArrayList<>();
+
+//                        for (DadosSUS estoque : dadosExtraidos) {
+//                            for (Municipio municipio : municipios) {
+//                                if (estoque.getMunicipio().getNome().equalsIgnoreCase(municipio.getNome())) {
+//                                    estoque.getMunicipio().setIdMunicipio(municipio.getIdMunicipio());
+//                                    dadosValidados.add(estoque);
+//                                    break;
+//                                }
+//                            }
+//                        }
+                        estoqueDao.encerrarInsert();
+
+//                        estoqueDao.saveBatch(dadosValidados);
+
                         // aqui vc pode inserir na tabela Planilha o nome do arquivo.
                         logDao.save(new Log("leitorDadosSUS", "Salvando dados na planilha", LocalDateTime.now(), "Salva dados"));
                         planilhaDao.save(object.key());
@@ -81,6 +95,10 @@ public class Main {
                     }
                 }
             }
+
+            JSONObject json = new JSONObject();
+            json.put("text", "Olá! Informamos que nossa base de dados foi atualizada com sucesso. Isso garante que suas informações estejam sempre corretas e que nossos serviços continuem funcionando da melhor forma para você. 😊 Qualquer dúvida, estamos à disposição!");
+            Slack.enviarMensagem(json);
         } catch (Exception e) {
             System.out.println(e);
             logDao.save(new Log("leitorDadosSUS", ExceptionUtils.getStackTrace(e), LocalDateTime.now(), "Leitura de arquivo Erro"));
