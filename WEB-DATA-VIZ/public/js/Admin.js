@@ -109,6 +109,14 @@ function listar() {
                                     <i class="fa fa-lock"></i>
                                     <input type="password" id="senha${i}" value="${json[i].senha}" class="input-field" placeholder="Digite sua senha" disabled>
                                 </div>
+
+                                <div class="input-item">
+                                    <label>Contatos</label>
+                                    <i class="fa fa-lock"></i>
+                                    <select id="contatos${i}" class="input-field" disabled>
+                                    </select>
+                                </div>
+
                             </div>
 
                             <div id="validacao-senha">
@@ -139,6 +147,24 @@ function listar() {
                                 <button class="btn-excluir"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>`;
+                        // Populando o select de contatos
+                        const selectContatos = document.getElementById(`contatos${i}`);
+
+                        if (json[i].contatos) {
+                            const listaContatos = json[i].contatos.split(',').map(contato => contato.trim());
+
+                            listaContatos.forEach(contato => {
+                                const option = document.createElement('option');
+                                option.value = contato;
+                                option.textContent = contato;
+                                selectContatos.appendChild(option);
+                            });
+                        } else {
+                            const option = document.createElement('option');
+                            option.textContent = 'Sem contatos';
+                            option.disabled = true;
+                            selectContatos.appendChild(option);
+                        }
                     }
 
                     adicionarEventosBotoes(json);
@@ -394,7 +420,7 @@ function adicionarEventosBotoes(json) {
         const btnEditar = document.querySelectorAll('.btn-editar')[i];
         const btnExcluir = document.querySelectorAll('.btn-excluir')[i];
 
-        const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}`);
+        const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}, #contatos${i}`);
         let editando = false;
 
 
