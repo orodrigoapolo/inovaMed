@@ -1,34 +1,33 @@
 package apolo.rodrigo.dao;
 
 import apolo.rodrigo.model.Estado;
-import apolo.rodrigo.model.Municipio;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
-public class EstadoDao {
+public class EstadoDao extends Dao{
     private final JdbcTemplate jdbcTemplate;
 
     public EstadoDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Estado> findAll(){
+    @Override
+    public List<Estado> findAll() {
         return jdbcTemplate.query("""
                 SELECT * FROM estado;
                 """, new BeanPropertyRowMapper<>(Estado.class));
     }
 
-    public List<Estado> findByNomeLike(String nome){
-
+    @Override
+    public List findByNomeLike(String nome) {
         return jdbcTemplate.query("""
                 SELECT * FROM estado WHERE LOWER(nome) LIKE ?;
                 """, new BeanPropertyRowMapper<>(Estado.class), "%"+nome.toLowerCase()+"%");
     }
 
-
-    public Integer save(Estado estado){
+    public Integer save(Estado estado) {
         List<Estado> estados = findByNomeLike(estado.getNome());
         if(estados.isEmpty()){
             jdbcTemplate.update("""
