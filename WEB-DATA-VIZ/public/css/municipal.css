@@ -250,7 +250,8 @@ body {
   flex-direction: column; 
   width: 19vw;
   height: 176px;
-  border: 3px solid rgb(0, 0, 0, 0.2);
+  background-color: white;
+  border: 3px solid rgb(0, 0, 0, 1);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
 }
@@ -258,10 +259,11 @@ body {
   font-size: 20px;
   text-align: center;
   color: #666;
+  margin-bottom: 2px;
 }
 
 .kpi-valor1 {
-  font-size: 1.8rem; /* Diminuir o tamanho do valor */
+  font-size: 1.4rem; /* Diminuir o tamanho do valor */
   font-weight: bold;
   color: #007BFF;
   margin-top: 0.5rem;
@@ -285,8 +287,9 @@ body {
   padding: 2%;
   margin-left: 1%;
   width: 31vw;
+  background-color: white;
   height: 35vh;
-  border: 3px solid rgb(0, 0, 0, 0.2);
+  border: 3px solid rgb(0, 0, 0, 1);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
 }
@@ -297,7 +300,7 @@ body {
   height: 35vh;
 }
 
-#graficoBarras {
+#graficoBas {
   width: 100% !important;
   height: 350px !important; /* você pode ajustar esse valor */
 }
@@ -442,6 +445,7 @@ body {
 
 .dash-perfil {
   display: none;
+
   font-family: 'Lato', sans-serif;
   font-weight: normal;
 }
@@ -477,6 +481,7 @@ body {
   padding-top: 30px;
   margin-left: 105px;
   margin-top: 20px;
+
   margin-bottom: 100px;
   width: 95%;
   border: 1px solid rgb(0, 0, 0, 0.2);
@@ -1324,6 +1329,14 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.contato-container-inexistente {
+  width: 85vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
 }
 
 .nome-contato {

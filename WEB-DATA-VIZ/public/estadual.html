@@ -8,13 +8,20 @@
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="./js/estadual.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./js/sessao.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="./css/estadual.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" href="assets/icon/logo fundo azul.png" type="image/x-icon" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">      
+    <!-- Chart.js e adaptador date-fns -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -26,15 +33,15 @@
 
             <div class="nav-icons">
                 <div class="btn-nav-white active" onclick="abrirDashboard()">
-                        <i class="fas fa-chart-bar"></i>
+                    <i class="fas fa-chart-bar"></i>
                 </div>
 
                 <div class="btn-nav" onclick="abrirPerfil()">
-                        <i class="fa-solid fa-circle-user"></i>
+                    <i class="fa-solid fa-circle-user"></i>
                 </div>
 
                 <div class="btn-nav-white" id="novo_user" onclick="abrirConfiguracoes()">
-                        <i class="fas fa-gear"></i>
+                    <i class="fas fa-gear"></i>
                 </div>
             </div>
 
@@ -53,51 +60,50 @@
                     <p id="titulo-periodo-atual">
                         Período atual:
                     </p>
-                    <p>
-                        dd/mm/aaaa
-                    </p>
+                    <p id="periodoAtual"></p>
                 </div>
             </div>
             <div class="conteudo-dashboard-estadual">
-                 <!-- Iniício KPIs -->
+                <!-- Iniício KPIs -->
 
-                 <div class="grupo-kpi">
+                <div class="grupo-kpi">
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">Quantidade de população que sofre com asma
                         </h3>
-                        <p class="kpi-valor1">1.600</p>
-                        
+                        <p class="kpi-valor1" id="qtdPopulacaoAsma"></p>
+
                     </div>
                     <div class="kpi-container">
-                        <h3 class="kpi-titulo">% da população com asma atendida com base na quantidade de medicamento disponível
+                        <h3 class="kpi-titulo">% da população com asma atendida com base na quantidade de medicamento
+                            disponível
                         </h3>
-                        <p class="kpi-valor1">80%</p>
-                        
+                        <p class="kpi-valor1" id="PorcPopulacaoAtendida"></p>
+
                     </div>
                     <div class="kpi-container">
                         <h3 class="kpi-titulo">Meses com mais consumo de medicamentos
                         </h3>
                         <p class="kpi-valor1">1. Janeiro<br>
-                            2. Julho 
+                            2. Julho
                         </p>
-                        
+
                     </div>
                     <!-- Final KPIs -->
 
                 </div>
                 <div class="grupo-grafico">
                     <div class="grafico-container">
-                        <canvas id="graficoTendencia"></canvas>   
+                        <canvas id="graficoHistorico"></canvas>
                     </div>
-                    <div class="grafico-container">
-                        <canvas id="graficoBarras"></canvas>   
-                    </div>
+                    <!-- <div class="grafico-container">
+                        <canvas id="graficoBarras"></canvas>
+                    </div> -->
                     <div class="grafico-container">
                         <canvas id="graficoMunicipios"></canvas>
                     </div>
-                    <div class="grafico-container">
+                    <!-- <div class="grafico-container">
                         <canvas id="graficoVencimento"></canvas>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -153,7 +159,7 @@
                             <option value="7">Tocantins</option>
                         </select>
                     </div>
-                    <div id="input_item_municipio" class="input-item"  style="display: none;">
+                    <div id="input_item_municipio" class="input-item" style="display: none;">
                         <label for="municipio">Município em que atua</label>
                         <i class="fa fa-map-marker-alt"></i> <!-- Ícone para municipio -->
                         <select id="municipio" class="input-field" disabled>
@@ -220,7 +226,7 @@
                             Contato
                         </h1>
                         <p>
-                            Defina onde é importante você receber notificações sobre alertas e avisos 
+                            Defina onde é importante você receber notificações sobre alertas e avisos
                         </p>
                     </div>
                     <div class="config-seta-imagem">
@@ -233,7 +239,7 @@
                             Parâmetros
                         </h1>
                         <p>
-                            Defina os parâmetros e métricas que façam sentido com sua realidade 
+                            Defina os parâmetros e métricas que façam sentido com sua realidade
                         </p>
                     </div>
                     <div class="config-seta-imagem">
@@ -242,19 +248,23 @@
                 </div>
             </div>
 
+            
             <div class="dash-contato-container" id="dash_contato_container">
                 <h1 class="titulo-contato">
                     Contatos
                 </h1>
-                <div class="contato-container">
-                    <!-- <div class="contato-container-cima">
+
+                <div id="card_contatos"></div>
+
+                <!-- <div class="contato-container">
+                    <div class="contato-container-cima">
                         <h1 class="nome-contato" id="nome_contato">
                             Contato 1
                         </h1>
                         <div class="excluir-contato">
                             <img src="assets/icon/trash.png">
                         </div>
-                    </div> -->
+                    </div>
                     <div class="contato-container-input">
                         <p class="email-contato">
                             Email
@@ -274,12 +284,12 @@
                             <i class="fas fa-save"></i> Salvar Informações
                         </button>
                     </div>
-                </div>
-                <!-- <div class="adicionar-contato">
-                    <div id="adicionar_contato">
+                </div> -->
+                <div class="adicionar-contato">
+                    <div id="adicionar_contato" onclick="adicionarCardVazio()">
                         <img src="assets/icon/plus-circle-thin.png">
                     </div>
-                </div> -->
+                </div>
             </div>
 
             <div class="dash-parametro-container" id="dash_parametro_container">
@@ -287,21 +297,26 @@
                     Parâmetros
                 </h1>
                 <div class="parametro-container">
+                    <div class="parametro-container-cima">
                         <h1 class="nome-parametro">
-                            Medicamentos
+                        Medicamentos
                         </h1>
+                        <div class="excluir-contato">
+                            <img src="assets/icon/trash.png">
+                        </div>
+                    </div>
                     <div class="parametro-container-input">
                         <p class="menor-valor-parametro">
                             Menor quantidade (unidades)
                         </p>
-                        <input type="text" id="input_parametro_menor_valor">
+                        <input type="text" id="input_parametro_menor_valor" disabled>
                         <p class="descricao-input-parametro">
                             Caso a quantidade de medicamentos esteja menor que esse valor, te notificaremos
                         </p>
                         <p class="maior-valor-parametro">
                             Maior quantidade (unidades)
                         </p>
-                        <input type="text" id="input_parametro_maior_valor">
+                        <input type="text" id="input_parametro_maior_valor" disabled>
                         <p class="descricao-input-parametro">
                             Caso a quantidade de medicamentos esteja maior que esse valor, te notificaremos
                         </p>
@@ -319,353 +334,372 @@
                             <i class="fas fa-save"></i> Salvar Informações
                     </div>
                 </div>
+                <div class="adicionar-contato">
+                    <div id="adicionar_contato">
+                        <img src="assets/icon/plus-circle-thin.png">
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // GRÁFICO DE BARRAS
-            const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
-            const graficoBarras = new Chart(ctxBarras, {
-                type: 'bar',
-                data: {
-                    labels: ['Remédio 1', 'Remédio 2', 'Remédio 3', 'Remédio 4'],
-                    datasets: [
-                        {
-                            label: 'Período Anterior',
-                            data: [60, 70, 85, 90],
-                            backgroundColor: 'rgb(255, 99, 132)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Período Atual',
-                            data: [80, 125, 100, 130],
-                            backgroundColor: 'rgba(54, 162, 235)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Comparação de quantidade de remédios por período',
-                            font: {
-                                size: 18,
-                                weight: 'bold'
-                            },
-                            padding: {
-                                top: 10,
-                                bottom: 20
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            min: 0,
-                            max: 140,
-                            ticks: {
-                                stepSize: 20
-                            }
-                        }
-                    }
-                }
-            });
-
-            // GRÁFICO DE TENDÊNCIA
-            const ctxTendencia = document.getElementById('graficoTendencia').getContext('2d');
-            const graficoTendencia = new Chart(ctxTendencia, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                    datasets: [
-                        {
-                            label: 'Remédio X',
-                            data: [30, 35, 40, 45, 50, 48, 47, 49, 52, 54, 58, 60],
-                            borderColor: 'rgba(34, 139, 34,1)',
-                            backgroundColor: 'transparent',
-                            tension: 0.3,
-                            borderWidth: 2,
-                            pointRadius: 0,
-                        },
-                        {
-                            label: 'Remédio Y',
-                            data: [20, 25, 28, 30, 35, 36, 33, 34, 38, 40, 42, 45],
-                            borderColor:'rgba(54, 162, 235',
-                            backgroundColor: 'transparent',
-                            borderDash: [5, 5],
-                            tension: 0.3,
-                            borderWidth: 2,
-                            pointRadius: 0,
-                        },
-                        {
-                            label: 'Remédio Z',
-                            data: [10, 15, 18, 20, 22, 21, 19, 22, 24, 26, 28, 30],
-                            borderColor: 'rgba(255, 206, 86, 1)',
-                            backgroundColor: 'transparent',
-                            tension: 0.3,
-                            borderWidth: 2,
-                            pointRadius: 0,
-                        },
-                        {
-                            label: 'Média pessoas com asma',
-                            data: [25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25],
-                            borderColor: 'rgba(75, 192, 192, )',
-                            borderDash: [10, 5],
-                            backgroundColor: 'transparent',
-                            borderWidth: 2,
-                            pointRadius: 0,
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Histórico mensal de medicamentos comprados por mês',
-                            font: {
-                                size: 18,
-                                weight: 'bold'
-                            },
-                            padding: {
-                                top: 10,
-                                bottom: 20
-                            }
-                        },
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                boxWidth: 15,
-                                padding: 10
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Quantidade',
-                                font: {
-                                    weight: 'bold',
-                                    size: 14
-                                }
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Meses',
-                                font: {
-                                    weight: 'bold',
-                                    size: 14
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // GRÁFICO DE VENCIMENTO DE LOTES
-            // GRÁFICO DE VENCIMENTO DE LOTES
-            const ctxVencimento = document.getElementById('graficoVencimento').getContext('2d');
-
-            const lotes = [
-                { nome: 'Lote A', remedio: 'Remédio X', vencimento: '2025-05-01', quantidade: 50 },
-                { nome: 'Lote B', remedio: 'Remédio Y', vencimento: '2025-05-10', quantidade: 30 },
-                { nome: 'Lote C', remedio: 'Remédio Z', vencimento: '2025-05-15', quantidade: 40 },
-                { nome: 'Lote D', remedio: 'Remédio X', vencimento: '2025-05-20', quantidade: 20 },
-                { nome: 'Lote E', remedio: 'Remédio Y', vencimento: '2025-05-25', quantidade: 60 }
-            ];
-
-            // Ordenar por data de vencimento
-            lotes.sort((a, b) => new Date(a.vencimento) - new Date(b.vencimento));
-            const labelsVenc = lotes.map(l => l.vencimento);
-            const dataVenc = lotes.map(l => l.quantidade);
-            const infoVenc = lotes.map(l => `${l.nome} - ${l.remedio}`);
-
-            // Cores diferentes para cada barra
-            const cores = [
-                'rgba(34, 139, 34',
-                'rgba(54, 162, 235)',
-                'rgba(255, 206, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(153, 102, 255)'
-            ];
-            const coresBorda = cores.map(c => c.replace('0.6', '1'));
-
-            const graficoVencimento = new Chart(ctxVencimento, {
-                type: 'bar',
-                data: {
-                    labels: labelsVenc,
-                    datasets: [{
-                        label: 'Quantidade por Lote',
-                        data: dataVenc,
-                        backgroundColor: cores,
-                        borderColor: coresBorda,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Remédios Próximos ao Vencimento',
-                            font: {
-                                size: 18,
-                                weight: 'bold'
-                            },
-                            padding: {
-                                top: 10,
-                                bottom: 20
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function (context) {
-                                    const quantidade = context.raw;
-                                    const info = infoVenc[context.dataIndex];
-                                    return `${info}: ${quantidade} unidades`;
-                                }
-                            }
-                        },
-                        legend: {
-                            labels: {
-                                generateLabels: function () {
-                                    // Exibe as legendas como os lotes/remédios
-                                    return infoVenc.map((info, index) => ({
-                                        text: info,
-                                        fillStyle: cores[index],
-                                        strokeStyle: coresBorda[index],
-                                        lineWidth: 1,
-                                        hidden: false,
-                                        index: index
-                                    }));
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            min: 0,
-                            max: 80,
-                            ticks: {
-                                stepSize: 0
-                            },
-                            title: {
-                                display: true,
-                                text: 'Quantidade',
-                                font: {
-                                    weight: 'bold',
-                                    size: 14
-                                }
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Data de Vencimento',
-                                font: {
-                                    weight: 'bold',
-                                    size: 14
-                                }
-                            }
-                        }
-                    }
-                }
-            });
- // GRÁFICO DE MUNICÍPIOS COM POPULAÇÃO QUE RECEBE MENOS DE 50% DOS MEDICAMENTOS
-const ctxMunicipios = document.getElementById('graficoMunicipios').getContext('2d');
-const graficoMunicipios = new Chart(ctxMunicipios, {
-    type: 'bar',
-    data: {
-        labels: ['Parintins (AM):', 'Marabá (PA)', 'Ji-Paraná (RO):', 'Araguaína (TO)'], // Municípios da Região Norte
-        datasets: [
-            {
-                label: 'População',
-                data: [10000, 21000, 3000, 3000],
-                backgroundColor: 'rgba(255, 206, 86)', // Amarelo
-                borderColor: 'rgba(255, 206, 86)',
-                borderWidth: 1
-            },
-            {
-                label: 'Medicamentos Recebidos',
-                data: [15000, 17000, 7000, 2300],
-                backgroundColor: 'rgba(34, 139, 34, 0.7) ', // Verde claro
-                borderColor: 'rgba(144, 238, 144, 1)',
-                borderWidth: 1
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Municípios com população que recebe menos de 50% de medicamentos suficientes',
-                font: {
-                    size: 18,
-                    weight: 'bold'
-                },
-                padding: {
-                    top: 10,
-                    bottom: 20
-                }
-            },
-            legend: {
-                position: 'top',
-                labels: {
-                    boxWidth: 15,
-                    padding: 10
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Quantidade',
-                    font: {
-                        weight: 'bold',
-                        size: 14
-                    }
-                }
-            },
-            x: {
-                title: {
-                    display: true,
-                    text: 'Municípios',
-                    font: {
-                        weight: 'bold',
-                        size: 14
-                    }
-                }
-            }
-        }
-    }
-});
-
-
-        });
-    </script>
-
-
 </body>
 
 </html>
-<script src="./js/sessao.js"></script>
+
+<!-- <script src="./js/sessao.js"></script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        carregarKPIPeriodoAtual();
+        carregarGraficoHistorico();
+        carregarGraficoMunicipios();
+        carregarKPIQtdPopulacao();
+        carregarKPIPopulacaoAtendida();
+
+        // KPI DE PERÍODO ATUAL
+        function carregarKPIPeriodoAtual() {
+            const idEstado = sessionStorage.FK_ESTADO;
+            console.log("Buscando período atual da base:", idEstado);
+
+            fetch(`/estados/periodoAtual/${idEstado}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO periodoAtual()!");
+
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+
+                            periodoAtual.innerHTML = `${json[0].periodo_atual}`
+
+                        } else {
+                            console.log("período atual não encontrada.");
+                        }
+                    });
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar a busca de período atual!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+            });
+        }
+
+        // GRÁFICO DE HISTÓRICO POR ESTADO
+
+        function gerarMesesIntervalo(ano, mesInicio, mesFim) {
+            const meses = [];
+            for (let m = mesInicio; m <= mesFim; m++) {
+                meses.push(`${m.toString().padStart(2, '0')}-${ano}`);
+            }
+            return meses;
+        }
+
+        function carregarGraficoHistorico() {
+            const idEstado = sessionStorage.FK_ESTADO;
+            console.log("Buscando histórico para o estado:", idEstado);
+
+            fetch(`/estados/historico/${idEstado}`)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
+                    return res.json();
+                })
+                .then(dados => {
+                    // Defina o intervalo fixo de meses que quer mostrar no gráfico:
+                    const ano = 2024;
+                    const mesInicio = 1;
+                    const mesFim = 12;
+                    const meses = gerarMesesIntervalo(ano, mesInicio, mesFim);
+
+                    const remedios = [...new Set(dados.map(item => item.remedio))];
+
+                    const datasets = remedios.map(remedio => ({
+                        label: remedio,
+                        data: meses.map(mes => {
+                            const registro = dados.find(d => d.mes === mes && d.remedio === remedio);
+                            return registro ? Number(registro.total_comprado) : 0;
+                        }),
+                        borderColor: gerarCorAleatoria(),
+                        backgroundColor: 'transparent',
+                        tension: 0.3,
+                        borderWidth: 2,
+                        pointRadius: 0,
+                    }));
+
+                    const mediaFixa = dados.length > 0 ? Number(dados[0].estimativa_asmaticos) : 0;
+
+                    // Preenche a média com o valor fixo para todos os meses
+                    const mediaAsmaticos = meses.map(() => mediaFixa);
+
+                    datasets.push({
+                        label: 'Média pessoas com asma',
+                        data: mediaAsmaticos,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderDash: [10, 5],
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                    });
+                    const ctx = document.getElementById('graficoHistorico').getContext('2d');
+
+                    // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
+                    if (window.graficoHistorico && typeof window.graficoHistorico.destroy === 'function') {
+                        window.graficoHistorico.destroy();
+                    }
+
+                    window.graficoHistorico = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: meses,
+                            datasets: datasets
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Histórico mensal de medicamentos comprados por estado',
+                                    font: { size: 14, weight: 'bold' },
+                                    padding: { top: 0, bottom: 5 }
+                                },
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        boxWidth: 15,
+                                        padding: 5
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Quantidade',
+                                        font: { weight: 'bold', size: 12 }
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Meses',
+                                        font: { weight: 'bold', size: 12 }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Erro no fetch:", err);
+                    alert("Erro ao carregar dados do gráfico");
+                });
+        }
+
+        function gerarCorAleatoria() {
+            const r = Math.floor(Math.random() * 200);
+            const g = Math.floor(Math.random() * 200);
+            const b = Math.floor(Math.random() * 200);
+            return `rgba(${r}, ${g}, ${b}, 1)`;
+        }
+
+        // GRÁFICO DE MUNICÍPIOS COM POPULAÇÃO QUE RECEBE MENOS DE 50% DOS MEDICAMENTOS
+
+        function carregarGraficoMunicipios() {
+            const idEstado = sessionStorage.FK_ESTADO;
+            console.log("Buscando municipios para o estado:", idEstado);
+
+            fetch(`/estados/municipios/${idEstado}`)
+                .then(res => {
+                    if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
+                    return res.json();
+                })
+                .then(dados => {
+
+                    const municipios = [...new Set(dados.map(item => item.municipio))];
+                    const total_comprado = [...new Set(dados.map(item => item.total_comprado))];
+                    const estimativa_asmaticos = [...new Set(dados.map(item => item.estimativa_asmaticos))];
+
+                    const data = {
+                        labels: municipios,
+                        datasets: [
+                            {
+                                label: 'Total de Medicamentos Comprados',
+                                data: total_comprado,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                            },
+                            {
+                                label: 'Estimativa de Pessoas com Asma',
+                                data: estimativa_asmaticos,
+                                backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                            }
+                        ]
+                    };
+
+                    const ctxMunicipios = document.getElementById('graficoMunicipios').getContext('2d');
+
+                    // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
+                    if (window.graficoMunicipios && typeof window.graficoMunicipios.destroy === 'function') {
+                        window.graficoMunicipios.destroy();
+                    }
+
+                    window.graficoMunicipios = new Chart(ctxMunicipios, {
+                        type: 'bar',
+                        data: data,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Municípios com população que recebe menos de 50% de medicamentos suficientes',
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    },
+                                    padding: {
+                                        top: 0,
+                                        bottom: 5
+                                    }
+                                },
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        boxWidth: 15,
+                                        padding: 5
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    type: 'logarithmic',
+                                    title: {
+                                        display: true,
+                                        text: 'Quantidade',
+                                        font: { weight: 'bold', size: 12 }
+                                    },
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function (value) {
+                                            return value.toLocaleString();
+                                        }
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: false,
+                                        text: 'Municípios',
+                                        font: { weight: 'bold', size: 12 }
+                                    },
+                                    ticks: {
+                                        font: { size: 10 }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Erro no fetch:", err);
+                    alert("Erro ao carregar dados do gráfico");
+                });
+        }
+
+        // KPI DE QUANTIDADE DE PESSOAS QUE SOFREM COM ASMA
+
+        function carregarKPIQtdPopulacao() {
+            const idEstado = sessionStorage.FK_ESTADO;
+            console.log("Buscando quantidade de população com asma para o estado:", idEstado);
+
+            fetch(`/estados/populacaoAsma/${idEstado}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO populacaoAsma()!");
+
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+
+                            qtdPopulacaoAsma.innerHTML += `${Number(json[0].estimativa_asmaticos).toLocaleString('pt-BR')}`
+
+                        } else {
+                            console.log("População com asma não encontrada.");
+                        }
+                    });
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar a busca de população com asma!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+            });
+        }
+
+        // KPI DE QUANTIDADE DE POPULAÇÃO ATENDIDA PELA QUANTIDADE DE MEDICAMENTOS DISPONÍVEIS
+
+        function carregarKPIPopulacaoAtendida() {
+            const idEstado = sessionStorage.FK_ESTADO;
+            console.log("Buscando quantidade de população atendida para o estado:", idEstado);
+
+            fetch(`/estados/populacaoAtendida/${idEstado}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO populacaoAtendida()!");
+
+                if (resposta.ok) {
+                    console.log(resposta);
+                    resposta.json().then(json => {
+                        console.log(json); // Verifique o conteúdo retornado
+                        if (json.length > 0) {
+
+                            var porcentagem = (json[0].periodo_atual / (json[0].estimativa_asmaticos)) * 100
+
+                            PorcPopulacaoAtendida.innerHTML = `${porcentagem.toFixed(2)}%`
+
+                        } else {
+                            console.log("População atendida não encontrada.");
+                        }
+                    });
+
+                } else {
+                    console.log("Houve um erro ao tentar realizar a busca de população atendida!");
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+            }).catch(function (erro) {
+                console.log(erro);
+            });
+        }
+
+
+
+    });
+</script>
+
 <script>
     nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
-    
+
     nome.value = sessionStorage.NOME_USUARIO;
     email.value = sessionStorage.EMAIL_USUARIO;
     cpf.value = sessionStorage.CPF_USUARIO;
@@ -673,57 +707,55 @@ const graficoMunicipios = new Chart(ctxMunicipios, {
     genero.value = sessionStorage.GENERO_USUARIO;
     senha.value = sessionStorage.SENHA_USUARIO;
     estado.value = sessionStorage.FK_ESTADO;
-    input_email_contato.value = sessionStorage.EMAIL_USUARIO;
-    input_parametro_menor_valor.value = 5;
-    input_parametro_maior_valor.value = 10;
+    // input_email_contato.value = sessionStorage.EMAIL_USUARIO;
 
     function listar2(fkEstado) {
-            var fkEstado = document.getElementById('estado').value;
-            fetch(`/municipios/listar/${fkEstado}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            }).then(function (resposta) {
-                console.log("ESTOU NO THEN DO listar()!");
+        var fkEstado = document.getElementById('estado').value;
+        fetch(`/municipios/listar/${fkEstado}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO listar()!");
 
-                if (resposta.ok) {
-                    console.log(resposta);
-                    resposta.json().then(json => {
-                        console.log(json); // Verifique o conteúdo retornado
-                        if (json.length > 0) {
-                            console.log("Número de usuários:", json.length);
-                            
-                            municipio.innerHTML = "";
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                    console.log(json); // Verifique o conteúdo retornado
+                    if (json.length > 0) {
+                        console.log("Número de usuários:", json.length);
 
-                            for (let i = 0; i < json.length; i++) {
-                                municipio.innerHTML += `
+                        municipio.innerHTML = "";
+
+                        for (let i = 0; i < json.length; i++) {
+                            municipio.innerHTML += `
                             <option value="${json[i].idMunicipio}">${json[i].nome}</option>
                         `
-                            }
-                            municipio.value = sessionStorage.FK_MUNICIPIO;
-                        } else {
-                            console.log("Nenhum município encontrado.");
                         }
-                    });
+                        municipio.value = sessionStorage.FK_MUNICIPIO;
+                    } else {
+                        console.log("Nenhum município encontrado.");
+                    }
+                });
 
-                } else {
-                    console.log("Houve um erro ao tentar realizar a listagem!");
-                    resposta.text().then(texto => {
-                        console.error(texto);
-                    });
-                }
+            } else {
+                console.log("Houve um erro ao tentar realizar a listagem!");
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
 
-            }).catch(function (erro) {
-                console.log(erro);
-            });
-        }
-    
+        }).catch(function (erro) {
+            console.log(erro);
+        });
+    }
+
     var dataCompleta = new Date(sessionStorage.DT_NASC);
     var dia = String(dataCompleta.getDate()).padStart(2, '0');
     var mes = String(dataCompleta.getMonth() + 1).padStart(2, '0');
     var ano = dataCompleta.getFullYear();
     var dataFormatada = `${ano}-${mes}-${dia}`;
-    
+
     nascimento.value = dataFormatada;
 </script>
