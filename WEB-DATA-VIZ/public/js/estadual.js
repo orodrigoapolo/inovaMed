@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!document.getElementById("parametro-medicamento") &&
         !document.getElementById("parametro-grafico")) {
-        const containerCards = document.getElementById('card_parametro_medicamento');
+        const containerCards = document.getElementById('mensagem-parametro-inexistente');
         if (!document.getElementById("parametro_inexistente")) {
             containerCards.innerHTML = `
             <div class="contato-container-inexistente" id="parametro_inexistente">
@@ -143,6 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
         }
+    } else {
+        // Se já existe algum card, remove a mensagem de inexistência
+        const msg = document.getElementById("parametro_inexistente");
+        if (msg) msg.remove();
     }
 
     // medicamentos
@@ -851,6 +855,10 @@ function exibirParametrosMedicamento(idUsuario) {
             const param = JSON.parse(text);
             console.log("Parâmetros medicamento existentes:", param);
 
+            const parametroInexistente = document.getElementById("parametro_inexistente");
+            if (parametroInexistente) {
+                parametroInexistente.remove();
+            }
 
             const containerCards = document.getElementById('card_parametro_medicamento');
             containerCards.innerHTML = '';
@@ -1001,6 +1009,11 @@ function exibirParametroGrafico(idUsuario) {
 
             const param = JSON.parse(text);
             console.log("Parâmetros grafico existentes:", param);
+
+            const parametroInexistente = document.getElementById("parametro_inexistente");
+            if (parametroInexistente) {
+                parametroInexistente.remove();
+            }
 
             const containerCards = document.getElementById('card_parametro_grafico');
             containerCards.innerHTML = '';

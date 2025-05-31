@@ -287,14 +287,21 @@
             </div>
 
 
-            <div class="dash-parametro-container" id="dash_parametro_container">
+           <div class="dash-parametro-container" id="dash_parametro_container">
                 <h1 class="titulo-parametro">
                     Parâmetros
                 </h1>
-                <div class="parametro-container">
-                    <h1 class="nome-parametro">
+
+                <div id="card_parametro_medicamento"></div>
+                <!-- <div class="parametro-container" id="parametro-medicamento">
+                    <div class="parametro-container-cima">
+                        <h1 class="nome-parametro">
                         Medicamentos
-                    </h1>
+                        </h1>
+                        <div class="excluir-contato">
+                            <img src="assets/icon/trash.png">
+                        </div>
+                    </div>
                     <div class="parametro-container-input">
                         <p class="menor-valor-parametro">
                             Menor quantidade (unidades)
@@ -312,19 +319,76 @@
                         </p>
                     </div>
                     <div class="botoes-acoes-parametros">
-                        <button class="btn-editar" id="btn-editar-parametro" onclick="editarInformacoesParametro()">
+                        <button class="btn-editar" id="btn-editar-parametro-medicamento" onclick="editarInformacoesParametroMedicamento()">
                             <i class="fas fa-pen"></i> Editar Informações
                         </button>
-                        <button class="btn-descartar" id="btn-descartar-parametro" onclick="descartarEdicaoParametro()"
+                        <button class="btn-descartar" id="btn-descartar-parametro-medicamento" onclick="descartarEdicaoParametroMedicamento()"
                             style="display: none;">
                             <i class="fas fa-times"></i> Descartar
                         </button>
-                        <button class="btn-salvar" id="btn-salvar-parametro" onclick="salvarInformacoesParametro()"
+                        <button class="btn-salvar" id="btn-salvar-parametro-medicamento" onclick="salvarInformacoesParametroMedicamento()"
                             style="display: none;">
                             <i class="fas fa-save"></i> Salvar Informações
                     </div>
+                </div> -->
+
+                <div id="card_parametro_grafico"></div>
+                <!-- <div class="parametro-container" id="parametro-grafico">
+                    <div class="parametro-container-cima">
+                        <h1 class="nome-parametro">
+                        Gráfico - remédios comprados por pessoas com asma por municipio
+                        </h1>
+                        <div class="excluir-contato">
+                            <img src="assets/icon/trash.png">
+                        </div>
+                    </div>
+                    <div class="parametro-container-input">
+                        <p class="menor-valor-parametro">
+                            Porcentagem
+                        </p>
+                        <input type="text" id="input_parametro_grafico" disabled>
+                        <p class="descricao-input-parametro">
+                            Configure a porcentagem desejada para alterar a visualização do gráfico.
+                        </p>
+                    </div>
+                    <div class="botoes-acoes-parametros">
+                        <button class="btn-editar" id="btn-editar-parametro-grafico" onclick="editarInformacoesParametroGrafico()">
+                            <i class="fas fa-pen"></i> Editar Informações
+                        </button>
+                        <button class="btn-descartar" id="btn-descartar-parametro-grafico" onclick="descartarEdicaoParametroGrafico()"
+                            style="display: none;">
+                            <i class="fas fa-times"></i> Descartar
+                        </button>
+                        <button class="btn-salvar" id="btn-salvar-parametro-grafico" onclick="salvarInformacoesParametroGrafico()"
+                            style="display: none;">
+                            <i class="fas fa-save"></i> Salvar Informações
+                    </div>
+                </div> -->
+
+                <div id="mensagem-parametro-inexistente"></div>
+
+
+                <div id="modal_parametro" class="modal-overlay hidden">
+                    <div class="modal-box">
+                        <h2>Qual parâmetro você gostaria de adicionar?</h2>
+                        <select id="select_parametro" class="select-parametro">
+                            <option value="medicamento">Medicamento</option>
+                            <option value="grafico">Gráfico</option>
+                        </select>
+                        <div class="modal-buttons">
+                            <button id="cancel_add_parametro" class="btn-cancelar-parametro">Cancelar</button>
+                            <button id="confirm_add_parametro" class="btn-confirmar-parametro">Adicionar Parâmetro</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="adicionar-contato">
+                    <div id="adicionar_contato" onclick="criarModalParametro()">
+                        <img src="assets/icon/plus-circle-thin.png">
+                    </div>
                 </div>
             </div>
+        
         </div>
     </div>
     <script>
