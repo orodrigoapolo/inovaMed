@@ -80,8 +80,25 @@ function exibirParametro(req, res) {
     });
 }
 
+function exibirAlertas(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    parametrosModel.buscarAlertas(idUsuario)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json({ alertas: resultado });
+            } else {
+                res.status(200).json({ alertas: [] });
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao buscar alertas:", erro);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
 module.exports = {
     configurarParametro,
     configurarPrimeiroParametro,
-    exibirParametro
+    exibirParametro,
+    exibirAlertas
 }

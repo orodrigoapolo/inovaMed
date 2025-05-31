@@ -16,4 +16,8 @@ router.get("/exibirParametro/:idUsuario", function (req, res) {
     parametrosController.exibirParametro(req, res);
 });
 
+router.get("/exibirAlertas/:idUsuario", function (req, res) {
+    parametrosController.exibirAlertas(req, res);
+});
+
 module.exports = router;

@@ -2,12 +2,16 @@ function abrirDashboard() {
     dash_municipal.style.display = "flex"
     dash_perfil.style.display = "none"
     dash_config.style.display = "none"
+                verificarAlertasMedicamentos();
+
+
 }
 
 function abrirPerfil() {
     dash_municipal.style.display = "none"
     dash_perfil.style.display = "block"
     dash_config.style.display = "none"
+
 }
 
 function abrirConfiguracoes() {
@@ -405,6 +409,31 @@ function exibirParametros(idUsuario) {
             console.error("Erro ao verificar parâmetros:", erro);
         });
 }
+
+let alertaMostrado = false;
+
+function verificarAlertasMedicamentos() {
+    if (alertaMostrado) return; // evita repetir alerta
+    var idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/parametros/exibirAlertas/${idUsuario}`)
+        .then(res => {
+            if (!res.ok) throw new Error("Erro na resposta do servidor");
+            return res.json();
+        })
+        .then(data => {
+            if (data.alertas && data.alertas.length > 0) {
+                let mensagem = "Atenção! Alguns medicamentos estão fora dos parâmetros:\n\n";
+                data.alertas.forEach(alerta => {
+                    mensagem += `- ${alerta.nomeFarmaco}: estoque atual ${alerta.total_qtd}, mínimo ${alerta.min}, máximo ${alerta.max}\n`;
+                });
+                alert(mensagem);
+                alertaMostrado = true; // marca como mostrado
+            }
+        })
+        .catch(erro => console.error("Erro ao buscar alertas de medicamentos:", erro));
+}
+
 
 // contatos functions
 

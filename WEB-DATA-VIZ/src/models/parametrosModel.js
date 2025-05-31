@@ -40,8 +40,34 @@ function exibirParametro(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function buscarAlertas(idUsuario) {
+    var instrucaoSql = `
+        SELECT 
+            e.nomeFarmaco,
+            SUM(e.qtdFarmaco) AS total_qtd,
+            MIN(m.min) AS min,
+            MAX(m.max) AS max
+        FROM 
+            usuario u
+        JOIN marcador m ON m.fkUsuario = u.idUsuario
+        JOIN estoque e ON e.fkMunicipio = u.fkMunicipio
+        WHERE
+            u.idUsuario = ${idUsuario}
+            AND (e.dtValidade IS NULL OR e.dtValidade >= CURRENT_DATE)
+        GROUP BY 
+            e.nomeFarmaco
+        HAVING 
+            total_qtd < min OR total_qtd > max;
+    
+    `;
+    console.log("Executando a instrução SQL para alertas: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
 module.exports = {
     configurarParametro,
     configurarPrimeiroParametro,
-    exibirParametro
+    exibirParametro,
+ buscarAlertas
 };

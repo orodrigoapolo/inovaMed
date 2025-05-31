@@ -22,40 +22,40 @@ function editar(idUsuario, email, senha, nome, cpf, dtNasc, genero) {
     return database.executar(instrucaoSql);
 }
 
-    function tendencia (idMunicipio){
-
-        var instrucaoSql = `
+ function tendencia(idMunicipio) {
+    const instrucaoSql = `
         SELECT 
-        SUM(CASE 
-            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m') 
-            THEN e.qtdFarmaco 
-            ELSE 0 
-        END) AS mes_anterior,
+            SUM(CASE 
+                WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 5 MONTH), '%Y-%m') 
+                THEN e.qtdFarmaco 
+                ELSE 0 
+            END) AS mes_anterior,
 
-        SUM(CASE 
-            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH), '%Y-%m') 
-            THEN e.qtdFarmaco 
-            ELSE 0 
-        END) AS mes_atual,
+            SUM(CASE 
+                WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH), '%Y-%m') 
+                THEN e.qtdFarmaco 
+                ELSE 0 
+            END) AS mes_atual,
 
-        ROUND(SUM(CASE 
-            WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH), '%Y-%m') 
-            THEN e.qtdFarmaco 
-            ELSE 0 
-        END) * 1.15) AS previsao_proximo_mes
+            ROUND(SUM(CASE 
+                WHEN DATE_FORMAT(e.dtEntrada, '%Y-%m') = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 4 MONTH), '%Y-%m') 
+                THEN e.qtdFarmaco 
+                ELSE 0 
+            END) * 1.15, 2) AS previsao_proximo_mes
 
-    FROM estoque e
-    WHERE e.fkMunicipio = ${idMunicipio}
-    ;
+        FROM estoque e
+        WHERE e.fkMunicipio = ${idMunicipio};
     `;
-        console.log("Executando SQL do histórico:\n" + instrucaoSql);
-        return database.executar(instrucaoSql);
-    }
+
+    console.log("Executando SQL do histórico:\n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 function historico(idMunicipio) {
     var instrucaoSql = `
         SELECT 
-            DATE_FORMAT(E.dtEntrada, '%Y-%m') AS mes,
+            DATE_FORMAT(E.dtEntrada, '%m/%Y') AS mes,
             E.nomeFarmaco AS remedio,
             SUM(E.qtdFarmaco) AS total_comprado,
             ROUND(M.qtdPopulacao * 0.2) AS estimativa_asmaticos
@@ -185,15 +185,16 @@ function qtdPopulacaoAsma(idMunicipio) {
 
 function topMesesEstoque() {
     const instrucaoSql = `
-        SELECT 
-            MONTHNAME(dtEntrada) AS mes,
-            SUM(qtdFarmaco) AS total_medicamentos
-        FROM estoque
-        WHERE dtEntrada IS NOT NULL
-          AND dtValidade >= CURDATE()
-        GROUP BY MONTH(dtEntrada), MONTHNAME(dtEntrada)
-        ORDER BY total_medicamentos DESC
-        LIMIT 3;
+SELECT 
+    DATE_FORMAT(MIN(dtEntrada), '%M %Y') AS mes,
+    SUM(qtdFarmaco) AS total_medicamentos
+FROM estoque
+WHERE dtEntrada IS NOT NULL
+  AND dtValidade >= CURDATE()
+GROUP BY YEAR(dtEntrada), MONTH(dtEntrada)
+ORDER BY total_medicamentos DESC
+LIMIT 3;
+
     `;
     console.log("Executando SQL topMesesEstoque:", instrucaoSql);
     return database.executar(instrucaoSql);
