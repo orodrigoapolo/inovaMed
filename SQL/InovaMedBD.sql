@@ -97,10 +97,9 @@ DROP TABLE IF EXISTS marcador ;
 
 CREATE TABLE IF NOT EXISTS marcador (
   idMarcador INT PRIMARY KEY AUTO_INCREMENT,
+  tipoParametro VARCHAR(500),
   max DECIMAL(10,2) NULL,
   min DECIMAL(10,2) NULL,
-  antesMax INT NULL,
-  antesMin INT NULL,
   fkUsuario INT NOT NULL,
   FOREIGN KEY (fkUsuario) REFERENCES usuario (idUsuario)
 );
