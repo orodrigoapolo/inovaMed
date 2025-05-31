@@ -48,7 +48,7 @@ function entrar() {
                     } else if (json.cargo == 'coordenador_estadual') {
                         const idUsuario = sessionStorage.getItem('ID_USUARIO');
 
-                        const fetchParametros = fetch(`/parametros/exibirParametro/${idUsuario}`)
+                        const fetchParametrosMedicamento = fetch(`/parametros/exibirParametroMedicamento/${idUsuario}`)
                             .then(res => {
                                 if (res.status === 204) return null;
                                 if (!res.ok) throw new Error("Erro na resposta do servidor");
@@ -57,7 +57,7 @@ function entrar() {
                             .then(text => {
                                 if (!text) {
                                     console.log("Nenhum parâmetro encontrado, configurando...");
-                                    configurarPrimeiroParametro();
+                                    configurarPrimeiroParametroMedicamento();
                                     return;
                                 }
 
@@ -69,7 +69,30 @@ function entrar() {
                             })
                             .catch(erro => {
                                 console.error("Erro ao verificar parâmetros:", erro);
-                                configurarPrimeiroParametro();
+                                configurarPrimeiroParametroMedicamento();
+                            });
+
+                        const fetchParametrosGrafico = fetch(`/parametros/exibirParametroGrafico/${idUsuario}`)
+                            .then(res => {
+                                if (res.status === 204) return null;
+                                if (!res.ok) throw new Error("Erro na resposta do servidor");
+                                return res.text();
+                            })
+                            .then(text => {
+                                if (!text) {
+                                    console.log("Nenhum parâmetro encontrado, configurando...");
+                                    configurarPrimeiroParametroGrafico();
+                                    return;
+                                }
+
+                                const param = JSON.parse(text);
+                                console.log("Parâmetros existentes:", param);
+
+                                sessionStorage.setItem('PARAMETRO_PORC', param[0].min);
+                            })
+                            .catch(erro => {
+                                console.error("Erro ao verificar parâmetros:", erro);
+                                configurarPrimeiroParametroGrafico();
                             });
 
                         const fetchContatos = fetch(`/contatoAvisos/exibirContato/${idUsuario}`)
@@ -96,7 +119,7 @@ function entrar() {
                             });
 
                         // Espera ambos os fetches antes de redirecionar
-                        Promise.all([fetchParametros, fetchContatos]).then(() => {
+                        Promise.all([fetchParametrosMedicamento, fetchParametrosGrafico, fetchContatos]).then(() => {
                             window.location = "estadual.html";
                         });
 
@@ -105,7 +128,7 @@ function entrar() {
 
                         const idUsuario = sessionStorage.getItem('ID_USUARIO');
 
-                        const fetchParametros = fetch(`/parametros/exibirParametro/${idUsuario}`)
+                        const fetchParametrosMedicamento = fetch(`/parametros/exibirParametroMedicamento/${idUsuario}`)
                             .then(res => {
                                 if (res.status === 204) return null;
                                 if (!res.ok) throw new Error("Erro na resposta do servidor");
@@ -114,7 +137,7 @@ function entrar() {
                             .then(text => {
                                 if (!text) {
                                     console.log("Nenhum parâmetro encontrado, configurando...");
-                                    configurarPrimeiroParametro();
+                                    configurarPrimeiroParametroMedicamento();
                                     return;
                                 }
 
@@ -126,7 +149,30 @@ function entrar() {
                             })
                             .catch(erro => {
                                 console.error("Erro ao verificar parâmetros:", erro);
-                                configurarPrimeiroParametro();
+                                configurarPrimeiroParametroMedicamento();
+                            });
+
+                        const fetchParametrosGrafico = fetch(`/parametros/exibirParametroGrafico/${idUsuario}`)
+                            .then(res => {
+                                if (res.status === 204) return null;
+                                if (!res.ok) throw new Error("Erro na resposta do servidor");
+                                return res.text();
+                            })
+                            .then(text => {
+                                if (!text) {
+                                    console.log("Nenhum parâmetro encontrado, configurando...");
+                                    configurarPrimeiroParametroGrafico();
+                                    return;
+                                }
+
+                                const param = JSON.parse(text);
+                                console.log("Parâmetros existentes:", param);
+
+                                sessionStorage.setItem('PARAMETRO_PORC', param[0].min);
+                            })
+                            .catch(erro => {
+                                console.error("Erro ao verificar parâmetros:", erro);
+                                configurarPrimeiroParametroGrafico();
                             });
 
                         const fetchContatos = fetch(`/contatoAvisos/exibirContato/${idUsuario}`)
@@ -151,9 +197,8 @@ function entrar() {
                                 console.error("Erro ao verificar contatos:", erro);
                                 configurarPrimeiroContato();
                             });
-
                         // Espera ambos os fetches antes de redirecionar
-                        Promise.all([fetchParametros, fetchContatos]).then(() => {
+                        Promise.all([fetchParametrosMedicamento, fetchParametrosGrafico, fetchContatos]).then(() => {
                             window.location = "municipal.html";
                         });
 
@@ -178,25 +223,64 @@ function entrar() {
     return false;
 }
 
-function configurarPrimeiroParametro() {
+function configurarPrimeiroParametroMedicamento() {
     // Se houver erros, exibe um alerta
     var maxVar = 10000;
     var minVar = 1000;
+    var tipoParam = "medicamento"
     var idUsuario = sessionStorage.ID_USUARIO;
-    if (!maxVar || !minVar) {
+    if (!maxVar || !minVar || !tipoParam) {
         alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
     } else {
         sessionStorage.setItem('PARAMETRO_MIN', minVar);
         sessionStorage.setItem('PARAMETRO_MAX', maxVar);
 
-        fetch(`/parametros/configurarPrimeiroParametro/${idUsuario}`, {
+        fetch(`/parametros/configurarPrimeiroParametroMedicamento/${idUsuario}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                paramServer: tipoParam,
                 maxServer: maxVar,
                 minServer: minVar
+            }),
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    setTimeout(() => {
+                        alert('Configuração realizada com sucesso!');
+                    }, 2000);
+                } else {
+                    throw "Houve um erro ao tentar realizar a configuração!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+}
+
+function configurarPrimeiroParametroGrafico() {
+    // Se houver erros, exibe um alerta
+    var porcentagem = 50;
+    var tipoParam = "grafico"
+    var idUsuario = sessionStorage.ID_USUARIO;
+    if (!porcentagem || !tipoParam) {
+        alert('Erro ao configurar: \n' + mensagensErro.join('\n'));
+    } else {
+        sessionStorage.setItem('PARAMETRO_PORC', porcentagem);
+
+        fetch(`/parametros/configurarPrimeiroParametroGrafico/${idUsuario}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                paramServer: tipoParam,
+                porcServer: porcentagem,
             }),
         })
             .then(function (resposta) {
