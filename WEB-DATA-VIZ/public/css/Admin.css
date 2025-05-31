@@ -168,7 +168,7 @@ body {
 }
 
 .conteudo-dashboard-admin {
-    width: 90vw;
+    width: 94vw;
     height: fit-content;
     display: flex;
     justify-content: space-between;
@@ -179,8 +179,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 20vw;
-    gap: 20px;
+    width: 460px;
+    gap: 75px;
     height: 88vh;
   }
   .kpi-container {
