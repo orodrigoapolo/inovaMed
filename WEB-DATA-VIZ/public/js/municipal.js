@@ -410,29 +410,85 @@ function exibirParametros(idUsuario) {
         });
 }
 
+const alerta = document.getElementById('alerta-estilizado');
+const alertaMensagem = document.getElementById('alerta-mensagem');
+const btnFechar = document.getElementById('alerta-fechar');
+const alertaBadge = document.getElementById('alerta-badge');
+
+function mostrarAlertaEstilizado(mensagem) {
+  alertaMensagem.textContent = mensagem;
+  alerta.classList.remove('alerta-esconder');
+  alertaBadge.classList.add('alerta-badge-esconder');
+}
+
+function esconderAlertaEstilizado() {
+  alerta.classList.add('alerta-esconder');
+  alertaBadge.classList.remove('alerta-badge-esconder');
+}
+
+btnFechar.addEventListener('click', esconderAlertaEstilizado);
+alertaBadge.addEventListener('click', () => {
+  mostrarAlertaEstilizado(alertaMensagem.textContent);
+});
+
+
 let alertaMostrado = false;
 
 function verificarAlertasMedicamentos() {
     if (alertaMostrado) return; // evita repetir alerta
     var idUsuario = sessionStorage.ID_USUARIO;
 
+    
     fetch(`/parametros/exibirAlertas/${idUsuario}`)
         .then(res => {
             if (!res.ok) throw new Error("Erro na resposta do servidor");
             return res.json();
         })
-        .then(data => {
+        .then(async data => {
+            
             if (data.alertas && data.alertas.length > 0) {
+                // Mostra alerta para o usuário (opcional)
                 let mensagem = "Atenção! Alguns medicamentos estão fora dos parâmetros:\n\n";
                 data.alertas.forEach(alerta => {
-                    mensagem += `- ${alerta.nomeFarmaco}: estoque atual ${alerta.total_qtd}, mínimo ${alerta.min}, máximo ${alerta.max}\n`;
+                    mensagem += `- ${alerta.nomeFarmaco}:\n Estoque atual: ${alerta.total_qtd}\n  Mínimo: ${alerta.min}\n  Máximo: ${alerta.max}\n\n`;
                 });
-                alert(mensagem);
-                alertaMostrado = true; // marca como mostrado
+                mostrarAlertaEstilizado(mensagem);
+
+                // Envia para o backend inserir cada alerta na tabela
+                for (const alerta of data.alertas) {
+                   const alertaParaInserir = {
+    fkEstoque: alerta.idEstoque,
+    fkUsuario: idUsuario,
+    tipoAlerta: "Estoque fora do parâmetro",
+    descricao: `Estoque de ${alerta.nomeFarmaco} fora dos limites (mín: ${alerta.min}, máx: ${alerta.max}, atual: ${alerta.total_qtd})`,
+    titulo: `Alerta de estoque - ${alerta.nomeFarmaco}`
+};
+
+                    try {
+                        console.log("Enviando alerta para o backend:", alertaParaInserir);
+                        const resposta = await fetch('/parametros/inserirAlerta', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(alertaParaInserir)
+                        });
+
+                        if (!resposta.ok) {
+                            console.error(`Erro ao inserir alerta para ${alerta.nomeFarmaco}`);
+                        }
+                    } catch (erro) {
+                        console.error("Erro ao enviar alerta para inserção:", erro);
+                    }
+                }
+
+                alertaMostrado = true;
             }
         })
         .catch(erro => console.error("Erro ao buscar alertas de medicamentos:", erro));
 }
+
+
 
 
 // contatos functions

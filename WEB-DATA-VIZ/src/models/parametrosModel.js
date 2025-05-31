@@ -42,25 +42,35 @@ function exibirParametro(idUsuario) {
 
 function buscarAlertas(idUsuario) {
     var instrucaoSql = `
-        SELECT 
-            e.nomeFarmaco,
-            SUM(e.qtdFarmaco) AS total_qtd,
-            MIN(m.min) AS min,
-            MAX(m.max) AS max
-        FROM 
-            usuario u
-        JOIN marcador m ON m.fkUsuario = u.idUsuario
-        JOIN estoque e ON e.fkMunicipio = u.fkMunicipio
-        WHERE
-            u.idUsuario = ${idUsuario}
-            AND (e.dtValidade IS NULL OR e.dtValidade >= CURRENT_DATE)
-        GROUP BY 
-            e.nomeFarmaco
-        HAVING 
-            total_qtd < min OR total_qtd > max;
+SELECT 
+    e.nomeFarmaco,
+    SUM(e.qtdFarmaco) AS total_qtd,
+    MIN(m.min) AS min,
+    MAX(m.max) AS max
+FROM 
+    usuario u
+JOIN marcador m ON m.fkUsuario = u.idUsuario
+JOIN estoque e ON e.fkMunicipio = u.fkMunicipio
+WHERE
+    u.idUsuario = ${idUsuario}
+    AND (e.dtValidade IS NULL OR e.dtValidade >= CURRENT_DATE)
+    AND e.qtdFarmaco > 0
+GROUP BY 
+    e.nomeFarmaco
+HAVING 
+    total_qtd < min OR total_qtd > max;
+
     
     `;
     console.log("Executando a instrução SQL para alertas: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+function inserirAlerta({ fkEstoque, fkUsuario, tipoAlerta, descricao, titulo }) {
+    const instrucaoSql = `
+        INSERT INTO alerta (fkEstoque, fkUsuario, TipoAlerta, Descricao, dtAlerta, titulo)
+        VALUES (${fkEstoque}, ${fkUsuario}, '${tipoAlerta}', '${descricao}', NOW(), '${titulo}');
+    `;
+    console.log("Executando SQL para inserir alerta:\n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
@@ -69,5 +79,6 @@ module.exports = {
     configurarParametro,
     configurarPrimeiroParametro,
     exibirParametro,
- buscarAlertas
+ buscarAlertas,
+ inserirAlerta
 };

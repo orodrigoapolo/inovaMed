@@ -96,9 +96,34 @@ function exibirAlertas(req, res) {
             res.status(500).json({ erro: erro.sqlMessage });
         });
 }
+
+
+function inserirAlerta(req, res) {
+    console.log("Recebido no body:", req.body);
+
+    var { fkEstoque, fkUsuario, tipoAlerta, descricao, titulo } = req.body;
+
+    if (!fkEstoque || !fkUsuario || !tipoAlerta || !descricao || !titulo) {
+        res.status(400).send("Faltando parâmetros para inserir o alerta.");
+        return;
+    }
+
+    parametrosModel.inserirAlerta({ fkEstoque, fkUsuario, tipoAlerta, descricao, titulo })
+        .then(resultado => {
+            res.status(201).json({ mensagem: "Alerta inserido com sucesso", resultado });
+        })
+        .catch(erro => {
+            console.log("Erro ao inserir alerta:", erro);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
+
+
+
 module.exports = {
     configurarParametro,
     configurarPrimeiroParametro,
     exibirParametro,
-    exibirAlertas
+    exibirAlertas,
+    inserirAlerta
 }

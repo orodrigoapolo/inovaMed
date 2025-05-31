@@ -21,7 +21,20 @@
 </head>
 
 
-<body onload="validarSessao(); listar2()">
+<body onload="validarSessao(); listar2();verificarAlertasMedicamentos(); ">
+
+    
+
+<!-- Alerta completo -->
+<div id="alerta-estilizado" class="alerta-esconder">
+  <div class="alerta-conteudo">
+    <span id="alerta-mensagem"></span>
+    <button id="alerta-fechar">&times;</button>
+  </div>
+</div>
+
+<!-- Badge separado, aparece quando alerta está escondido -->
+<div id="alerta-badge" class="alerta-badge-esconder" title="Clique para abrir o alerta">!</div>
 
     <div class="janela">
 

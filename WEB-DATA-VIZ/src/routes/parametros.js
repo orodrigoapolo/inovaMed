@@ -20,4 +20,7 @@ router.get("/exibirAlertas/:idUsuario", function (req, res) {
     parametrosController.exibirAlertas(req, res);
 });
 
+router.post("/inserirAlerta", function (req, res) {
+    parametrosController.inserirAlerta(req, res);
+});
 module.exports = router;
