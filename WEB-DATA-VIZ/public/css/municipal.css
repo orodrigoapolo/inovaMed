@@ -184,6 +184,150 @@ body {
 
 /* DASHBOARD MUNICIPAL */
 
+/* Alerta completo no topo, centralizado */
+#alerta-estilizado {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  max-width: 400px;
+  background-color: #f8d7da;
+  color: #721c24;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  z-index: 9999;
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Texto do alerta */
+#alerta-mensagem {
+  white-space: pre-line;
+  flex: 1;
+  margin-right: 10px;
+}
+
+/* Botão fechar (X) */
+#alerta-fechar {
+  background: transparent;
+  border: none;
+  color: #721c24;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 8px;
+  line-height: 1;
+  position: relative;
+  top: -2px;
+}
+
+#alerta-fechar:hover {
+  color: #491217;
+}
+
+/* Badge retangular ao invés de bola */
+#alerta-badge {
+  position: fixed;
+  top: 10px;          /* distância do topo */
+  left: 50%;          /* centraliza na horizontal */
+  transform: translateX(-50%);
+  
+  min-width: 80px;    /* largura mínima para texto */
+  height: 30px;       /* altura do retângulo */
+  padding: 0 15px;    /* espaçamento interno horizontal */
+  
+  background-color: #FF4D4D; /* vermelho */
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 6px; /* cantos arredondados */
+  text-align: center;
+  line-height: 30px;   /* centraliza verticalmente o texto */
+  
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  z-index: 10000;
+}
+
+/* Esconde os elementos */
+.alerta-esconder {
+  display: none !important;
+}
+
+#alerta-badge {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ff4d4d, #e60000);
+  color: white;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(230, 0, 0, 0.6);
+  cursor: pointer;
+  z-index: 10000;
+  max-width: 90vw;
+  white-space: nowrap;
+  user-select: none;
+
+  animation: pulseAlert 2.5s infinite ease-in-out;
+}
+
+.badge-icone {
+  font-size: 22px;
+  color: white;
+  margin-right: 12px;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
+
+.badge-texto {
+  line-height: 1.2;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.alerta-badge-esconder {
+  display: none !important;
+}
+
+/* Pulsação suave para chamar atenção */
+@keyframes pulseAlert {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(230, 0, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(255, 77, 77, 0.9);
+  }
+}
+
+/* Animação fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -15px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+
 .dash-municipal {
   display: flex;
   flex-direction: column;

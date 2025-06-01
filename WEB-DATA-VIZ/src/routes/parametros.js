@@ -46,6 +46,10 @@ router.get("/exibirParametroGrafico/:idUsuario", function (req, res) {
 router.post("/configurarNovoParametroGrafico/:idUsuario", function (req, res) {
     parametrosController.configurarNovoParametroGrafico(req, res);
 });
+router.get("/exibirAlertasMedicamento/:idUsuario", function (req, res) {
+    parametrosController.exibirAlertasMedicamento(req, res);
+});
+
 
 
 module.exports = router;

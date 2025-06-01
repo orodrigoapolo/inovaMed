@@ -286,6 +286,24 @@ function deletarParametroGrafico(req, res) {
     }
 }
 
+function exibirAlertasMedicamento(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    parametrosModel.buscarAlertasMedicamento(idUsuario)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json({ alertas: resultado });
+            } else {
+                res.status(200).json({ alertas: [] });
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao buscar alertas:", erro);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
+
+
 module.exports = {
     configurarParametroMedicamento,
     configurarParametroGrafico,
@@ -296,5 +314,7 @@ module.exports = {
     deletarParametroMedicamento,
     deletarParametroGrafico,
     configurarNovoParametroMedicamento,
-    configurarNovoParametroGrafico
+    configurarNovoParametroGrafico,
+    exibirAlertasMedicamento
+    
 }
