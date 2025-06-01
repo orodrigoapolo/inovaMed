@@ -790,6 +790,8 @@ function configurarParametroMedicamento() {
     }
 }
 
+
+
 function configurarNovoParametroMedicamento(maxVar, minVar) {
     // Se houver erros, exibe um alerta
     // var maxVar = document.getElementById('input_parametro_maior_valor').value;
@@ -918,6 +920,68 @@ function exibirParametrosMedicamento(idUsuario) {
         })
         .catch(erro => {
             console.error("Erro ao verificar parâmetros medicamento:", erro);
+        });
+}
+
+
+const alerta = document.getElementById('alerta-estilizado');
+const alertaMensagem = document.getElementById('alerta-mensagem');
+const btnFechar = document.getElementById('alerta-fechar');
+const alertaBadge = document.getElementById('alerta-badge');
+
+function mostrarAlertaEstilizado(mensagem) {
+    alertaMensagem.textContent = mensagem;
+    alerta.classList.remove('alerta-esconder');
+    alertaBadge.classList.add('alerta-badge-esconder');
+}
+
+function esconderAlertaEstilizado() {
+    alerta.classList.add('alerta-esconder');
+    alertaBadge.classList.remove('alerta-badge-esconder');
+}
+
+btnFechar.addEventListener('click', esconderAlertaEstilizado);
+alertaBadge.addEventListener('click', () => {
+    mostrarAlertaEstilizado(alertaMensagem.textContent);
+});
+
+let alertaMostrado = false;
+
+function verificarAlertasMedicamentos() {
+    if (alertaMostrado) return;
+
+    const idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/parametros/exibirAlertasMedicamento/${idUsuario}`)
+        .then(res => {
+            if (!res.ok) throw new Error("Erro na resposta do servidor");
+            return res.json();
+        })
+        .then(data => {
+            if (data.alertas && data.alertas.length > 0) {
+                let mensagem = "⚠️ Alguns medicamentos estão fora dos parâmetros:\n\n";
+
+                data.alertas.forEach(alerta => {
+                    const { nomeFarmaco: nome, total_qtd: qtd, min, max } = alerta;
+                    let status = '';
+
+                    if (qtd > min) {
+                        status = 'ACIMA';
+                        mensagem += `• ${nome} está ACIMA do máximo permitido:\n\n`;
+                        mensagem += `  Estoque: ${qtd} \n\n`;
+                    } else if (qtd < max) {
+                        status = 'ABAIXO';
+                        mensagem += `• ${nome} está ABAIXO do mínimo permitido:\n\n`;
+                        mensagem += `  Estoque: ${qtd} \n\n`;
+                    }
+                });
+
+                mostrarAlertaEstilizado(mensagem);
+                alertaMostrado = true;
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar alertas de medicamentos:", erro);
         });
 }
 

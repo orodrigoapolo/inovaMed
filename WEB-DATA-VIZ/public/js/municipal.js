@@ -966,12 +966,12 @@ function verificarAlertasMedicamentos() {
 
                     if (qtd > min) {
                         status = 'ABAIXO';
-                        mensagem += `• ${nome} está ABAIXO do mínimo permitido:\n`;
-                        mensagem += `  Estoque: ${qtd} | Mínimo: ${min}\n\n`;
+                        mensagem += `• ${nome} está ABAIXO do mínimo permitido:\n\n`;
+                        mensagem += `  Estoque: ${qtd}`;
                     } else if (qtd < max) {
                         status = 'ACIMA';
-                        mensagem += `• ${nome} está ACIMA do máximo permitido:\n`;
-                        mensagem += `  Estoque: ${qtd} | Máximo: ${max}\n\n`;
+                        mensagem += `• ${nome} está ACIMA do máximo permitido:\n\n`;
+                        mensagem += `  Estoque: ${qtd}`;
                     }
                 });
 

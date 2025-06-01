@@ -142,7 +142,7 @@ WHERE e.fkMunicipio = ${idMunicipio}
   )
 GROUP BY nomeFarmaco
 ORDER BY total_periodos DESC
-LIMIT 2;
+LIMIT 5;
 
     `;
 

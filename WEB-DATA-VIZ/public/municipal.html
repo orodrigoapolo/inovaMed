@@ -534,11 +534,14 @@
 }
 
             const coresFixas = [
-                'rgba(75, 192, 192, 1)',    // Verde
-                'rgba(255, 206, 86, 1)',    // Amarelo forte
-                'rgba(54, 162, 235, 1)',    // Azul
-                'rgba(255, 99, 132, 1)'     // Vermelho
-            ];
+  'rgba(75, 192, 192, 1)',    // Verde
+  'rgba(255, 206, 86, 1)',    // Amarelo
+  'rgba(255, 99, 132, 1)',    // Vermelho
+  'rgba(153, 102, 255, 1)',   // Roxo
+  'rgba(255, 159, 64, 1)',    // Laranja
+  'rgba(54, 162, 235, 1)',    // Azul
+  // ... mais cores se quiser
+];
 
 
       function carregarGraficoHistorico(idMunicipio) {
@@ -569,7 +572,8 @@
                                 label: nomeCurto,
                                 data: valores,
                                 borderColor: coresFixas[i % coresFixas.length],
-                                backgroundColor: 'rgba(20, 162, 235, 1)', // você pode também criar um array para isso se quiser variar
+                                backgroundColor: 'rgba(0, 0, 0, 1)'  // preto opaco
+, // você pode também criar um array para isso se quiser variar
                                 tension: 0.3,
                                 borderWidth: 3,
                                 pointRadius: 4
