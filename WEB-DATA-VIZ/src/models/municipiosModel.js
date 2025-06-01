@@ -55,7 +55,7 @@ function editar(idUsuario, email, senha, nome, cpf, dtNasc, genero) {
 function historico(idMunicipio) {
     var instrucaoSql = `
         SELECT 
-            DATE_FORMAT(E.dtEntrada, '%Y-%m') AS mes,
+            DATE_FORMAT(E.dtEntrada, '%m/%Y') AS mes,
             E.nomeFarmaco AS remedio,
             SUM(E.qtdFarmaco) AS total_comprado,
             ROUND(M.qtdPopulacao * 0.2) AS estimativa_asmaticos
@@ -142,7 +142,7 @@ WHERE e.fkMunicipio = ${idMunicipio}
   )
 GROUP BY nomeFarmaco
 ORDER BY total_periodos DESC
-LIMIT 2;
+LIMIT 5;
 
     `;
 
@@ -185,15 +185,16 @@ function qtdPopulacaoAsma(idMunicipio) {
 
 function topMesesEstoque() {
     const instrucaoSql = `
-        SELECT 
-            MONTHNAME(dtEntrada) AS mes,
-            SUM(qtdFarmaco) AS total_medicamentos
-        FROM estoque
-        WHERE dtEntrada IS NOT NULL
-          AND dtValidade >= CURDATE()
-        GROUP BY MONTH(dtEntrada), MONTHNAME(dtEntrada)
-        ORDER BY total_medicamentos DESC
-        LIMIT 3;
+SELECT 
+    DATE_FORMAT(MIN(dtEntrada), '%M %Y') AS mes,
+    SUM(qtdFarmaco) AS total_medicamentos
+FROM estoque
+WHERE dtEntrada IS NOT NULL
+  AND dtValidade >= CURDATE()
+GROUP BY YEAR(dtEntrada), MONTH(dtEntrada)
+ORDER BY total_medicamentos DESC
+LIMIT 3;
+
     `;
     console.log("Executando SQL topMesesEstoque:", instrucaoSql);
     return database.executar(instrucaoSql);
