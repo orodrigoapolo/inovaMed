@@ -928,26 +928,36 @@ const alertaMensagem = document.getElementById('alerta-mensagem');
 const btnFechar = document.getElementById('alerta-fechar');
 const alertaBadge = document.getElementById('alerta-badge');
 
+let alertaMostrado = false;
+
 function mostrarAlertaEstilizado(mensagem) {
     alertaMensagem.textContent = mensagem;
     alerta.classList.remove('alerta-esconder');
     alertaBadge.classList.add('alerta-badge-esconder');
+    alertaMostrado = true;
 }
 
 function esconderAlertaEstilizado() {
     alerta.classList.add('alerta-esconder');
     alertaBadge.classList.remove('alerta-badge-esconder');
+    alertaMostrado = false;
 }
 
 btnFechar.addEventListener('click', esconderAlertaEstilizado);
+
 alertaBadge.addEventListener('click', () => {
     mostrarAlertaEstilizado(alertaMensagem.textContent);
 });
+const badgeFechar = document.getElementById('badge-fechar');
 
-let alertaMostrado = false;
+badgeFechar.addEventListener('click', (e) => {
+    e.stopPropagation(); // evita que clique no botão abra o alerta
+    alertaBadge.style.display = 'none';  // oculta o badge completamente
+});
+
 
 function verificarAlertasMedicamentos() {
-    if (alertaMostrado) return;
+    if (alertaMostrado) return; // se já tá aberto, não atrapalha
 
     const idUsuario = sessionStorage.ID_USUARIO;
 
@@ -962,27 +972,30 @@ function verificarAlertasMedicamentos() {
 
                 data.alertas.forEach(alerta => {
                     const { nomeFarmaco: nome, total_qtd: qtd, min, max } = alerta;
-                    let status = '';
-
-                    if (qtd > min) {
-                        status = 'ABAIXO';
-                        mensagem += `• ${nome} está ACIMA do máximo permitido:\n\n`;
-                        mensagem += `  Estoque: ${qtd} \n\n`;
-                    } else if (qtd < max) {
-                        status = 'ACIMA';
-                        mensagem += `• ${nome} está ABAIXO do abaixo permitido:\n\n`;
-                        mensagem += `  Estoque: ${qtd} n\n`;
+                    if (qtd > max) {
+                        mensagem += `• ${nome} está ACIMA do máximo permitido: Estoque: ${qtd}\n\n`;
+                    } else if (qtd < min) {
+                        mensagem += `• ${nome} está ABAIXO do mínimo permitido: Estoque: ${qtd}\n\n`;
                     }
                 });
 
                 mostrarAlertaEstilizado(mensagem);
-                alertaMostrado = true;
+            } else {
+                // Se não tem alerta, garante que tudo fique escondido
+                esconderAlertaEstilizado();
             }
         })
         .catch(erro => {
             console.error("Erro ao buscar alertas de medicamentos:", erro);
         });
 }
+
+// Chama a primeira vez ao carregar a página
+verificarAlertasMedicamentos();
+
+// Verifica a cada 5 minutos (300000 ms)
+setInterval(verificarAlertasMedicamentos, 300000);
+
 
 
 function deletarParametroMedicamento() {

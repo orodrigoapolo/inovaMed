@@ -93,6 +93,17 @@ function novoUsuario(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado, f
     return database.executar(instrucaoSql);
 }
 
+
+function buscarNomeEstadoPorId(idEstado) {
+    console.log("Buscando nome do estado com ID:", idEstado);
+
+    var instrucaoSql = `
+        SELECT nome FROM estado WHERE idEstado = ${idEstado};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 module.exports = {
     autenticar,
     cadastrar,
@@ -100,5 +111,6 @@ module.exports = {
     deletarUsuario,
     buscar,
     editar,
-    novoUsuario
+    novoUsuario,
+    buscarNomeEstadoPorId
 };
