@@ -629,119 +629,88 @@
 
 
             function carregarGraficoVencimento(idMunicipio) {
-                fetch(`/municipios/vencimentos/${idMunicipio}`)
-                    .then(res => {
-                        if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
-                        return res.json();
-                    })
-                    .then(dados => {
-                        // Montar labels por lote + remédio, limitado a 6 palavras
-                        const labels = dados.map(item => {
-                            const textoCompleto = `Lote ${item.nome} - ${item.remedio || ""}`;
-                            const palavras = textoCompleto.split(' ');
-                            return palavras.slice(0, 6).join(' ');
-                        });
+    fetch(`/municipios/vencimentos/${idMunicipio}`)
+        .then(res => {
+            if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
+            return res.json();
+        })
+        .then(dados => {
+            const labels = dados.map(item => `Lote ${item.nome_lote} (venc: ${item.vencimento})`);
+            const diasEstoque = dados.map(item => item.dias_estoque_total);
 
-                        // Quantidade em estoque por lote
-                        const estoque = dados.map(item => item.quantidade);
+            const ctx = document.getElementById('graficoVencimento').getContext('2d');
 
-                        // Calcula dias para vencimento por lote
-                        const hoje = new Date();
-                        const diasParaVencimento = dados.map(item => {
-                            const dtVenc = new Date(item.vencimento);
-                            const diffTime = dtVenc - hoje;
-                            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                        });
-
-                        const ctx = document.getElementById('graficoVencimento').getContext('2d');
-
-                        if (window.graficoVencimento && typeof window.graficoVencimento.destroy === 'function') {
-                            window.graficoVencimento.destroy();
-                        }
-
-                        window.graficoVencimento = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: labels,
-                                datasets: [
-                                    {
-                                        label: 'Quantidade em estoque',
-                                        data: estoque,
-                                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                                        borderWidth: 1
-                                    },
-                                    {
-                                        label: 'Dias para vencimento',
-                                        data: diasParaVencimento,
-                                        backgroundColor: 'rgba(255, 206, 86, 0.7)',
-                                        borderWidth: 1
-                                    }
-                                ]
-                            },
-                            options: {
-                                indexAxis: 'y',
-                                responsive: true,
-                                plugins: {
-                                    title: {
-                                        display: true,
-                                        text: 'Remédios Próximos ao Vencimento por Lote',
-                                        font: {
-                                            size: 18,
-                                            weight: 'bold'
-                                        }
-                                    },
-                                    tooltip: {
-                                        mode: 'index',
-                                        intersect: false,
-                                        callbacks: {
-                                            label: function (context) {
-                                                if (context.dataset.label === 'Dias para vencimento') {
-                                                    return `${context.dataset.label}: ${context.raw} dias`;
-                                                } else {
-                                                    return `${context.dataset.label}: ${context.raw} unidades`;
-                                                }
-                                            }
-                                        }
-                                    },
-                                    legend: {
-                                        position: 'top'
-                                    }
-                                },
-                                scales: {
-                                    x: {
-                                        type: 'logarithmic',
-                                        min: 1,
-                                        title: {
-                                            display: true,
-                                            text: 'Quantidade / Dias (escala logarítmica)',
-                                            font: { size: 14, weight: 'bold' }
-                                        },
-                                        ticks: {
-                                            callback: function (value) {
-                                                return Number(value.toString()); // para mostrar números normais
-                                            }
-                                        }
-                                    }
-                                    ,
-                                    y: {
-                                        title: {
-                                            display: true,
-                                            text: 'Lotes de Remédios',
-                                            font: {
-                                                size: 14,
-                                                weight: 'bold'
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    })
-                    .catch(err => {
-                        console.error("Erro ao carregar vencimentos:", err);
-                        alert("Erro ao carregar gráfico de vencimentos.");
-                    });
+            if (window.graficoVencimento && typeof window.graficoVencimento.destroy === 'function') {
+                window.graficoVencimento.destroy();
             }
+
+window.graficoVencimento = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Dias de Estoque Estimado',
+            data: diasEstoque,
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Dias de Estoque por Lote (baseado na quantidade e consumo estimado)',
+                font: {
+                    size: 18,
+                    weight: 'bold'
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        const valor = context.raw;
+                        return ` ${valor} dias de estoque`;
+                    }
+                }
+            },
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+text: 'Dias de Estoque até o consumo total estimado',
+                    font: {
+                        size: 14,
+                        weight: 'bold'
+                    }
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Lotes ',
+                    font: {
+                        size: 14,
+                        weight: 'bold'
+                    }
+                }
+            }
+        }
+    }
+});
+
+        })
+        .catch(err => {
+            console.error("Erro ao carregar vencimentos:", err);
+            alert("Erro ao carregar gráfico de vencimentos.");
+        });
+}
         });
         function carregarGraficoTendencia(idMunicipio) {
             fetch(`/municipios/tendencia/${idMunicipio}`)
@@ -881,47 +850,50 @@
                     });
             }
 
-            function carregarTopMesesEstoque(idMunicipio) {
-                fetch(`/municipios/topMesesEstoque/${idMunicipio}`)
-    .then(res => {
-        if (res.status === 200) {
-            return res.json();
-        } else if (res.status === 204) {
-            throw new Error("Nenhum dado encontrado.");
-        } else {
-            throw new Error(`Erro inesperado: ${res.status}`);
-        }
-    })
-    .then(dados => {
-        if (dados.length === 0) throw new Error("Nenhum dado para exibir");
-
-        const mesesENtoPT = {
-            "January": "Janeiro",
-            "February": "Fevereiro",
-            "March": "Março",
-            "April": "Abril",
-            "May": "Maio",
-            "June": "Junho",
-            "July": "Julho",
-            "August": "Agosto",
-            "September": "Setembro",
-            "October": "Outubro",
-            "November": "Novembro",
-            "December": "Dezembro"
-        };
-
-        const listaMeses = dados
-            .map(item => mesesENtoPT[item.mes] || item.mes)
-            .join("<br>");
-
-        document.getElementById("valorKpi3").innerHTML = listaMeses;
-    })
-    .catch(err => {
-        console.error("Erro ao carregar meses com mais consumo:", err.message);
-        document.getElementById("valorKpi3").textContent = "Sem dados";
-    });
-
+function carregarTopMesesEstoque(idMunicipio) {
+    fetch(`/municipios/topMesesEstoque/${idMunicipio}`)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            } else if (res.status === 204) {
+                throw new Error("Nenhum dado encontrado.");
+            } else {
+                throw new Error(`Erro inesperado: ${res.status}`);
             }
+        })
+        .then(dados => {
+            if (dados.length === 0) throw new Error("Nenhum dado para exibir");
+
+            const mesesENtoPT = {
+                "January": "Janeiro",
+                "February": "Fevereiro",
+                "March": "Março",
+                "April": "Abril",
+                "May": "Maio",
+                "June": "Junho",
+                "July": "Julho",
+                "August": "Agosto",
+                "September": "Setembro",
+                "October": "Outubro",
+                "November": "Novembro",
+                "December": "Dezembro"
+            };
+
+            const listaMeses = dados
+                .map(item => {
+                    const [mesIngles, ano] = item.mes.split(' ');
+                    const mesPT = mesesENtoPT[mesIngles] || mesIngles;
+                    return `${mesPT} ${ano}`;
+                })
+                .join("<br>");
+
+            document.getElementById("valorKpi3").innerHTML = listaMeses;
+        })
+        .catch(err => {
+            console.error("Erro ao carregar meses com mais consumo:", err.message);
+            document.getElementById("valorKpi3").textContent = "Sem dados";
+        });
+}
         });
 
 
