@@ -4,7 +4,8 @@ var database = require("../database/config")
 function periodoAtual(idEstado) {
     var instrucaoSql =  `
         SELECT 
-            DATE_FORMAT(dtEntrada, '%d/%m/%Y') AS periodo_atual
+            DATE_FORMAT(dtEntrada, '%d/%m/%Y') AS periodo_atual,
+            estado.nome AS estado_atual
         FROM estoque
         JOIN municipio ON estoque.fkMunicipio = municipio.idMunicipio
         JOIN estado ON municipio.fkEstado = estado.idEstado
@@ -87,12 +88,19 @@ function populacaoAsma(idEstado) {
 function populacaoAtendida(idEstado) {
     var instrucaoSql =  `
         SELECT 
-            SUM(ROUND(municipio.qtdPopulacao * 0.2)) AS estimativa_asmaticos,
-            SUM(CASE WHEN dtEntrada >= (SELECT MAX(dtEntrada) FROM estoque) THEN qtdFarmaco ELSE 0 END) AS periodo_atual
-        FROM estoque
-        JOIN municipio ON estoque.fkMunicipio = municipio.idMunicipio
-        JOIN estado ON municipio.fkEstado = estado.idEstado
-        WHERE idEstado = ${idEstado};
+            -- Estimativa de asmáticos correta: 20% da população dos municípios do estado
+            SUM(ROUND(m.qtdPopulacao * 0.2)) AS estimativa_asmaticos,
+
+            -- Soma de medicamentos do período atual (última data de entrada)
+            (
+                SELECT SUM(e.qtdFarmaco)
+                FROM estoque e
+                JOIN municipio m2 ON e.fkMunicipio = m2.idMunicipio
+                WHERE e.dtEntrada = (SELECT MAX(dtEntrada) FROM estoque)
+                AND m2.fkEstado = ${idEstado}
+            ) AS periodo_atual
+        FROM municipio m
+        WHERE m.fkEstado = ${idEstado};
     `;
 
     console.log("SQL populacaoAtendida:", instrucaoSql);
@@ -103,10 +111,46 @@ function populacaoAtendida(idEstado) {
     });
 }
 
+function topMesesEstoque(idEstado) {
+    const instrucaoSql = `
+        SELECT 
+            CONCAT(
+                CASE MONTH(MIN(dtEntrada))
+                    WHEN 1 THEN 'Janeiro'
+                    WHEN 2 THEN 'Fevereiro'
+                    WHEN 3 THEN 'Março'
+                    WHEN 4 THEN 'Abril'
+                    WHEN 5 THEN 'Maio'
+                    WHEN 6 THEN 'Junho'
+                    WHEN 7 THEN 'Julho'
+                    WHEN 8 THEN 'Agosto'
+                    WHEN 9 THEN 'Setembro'
+                    WHEN 10 THEN 'Outubro'
+                    WHEN 11 THEN 'Novembro'
+                    WHEN 12 THEN 'Dezembro'
+                END, '/',
+                RIGHT(YEAR(MIN(dtEntrada)), 2)
+            ) AS mes,
+            SUM(qtdFarmaco) AS total_medicamentos
+        FROM estoque
+        JOIN municipio m ON estoque.fkMunicipio = m.idMunicipio
+        JOIN estado ON m.fkEstado = estado.idEstado
+        WHERE dtEntrada IS NOT NULL
+        AND dtValidade >= CURDATE()
+        AND estado.idEstado = ${idEstado}
+        GROUP BY YEAR(dtEntrada), MONTH(dtEntrada)
+        ORDER BY total_medicamentos DESC
+        LIMIT 3;
+    `;
+    console.log("Executando SQL topMesesEstoque:", instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     periodoAtual,
     historico,
     municipios,
     populacaoAsma,
-    populacaoAtendida
+    populacaoAtendida,
+    topMesesEstoque
 };

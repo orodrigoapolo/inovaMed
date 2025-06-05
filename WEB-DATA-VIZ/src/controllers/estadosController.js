@@ -89,10 +89,27 @@ function populacaoAtendida(req, res) {
         });
 }
 
+function topMesesEstoque(req, res) {
+    var idEstado = req.params.idEstado;
+    estadosModel.topMesesEstoque(idEstado)
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum dado encontrado para meses de estoque.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar meses estoque:", erro.sqlMessage);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
+}
+
 module.exports = {
     periodoAtual,
     historico,
     municipios,
     populacaoAsma,
-    populacaoAtendida
+    populacaoAtendida,
+    topMesesEstoque
 }

@@ -26,254 +26,264 @@
 
 <body>
 
-    <body onload="verificarAlertasMedicamentos()" >
+    <body onload="verificarAlertasMedicamentos()">
 
 
-    <!-- Alerta completo -->
-<div id="alerta-estilizado" class="alerta-esconder">
-  <div class="alerta-conteudo">
-    <span id="alerta-mensagem"></span>
-    <button id="alerta-fechar">&times;</button>
-  </div>
-</div>
-
-<!-- Badge separado, aparece quando alerta está escondido -->
-<div id="alerta-badge" class="alerta-badge-esconder" title="Clique para abrir o alerta">
-  <span class="badge-icone">🔔</span>
-  <span class="badge-texto">
-    Alerta: Seus parâmetros de medicamento foram atingidos! Verifique seu estoque.
-  </span>
-</div>
-    <div class="janela">
-
-        <div class="header-left">
-            <img src="./assets/imgs/logo plus branca sem fundo.png" alt="Logo InovMed" class="logo" />
-
-            <div class="nav-icons">
-                <div class="btn-nav-white active" onclick="abrirDashboard()">
-                    <i class="fas fa-chart-bar"></i>
-                </div>
-
-                <div class="btn-nav" onclick="abrirPerfil()">
-                    <i class="fa-solid fa-circle-user"></i>
-                </div>
-
-                <div class="btn-nav-white" id="novo_user" onclick="abrirConfiguracoes()">
-                    <i class="fas fa-gear"></i>
-                </div>
+        <!-- Alerta completo -->
+        <div id="alerta-estilizado" class="alerta-esconder">
+            <div class="alerta-conteudo">
+                <span id="alerta-mensagem"></span>
+                <button id="alerta-fechar">&times;</button>
             </div>
-
-            <div class="btn-logout" onclick="limparSessao()">
-                <i class="fa-solid fa-power-off"></i>
-            </div>
-
         </div>
 
-        <div class="dash-estadual" id="dash_estadual">
-            <div class="header-dashboard">
-                <h1 class="titulo-dashboard">
-                    Olá, <span id="nomeUsuario"></span>!
-                </h1>
-                <div class="periodo-atual">
-                    <p id="titulo-periodo-atual">
-                        Período atual:
-                    </p>
-                    <p id="periodoAtual"></p>
+        <!-- Badge separado, aparece quando alerta está escondido -->
+        <div id="alerta-badge" class="alerta-badge-esconder" title="Clique para abrir o alerta">
+            <span class="badge-icone">🔔</span>
+            <span class="badge-texto">
+                Alerta: Seus parâmetros de medicamento foram atingidos! Verifique seu estoque.
+            </span>
+        </div>
+        <div class="janela">
+
+            <div class="header-left">
+                <img src="./assets/imgs/logo plus branca sem fundo.png" alt="Logo InovMed" class="logo" />
+
+                <div class="nav-icons">
+                    <div class="btn-nav-white active" onclick="abrirDashboard()">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+
+                    <div class="btn-nav" onclick="abrirPerfil()">
+                        <i class="fa-solid fa-circle-user"></i>
+                    </div>
+
+                    <div class="btn-nav-white" id="novo_user" onclick="abrirConfiguracoes()">
+                        <i class="fas fa-gear"></i>
+                    </div>
                 </div>
+
+                <div class="btn-logout" onclick="limparSessao()">
+                    <i class="fa-solid fa-power-off"></i>
+                </div>
+
             </div>
-            <div class="conteudo-dashboard-estadual">
-                <!-- Iniício KPIs -->
 
-                <div class="grupo-kpi">
-                    <div class="kpi-container">
-                        <h3 class="kpi-titulo">Quantidade de população que sofre com asma
-                        </h3>
-                        <p class="kpi-valor1" id="qtdPopulacaoAsma"></p>
-
-                    </div>
-                    <div class="kpi-container">
-                        <h3 class="kpi-titulo">% da população com asma atendida com base na quantidade de medicamento
-                            disponível
-                        </h3>
-                        <p class="kpi-valor1" id="PorcPopulacaoAtendida"></p>
-
-                    </div>
-                    <div class="kpi-container">
-                        <h3 class="kpi-titulo">Meses com mais consumo de medicamentos
-                        </h3>
-                        <p class="kpi-valor1">1. Janeiro<br>
-                            2. Julho
+            <div class="dash-estadual" id="dash_estadual">
+                <div class="header-dashboard">
+                    <h1 class="titulo-dashboard">
+                        Olá, <span id="nomeUsuario"></span>!
+                    </h1>
+                    <div class="periodo-atual">
+                        <p id="titulo-periodo-atual">
+                            Estado atual:
                         </p>
-
+                        <p id="estadoAtual"></p>
+                        <p> | </p>
+                        <p id="titulo-periodo-atual">
+                            Período atual:
+                        </p>
+                        <p id="periodoAtual"></p>
                     </div>
-                    <!-- Final KPIs -->
-
                 </div>
-                <div class="grupo-grafico">
-                    <div class="grafico-container">
-                        <canvas id="graficoHistorico"></canvas>
+                <div class="conteudo-dashboard-estadual">
+                    <!-- Iniício KPIs -->
+
+                    <div class="grupo-kpi">
+                        <div class="kpi-container">
+                            <h3 class="kpi-titulo">Quantidade de população que sofre com asma
+                            </h3>
+                            <p class="kpi-valor1" id="qtdPopulacaoAsma"></p>
+
+                        </div>
+                        <div class="kpi-container">
+                            <h3 class="kpi-titulo">% da população com asma atendida com base na quantidade de
+                                medicamento
+                                disponível
+                            </h3>
+                            <p class="kpi-valor1" id="PorcPopulacaoAtendida"></p>
+
+                        </div>
+                        <div class="kpi-container">
+                            <h3 class="kpi-titulo">Meses com mais consumo de medicamentos
+                            </h3>
+                            <p class="kpi-valor1" id="MesesMaisConsumo">
+                            </p>
+
+                        </div>
+                        <!-- Final KPIs -->
+
                     </div>
-                    <!-- <div class="grafico-container">
+                    <div class="grupo-grafico">
+                        <div class="grafico-container">
+                            <select id="anoSelect">
+                                <option value="2024" selected>2024</option>
+                                <option value="2025">2025</option>
+                            </select>
+                            <canvas id="graficoHistorico"></canvas>
+                        </div>
+                        <!-- <div class="grafico-container">
                         <canvas id="graficoBarras"></canvas>
                     </div> -->
-                    <div class="grafico-container">
-                        <canvas id="graficoMunicipios"></canvas>
-                    </div>
-                    <!-- <div class="grafico-container">
+                        <div class="grafico-container">
+                            <canvas id="graficoMunicipios"></canvas>
+                        </div>
+                        <!-- <div class="grafico-container">
                         <canvas id="graficoVencimento"></canvas>
                     </div> -->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="dash-perfil" id="dash_perfil">
+                <div class="div_animacao">
+                    <h1 id="title_hello">Seu perfil</h1>
+                </div>
+                <div class="perfil-container">
+                    <h2 class="subtitulo">Dados Pessoais</h2>
+
+                    <div class="input-group">
+                        <div class="input-item">
+                            <label for="nome">Nome Completo</label>
+                            <i class="fa fa-user"></i>
+                            <input type="text" id="nome" class="input-field" disabled>
+                        </div>
+
+                        <div class="input-item">
+                            <label for="email">E-mail</label>
+                            <i class="fa fa-envelope"></i>
+                            <input type="email" id="email" class="input-field" disabled>
+                        </div>
+
+                        <div class="input-item">
+                            <label for="cpf">CPF</label>
+                            <i class="fa fa-id-card"></i>
+                            <input type="text" maxlength="11" id="cpf" class="input-field" disabled>
+                        </div>
+
+                        <div class="input-item">
+                            <label for="cargo">Cargo Exercido</label>
+                            <i class="fa fa-briefcase"></i>
+                            <select id="cargo" class="input-field" disabled>
+                                <option value="outros"></option>
+                                <option value="coordenador_estadual">Coordenador Estadual</option>
+                                <option value="coordenador_municipal">Coordenador Municipal</option>
+                            </select>
+                        </div>
+
+                        <div class="input-item">
+                            <label for="estado">Estado em que atua</label>
+                            <i class="fa fa-map-marker-alt"></i>
+                            <select id="estado" class="input-field" disabled>
+                                <option value="outros"></option>
+                                <option value="1">Acre</option>
+                                <option value="2">Amapá</option>
+                                <option value="3">Amazonas</option>
+                                <option value="4">Pará</option>
+                                <option value="5">Rondônia</option>
+                                <option value="6">Roraima</option>
+                                <option value="7">Tocantins</option>
+                            </select>
+                        </div>
+                        <div id="input_item_municipio" class="input-item" style="display: none;">
+                            <label for="municipio">Município em que atua</label>
+                            <i class="fa fa-map-marker-alt"></i> <!-- Ícone para municipio -->
+                            <select id="municipio" class="input-field" disabled>
+                            </select>
+                        </div>
+                        <div class="input-item">
+                            <label for="nascimento">Data de Nascimento</label>
+                            <i class="fa fa-map-marker-alt"></i>
+                            <input type="date" id="nascimento" class="input-field" disabled>
+                        </div>
+                        <div class="input-item">
+                            <label for="genero">Gênero</label>
+                            <i class="fa fa-map-marker-alt"></i>
+                            <select id="genero" name="genero" class="input-field" disabled>
+                                <option value="">Selecione</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                                <option value="outro">Outro</option>
+                                <option value="nao_informar">Prefiro não informar</option>
+                            </select>
+                        </div>
+                        <div class="input-item">
+                            <label for="senha">Senha</label>
+                            <i class="fa fa-lock"></i>
+                            <input type="password" id="senha" class="input-field" disabled>
+                        </div>
+                    </div>
+                    <div class="botoes-acoes">
+                        <button class="btn-descartar" id="btn-descartar" onclick="descartarEdicao()"
+                            style="display: none;">
+                            <i class="fas fa-times"></i> Descartar
+                        </button>
+                        <button class="btn-editar" id="btn-editar" onclick="editarInformacoes()">
+                            <i class="fas fa-pen"></i> Editar Informações
+                        </button>
+
+                        <button class="btn-salvar" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
+                            <i class="fas fa-save"></i> Salvar Informações
+                        </button>
+                    </div>
+                    <button class="delete-btn" onclick="excluirConta()">Excluir Conta</button>
                 </div>
             </div>
 
-        </div>
-
-        <div class="dash-perfil" id="dash_perfil">
-            <div class="div_animacao">
-                <h1 id="title_hello">Seu perfil</h1>
-            </div>
-            <div class="perfil-container">
-                <h2 class="subtitulo">Dados Pessoais</h2>
-
-                <div class="input-group">
-                    <div class="input-item">
-                        <label for="nome">Nome Completo</label>
-                        <i class="fa fa-user"></i>
-                        <input type="text" id="nome" class="input-field" disabled>
-                    </div>
-
-                    <div class="input-item">
-                        <label for="email">E-mail</label>
-                        <i class="fa fa-envelope"></i>
-                        <input type="email" id="email" class="input-field" disabled>
-                    </div>
-
-                    <div class="input-item">
-                        <label for="cpf">CPF</label>
-                        <i class="fa fa-id-card"></i>
-                        <input type="text" maxlength="11" id="cpf" class="input-field" disabled>
-                    </div>
-
-                    <div class="input-item">
-                        <label for="cargo">Cargo Exercido</label>
-                        <i class="fa fa-briefcase"></i>
-                        <select id="cargo" class="input-field" disabled>
-                            <option value="outros"></option>
-                            <option value="coordenador_estadual">Coordenador Estadual</option>
-                            <option value="coordenador_municipal">Coordenador Municipal</option>
-                        </select>
-                    </div>
-
-                    <div class="input-item">
-                        <label for="estado">Estado em que atua</label>
-                        <i class="fa fa-map-marker-alt"></i>
-                        <select id="estado" class="input-field" disabled>
-                            <option value="outros"></option>
-                            <option value="1">Acre</option>
-                            <option value="2">Amapá</option>
-                            <option value="3">Amazonas</option>
-                            <option value="4">Pará</option>
-                            <option value="5">Rondônia</option>
-                            <option value="6">Roraima</option>
-                            <option value="7">Tocantins</option>
-                        </select>
-                    </div>
-                    <div id="input_item_municipio" class="input-item" style="display: none;">
-                        <label for="municipio">Município em que atua</label>
-                        <i class="fa fa-map-marker-alt"></i> <!-- Ícone para municipio -->
-                        <select id="municipio" class="input-field" disabled>
-                        </select>
-                    </div>
-                    <div class="input-item">
-                        <label for="nascimento">Data de Nascimento</label>
-                        <i class="fa fa-map-marker-alt"></i>
-                        <input type="date" id="nascimento" class="input-field" disabled>
-                    </div>
-                    <div class="input-item">
-                        <label for="genero">Gênero</label>
-                        <i class="fa fa-map-marker-alt"></i>
-                        <select id="genero" name="genero" class="input-field" disabled>
-                            <option value="">Selecione</option>
-                            <option value="masculino">Masculino</option>
-                            <option value="feminino">Feminino</option>
-                            <option value="outro">Outro</option>
-                            <option value="nao_informar">Prefiro não informar</option>
-                        </select>
-                    </div>
-                    <div class="input-item">
-                        <label for="senha">Senha</label>
-                        <i class="fa fa-lock"></i>
-                        <input type="password" id="senha" class="input-field" disabled>
-                    </div>
-                </div>
-                <div class="botoes-acoes">
-                    <button class="btn-descartar" id="btn-descartar" onclick="descartarEdicao()" style="display: none;">
-                        <i class="fas fa-times"></i> Descartar
-                    </button>
-                    <button class="btn-editar" id="btn-editar" onclick="editarInformacoes()">
-                        <i class="fas fa-pen"></i> Editar Informações
-                    </button>
-
-                    <button class="btn-salvar" id="btn-salvar" onclick="salvarInformacoes()" style="display: none;">
-                        <i class="fas fa-save"></i> Salvar Informações
-                    </button>
-                </div>
-                <button class="delete-btn" onclick="excluirConta()">Excluir Conta</button>
-            </div>
-        </div>
-
-        <div id="modal-confirm" class="modal-overlay hidden">
-            <div class="modal-box">
-                <h2>Tem certeza que deseja excluir sua conta?</h2>
-                <p>Você não irá mais ter acessos à nossa plataforma e aos dados aqui inclusos</p>
-                <div class="modal-buttons">
-                    <button id="cancel-delete" class="btn cancelar">Cancelar</button>
-                    <button id="confirm-delete" class="btn confirmar">Excluir Conta</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="dash-config" id="dash_config">
-            <div class="titulo-config">
-                <h1>Configurações</h1>
-            </div>
-
-            <div class="opcao-config-container" id="opcao_config_container">
-                <div class="opcao-config-contato" onclick="abrirContatos()">
-                    <div class="texto-config">
-                        <h1>
-                            Contato
-                        </h1>
-                        <p>
-                            Defina onde é importante você receber notificações sobre alertas e avisos
-                        </p>
-                    </div>
-                    <div class="config-seta-imagem">
-                        <img src="assets/icon/caret-right-light.png">
-                    </div>
-                </div>
-                <div class="opcao-config-parametro" onclick="abrirParametros()">
-                    <div class="texto-config">
-                        <h1>
-                            Parâmetros
-                        </h1>
-                        <p>
-                            Defina os parâmetros e métricas que façam sentido com sua realidade
-                        </p>
-                    </div>
-                    <div class="config-seta-imagem">
-                        <img src="assets/icon/caret-right-light.png">
+            <div id="modal-confirm" class="modal-overlay hidden">
+                <div class="modal-box">
+                    <h2>Tem certeza que deseja excluir sua conta?</h2>
+                    <p>Você não irá mais ter acessos à nossa plataforma e aos dados aqui inclusos</p>
+                    <div class="modal-buttons">
+                        <button id="cancel-delete" class="btn cancelar">Cancelar</button>
+                        <button id="confirm-delete" class="btn confirmar">Excluir Conta</button>
                     </div>
                 </div>
             </div>
 
+            <div class="dash-config" id="dash_config">
+                <div class="titulo-config">
+                    <h1>Configurações</h1>
+                </div>
 
-            <div class="dash-contato-container" id="dash_contato_container">
-                <h1 class="titulo-contato">
-                    Contatos
-                </h1>
+                <div class="opcao-config-container" id="opcao_config_container">
+                    <div class="opcao-config-contato" onclick="abrirContatos()">
+                        <div class="texto-config">
+                            <h1>
+                                Contato
+                            </h1>
+                            <p>
+                                Defina onde é importante você receber notificações sobre alertas e avisos
+                            </p>
+                        </div>
+                        <div class="config-seta-imagem">
+                            <img src="assets/icon/caret-right-light.png">
+                        </div>
+                    </div>
+                    <div class="opcao-config-parametro" onclick="abrirParametros()">
+                        <div class="texto-config">
+                            <h1>
+                                Parâmetros
+                            </h1>
+                            <p>
+                                Defina os parâmetros e métricas que façam sentido com sua realidade
+                            </p>
+                        </div>
+                        <div class="config-seta-imagem">
+                            <img src="assets/icon/caret-right-light.png">
+                        </div>
+                    </div>
+                </div>
 
-                <div id="card_contatos"></div>
-                <!-- <div class="contato-container">
+
+                <div class="dash-contato-container" id="dash_contato_container">
+                    <h1 class="titulo-contato">
+                        Contatos
+                    </h1>
+
+                    <div id="card_contatos"></div>
+                    <!-- <div class="contato-container">
                     <div class="contato-container-cima">
                         <h1 class="nome-contato" id="nome_contato">
                             Contato 1
@@ -302,21 +312,21 @@
                         </button>
                     </div>
                 </div> -->
-                
-                <div class="adicionar-contato">
-                    <div id="adicionar_contato" onclick="adicionarCardVazio()">
-                        <img src="assets/icon/plus-circle-thin.png">
+
+                    <div class="adicionar-contato">
+                        <div id="adicionar_contato" onclick="adicionarCardVazio()">
+                            <img src="assets/icon/plus-circle-thin.png">
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="dash-parametro-container" id="dash_parametro_container">
-                <h1 class="titulo-parametro">
-                    Parâmetros
-                </h1>
+                <div class="dash-parametro-container" id="dash_parametro_container">
+                    <h1 class="titulo-parametro">
+                        Parâmetros
+                    </h1>
 
-                <div id="card_parametro_medicamento"></div>
-                <!-- <div class="parametro-container" id="parametro-medicamento">
+                    <div id="card_parametro_medicamento"></div>
+                    <!-- <div class="parametro-container" id="parametro-medicamento">
                     <div class="parametro-container-cima">
                         <h1 class="nome-parametro">
                         Medicamentos
@@ -355,8 +365,8 @@
                     </div>
                 </div> -->
 
-                <div id="card_parametro_grafico"></div>
-                <!-- <div class="parametro-container" id="parametro-grafico">
+                    <div id="card_parametro_grafico"></div>
+                    <!-- <div class="parametro-container" id="parametro-grafico">
                     <div class="parametro-container-cima">
                         <h1 class="nome-parametro">
                         Gráfico - remédios comprados por pessoas com asma por municipio
@@ -388,32 +398,33 @@
                     </div>
                 </div> -->
 
-                <div id="mensagem-parametro-inexistente"></div>
+                    <div id="mensagem-parametro-inexistente"></div>
 
-                <div id="modal_parametro" class="modal-overlay hidden">
-                    <div class="modal-box">
-                        <h2>Qual parâmetro você gostaria de adicionar?</h2>
-                        <select id="select_parametro" class="select-parametro">
-                            <option value="medicamento">Medicamento</option>
-                            <option value="grafico">Gráfico</option>
-                        </select>
-                        <div class="modal-buttons">
-                            <button id="cancel_add_parametro" class="btn-cancelar-parametro">Cancelar</button>
-                            <button id="confirm_add_parametro" class="btn-confirmar-parametro">Adicionar Parâmetro</button>
+                    <div id="modal_parametro" class="modal-overlay hidden">
+                        <div class="modal-box">
+                            <h2>Qual parâmetro você gostaria de adicionar?</h2>
+                            <select id="select_parametro" class="select-parametro">
+                                <option value="medicamento">Medicamento</option>
+                                <option value="grafico">Gráfico</option>
+                            </select>
+                            <div class="modal-buttons">
+                                <button id="cancel_add_parametro" class="btn-cancelar-parametro">Cancelar</button>
+                                <button id="confirm_add_parametro" class="btn-confirmar-parametro">Adicionar
+                                    Parâmetro</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="adicionar-contato">
+                        <div id="adicionar_contato" onclick="criarModalParametro()">
+                            <img src="assets/icon/plus-circle-thin.png">
                         </div>
                     </div>
                 </div>
-
-                <div class="adicionar-contato">
-                    <div id="adicionar_contato" onclick="criarModalParametro()">
-                        <img src="assets/icon/plus-circle-thin.png">
-                    </div>
-                </div>
             </div>
-        </div>
 
-    </div>
-</body>
+        </div>
+    </body>
 
 </html>
 
@@ -421,12 +432,16 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const idEstado = sessionStorage.FK_ESTADO;
+
 
         carregarKPIPeriodoAtual();
         carregarGraficoHistorico();
         carregarGraficoMunicipios();
         carregarKPIQtdPopulacao();
         carregarKPIPopulacaoAtendida();
+        carregarTopMesesEstoque();
+
 
         // KPI DE PERÍODO ATUAL
         function carregarKPIPeriodoAtual() {
@@ -446,6 +461,8 @@
                     resposta.json().then(json => {
                         console.log(json); // Verifique o conteúdo retornado
                         if (json.length > 0) {
+
+                            estadoAtual.innerHTML = `${json[0].estado_atual}`
 
                             periodoAtual.innerHTML = `${json[0].periodo_atual}`
 
@@ -467,17 +484,42 @@
 
         // GRÁFICO DE HISTÓRICO POR ESTADO
 
+        const anoSelect = document.getElementById("anoSelect");
+        if (anoSelect) {
+            carregarGraficoHistorico(idEstado); // só chama se o select existir
+            anoSelect.addEventListener("change", function () {
+                carregarGraficoHistorico(idEstado);
+            });
+        } else {
+            console.warn("Elemento #anoSelect não encontrado no DOM.");
+        }
+
         function gerarMesesIntervalo(ano, mesInicio, mesFim) {
-            const meses = [];
+            let meses = [];
             for (let m = mesInicio; m <= mesFim; m++) {
-                meses.push(`${m.toString().padStart(2, '0')}-${ano}`);
+                // Adiciona zero à esquerda no mês
+                const mesStr = m.toString().padStart(2, '0');
+                meses.push(`${mesStr}/${ano}`);
             }
             return meses;
         }
 
+        const coresFixas = [
+            'rgba(75, 192, 192, 1)',    // Verde
+            'rgba(255, 99, 132, 1)',    // Vermelho
+            'rgba(153, 102, 255, 1)',   // Roxo
+            'rgba(255, 159, 64, 1)',    // Laranja
+            'rgba(54, 162, 235, 1)',    // Azul
+            // ... mais cores se quiser
+        ];
+
         function carregarGraficoHistorico() {
             const idEstado = sessionStorage.FK_ESTADO;
             console.log("Buscando histórico para o estado:", idEstado);
+
+            const anoSelecionado = document.getElementById("anoSelect").value;
+
+            console.log(`Buscando histórico para o município ${idEstado} no ano ${anoSelecionado}`);
 
             fetch(`/estados/historico/${idEstado}`)
                 .then(res => {
@@ -486,40 +528,70 @@
                 })
                 .then(dados => {
                     // Defina o intervalo fixo de meses que quer mostrar no gráfico:
-                    const ano = 2024;
                     const mesInicio = 1;
                     const mesFim = 12;
-                    const meses = gerarMesesIntervalo(ano, mesInicio, mesFim);
+                    const meses = gerarMesesIntervalo(anoSelecionado, mesInicio, mesFim);
 
-                    const remedios = [...new Set(dados.map(item => item.remedio))];
+                    // const remedios = [...new Set(dados.map(item => item.remedio))];
 
-                    const datasets = remedios.map(remedio => ({
-                        label: remedio,
-                        data: meses.map(mes => {
-                            const registro = dados.find(d => d.mes === mes && d.remedio === remedio);
+                    // const datasets = remedios.map(remedio => ({
+                    //     label: remedio,
+                    //     data: meses.map(mes => {
+                    //         const registro = dados.find(d => d.mes === mes && d.remedio === remedio);
+                    //         return registro ? Number(registro.total_comprado) : 0;
+                    //     }),
+                    //     borderColor: gerarCorAleatoria(),
+                    //     backgroundColor: 'transparent',
+                    //     tension: 0.3,
+                    //     borderWidth: 2,
+                    //     pointRadius: 0,
+                    // }));
+
+                    // const mediaFixa = dados.length > 0 ? Number(dados[0].estimativa_asmaticos) : 0;
+
+                    // // Preenche a média com o valor fixo para todos os meses
+                    // const mediaAsmaticos = meses.map(() => mediaFixa);
+
+                    // datasets.push({
+                    //     label: 'Média pessoas com asma',
+                    //     data: mediaAsmaticos,
+                    //     borderColor: 'rgba(75, 192, 192, 1)',
+                    //     borderDash: [10, 5],
+                    //     backgroundColor: 'transparent',
+                    //     borderWidth: 2,
+                    //     pointRadius: 0,
+                    // });
+
+                    const remedios = [...new Set(dados.map(item => item.remedio.trim()))];
+
+                    const datasets = remedios.map((remedio, i) => {
+                        const nomeCurto = remedio.split(' ').slice(0, 4).join(' ');
+                        const valores = meses.map(mes => {
+                            const registro = dados.find(d => {
+                                const mesNormalizado = d.mes.replace('-', '/').trim();
+                                return mesNormalizado === mes &&
+                                    d.remedio.trim().toLowerCase() === remedio.trim().toLowerCase();
+                            });
                             return registro ? Number(registro.total_comprado) : 0;
-                        }),
-                        borderColor: gerarCorAleatoria(),
-                        backgroundColor: 'transparent',
-                        tension: 0.3,
-                        borderWidth: 2,
-                        pointRadius: 0,
-                    }));
+                        });
 
-                    const mediaFixa = dados.length > 0 ? Number(dados[0].estimativa_asmaticos) : 0;
+                        const cor = coresFixas[i % coresFixas.length];
 
-                    // Preenche a média com o valor fixo para todos os meses
-                    const mediaAsmaticos = meses.map(() => mediaFixa);
-
-                    datasets.push({
-                        label: 'Média pessoas com asma',
-                        data: mediaAsmaticos,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderDash: [10, 5],
-                        backgroundColor: 'transparent',
-                        borderWidth: 2,
-                        pointRadius: 0,
+                        return {
+                            label: nomeCurto,
+                            data: valores,
+                            backgroundColor: cor,
+                            borderColor: cor,
+                            tension: 0.3,
+                            pointRadius: 4
+                        };
+                        console.log("Remédios únicos:", remedios);
                     });
+
+                    console.log("Dados recebidos:", dados);
+
+                    console.log("Meses esperados:", meses);
+
                     const ctx = document.getElementById('graficoHistorico').getContext('2d');
 
                     // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
@@ -538,7 +610,7 @@
                             plugins: {
                                 title: {
                                     display: true,
-                                    text: 'Histórico mensal de medicamentos comprados por estado',
+                                    text: `Histórico mensal de medicamentos comprados por estado em ${anoSelecionado}`,
                                     font: { size: 14, weight: 'bold' },
                                     padding: { top: 0, bottom: 5 }
                                 },
@@ -574,14 +646,10 @@
                     console.error("Erro no fetch:", err);
                     alert("Erro ao carregar dados do gráfico");
                 });
+
         }
 
-        function gerarCorAleatoria() {
-            const r = Math.floor(Math.random() * 200);
-            const g = Math.floor(Math.random() * 200);
-            const b = Math.floor(Math.random() * 200);
-            return `rgba(${r}, ${g}, ${b}, 1)`;
-        }
+        document.getElementById("anoSelect").addEventListener("change", carregarGraficoHistorico);
 
         // GRÁFICO DE MUNICÍPIOS COM POPULAÇÃO QUE RECEBE MENOS DE 50% DOS MEDICAMENTOS
 
@@ -742,7 +810,7 @@
                         console.log(json); // Verifique o conteúdo retornado
                         if (json.length > 0) {
 
-                            var porcentagem = (json[0].periodo_atual / (json[0].estimativa_asmaticos)) * 100
+                            var porcentagem = (json[0].periodo_atual / (json[0].estimativa_asmaticos * 30 )) * 100
 
                             PorcPopulacaoAtendida.innerHTML = `${porcentagem.toFixed(2)}%`
 
@@ -762,7 +830,51 @@
             });
         }
 
+        // KPI DE MESES COM MAIS CONSUMO
 
+        function carregarTopMesesEstoque() {
+            const idEstado = sessionStorage.FK_ESTADO;
+
+            fetch(`/estados/topMesesEstoque/${idEstado}`)
+                .then(res => {
+                    if (res.status === 200) {
+                        return res.json();
+                    } else if (res.status === 204) {
+                        throw new Error("Nenhum dado encontrado.");
+                    } else {
+                        throw new Error(`Erro inesperado: ${res.status}`);
+                    }
+                })
+                .then(dados => {
+                    if (dados.length === 0) throw new Error("Nenhum dado para exibir");
+
+                    const mesesENtoPT = {
+                        "January": "Janeiro",
+                        "February": "Fevereiro",
+                        "March": "Março",
+                        "April": "Abril",
+                        "May": "Maio",
+                        "June": "Junho",
+                        "July": "Julho",
+                        "August": "Agosto",
+                        "September": "Setembro",
+                        "October": "Outubro",
+                        "November": "Novembro",
+                        "December": "Dezembro"
+                    };
+
+                    const listaMeses = dados
+                        .map(item => mesesENtoPT[item.mes] || item.mes)
+                        .join("<br>");
+
+                    document.getElementById("MesesMaisConsumo").innerHTML = listaMeses;
+                })
+                .catch(err => {
+                    console.error("Erro ao carregar meses com mais consumo:", err.message);
+                    document.getElementById("MesesMaisConsumo").textContent = "Sem dados";
+                });
+
+        }
 
     });
 </script>

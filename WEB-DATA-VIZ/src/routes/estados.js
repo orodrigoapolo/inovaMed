@@ -23,4 +23,9 @@ router.get("/populacaoAtendida/:idEstado", function (req, res) {
     estadosController.populacaoAtendida(req, res);
 });
 
+router.get('/topMesesEstoque/:idEstado', function (req, res) {
+    estadosController.topMesesEstoque(req, res);
+});
+
+
 module.exports = router;
