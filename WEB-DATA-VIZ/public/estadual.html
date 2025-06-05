@@ -37,6 +37,7 @@
             </div>
         </div>
 
+
         <!-- Badge separado, aparece quando alerta está escondido -->
         <div id="alerta-badge" class="alerta-badge-esconder" title="Clique para abrir o alerta">
             <span class="badge-icone">🔔</span>
@@ -880,7 +881,21 @@
 </script>
 
 <script>
-    nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
+    
+    document.getElementById("nomeUsuario").textContent = sessionStorage.NOME_USUARIO;
+
+    // Buscar e exibir nome do estado pela fkEstado
+    fetch(`/usuarios/nomeEstado/${sessionStorage.FK_ESTADO}`)
+        .then(res => {
+            if (!res.ok) throw new Error("Erro ao buscar nome do estado.");
+            return res.json();
+        })
+        .then(data => {
+            document.getElementById("fkEstado").textContent = ` (${data.nome})`;
+        })
+        .catch(err => {
+            console.error("Erro ao buscar nome do estado:", err);
+        });
 
     nome.value = sessionStorage.NOME_USUARIO;
     email.value = sessionStorage.EMAIL_USUARIO;
