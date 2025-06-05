@@ -26,10 +26,14 @@ router.get("/buscar/:nome/:email/:cpf/:cargo/:genero", function (req, res) {
 
 router.put("/editar/:idUsuario/:email/:senha/:nome/:cpf/:cargo/:fkEstado/:dtNasc/:genero", function (req, res) {
     usuarioController.editar(req, res);
-})
+});
 
 router.post("/novoUsuario", function (req, res) {
     usuarioController.novoUsuario(req, res);
-})
+});
+
+router.get("/nomeEstado/:idEstado", function (req, res) {
+    usuarioController.buscarNomeEstado(req, res);
+});
 
 module.exports = router;

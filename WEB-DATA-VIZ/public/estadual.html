@@ -72,7 +72,7 @@
         <div class="dash-estadual" id="dash_estadual">
             <div class="header-dashboard">
                 <h1 class="titulo-dashboard">
-                    Olá, <span id="nomeUsuario"></span>!
+                    Olá, <span id="nomeUsuario"></span><span id="fkEstado"></span>
                 </h1>
                 <div class="periodo-atual">
                     <p id="titulo-periodo-atual">
@@ -768,7 +768,21 @@
 </script>
 
 <script>
-    nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
+    
+    document.getElementById("nomeUsuario").textContent = sessionStorage.NOME_USUARIO;
+
+    // Buscar e exibir nome do estado pela fkEstado
+    fetch(`/usuarios/nomeEstado/${sessionStorage.FK_ESTADO}`)
+        .then(res => {
+            if (!res.ok) throw new Error("Erro ao buscar nome do estado.");
+            return res.json();
+        })
+        .then(data => {
+            document.getElementById("fkEstado").textContent = ` (${data.nome})`;
+        })
+        .catch(err => {
+            console.error("Erro ao buscar nome do estado:", err);
+        });
 
     nome.value = sessionStorage.NOME_USUARIO;
     email.value = sessionStorage.EMAIL_USUARIO;
