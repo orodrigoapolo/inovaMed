@@ -21,10 +21,11 @@
 </head>
 
 
-<body onload="validarSessao(); listar2(),verificarAlertasMedicamentos()" >
+<body onload="validarSessao(); listar2(),verificarAlertasMedicamentos()">
 
 
     <!-- Alerta completo -->
+
 <div id="alerta-estilizado" class="alerta-esconder">
   <div class="alerta-conteudo">
     <span id="alerta-mensagem"></span>
@@ -264,7 +265,7 @@
                 </div>
             </div>
 
-            
+
             <div class="dash-contato-container" id="dash_contato_container">
                 <h1 class="titulo-contato">
                     Contatos
@@ -309,7 +310,7 @@
             </div>
 
 
-           <div class="dash-parametro-container" id="dash_parametro_container">
+            <div class="dash-parametro-container" id="dash_parametro_container">
                 <h1 class="titulo-parametro">
                     Parâmetros
                 </h1>
@@ -399,7 +400,8 @@
                         </select>
                         <div class="modal-buttons">
                             <button id="cancel_add_parametro" class="btn-cancelar-parametro">Cancelar</button>
-                            <button id="confirm_add_parametro" class="btn-confirmar-parametro">Adicionar Parâmetro</button>
+                            <button id="confirm_add_parametro" class="btn-confirmar-parametro">Adicionar
+                                Parâmetro</button>
                         </div>
                     </div>
                 </div>
@@ -410,7 +412,7 @@
                     </div>
                 </div>
             </div>
-        
+
         </div>
     </div>
     <script>
@@ -525,28 +527,28 @@
 
             // === GRÁFICO DE HISTÓRICO POR MUNICÍPIO ===
 
- function gerarMesesIntervalo(ano, mesInicio, mesFim) {
-    let meses = [];
-    for(let m = mesInicio; m <= mesFim; m++) {
-        // Adiciona zero à esquerda no mês
-        const mesStr = m.toString().padStart(2, '0');
-        meses.push(`${mesStr}/${ano}`);
-    }
-    return meses;
-}
+            function gerarMesesIntervalo(ano, mesInicio, mesFim) {
+                let meses = [];
+                for (let m = mesInicio; m <= mesFim; m++) {
+                    // Adiciona zero à esquerda no mês
+                    const mesStr = m.toString().padStart(2, '0');
+                    meses.push(`${mesStr}/${ano}`);
+                }
+                return meses;
+            }
 
             const coresFixas = [
-  'rgba(75, 192, 192, 1)',    // Verde
-  'rgba(255, 206, 86, 1)',    // Amarelo
-  'rgba(255, 99, 132, 1)',    // Vermelho
-  'rgba(153, 102, 255, 1)',   // Roxo
-  'rgba(255, 159, 64, 1)',    // Laranja
-  'rgba(54, 162, 235, 1)',    // Azul
-  // ... mais cores se quiser
-];
+                'rgba(75, 192, 192, 1)',    // Verde
+                'rgba(255, 206, 86, 1)',    // Amarelo
+                'rgba(255, 99, 132, 1)',    // Vermelho
+                'rgba(153, 102, 255, 1)',   // Roxo
+                'rgba(255, 159, 64, 1)',    // Laranja
+                'rgba(54, 162, 235, 1)',    // Azul
+                // ... mais cores se quiser
+            ];
 
 
-      function carregarGraficoHistorico(idMunicipio) {
+            function carregarGraficoHistorico(idMunicipio) {
                 const anoSelecionado = document.getElementById("anoSelect").value;
 
                 console.log(`Buscando histórico para o município ${idMunicipio} no ano ${anoSelecionado}`);
@@ -575,7 +577,7 @@
                                 data: valores,
                                 borderColor: coresFixas[i % coresFixas.length],
                                 backgroundColor: 'rgba(0, 0, 0, 1)'  // preto opaco
-, // você pode também criar um array para isso se quiser variar
+                                , // você pode também criar um array para isso se quiser variar
                                 tension: 0.3,
                                 borderWidth: 3,
                                 pointRadius: 4

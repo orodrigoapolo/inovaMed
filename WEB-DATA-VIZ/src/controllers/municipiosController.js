@@ -17,8 +17,8 @@ function listar(req, res) {
 
 function editar(req, res) {
     var idUsuario = req.params.idUsuario;
-    var email = req.params.email; 
-    var senha = req.params.senha; 
+    var email = req.params.email;
+    var senha = req.params.senha;
     var nome = req.params.nome;
     var cpf = req.params.cpf;
     var dtNasc = req.params.dtNasc;
@@ -138,21 +138,20 @@ function topMesesEstoque(req, res) {
         });
 }
 
-function tendencia(req,res)
-{
+function tendencia(req, res) {
     const idMunicipio = req.params.idMunicipio;
     municipiosModel.tendencia(idMunicipio)
-    .then (resultado => {
-        if (resultado.length > 0){
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum dado encontrado para a próxima tendência de remédios.")
-        }
-    })
-    .catch(erro =>{
-        console.error("Erro ao buscar remédios para tendÊncia:", erro.sqlMessage);
-        res.status(500).json({erro : erro.sqlMessage});
-    });
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum dado encontrado para a próxima tendência de remédios.")
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar remédios para tendÊncia:", erro.sqlMessage);
+            res.status(500).json({ erro: erro.sqlMessage });
+        });
 }
 
 
@@ -164,7 +163,7 @@ module.exports = {
     vencimentos,
     periodos,
     kpiAtendimento,
-      topMesesEstoque,
+    topMesesEstoque,
     qtdPopulacaoAsma,
     tendencia
 }
