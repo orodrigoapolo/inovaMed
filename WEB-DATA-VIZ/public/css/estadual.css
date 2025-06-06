@@ -210,6 +210,16 @@ body {
   font-size: 14px;
   line-height: 1.4;
 }
+#badge-fechar {
+    font-size: 24px;  /* aumenta o tamanho do X */
+    font-weight: bold;
+    background: transparent;
+    border: none;
+color: white;
+    cursor: pointer;
+    line-height: 1;
+    margin-left: 10px;
+}
 
 /* Texto do alerta */
 #alerta-mensagem {
@@ -247,7 +257,7 @@ body {
   height: 30px;       /* altura do retângulo */
   padding: 0 15px;    /* espaçamento interno horizontal */
   
-  background-color: #FF4D4D; /* vermelho */
+  background-color: #000000; /* vermelho */
   color: white;
   font-weight: bold;
   font-size: 16px;
@@ -272,7 +282,7 @@ body {
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #ff4d4d, #e60000);
+  background: linear-gradient(135deg, #ac4242, #b11616);
   color: white;
   font-weight: 700;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -306,6 +316,28 @@ body {
 
 .alerta-badge-esconder {
   display: none !important;
+}
+
+/* Pulsação suave para chamar atenção */
+@keyframes pulseAlert {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(230, 0, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(255, 77, 77, 0.9);
+  }
+}
+
+/* Animação fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -15px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 
@@ -371,9 +403,9 @@ body {
   align-items: center;
   padding: 2%;
   flex-direction: column;
-  width: 24vw;
+  width: 19vw;
   height: 176px;
-  border: 3px solid rgb(0, 0, 0, 0.2);
+  border: 3px solid rgb(0, 0, 0, 1);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
 }
@@ -408,9 +440,9 @@ body {
   align-items: center;
   padding: 2%;
   margin-left: 1%;
-  width: 40vw;
-  height: 47vh;
-  border: 3px solid rgb(0, 0, 0, 0.2);
+  width: 31vw;
+  height: 35vh;
+  border: 3px solid rgb(0, 0, 0, 1);
   border-radius: 10px;
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
 }
