@@ -49,19 +49,20 @@ function historico(idEstado) {
     return database.executar(instrucaoSql);
 }
 
-function municipios(idEstado) {
+function municipios(idEstado, parametro) {
     var instrucaoSql = `
         SELECT
-            SUM(E.qtdFarmaco) AS total_comprado,
             m.nome AS municipio,
-            SUM(ROUND(m.qtdPopulacao * 0.2)) AS estimativa_asmaticos
+            SUM(E.qtdFarmaco) AS total_comprado,
+            SUM(ROUND(m.qtdPopulacao * 0.2)) AS estimativa_asmaticos,
+            ROUND((SUM(E.qtdFarmaco) * 1000.0) / SUM(ROUND(m.qtdPopulacao * 0.2)), 2) AS medicamentos_por_1000_asmaticos
         FROM estoque E
         JOIN municipio m ON E.fkMunicipio = m.idMunicipio
         JOIN estado ON m.fkEstado = estado.idEstado
         WHERE E.dtEntrada IS NOT NULL
         AND estado.idEstado = ${idEstado}
         GROUP BY m.idMunicipio
-        HAVING total_comprado <= (estimativa_asmaticos * 0.5) 
+        HAVING SUM(E.qtdFarmaco) <= (SUM(ROUND(m.qtdPopulacao * 0.2)) * ${Number(parametro)})
         ORDER BY m.idMunicipio;
     `;
     console.log("Executando SQL dos municípios:\n" + instrucaoSql);
