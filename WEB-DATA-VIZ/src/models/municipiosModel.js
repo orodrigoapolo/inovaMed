@@ -116,7 +116,7 @@ function periodos(idMunicipio) {
     nomeFarmaco AS remedio,
     
     SUM(CASE 
-        WHEN YEAR(e.dtEntrada) = 2024 AND MONTH(e.dtEntrada) = 12 THEN e.qtdFarmaco
+        WHEN YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 2 THEN e.qtdFarmaco
         ELSE 0
     END) AS periodo_atual,
 
