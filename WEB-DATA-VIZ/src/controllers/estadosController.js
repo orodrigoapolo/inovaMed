@@ -40,8 +40,9 @@ function historico(req, res) {
 
 function municipios(req, res) {
     var idEstado = req.params.idEstado;
+    const parametro = Number(parseFloat(req.query.parametro));
 
-    estadosModel.municipios(idEstado)
+    estadosModel.municipios(idEstado, parametro)
         .then(function (resultado) {
             res.status(200).json(resultado);
         })

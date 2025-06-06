@@ -449,38 +449,29 @@
             const idEstado = sessionStorage.FK_ESTADO;
             console.log("Buscando período atual da base:", idEstado);
 
-            fetch(`/estados/periodoAtual/${idEstado}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            }).then(function (resposta) {
-                console.log("ESTOU NO THEN DO periodoAtual()!");
+            fetch(`/estados/periodoAtual/${idEstado}`)
+                .then(resposta => {
+                    if (resposta.status === 204) {
+                        console.warn("Nenhum dado retornado (204)");
+                        return null;
+                    }
+                    if (!resposta.ok) throw new Error("Erro ao buscar período atual");
+                    return resposta.json(); // só chama isso se houver conteúdo
+                })
+                .then(json => {
+                    if (!json) return;
 
-                if (resposta.ok) {
-                    console.log(resposta);
-                    resposta.json().then(json => {
-                        console.log(json); // Verifique o conteúdo retornado
-                        if (json.length > 0) {
+                    const estadoAtual = document.getElementById('estadoAtual');
+                    const periodoAtual = document.getElementById('periodoAtual');
 
-                            estadoAtual.innerHTML = `${json[0].estado_atual}`
-
-                            periodoAtual.innerHTML = `${json[0].periodo_atual}`
-
-                        } else {
-                            console.log("período atual não encontrada.");
-                        }
-                    });
-
-                } else {
-                    console.log("Houve um erro ao tentar realizar a busca de período atual!");
-                    resposta.text().then(texto => {
-                        console.error(texto);
-                    });
-                }
-            }).catch(function (erro) {
-                console.log(erro);
-            });
+                    if (estadoAtual && periodoAtual && json.length > 0) {
+                        estadoAtual.textContent = json[0].estado_atual;
+                        periodoAtual.textContent = json[0].periodo_atual;
+                    }
+                })
+                .catch(erro => {
+                    console.error("Erro ao buscar nome do estado:", erro);
+                });
         }
 
         // GRÁFICO DE HISTÓRICO POR ESTADO
@@ -654,103 +645,87 @@
 
         // GRÁFICO DE MUNICÍPIOS COM POPULAÇÃO QUE RECEBE MENOS DE 50% DOS MEDICAMENTOS
 
-        function carregarGraficoMunicipios() {
+        async function carregarGraficoMunicipios() {
             const idEstado = sessionStorage.FK_ESTADO;
+            var idUsuario = sessionStorage.ID_USUARIO;
             console.log("Buscando municipios para o estado:", idEstado);
 
-            fetch(`/estados/municipios/${idEstado}`)
-                .then(res => {
-                    if (!res.ok) throw new Error(`Erro na resposta: ${res.status} ${res.statusText}`);
-                    return res.json();
-                })
-                .then(dados => {
+            try {
+                // Primeiro fetch: busca os parâmetros
+                const resParametro = await fetch(`/parametros/exibirParametroGrafico/${idUsuario}`);
+                let parametro = null;
 
-                    const municipios = [...new Set(dados.map(item => item.municipio))];
-                    const total_comprado = [...new Set(dados.map(item => item.total_comprado))];
-                    const estimativa_asmaticos = [...new Set(dados.map(item => item.estimativa_asmaticos))];
-
-                    const data = {
-                        labels: municipios,
-                        datasets: [
-                            {
-                                label: 'Total de Medicamentos Comprados',
-                                data: total_comprado,
-                                backgroundColor: 'rgba(54, 162, 235, 0.7)'
-                            },
-                            {
-                                label: 'Estimativa de Pessoas com Asma',
-                                data: estimativa_asmaticos,
-                                backgroundColor: 'rgba(255, 99, 132, 0.7)'
-                            }
-                        ]
-                    };
-
-                    const ctxMunicipios = document.getElementById('graficoMunicipios').getContext('2d');
-
-                    // PROTEÇÃO PARA DESTRUIR O GRÁFICO APENAS SE EXISTIR
-                    if (window.graficoMunicipios && typeof window.graficoMunicipios.destroy === 'function') {
-                        window.graficoMunicipios.destroy();
+                if (resParametro.status !== 204) {
+                    if (!resParametro.ok) throw new Error("Erro na resposta do servidor de parâmetros");
+                    const text = await resParametro.text();
+                    if (text) {
+                        const param = JSON.parse(text);
+                        console.log("Parâmetros gráfico existentes:", param);
+                        parametro = Number(Number(param[0].min) / 100); // Aqui está o parâmetro que você quer usar
+                    } else {
+                        console.log("Nenhum parâmetro gráfico encontrado");
                     }
+                }
 
-                    window.graficoMunicipios = new Chart(ctxMunicipios, {
-                        type: 'bar',
-                        data: data,
-                        options: {
-                            responsive: true,
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Municípios com população que recebe menos de 50% de medicamentos suficientes',
-                                    font: {
-                                        size: 14,
-                                        weight: 'bold'
-                                    },
-                                    padding: {
-                                        top: 0,
-                                        bottom: 5
-                                    }
-                                },
-                                legend: {
-                                    position: 'top',
-                                    labels: {
-                                        boxWidth: 15,
-                                        padding: 5
-                                    }
-                                }
+                // Segundo fetch: passa o parâmetro como query string (exemplo)
+                const resMunicipios = await fetch(`/estados/municipios/${idEstado}?parametro=${parametro}`);
+                if (!resMunicipios.ok) throw new Error(`Erro na resposta: ${resMunicipios.status} ${resMunicipios.statusText}`);
+
+                const dados = await resMunicipios.json();
+
+                const municipios = [...new Set(dados.map(item => item.municipio))];
+                const medicamentos_por_1000_asmaticos = [...new Set(dados.map(item => item.medicamentos_por_1000_asmaticos))];
+
+                const data = {
+                    labels: municipios,
+                    datasets: [
+                        {
+                            label: 'Medicamentos por 1000 pessoas',
+                            data: medicamentos_por_1000_asmaticos,
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                        }
+                    ]
+                };
+
+                const ctxMunicipios = document.getElementById('graficoMunicipios').getContext('2d');
+
+                if (window.graficoMunicipios && typeof window.graficoMunicipios.destroy === 'function') {
+                    window.graficoMunicipios.destroy();
+                }
+
+                window.graficoMunicipios = new Chart(ctxMunicipios, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: `Municípios com população que recebe menos de ${parametro * 100}% de medicamentos suficientes`,
+                                font: { size: 14, weight: 'bold' },
+                                padding: { top: 0, bottom: 5 }
                             },
-                            scales: {
-                                y: {
-                                    type: 'logarithmic',
-                                    title: {
-                                        display: true,
-                                        text: 'Quantidade',
-                                        font: { weight: 'bold', size: 12 }
-                                    },
-                                    beginAtZero: true,
-                                    ticks: {
-                                        callback: function (value) {
-                                            return value.toLocaleString();
-                                        }
-                                    }
-                                },
-                                x: {
-                                    title: {
-                                        display: false,
-                                        text: 'Municípios',
-                                        font: { weight: 'bold', size: 12 }
-                                    },
-                                    ticks: {
-                                        font: { size: 10 }
-                                    }
-                                }
+                            legend: {
+                                position: 'top',
+                                labels: { boxWidth: 15, padding: 5 }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                title: { display: true, text: 'Quantidade', font: { weight: 'bold', size: 12 } },
+                                beginAtZero: true,
+                                ticks: { callback: value => value.toLocaleString() }
+                            },
+                            x: {
+                                ticks: { font: { size: 10 } }
                             }
                         }
-                    });
-                })
-                .catch(err => {
-                    console.error("Erro no fetch:", err);
-                    alert("Erro ao carregar dados do gráfico");
+                    }
                 });
+            } catch (erro) {
+                console.error("Erro ao carregar gráfico:", erro);
+                alert("Erro ao carregar dados do gráfico");
+            }
         }
 
         // KPI DE QUANTIDADE DE PESSOAS QUE SOFREM COM ASMA
@@ -811,7 +786,7 @@
                         console.log(json); // Verifique o conteúdo retornado
                         if (json.length > 0) {
 
-                            var porcentagem = (json[0].periodo_atual / (json[0].estimativa_asmaticos * 30 )) * 100
+                            var porcentagem = (json[0].periodo_atual / (json[0].estimativa_asmaticos * 30)) * 100
 
                             PorcPopulacaoAtendida.innerHTML = `${porcentagem.toFixed(2)}%`
 
@@ -881,7 +856,7 @@
 </script>
 
 <script>
-    
+
     document.getElementById("nomeUsuario").textContent = sessionStorage.NOME_USUARIO;
 
     // Buscar e exibir nome do estado pela fkEstado
@@ -955,4 +930,5 @@
     var dataFormatada = `${ano}-${mes}-${dia}`;
 
     nascimento.value = dataFormatada;
+
 </script>

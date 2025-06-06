@@ -415,6 +415,10 @@ body {
   box-shadow: 0px 5px 4px rgb(0, 0, 0, 0.2);
 }
 
+#anoSelect {
+  background-color: #D9D9D9;
+}
+
 .grafico-container canvas {
   width: 31vw;
   height: 35vh;
