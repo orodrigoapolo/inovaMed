@@ -10,7 +10,7 @@ SQL_IMAGE="rodrigoapolo/imagem-sql:1.0"
 IBGE_IMAGE="rodrigoapolo/imagem-javaibge:1.0"
 SUS_IMAGE="rodrigoapolo/imagem-javasus:1.0"
 DB_PASSWORD="urubu100"
-BUCKET_NAME="inovamed-s3"
+BUCKET_NAME="inovamed-sprint3"
 REPO_URL="https://github.com/orodrigoapolo/inovaMed.git"
 WORKSPACE_DIR="$HOME/docker-compose"
 REPO_DIR="$HOME/inovaMed"
@@ -143,6 +143,7 @@ create_docker_compose() {
   cd "$WORKSPACE_DIR"
   log_message "Criando docker-compose.yml"
   cat > docker-compose.yml << EOL
+
 version: '3.8'
 
 services:
@@ -185,6 +186,18 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    command: >
+      bash -c "
+        echo 'Aguardando banco de dados estar completamente pronto...'
+        until timeout 1 bash -c '</dev/tcp/db/3306'; do
+          echo 'Aguardando conexão com o banco...'
+          sleep 2
+        done
+        echo 'Conexão estabelecida! Aguardando criação das tabelas...'
+        sleep 20
+        echo 'Iniciando aplicação Java IBGE...'
+        java -jar /app/app.jar
+      "
 
   java-sus:
     image: ${SUS_IMAGE}
@@ -196,6 +209,18 @@ services:
         condition: service_healthy
     networks:
       - app-network
+    command: >
+      bash -c "
+        echo 'Aguardando banco de dados estar completamente pronto...'
+        until timeout 1 bash -c '</dev/tcp/db/3306'; do
+          echo 'Aguardando conexão com o banco...'
+          sleep 2
+        done
+        echo 'Conexão estabelecida! Aguardando criação das tabelas...'
+        sleep 20
+        echo 'Iniciando aplicação Java SUS...'
+        java -jar /app/app.jar
+      "
 
 volumes:
   mysql_data:
@@ -203,7 +228,6 @@ volumes:
 networks:
   app-network:
     driver: bridge
-
 
 EOL
   check_success "Criação do arquivo docker-compose.yml"
