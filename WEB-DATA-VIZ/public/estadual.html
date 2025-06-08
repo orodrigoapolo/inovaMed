@@ -789,6 +789,9 @@
                         if (json.length > 0) {
 
                             var porcentagem = (json[0].periodo_atual / (json[0].estimativa_asmaticos * 30)) * 100
+                            console.log(json[0].periodo_atual)
+                            console.log(json[0].estimativa_asmaticos * 30)
+                            console.log("porcentagem final: "+porcentagem)
 
                             PorcPopulacaoAtendida.innerHTML = `${porcentagem.toFixed(2)}%`
 

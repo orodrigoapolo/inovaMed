@@ -10,7 +10,7 @@ import java.net.http.HttpResponse;
 
 public class Slack {
     private static HttpClient client = HttpClient.newHttpClient();
-    private static final String URL = "https://hooks.slack.com/services/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";
+    private static final String URL = "https://hooks.slack.com/services/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";
 
     public static void enviarMensagem(JSONObject content) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(
