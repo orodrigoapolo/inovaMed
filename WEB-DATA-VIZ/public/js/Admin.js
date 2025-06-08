@@ -74,12 +74,12 @@ function listar() {
                                     <i class="fa fa-map-marker-alt"></i>
                                     <select id="estado${i}" class="input-field" disabled>
                                         <option value="outros" ${json[i].fkEstado === "" ? "selected" : ""}></option>
-                                        <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Acre</option>
-                                        <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Amapá</option>
+                                        <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Rondônia</option>
+                                        <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Acre</option>
                                         <option value="3" ${json[i].fkEstado === 3 ? "selected" : ""}>Amazonas</option>
-                                        <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Pará</option>
-                                        <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Rondônia</option>
-                                        <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Roraima</option>
+                                        <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Roraima</option>
+                                        <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Pará</option>
+                                        <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Amapá</option>
                                         <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                     </select>
                                 </div>
@@ -274,12 +274,12 @@ function buscar(nome, email, cpf, cargo, genero) {
                                     <i class="fa fa-map-marker-alt"></i>
                                     <select id="estado${i}" class="input-field" disabled>
                                         <option value="outros" ${json[i].fkEstado === "" ? "selected" : ""}></option>
-                                        <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Acre</option>
-                                        <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Amapá</option>
+                                        <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Rondônia</option>
+                                        <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Acre</option>
                                         <option value="3" ${json[i].fkEstado === 3 ? "selected" : ""}>Amazonas</option>
-                                        <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Pará</option>
-                                        <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Rondônia</option>
-                                        <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Roraima</option>
+                                        <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Roraima</option>
+                                        <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Pará</option>
+                                        <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Amapá</option>
                                         <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                     </select>
                                 </div>
@@ -571,12 +571,12 @@ function criarCardVazio() {
                         <i class="fa fa-map-marker-alt"></i>
                         <select id="estado" oninput="listarMunicipios()" class="input-field" disabled>
                             <option value="outros"></option>
-                            <option value="1">Acre</option>
-                            <option value="2">Amapá</option>
+                            <option value="1">Rondônia</option>
+                            <option value="2">Acre</option>
                             <option value="3">Amazonas</option>
-                            <option value="4">Pará</option>
-                            <option value="5">Rondônia</option>
-                            <option value="6">Roraima</option>
+                            <option value="4">Roraima</option>
+                            <option value="5">Pará </option>
+                            <option value="6">Amapá</option>
                             <option value="7">Tocantins</option>
                         </select>
                     </div>

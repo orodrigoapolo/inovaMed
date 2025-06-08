@@ -93,12 +93,12 @@
                                 <i class="fa fa-map-marker-alt"></i> <!-- Ícone para estado -->
                                 <select id="estado" class="input-field" onclick="listar()">
                                     <option value="outros">Selecione seu estado</option>
-                                    <option value="1">Acre</option>
-                                    <option value="2">Amapá</option>
+                                    <option value="1">Rondônia</option>
+                                    <option value="2">Acre</option>
                                     <option value="3">Amazonas</option>
-                                    <option value="4">Pará</option>
-                                    <option value="5">Rondônia</option>
-                                    <option value="6">Roraima</option>
+                                    <option value="4">Roraima</option>
+                                    <option value="5">Pará </option>
+                                    <option value="6">Amapá</option>
                                     <option value="7">Tocantins</option>
                                 </select>
                             </div>
@@ -439,7 +439,7 @@
                         console.log(json); // Verifique o conteúdo retornado
                         if (json.length > 0) {
                             console.log("Número de usuários:", json.length);
-                            
+
                             municipio.innerHTML = "";
 
                             for (let i = 0; i < json.length; i++) {
