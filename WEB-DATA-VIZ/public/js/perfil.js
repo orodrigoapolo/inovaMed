@@ -64,13 +64,13 @@ function listar() {
                         <i class="fa fa-map-marker-alt"></i>
                         <select id="estado${i}" value="${json[i].estado}" class="input-field" disabled>
                             <option value="outros"></option>
-                            <option value="acre">Acre</option>
-                            <option value="amazonas">Amazonas</option>
-                            <option value="roraima">Roraima</option>
-                            <option value="rondonia">Rondônia</option>
-                            <option value="pará">Pará</option>
-                            <option value="amapá">Amapá</option>
-                            <option value="tocantins">Tocantins</option>
+                            <option value="1">Rondônia</option>
+                            <option value="2">Acre</option>
+                            <option value="3">Amazonas</option>
+                            <option value="4">Roraima</option>
+                            <option value="5">Pará </option>
+                            <option value="6">Amapá</option>
+                            <option value="7">Tocantins</option>
                         </select>
                     </div>
                     <div class="input-item">
