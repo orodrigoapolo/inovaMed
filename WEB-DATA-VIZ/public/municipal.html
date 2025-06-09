@@ -26,21 +26,21 @@
 
     <!-- Alerta completo -->
 
-<div id="alerta-estilizado" class="alerta-esconder">
-  <div class="alerta-conteudo">
-    <span id="alerta-mensagem"></span>
-    <button id="alerta-fechar">&times;</button>
-  </div>
-</div>
+    <div id="alerta-estilizado" class="alerta-esconder">
+        <div class="alerta-conteudo">
+            <span id="alerta-mensagem"></span>
+            <button id="alerta-fechar">&times;</button>
+        </div>
+    </div>
 
-<!-- Badge separado, aparece quando alerta está escondido -->
-<div id="alerta-badge" class="alerta-badge-esconder" title="Clique para abrir o alerta">    
-  <span class="badge-icone">🔔</span>
-  <span class="badge-texto">
-    Alerta: Seus parâmetros de medicamento foram atingidos! Verifique seu estoque.
-  </span>
-  <button id="badge-fechar" title="Fechar alerta">×</button>
-</div>
+    <!-- Badge separado, aparece quando alerta está escondido -->
+    <div id="alerta-badge" class="alerta-badge-esconder" title="Clique para abrir o alerta">
+        <span class="badge-icone">🔔</span>
+        <span class="badge-texto">
+            Alerta: Seus parâmetros de medicamento foram atingidos! Verifique seu estoque.
+        </span>
+        <button id="badge-fechar" title="Fechar alerta">×</button>
+    </div>
 
     <div class="janela">
 
@@ -68,21 +68,21 @@
         </div>
 
         <div class="dash-municipal" id="dash_municipal">
-           <div class="header-dashboard">
-                    <h1 class="titulo-dashboard">
-                        Olá, <span id="nomeUsuario"></span>!
-                    </h1>
-                    <div class="periodo-atual">
-                        <p id="titulo-periodo-atual">
-                            Estado atual:
-                        </p>
-                        <p id="estadoAtual"></p>
-                        <p> | </p>
-                        <p id="titulo-periodo-atual">
-                            Período atual:
-                        </p>
-                        <p id="periodoAtual"></p>
-                    </div>
+            <div class="header-dashboard">
+                <h1 class="titulo-dashboard">
+                    Olá, <span id="nomeUsuario"></span>!
+                </h1>
+                <div class="periodo-atual">
+                    <p id="titulo-periodo-atual">
+                        Estado atual:
+                    </p>
+                    <p id="estadoAtual"></p>
+                    <p> | </p>
+                    <p id="titulo-periodo-atual">
+                        Período atual:
+                    </p>
+                    <p id="periodoAtual"></p>
+                </div>
             </div>
             <div class="conteudo-dashboard-municipal">
                 <div class="grupo-kpi">
@@ -123,7 +123,12 @@
                     </div>
                     <div class="grafico-container">
                         <canvas id="graficoVencimento"></canvas>
+                        <!-- <span class="ajuda-tooltip" onclick="mostrarAjudaGrafico()">ℹ️</span>
+    <div id="ajudaMensagem" class="ajuda-box escondido">
+        Este gráfico mostra a estimativa de dias até que o estoque de cada lote se esgote, com base no consumo médio. -->
+
                     </div>
+
                 </div>
             </div>
 
@@ -636,88 +641,88 @@
 
 
             function carregarGraficoVencimento(idMunicipio) {
-    fetch(`/municipios/vencimentos/${idMunicipio}`)
-        .then(res => {
-            if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
-            return res.json();
-        })
-        .then(dados => {
-            const labels = dados.map(item => `Lote ${item.nome_lote} (venc: ${item.vencimento})`);
-            const diasEstoque = dados.map(item => item.dias_estoque_total);
+                fetch(`/municipios/vencimentos/${idMunicipio}`)
+                    .then(res => {
+                        if (!res.ok) throw new Error(`Erro na resposta: ${res.statusText}`);
+                        return res.json();
+                    })
+                    .then(dados => {
+                        const labels = dados.map(item => `Lote ${item.nome_lote} (venc: ${item.vencimento})`);
+                        const diasEstoque = dados.map(item => item.dias_estoque_total);
 
-            const ctx = document.getElementById('graficoVencimento').getContext('2d');
+                        const ctx = document.getElementById('graficoVencimento').getContext('2d');
 
-            if (window.graficoVencimento && typeof window.graficoVencimento.destroy === 'function') {
-                window.graficoVencimento.destroy();
+                        if (window.graficoVencimento && typeof window.graficoVencimento.destroy === 'function') {
+                            window.graficoVencimento.destroy();
+                        }
+
+                        window.graficoVencimento = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Dias de Estoque Estimado',
+                                    data: diasEstoque,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                indexAxis: 'y',
+                                responsive: true,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: 'Dias de Estoque por Lote (baseado na quantidade e consumo estimado)',
+                                        font: {
+                                            size: 18,
+                                            weight: 'bold'
+                                        }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function (context) {
+                                                const valor = context.raw;
+                                                return ` ${valor} dias de estoque`;
+                                            }
+                                        }
+                                    },
+                                    legend: {
+                                        display: false
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        title: {
+                                            display: true,
+                                            text: 'Dias de Estoque até o consumo total estimado',
+                                            font: {
+                                                size: 14,
+                                                weight: 'bold'
+                                            }
+                                        }
+                                    },
+                                    y: {
+                                        title: {
+                                            display: true,
+                                            text: 'Lotes ',
+                                            font: {
+                                                size: 14,
+                                                weight: 'bold'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                    })
+                    .catch(err => {
+                        console.error("Erro ao carregar vencimentos:", err);
+                        alert("Erro ao carregar gráfico de vencimentos.");
+                    });
             }
-
-window.graficoVencimento = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'Dias de Estoque Estimado',
-            data: diasEstoque,
-            backgroundColor: 'rgba(54, 162, 235, 0.7)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        indexAxis: 'y',
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Dias de Estoque por Lote (baseado na quantidade e consumo estimado)',
-                font: {
-                    size: 18,
-                    weight: 'bold'
-                }
-            },
-            tooltip: {
-                callbacks: {
-                    label: function (context) {
-                        const valor = context.raw;
-                        return ` ${valor} dias de estoque`;
-                    }
-                }
-            },
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-text: 'Dias de Estoque até o consumo total estimado',
-                    font: {
-                        size: 14,
-                        weight: 'bold'
-                    }
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Lotes ',
-                    font: {
-                        size: 14,
-                        weight: 'bold'
-                    }
-                }
-            }
-        }
-    }
-});
-
-        })
-        .catch(err => {
-            console.error("Erro ao carregar vencimentos:", err);
-            alert("Erro ao carregar gráfico de vencimentos.");
-        });
-}
         });
         function carregarGraficoTendencia(idMunicipio) {
             fetch(`/municipios/tendencia/${idMunicipio}`)
@@ -857,52 +862,52 @@ text: 'Dias de Estoque até o consumo total estimado',
                     });
             }
 
-    function carregarTopMesesEstoque(idMunicipio) {
-        fetch(`/municipios/topMesesEstoque/${idMunicipio}`)
-            .then(res => {
-                if (res.status === 200) {
-                    return res.json();
-                } else if (res.status === 204) {
-                    throw new Error("Nenhum dado encontrado.");
-                } else {
-                    throw new Error(`Erro inesperado: ${res.status}`);
-                }
-            })
-            .then(dados => {
-                if (dados.length === 0) throw new Error("Nenhum dado para exibir");
-
-                const mesesENtoPT = {
-                    "January": "Janeiro",
-                    "February": "Fevereiro",
-                    "March": "Março",
-                    "April": "Abril",
-                    "May": "Maio",
-                    "June": "Junho",
-                    "July": "Julho",
-                    "August": "Agosto",
-                    "September": "Setembro",
-                    "October": "Outubro",
-                    "November": "Novembro",
-                    "December": "Dezembro"
-                };
-
-                const listaMeses = dados
-                    .map(item => {
-                        const [mesIngles, ano] = item.mes.split(' ');
-                        const mesPT = mesesENtoPT[mesIngles] || mesIngles;
-                       return `${mesPT} /${ano.slice(-2)}`;
-
+            function carregarTopMesesEstoque(idMunicipio) {
+                fetch(`/municipios/topMesesEstoque/${idMunicipio}`)
+                    .then(res => {
+                        if (res.status === 200) {
+                            return res.json();
+                        } else if (res.status === 204) {
+                            throw new Error("Nenhum dado encontrado.");
+                        } else {
+                            throw new Error(`Erro inesperado: ${res.status}`);
+                        }
                     })
-                    .join("<br>");
+                    .then(dados => {
+                        if (dados.length === 0) throw new Error("Nenhum dado para exibir");
 
-                document.getElementById("valorKpi3").innerHTML = listaMeses;
-            })
-            .catch(err => {
-                console.error("Erro ao carregar meses com mais consumo:", err.message);
-                document.getElementById("valorKpi3").textContent = "Sem dados";
-            });
-    }
-            });
+                        const mesesENtoPT = {
+                            "January": "Janeiro",
+                            "February": "Fevereiro",
+                            "March": "Março",
+                            "April": "Abril",
+                            "May": "Maio",
+                            "June": "Junho",
+                            "July": "Julho",
+                            "August": "Agosto",
+                            "September": "Setembro",
+                            "October": "Outubro",
+                            "November": "Novembro",
+                            "December": "Dezembro"
+                        };
+
+                        const listaMeses = dados
+                            .map(item => {
+                                const [mesIngles, ano] = item.mes.split(' ');
+                                const mesPT = mesesENtoPT[mesIngles] || mesIngles;
+                                return `${mesPT} /${ano.slice(-2)}`;
+
+                            })
+                            .join("<br>");
+
+                        document.getElementById("valorKpi3").innerHTML = listaMeses;
+                    })
+                    .catch(err => {
+                        console.error("Erro ao carregar meses com mais consumo:", err.message);
+                        document.getElementById("valorKpi3").textContent = "Sem dados";
+                    });
+            }
+        });
 
 
 
@@ -917,37 +922,37 @@ text: 'Dias de Estoque até o consumo total estimado',
 <script src="./js/sessao.js"></script>
 <script>
 
-        carregarKPIPeriodoAtual();
+    carregarKPIPeriodoAtual();
 
 
- function carregarKPIPeriodoAtual() {
-            const idEstado = sessionStorage.FK_ESTADO;
-            console.log("Buscando período atual da base:", idEstado);
+    function carregarKPIPeriodoAtual() {
+        const idEstado = sessionStorage.FK_ESTADO;
+        console.log("Buscando período atual da base:", idEstado);
 
-            fetch(`/estados/periodoAtual/${idEstado}`)
-                .then(resposta => {
-                    if (resposta.status === 204) {
-                        console.warn("Nenhum dado retornado (204)");
-                        return null;
-                    }
-                    if (!resposta.ok) throw new Error("Erro ao buscar período atual");
-                    return resposta.json(); // só chama isso se houver conteúdo
-                })
-                .then(json => {
-                    if (!json) return;
+        fetch(`/estados/periodoAtual/${idEstado}`)
+            .then(resposta => {
+                if (resposta.status === 204) {
+                    console.warn("Nenhum dado retornado (204)");
+                    return null;
+                }
+                if (!resposta.ok) throw new Error("Erro ao buscar período atual");
+                return resposta.json(); // só chama isso se houver conteúdo
+            })
+            .then(json => {
+                if (!json) return;
 
-                    const estadoAtual = document.getElementById('estadoAtual');
-                    const periodoAtual = document.getElementById('periodoAtual');
+                const estadoAtual = document.getElementById('estadoAtual');
+                const periodoAtual = document.getElementById('periodoAtual');
 
-                    if (estadoAtual && periodoAtual && json.length > 0) {
-                        estadoAtual.textContent = json[0].estado_atual;
-                        periodoAtual.textContent = json[0].periodo_atual;
-                    }
-                })
-                .catch(erro => {
-                    console.error("Erro ao buscar nome do estado:", erro);
-                });
-        }
+                if (estadoAtual && periodoAtual && json.length > 0) {
+                    estadoAtual.textContent = json[0].estado_atual;
+                    periodoAtual.textContent = json[0].periodo_atual;
+                }
+            })
+            .catch(erro => {
+                console.error("Erro ao buscar nome do estado:", erro);
+            });
+    }
     document.getElementById("nomeUsuario").textContent = sessionStorage.NOME_USUARIO;
 
     // Buscar e exibir nome do estado pela fkEstado
@@ -1015,6 +1020,11 @@ text: 'Dias de Estoque até o consumo total estimado',
         }).catch(function (erro) {
             console.log(erro);
         });
+    }
+
+    function mostrarAjudaGrafico() {
+        const ajuda = document.getElementById("ajudaMensagem");
+        ajuda.classList.toggle("escondido");
     }
 
 
