@@ -29,12 +29,12 @@ function graficoUsuarioEstado(){
 
     var instrucaoSql = `SELECT 
     estado.nome as estados,
-    SUM(CASE WHEN usuario.cargo = 'Coordenador Municipal' THEN 1 ELSE 0 END) AS totalMunicipal,
-    SUM(CASE WHEN usuario.cargo = 'Coordenador Estadual' THEN 1 ELSE 0 END) AS totalEstadual,
+    SUM(CASE WHEN usuario.cargo = 'coordenador_municipal' THEN 1 ELSE 0 END) AS totalMunicipal,
+    SUM(CASE WHEN usuario.cargo = 'coordenador_estadual' THEN 1 ELSE 0 END) AS totalEstadual,
     SUM(
         CASE 
-            WHEN usuario.cargo = 'Coordenador Municipal' THEN 1 
-            WHEN usuario.cargo = 'Coordenador Estadual' THEN 1 
+            WHEN usuario.cargo = 'coordenador_municipal' THEN 1 
+            WHEN usuario.cargo = 'coordenador_estadual' THEN 1 
             ELSE 0 
         END
     ) AS totalCoordenadores
@@ -56,11 +56,11 @@ function graficoFaixaEtaria(){
         WHEN TIMESTAMPDIFF(YEAR, dtNasc, CURDATE()) BETWEEN 36 AND 49 THEN '36-49'
         ELSE '50+' 
     END AS faixa_etaria,
-    SUM(CASE WHEN cargo = 'Coordenador Municipal' THEN 1 ELSE 0 END) AS totalMunicipais,
-    SUM(CASE WHEN cargo = 'Coordenador Estadual' THEN 1 ELSE 0 END) AS totalEstaduais,
+    SUM(CASE WHEN cargo = 'coordenador_municipal' THEN 1 ELSE 0 END) AS totalMunicipais,
+    SUM(CASE WHEN cargo = 'coordenador_estadual' THEN 1 ELSE 0 END) AS totalEstaduais,
     COUNT(*) AS totalCoordenadores
 FROM usuario
-WHERE cargo IN ('Coordenador Municipal', 'Coordenador Estadual')
+WHERE cargo IN ('coordenador_municipal', 'coordenador_estadual')
 GROUP BY faixa_etaria
 ORDER BY faixa_etaria;`;
 

@@ -168,20 +168,26 @@ body {
 }
 
 .conteudo-dashboard-admin {
-    width: 94vw;
+    width: 90vw;
     height: fit-content;
     display: flex;
     justify-content: space-between;
-    margin-top: 1%;
+  }
+
+  .container-dash-admin {
+    display: flex;
+    flex-direction: column;
   }
   
   .grupo-kpi {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    width: 460px;
-    gap: 75px;
-    height: 88vh;
+    justify-content: center;
+    width: 90vw;
+    gap: 20px;
+    height: fit-content;
+    margin-bottom: 1%;
   }
   .kpi-container {
     display: flex;
@@ -213,7 +219,7 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    width: 70vw;
+    width: 90vw;
     height: 88vh;
   }
   
@@ -224,7 +230,7 @@ body {
     align-items: center;
     padding: 2%;
     margin-left: 1%;
-    width: 31vw;
+    width: 25vw;
     height: 35vh;
     border: 3px solid rgb(0, 0, 0, 0.2);
     border-radius: 10px;
