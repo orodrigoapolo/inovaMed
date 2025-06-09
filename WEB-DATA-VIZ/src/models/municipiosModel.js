@@ -115,11 +115,13 @@ function periodos(idMunicipio) {
        SELECT 
     nomeFarmaco AS remedio,
     
+    -- Janeiro de 2025 (período atual)
     SUM(CASE 
         WHEN YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 2 THEN e.qtdFarmaco
         ELSE 0
     END) AS periodo_atual,
 
+    -- Dezembro de 2024 (período anterior)
     SUM(CASE 
         WHEN YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 1 THEN e.qtdFarmaco
         ELSE 0
@@ -127,7 +129,7 @@ function periodos(idMunicipio) {
 
     -- Soma total entre os dois meses
     SUM(CASE 
-        WHEN (YEAR(e.dtEntrada) = 2024 AND MONTH(e.dtEntrada) = 12)
+        WHEN (YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 2)
           OR (YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 1)
         THEN e.qtdFarmaco
         ELSE 0
@@ -136,13 +138,14 @@ function periodos(idMunicipio) {
 FROM estoque e
 WHERE e.fkMunicipio = ${idMunicipio}
   AND (
-      (YEAR(e.dtEntrada) = 2024 AND MONTH(e.dtEntrada) = 12)
-      OR
-      (YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 1)
+      (YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 2)
+      OR (YEAR(e.dtEntrada) = 2025 AND MONTH(e.dtEntrada) = 1)
   )
 GROUP BY nomeFarmaco
 ORDER BY total_periodos DESC
 LIMIT 3;
+
+
 
     `;
 
