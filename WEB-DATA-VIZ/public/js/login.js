@@ -225,8 +225,8 @@ function entrar() {
 
 function configurarPrimeiroParametroMedicamento() {
     // Se houver erros, exibe um alerta
-    var maxVar = 10000;
-    var minVar = 1000;
+    var maxVar = 1000000;
+    var minVar = 100000;
     var tipoParam = "medicamento"
     var idUsuario = sessionStorage.ID_USUARIO;
     if (!maxVar || !minVar || !tipoParam) {
