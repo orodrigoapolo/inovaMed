@@ -1,33 +1,160 @@
 var database = require("../database/config")
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
-function configurar(max, min, idUsuario) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
+function configurarPrimeiroParametroMedicamento(max, min, param, idUsuario) {
+    console.log("ACESSEI O parametro MODEL \n \n\t\t function configurarPrimeiroParametroMedicamento():");
     
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        INSERT INTO marcador (idMarcador, max, min, fkUsuario) VALUES (default, '${max}', '${min}', ${idUsuario});
+        INSERT INTO marcador (tipoParametro, max, min, fkUsuario) VALUES ('${param}', ${max}, ${min}, ${idUsuario});
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     
     return database.executar(instrucaoSql);
 }
 
-function exibir(idUsuario) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
+function configurarPrimeiroParametroGrafico(porc, param, idUsuario) {
+    console.log("ACESSEI O parametro MODEL \n \n\t\t function configurarPrimeiroParametroGrafico():");
+    
+    var instrucaoSql = `
+        INSERT INTO marcador (tipoParametro, min, fkUsuario) VALUES ('${param}', ${porc}, ${idUsuario});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function configurarParametroMedicamento(max, min, param, idUsuario) {
+    console.log("ACESSEI O parametro MODEL \n \n\t\t function configurarParametro():");
     
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        SELECT * FROM marcador WHERE fkUsuario = ${idUsuario} ORDER BY idMarcador DESC LIMIT 1;
+            UPDATE marcador SET max = ${max}, min = ${min} WHERE fkUsuario = ${idUsuario} AND tipoParametro = "${param}";
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     
+    return database.executar(instrucaoSql);
+}
+
+function configurarParametroGrafico(porc, param, idUsuario) {
+    console.log("ACESSEI O parametro MODEL \n \n\t\t function configurarParametro():");
+    
+    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //  e na ordem de inserção dos dados.
+    var instrucaoSql = `
+            UPDATE marcador SET min = ${porc} WHERE fkUsuario = ${idUsuario} AND tipoParametro = "${param}";
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function exibirParametroMedicamento(idUsuario) {
+    console.log("ACESSEI O parametro MODEL \n \n\t\t function exibirParametroMedicamento():");
+    
+    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //  e na ordem de inserção dos dados.
+    var instrucaoSql = `
+        SELECT * FROM marcador WHERE fkUsuario = ${idUsuario} AND tipoParametro = "medicamento" ORDER BY idMarcador DESC LIMIT 1;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function exibirParametroGrafico(idUsuario) {
+    console.log("ACESSEI O parametro MODEL \n \n\t\t function exibirParametroGrafico():");
+    
+    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //  e na ordem de inserção dos dados.
+    var instrucaoSql = `
+        SELECT * FROM marcador WHERE fkUsuario = ${idUsuario} AND tipoParametro = "grafico" ORDER BY idMarcador DESC LIMIT 1;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function deletarParametroMedicamento(param, idUsuario) {
+    console.log("ACESSEI O parametro MODEL function deletarParametroMedicamento():");
+    
+    var instrucaoSql = `
+        DELETE FROM marcador WHERE fkUsuario = ${idUsuario} AND tipoParametro = "${param}";
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function deletarParametroGrafico(param, idUsuario) {
+    console.log("ACESSEI O parametro MODEL function deletarParametroMedicamento():");
+    
+    var instrucaoSql = `
+        DELETE FROM marcador WHERE fkUsuario = ${idUsuario} AND tipoParametro = "${param}";
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function configurarNovoParametroMedicamento(max, min, param, idUsuario) {
+    console.log("ACESSEI O parametro MODEL \n \n\t\t function configurarNovoParametroMedicamento():");
+    
+    var instrucaoSql = `
+        INSERT INTO marcador (tipoParametro, max, min, fkUsuario) VALUES ('${param}', ${max}, ${min}, ${idUsuario});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function configurarNovoParametroGrafico(porc, param, idUsuario) {
+    console.log("ACESSEI O parametro MODEL \n \n\t\t function configurarNovoParametroGrafico():");
+    
+    var instrucaoSql = `
+        INSERT INTO marcador (tipoParametro, min, fkUsuario) VALUES ('${param}', ${porc}, ${idUsuario});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+
+function buscarAlertasMedicamento(idUsuario) {
+    var instrucaoSql = `
+SELECT 
+    e.nomeFarmaco,
+    SUM(e.qtdFarmaco) AS total_qtd,
+    MIN(m.min) AS min,
+    MAX(m.max) AS max
+FROM 
+    usuario u
+JOIN marcador m ON m.fkUsuario = u.idUsuario
+JOIN estoque e ON e.fkMunicipio = u.fkMunicipio
+WHERE
+    u.idUsuario = ${idUsuario}
+    AND (e.dtValidade IS NULL OR e.dtValidade >= CURRENT_DATE)
+    AND e.qtdFarmaco > 0
+GROUP BY 
+    e.nomeFarmaco
+HAVING 
+    total_qtd < min OR total_qtd > max;
+
+    
+    `;
+    console.log("Executando a instrução SQL para alertas: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 module.exports = {
-    configurar,
-    exibir
+    configurarParametroMedicamento,
+    configurarParametroGrafico,
+    configurarPrimeiroParametroMedicamento,
+    configurarPrimeiroParametroGrafico,
+    exibirParametroMedicamento,
+    exibirParametroGrafico,
+    deletarParametroMedicamento,
+    deletarParametroGrafico,
+    configurarNovoParametroGrafico,
+    configurarNovoParametroMedicamento,
+    buscarAlertasMedicamento
 };

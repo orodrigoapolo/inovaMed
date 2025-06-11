@@ -1,0 +1,30 @@
+
+scp -i urubu100.pem ./LeitorArquivoIBGE-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@54.221.105.2:~
+
+scp -i urubu100.pem ./limpeza-dados-sus-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@54.221.105.2:~
+
+scp -i urubu100.pem ./extracao-dados-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@54.221.105.2:~
+
+nano setup_inovamed.sh
+nano cleanup_inovamed.sh
+
+chmod +x setup_inovamed.sh
+chmod +x cleanup_inovamed.sh
+
+./setup_inovamed.sh
+./cleanup_inovamed.sh
+
+rm setup_inovamed.sh
+rm cleanup_inovamed.sh
+
+crontab -e
+
+sudo docker-compose up -d
+
+sudo docker-compose up
+
+sudo docker logs -f app-javaibge 
+
+sudo docker logs bd-inovamed  # Verifique se o banco inicializou corretamente
+sudo docker logs app-javaibge # Verifique erros de conexão
+sudo docker logs app-javasus  # Verifique erros de conexão

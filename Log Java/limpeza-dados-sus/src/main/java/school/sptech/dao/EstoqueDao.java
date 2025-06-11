@@ -1,10 +1,13 @@
 package school.sptech.dao;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import school.sptech.DadosSUS;
 import school.sptech.model.Municipio;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class EstoqueDao {
@@ -34,5 +37,13 @@ public class EstoqueDao {
                 estoque.getCatmat(),
                 estoque.getMunicipio().getIdMunicipio()
         );
+    }
+
+    public void comecarInsert(){
+        jdbcTemplate.update("START TRANSACTION");
+    }
+
+    public void encerrarInsert(){
+        jdbcTemplate.update("COMMIT");
     }
 }

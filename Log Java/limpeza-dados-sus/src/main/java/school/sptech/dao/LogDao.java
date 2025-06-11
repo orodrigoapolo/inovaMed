@@ -16,4 +16,12 @@ public class LogDao {
                 VALUES (?, ?, ?, ?)
         """, log.getTitulo(), log.getDescricao(), log.getDtLog(), log.getTipo());
     }
+
+    public void comecarInsert(){
+        jdbcTemplate.update("START TRANSACTION");
+    }
+
+    public void encerrarInsert(){
+        jdbcTemplate.update("COMMIT");
+    }
 }

@@ -17,7 +17,7 @@ function cadastrar(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado, fkM
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
         INSERT INTO usuario (idUsuario, email, nome, cpf, genero, cargo, senha, dtNasc, dtCriacao, fkEstado, fkMunicipio) VALUES (default, '${email}', '${nome}', '${cpf}', '${genero}', '${cargo}', '${senha}', '${dtNasc}', NOW(), ${fkEstado}, ${fkMunicipio});
-    `;
+        `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -26,9 +26,20 @@ function listar() {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
     
     var instrucaoSql = `
-        SELECT usuario.*, municipio.nome as nomeMunicipio 
-        FROM usuario LEFT JOIN municipio ON idMunicipio = fkMunicipio 
-        WHERE dtInativo IS NULL;
+        SELECT 
+            usuario.*, 
+            municipio.nome AS nomeMunicipio, 
+            GROUP_CONCAT(contato.email SEPARATOR ', ') AS contatos
+        FROM 
+            usuario 
+        LEFT JOIN 
+            municipio ON idMunicipio = fkMunicipio
+        LEFT JOIN 
+            contato ON idUsuario = fkUsuario
+        WHERE 
+            dtInativo IS NULL
+        GROUP BY 
+            usuario.idUsuario;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -82,6 +93,17 @@ function novoUsuario(email, nome, cpf, genero, cargo, senha, dtNasc, fkEstado, f
     return database.executar(instrucaoSql);
 }
 
+
+function buscarNomeEstadoPorId(idEstado) {
+    console.log("Buscando nome do estado com ID:", idEstado);
+
+    var instrucaoSql = `
+        SELECT nome FROM estado WHERE idEstado = ${idEstado};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 module.exports = {
     autenticar,
     cadastrar,
@@ -89,5 +111,6 @@ module.exports = {
     deletarUsuario,
     buscar,
     editar,
-    novoUsuario
+    novoUsuario,
+    buscarNomeEstadoPorId
 };

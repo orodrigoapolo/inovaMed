@@ -230,6 +230,22 @@ function novoUsuario(req, res) {
     }
 }
 
+function buscarNomeEstado(req, res) {
+    var idEstado = req.params.idEstado;
+
+    usuarioModel.buscarNomeEstadoPorId(idEstado)
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.json(resultado[0]); // { nome: 'São Paulo' }
+            } else {
+                res.status(404).send("Estado não encontrado.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao buscar nome do estado:", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
 
 module.exports = {
     autenticar,
@@ -238,5 +254,6 @@ module.exports = {
     buscar,
     editar,
     deletarUsuario,
-    novoUsuario
+    novoUsuario,
+    buscarNomeEstado
 }

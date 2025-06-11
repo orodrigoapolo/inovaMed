@@ -74,12 +74,12 @@ function listar() {
                                     <i class="fa fa-map-marker-alt"></i>
                                     <select id="estado${i}" class="input-field" disabled>
                                         <option value="outros" ${json[i].fkEstado === "" ? "selected" : ""}></option>
-                                        <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Acre</option>
-                                        <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Amapá</option>
+                                        <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Rondônia</option>
+                                        <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Acre</option>
                                         <option value="3" ${json[i].fkEstado === 3 ? "selected" : ""}>Amazonas</option>
-                                        <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Pará</option>
-                                        <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Rondônia</option>
-                                        <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Roraima</option>
+                                        <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Roraima</option>
+                                        <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Pará</option>
+                                        <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Amapá</option>
                                         <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                     </select>
                                 </div>
@@ -109,6 +109,14 @@ function listar() {
                                     <i class="fa fa-lock"></i>
                                     <input type="password" id="senha${i}" value="${json[i].senha}" class="input-field" placeholder="Digite sua senha" disabled>
                                 </div>
+
+                                <div class="input-item">
+                                    <label>Contatos</label>
+                                    <i class="fa fa-lock"></i>
+                                    <select id="contatos${i}" class="input-field" disabled>
+                                    </select>
+                                </div>
+
                             </div>
 
                             <div id="validacao-senha">
@@ -139,6 +147,24 @@ function listar() {
                                 <button class="btn-excluir"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>`;
+                        // Populando o select de contatos
+                        const selectContatos = document.getElementById(`contatos${i}`);
+
+                        if (json[i].contatos) {
+                            const listaContatos = json[i].contatos.split(',').map(contato => contato.trim());
+
+                            listaContatos.forEach(contato => {
+                                const option = document.createElement('option');
+                                option.value = contato;
+                                option.textContent = contato;
+                                selectContatos.appendChild(option);
+                            });
+                        } else {
+                            const option = document.createElement('option');
+                            option.textContent = 'Sem contatos';
+                            option.disabled = true;
+                            selectContatos.appendChild(option);
+                        }
                     }
 
                     adicionarEventosBotoes(json);
@@ -248,12 +274,12 @@ function buscar(nome, email, cpf, cargo, genero) {
                                     <i class="fa fa-map-marker-alt"></i>
                                     <select id="estado${i}" class="input-field" disabled>
                                         <option value="outros" ${json[i].fkEstado === "" ? "selected" : ""}></option>
-                                        <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Acre</option>
-                                        <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Amapá</option>
+                                        <option value="1" ${json[i].fkEstado === 1 ? "selected" : ""}>Rondônia</option>
+                                        <option value="2" ${json[i].fkEstado === 2 ? "selected" : ""}>Acre</option>
                                         <option value="3" ${json[i].fkEstado === 3 ? "selected" : ""}>Amazonas</option>
-                                        <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Pará</option>
-                                        <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Rondônia</option>
-                                        <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Roraima</option>
+                                        <option value="4" ${json[i].fkEstado === 4 ? "selected" : ""}>Roraima</option>
+                                        <option value="5" ${json[i].fkEstado === 5 ? "selected" : ""}>Pará</option>
+                                        <option value="6" ${json[i].fkEstado === 6 ? "selected" : ""}>Amapá</option>
                                         <option value="7" ${json[i].fkEstado === 7 ? "selected" : ""}>Tocantins</option>
                                     </select>
                                 </div>
@@ -388,12 +414,13 @@ function abrirConfiguracoes() {
     dash_config.style.display = "flex"
     exibir();
 }
+
 function adicionarEventosBotoes(json) {
     for (let i = 0; i < json.length; i++) {
         const btnEditar = document.querySelectorAll('.btn-editar')[i];
         const btnExcluir = document.querySelectorAll('.btn-excluir')[i];
 
-        const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}`);
+        const campos = document.querySelectorAll(`#email${i}, #nome${i}, #cpf${i}, #cargo${i}, #estado${i}, #nascimento${i}, #genero${i}, #senha${i}, #contatos${i}`);
         let editando = false;
 
 
@@ -544,12 +571,12 @@ function criarCardVazio() {
                         <i class="fa fa-map-marker-alt"></i>
                         <select id="estado" oninput="listarMunicipios()" class="input-field" disabled>
                             <option value="outros"></option>
-                            <option value="1">Acre</option>
-                            <option value="2">Amapá</option>
+                            <option value="1">Rondônia</option>
+                            <option value="2">Acre</option>
                             <option value="3">Amazonas</option>
-                            <option value="4">Pará</option>
-                            <option value="5">Rondônia</option>
-                            <option value="6">Roraima</option>
+                            <option value="4">Roraima</option>
+                            <option value="5">Pará </option>
+                            <option value="6">Amapá</option>
                             <option value="7">Tocantins</option>
                         </select>
                     </div>
