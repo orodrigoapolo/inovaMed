@@ -78,6 +78,11 @@
                         </p>
                         <p id="estadoAtual"></p>
                         <p> | </p>
+                         <p id="titulo-periodo-atual">
+                            Município atual:
+                        </p>
+                        <p id="municipioAtual"></p>
+                        <p> | </p>
                         <p id="titulo-periodo-atual">
                             Período atual:
                         </p>
@@ -935,11 +940,13 @@ text: 'Dias de Estoque até o consumo total estimado',
                 .then(json => {
                     if (!json) return;
 
+                    const municipioAtual = document.getElementById('municipioAtual');
                     const estadoAtual = document.getElementById('estadoAtual');
                     const periodoAtual = document.getElementById('periodoAtual');
 
-                    if (estadoAtual && periodoAtual && json.length > 0) {
+                    if (estadoAtual && municipioAtual && periodoAtual && json.length > 0) {
                         estadoAtual.textContent = json[0].estado_atual;
+                        municipioAtual.textContent = json[0].municipio_atual
                         periodoAtual.textContent = json[0].periodo_atual;
                     }
                 })

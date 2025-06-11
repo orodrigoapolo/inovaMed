@@ -5,7 +5,8 @@ function periodoAtual(idEstado) {
     var instrucaoSql =  `
         SELECT 
             DATE_FORMAT(dtEntrada, '%d/%m/%Y') AS periodo_atual,
-            estado.nome AS estado_atual
+            estado.nome AS estado_atual,
+            municipio.nome AS municipio_atual
         FROM estoque
         JOIN municipio ON estoque.fkMunicipio = municipio.idMunicipio
         JOIN estado ON municipio.fkEstado = estado.idEstado
